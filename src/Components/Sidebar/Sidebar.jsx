@@ -24,36 +24,54 @@ import { FaShop } from "react-icons/fa6";
 
 
 import img from '../../Images/img4.png'
+import img1 from '../../Images/img10.png'
+import img2 from '../../Images/img11.png'
+import img3 from '../../Images/img12.png'
+import img4 from '../../Images/img13.png'
+import img5 from '../../Images/img14.png'
+import img6 from '../../Images/img15.png'
+import img7 from '../../Images/img16.png'
+import img8 from '../../Images/img17.png'
+import img9 from '../../Images/img18.png'
+import img10 from '../../Images/img19.png'
+import img11 from '../../Images/img20.png'
+import img12 from '../../Images/img21.png'
+import img13 from '../../Images/img22.png'
+import img14 from '../../Images/img23.png'
+import img15 from '../../Images/img24.png'
+import img16 from '../../Images/img25.png'
+import img17 from '../../Images/img26.png'
+
 
 
 
 const Sidebar = () => {
 
     const sidebarItems = [
-        { icon: <MdOutlineDashboardCustomize />, text: 'Dashboard', link: '/dashboard' },
-        { icon: <FiUsers />, text: 'All Riders', link: '/riders' },
-        { icon: <FaRegHandshake />, text: 'All Drivers', link: '/drivers' },
-        { icon: <FaShop />, text: 'All Vendors', link: '/vendors' },
-        { icon: <FaCarSide />, text: 'Privileges' },
-        { icon: <TbNotification />, text: 'Push Notification' },
-        { icon: <LuWallet />, text: 'Wallet Management' },
-        { icon: <BsListCheck />, text: 'Payout Management' },
-        { icon: <FaRegCalendar />, text: 'All Bookings' },
-        { icon: <GoCrossReference />, text: 'All Referrals' },
-        { icon: <GrServices />, text: 'Services' },
-        { icon: <TbNotes />, text: 'SOS Updates' },
-        { icon: <MdWeb />, text: 'Update Banner' },
-        { icon: <BiSolidDiscount />, text: 'Promo Code' },
-        { icon: <BsChatRightText />, text: 'Live Chat' },
-        { icon: <IoLocation />, text: 'Location' },
-        { icon: <TbCoinRupeeFilled />, text: 'Pricing' },
-        { icon: <BiSolidCoupon />, text: 'Subscription Booking ' },
-        { icon: <BiSolidCoupon />, text: 'Service Location' },
-        { icon: <BiSolidCoupon />, text: 'Manage Owners' },
-        { icon: <BiSolidCoupon />, text: 'Admin' },
-        { icon: <BiSolidCoupon />, text: 'Vehicle Types' },
-        { icon: <BiSolidCoupon />, text: 'Master Data' },
-        { icon: <BiSolidCoupon />, text: 'Geofencing' },
+        { icon: img1, text: 'Dashboard', link: '/dashboard' },
+        { icon: img2, text: 'All Riders', link: '/riders' },
+        { icon: img3, text: 'All Drivers', link: '/drivers' },
+        { icon: img4, text: 'All Vendors', link: '/vendors' },
+        { icon: img5, text: 'Privileges' },
+        { icon: img6, text: 'Push Notification' },
+        { icon: img7, text: 'Wallet Management' },
+        { icon: img8, text: 'Payout Management' },
+        { icon: img9, text: 'All Bookings' , link: '/bookings'},
+        { icon: img12, text: 'All Referrals' },
+        { icon: img10, text: 'Services' },
+        { icon: img11, text: 'SOS Updates' },
+        { icon: img13, text: 'Update Banner' },
+        { icon: img14, text: 'Promo Code' },
+        { icon: img15, text: 'Live Chat' },
+        { icon: img16, text: 'Location' },
+        { icon: img17, text: 'Pricing' },
+        { icon: img14, text: 'Subscription Booking ' },
+        { icon: img14, text: 'Service Location' },
+        { icon: img14, text: 'Manage Owners' },
+        { icon: img14, text: 'Admin' },
+        { icon: img14, text: 'Vehicle Types' },
+        { icon: img14, text: 'Master Data' },
+        { icon: img14, text: 'Geofencing' },
     ];
 
     return (
@@ -68,7 +86,7 @@ const Sidebar = () => {
                         {sidebarItems.map((item, index) => (
                             <Link to={item.link} key={index} className='sidebar-link'>
                                 <div className='sidebar4'>
-                                    <div className='sidebar5'>{item.icon}</div>
+                                    <div className='sidebar5'><img src={item.icon} alt="" /></div>
                                     <p>{item.text}</p>
                                 </div>
                             </Link>

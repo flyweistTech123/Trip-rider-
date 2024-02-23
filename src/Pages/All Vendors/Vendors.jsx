@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {  toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './Vendors.css'
 import HOC from '../../Components/HOC/HOC'
+import { Link } from 'react-router-dom';
 
 import { IoSearch } from "react-icons/io5";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { MdOutlineBlock } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
+import { IoEyeOutline } from "react-icons/io5";
 
 
 
@@ -119,7 +120,7 @@ const Vendors = () => {
                             </thead>
                             <tbody>
                                 {vendorData.map(vendor => (
-                                    <tr key={vendor.id} className={vendor.isBlock ? 'blocked-vendor' : ''}>
+                                    <tr key={vendor.id}>
                                         <td className='rider8'>
                                             <img src={vendor.profilePicture} />
                                             {vendor.name}
@@ -133,13 +134,15 @@ const Vendors = () => {
                                                 <RiDeleteBinLine color='#667085' size={20} />
                                                 <p>Delete</p>
                                             </div>
-                                            <div className='rider10'  onClick={()=>{vendor.isBlock ? unblockVendor(vendor._id) : blockVendor(vendor._id)}}>
-                                                <MdOutlineBlock color='#667085' size={20} />
-                                                <p>Block/Unblock</p>
+                                            <div className='rider10' onClick={() => { vendor.isBlock ? unblockVendor(vendor._id) : blockVendor(vendor._id) }}>
+                                                <MdOutlineBlock color={vendor.isBlock ? "red" : "#667085"} size={20} />
+                                                <p style={{ color: vendor.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
                                             </div>
                                             <div className='rider10'>
-                                                <MdEdit color='#667085' size={20} />
-                                                <p>Edit</p>
+                                                <Link to={`/vendors_details/${vendor._id}`} className='sidebar-link' >
+                                                    <IoEyeOutline color='#667085' size={20} />
+                                                    <p>View</p>
+                                                </Link>
                                             </div>
                                         </td>
                                     </tr>

@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {  toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './Drivers.css'
+import { Link } from 'react-router-dom';
 import HOC from '../../Components/HOC/HOC'
 
 import { IoSearch } from "react-icons/io5";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { MdOutlineBlock } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
+import { IoEyeOutline } from "react-icons/io5";
+
 
 
 
@@ -52,7 +55,7 @@ const Drivers = () => {
                 setDriverData(prevDriverData => {
                     return prevDriverData.map(driver => {
                         if (driver._id === driverId) {
-                            return { ...driver, isBlock: true }; 
+                            return { ...driver, isBlock: true };
                         }
                         return driver;
                     });
@@ -71,7 +74,7 @@ const Drivers = () => {
                 setDriverData(prevDriverData => {
                     return prevDriverData.map(driver => {
                         if (driver._id === driverId) {
-                            return { ...driver, isBlock: false }; 
+                            return { ...driver, isBlock: false };
                         }
                         return driver;
                     });
@@ -119,7 +122,7 @@ const Drivers = () => {
                             </thead>
                             <tbody>
                                 {DriverData.map(driver => (
-                                    <tr key={driver.id} className={driver.isBlock ? 'blocked-driver' : ''}>
+                                    <tr key={driver.id}>
                                         <td className='rider8'>
                                             <img src={driver.profilePicture} />
                                             {driver.name}
@@ -134,13 +137,15 @@ const Drivers = () => {
                                                 <RiDeleteBinLine color='#667085' size={20} />
                                                 <p>Delete</p>
                                             </div>
-                                            <div className='rider10'  onClick={()=>{driver.isBlock ? unblockDriver(driver._id) : blockDriver(driver._id)}}>
-                                                <MdOutlineBlock color='#667085' size={20} />
-                                                <p>Block/Unblock</p>
+                                            <div className='rider10' onClick={() => { driver.isBlock ? unblockDriver(driver._id) : blockDriver(driver._id) }}>
+                                                <MdOutlineBlock color={driver.isBlock ? "red" : "#667085"} size={20} />
+                                                <p style={{ color: driver.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
                                             </div>
                                             <div className='rider10'>
-                                                <MdEdit color='#667085' size={20} />
-                                                <p>Edit</p>
+                                                <Link to={`/driver_details/${driver._id}`} className='sidebar-link' >
+                                                    <IoEyeOutline color='#667085' size={20} />
+                                                    <p>View</p>
+                                                </Link>
                                             </div>
                                         </td>
                                     </tr>

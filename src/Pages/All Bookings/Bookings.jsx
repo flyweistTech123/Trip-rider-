@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './Riders.css'
+import './Bookings.css'
 import HOC from '../../Components/HOC/HOC'
 import { Link } from 'react-router-dom';
 
@@ -11,6 +11,8 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { MdOutlineBlock } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
+import { FaCalendarDays } from "react-icons/fa6";
+
 
 
 
@@ -18,7 +20,7 @@ import { IoEyeOutline } from "react-icons/io5";
 // import img from '../../Images/img5.png'
 
 
-const Riders = () => {
+const Bookings = () => {
     const [riderData, setRiderData] = useState([]);
 
     useEffect(() => {
@@ -26,9 +28,9 @@ const Riders = () => {
     }, []);
 
     const fetchRiderData = () => {
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/admin/all/user')
+        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/getBooking')
             .then(response => {
-                setRiderData(response.data.category);
+                setRiderData(response.data.data);
             })
             .catch(error => {
                 console.error('Error fetching rider data:', error);
@@ -87,19 +89,28 @@ const Riders = () => {
             });
     };
 
-
-
+    const toggleCalendar = () => {
+        const inputElement = document.getElementById('calendar-input');
+        inputElement.focus();
+    };
     return (
         <>
             <div className='rider'>
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>All Riders</h6>
+                            <h6>All Bookings</h6>
                         </div>
 
                         <div className='rider4'>
-                            <button>Add user</button>
+                            <div className='booking'>
+                                <p>08/17/2023</p>
+                                <div className='booking1'>
+                                    <FaCalendarDays color='#FFFFFF' onClick={toggleCalendar} />
+                                    <input type="date" id="calendar-input" style={{ display: 'none' }} />
+                                </div>
+                            </div>
+
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
@@ -112,26 +123,31 @@ const Riders = () => {
                         <table>
                             <thead>
                                 <tr>
-                                    <th>User Name</th>
-                                    <th>Email</th>
-                                    <th>Phone No.</th>
-                                    <th>Wallet Balance</th>
-                                    {/* <th>Total Trips</th> */}
-                                    <th>Action Buttons</th>
+                                    <th>Booking ID</th>
+                                    <th>Date</th>
+                                    {/* <th>Booking by</th> */}
+                                    {/* <th>Location</th> */}
+                                    <th>Timing</th>
+                                    <th>Distance</th>
+                                    <th>Total Bill</th>
+                                    {/* <th>Vehicle Name</th> */}
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {riderData.map(rider => (
                                     <tr key={rider.id}>
                                         <td className='rider8'>
-                                            <img src={rider.profilePicture} />
-                                            {rider.name}
+                                            {/* <img src={rider.profilePicture} /> */}
+                                            {rider.userId}
                                         </td>
-                                        <td>{rider.email}</td>
-                                        <td>{rider.mobileNumber}</td>
-                                        <td style={{ color: '#F52D56' }}>{rider.wallet}</td>
-                                        {/* <td>{user.totalTrips}</td> */}
-                                        <td className='rider9'>
+                                        <td>{rider.date}</td>
+                                        <td>{rider.time}</td>
+                                        <td>{rider.distance}</td>
+                                        <td>{rider.totalPrice}</td>
+                                        {/* <td>{rider.car.name}</td> */}
+                                        <td>{rider.status}</td>
+                                        {/* <td className='rider9'>
                                             <div className='rider10' onClick={() => deleteRider(rider._id)}>
                                                 <RiDeleteBinLine color='#667085' size={20} />
                                                 <p>Delete</p>
@@ -142,11 +158,11 @@ const Riders = () => {
                                             </div>
                                             <div className='rider10'>
                                                 <Link to={`/riders_details/${rider._id}`} className='sidebar-link' >
-                                                    <IoEyeOutline   color='#667085' size={20} />
+                                                    <IoEyeOutline color='#667085' size={20} />
                                                     <p>View</p>
                                                 </Link>
                                             </div>
-                                        </td>
+                                        </td> */}
                                     </tr>
                                 ))}
                             </tbody>
@@ -158,4 +174,4 @@ const Riders = () => {
     )
 }
 
-export default HOC(Riders)
+export default HOC(Bookings)
