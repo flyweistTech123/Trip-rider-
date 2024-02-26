@@ -9,6 +9,15 @@ import Riders_details from './Pages/All Riders/Riders_details';
 import Driver_Details from './Pages/All Drivers/Driver_Details';
 import Vendors_Details from './Pages/All Vendors/Vendors_Details';
 import Bookings from './Pages/All Bookings/Bookings';
+import Services from './Pages/Services/Services';
+import CarDetails from './Pages/Services/CarDetails';
+import UpdateBanners from './Pages/Update Banners/UpdateBanners';
+import Pricing from './Pages/Pricing/Pricing';
+import DailyPricing from './Pages/Pricing/DailyPricing';
+import Outstationpricing from './Pages/Pricing/Outstationpricing';
+import Addoutstationpricing from './Pages/Pricing/Addoutstationpricing';
+import Basepricing from './Pages/Pricing/Basepricing';
+import Taxes from './Pages/Pricing/Taxes';
 
 
 function App() {
@@ -25,6 +34,15 @@ function App() {
           <Route path="/driver_details/:id" element={<AdminRouteProtect> <Driver_Details /> </AdminRouteProtect>} />
           <Route path="/vendors_details/:id" element={<AdminRouteProtect> <Vendors_Details /> </AdminRouteProtect>} />
           <Route path="/bookings" element={<AdminRouteProtect> <Bookings /> </AdminRouteProtect>} />
+          <Route path="/services" element={<AdminRouteProtect> <Services /> </AdminRouteProtect>} />
+          <Route path="/cardetails" element={<AdminRouteProtect> <CarDetails /> </AdminRouteProtect>} />
+          <Route path="/updatebanners" element={<AdminRouteProtect> <UpdateBanners /> </AdminRouteProtect>} />
+          <Route path="/pricing" element={<AdminRouteProtect> <Pricing /> </AdminRouteProtect>} />
+          <Route path="/dailypricing" element={<AdminRouteProtect> <DailyPricing /> </AdminRouteProtect>} />
+          <Route path="/outstationpricing" element={<AdminRouteProtect> <Outstationpricing /> </AdminRouteProtect>} />
+          <Route path="/addoutstationpricing" element={<AdminRouteProtect> <Addoutstationpricing /> </AdminRouteProtect>} />
+          <Route path="/basepricing" element={<AdminRouteProtect> <Basepricing /> </AdminRouteProtect>} />
+          <Route path="/taxes" element={<AdminRouteProtect> <Taxes /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>

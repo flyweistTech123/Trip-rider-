@@ -4,13 +4,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Bookings.css'
 import HOC from '../../Components/HOC/HOC'
-import { Link } from 'react-router-dom';
 
 import { IoSearch } from "react-icons/io5";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { MdOutlineBlock } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
-import { IoEyeOutline } from "react-icons/io5";
 import { FaCalendarDays } from "react-icons/fa6";
 
 
@@ -130,7 +125,7 @@ const Bookings = () => {
                                     <th>Timing</th>
                                     <th>Distance</th>
                                     <th>Total Bill</th>
-                                    {/* <th>Vehicle Name</th> */}
+                                    <th>Vehicle Name</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -143,9 +138,9 @@ const Bookings = () => {
                                         </td>
                                         <td>{rider.date}</td>
                                         <td>{rider.time}</td>
-                                        <td>{rider.distance}</td>
-                                        <td>{rider.totalPrice}</td>
-                                        {/* <td>{rider.car.name}</td> */}
+                                        <td>{rider.distance} Km</td>
+                                        <td>₹{rider.totalPrice}</td>
+                                        <td>{rider?.car?.name}</td>
                                         <td>{rider.status}</td>
                                         {/* <td className='rider9'>
                                             <div className='rider10' onClick={() => deleteRider(rider._id)}>

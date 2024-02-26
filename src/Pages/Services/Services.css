@@ -1,0 +1,234 @@
+.services {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.services p {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #ffffff;
+  line-height: 24px;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.services1 {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  background-color: #ffffff;
+  border-radius: 15px;
+}
+
+.services2 {
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 25px;
+  height: 25px;
+  background-color: #f52d56;
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+  transform: translateX(0);
+  cursor: pointer;
+}
+
+.services1 input[type="checkbox"] {
+  display: none;
+}
+
+.services1 input[type="checkbox"]:checked + .slide-container .slide-bar {
+  transform: translateX(100px);
+}
+
+.services3 {
+  width: 90%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.services4 {
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.services4 p:nth-child(1) {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #f52d56;
+  line-height: 24px;
+  letter-spacing: 0.5px;
+  margin: 0;
+  text-decoration: underline;
+}
+
+.services4 p:nth-child(2) {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #667085;
+  line-height: 24px;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.services5 {
+  display: flex;
+  gap: 70px;
+  margin-top: 30px;
+}
+.services6 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.services6 h6 {
+  font-family: "Mulish", sans-serif;
+  font-weight: 700;
+  font-size: 20.33px;
+  color: #8c8c8c;
+  line-height: 30.54px;
+  margin: 0;
+}
+
+.services7 {
+  width: 189px;
+  height: 151px;
+  border: 1px solid #bcbcbc;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.services6 img {
+}
+
+
+
+
+
+
+/* CarDetails */
+
+
+
+.services8{
+  width: 95%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+
+
+.services9{
+
+}
+
+.services9 p{
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #121212;
+  line-height: 24px;
+  margin: 0;
+}
+
+.services9 p{
+
+}
+
+
+.services10 {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.services11{
+  margin-top: 20px;
+}
+
+
+.services12{
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  gap: 5px;
+}
+
+.services12 label{
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #000000;
+  line-height: 24px;
+  margin: 0;
+}
+
+.services12 input{
+  width: 98%;
+  height: 55px;
+  border-radius: 8px;
+  border: 1px solid #E0E0E0;
+  outline: none;
+  padding-left: 20px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  color: #000000;
+  line-height: 24px;
+  margin: 0;
+}
+
+.services12 textarea{
+  width: 98%;
+  height: 55px;
+  border-radius: 8px;
+  border: 1px solid #E0E0E0;
+  outline: none;
+  padding-left: 20px;
+  padding-top: 10px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  color: #000000;
+  line-height: 24px;
+  margin: 0;
+}
+
+
+.services13{
+  text-align: center;
+  margin-top: 20px;
+}
+
+.services13 button{
+  width: 186px;
+  height: 67px;
+  border: none;
+  outline: none;
+  border-radius: 14px;
+  background-color: #F52D56;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  color: #FFFFFF;
+  line-height: 39px;
+  margin: 0;
+  cursor: pointer;
+}
+
+
+.services13 button:hover{
+  background-color: #C3052C;
+}
