@@ -148,9 +148,12 @@ const Driver_Details = () => {
                                                     <p>{DriverData.mobileNumber}</p>
                                                 </div>
                                             </div>
-
-                                        </div>
-                                        <div className='rider_details13'>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Phone Number</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData.mobileNumber}</p>
+                                                </div>
+                                            </div>
                                             <div className='rider_details14'>
                                                 <label htmlFor="">Gender</label>
                                                 <div className='input11'>
@@ -163,7 +166,67 @@ const Driver_Details = () => {
                                                     <p>{DriverData.birthday}</p>
                                                 </div>
                                             </div>
-                                        </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Aadhar Card Number</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData.aadhar}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">First Line Address</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData.present_address}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Second Line Address</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData.permanent_address}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">District</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData.registered_at}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Pin Code</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData.registered_at}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Country</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData.registered_at}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">State</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData.registered_at}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Vehicle Type</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData.vehicle_category}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Vehicle Number</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData.permit_number}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Vehicle Name</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData.maker_model}</p>
+                                                </div>
+                                            </div>
+                                        </div>    
                                     </div>
 
                                     {/* <div className='rider_details15'>
