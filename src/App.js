@@ -18,6 +18,9 @@ import Outstationpricing from './Pages/Pricing/Outstationpricing';
 import Addoutstationpricing from './Pages/Pricing/Addoutstationpricing';
 import Basepricing from './Pages/Pricing/Basepricing';
 import Taxes from './Pages/Pricing/Taxes';
+import Services2 from './Pages/Services2/Services2';
+import Add_Service from './Pages/Services2/Add_Service';
+import Update_Service from './Pages/Services2/Update_Service';
 
 
 function App() {
@@ -34,7 +37,7 @@ function App() {
           <Route path="/driver_details/:id" element={<AdminRouteProtect> <Driver_Details /> </AdminRouteProtect>} />
           <Route path="/vendors_details/:id" element={<AdminRouteProtect> <Vendors_Details /> </AdminRouteProtect>} />
           <Route path="/bookings" element={<AdminRouteProtect> <Bookings /> </AdminRouteProtect>} />
-          <Route path="/services" element={<AdminRouteProtect> <Services /> </AdminRouteProtect>} />
+          <Route path="/services" element={<AdminRouteProtect> <Services2 /> </AdminRouteProtect>} />
           <Route path="/cardetails" element={<AdminRouteProtect> <CarDetails /> </AdminRouteProtect>} />
           <Route path="/updatebanners" element={<AdminRouteProtect> <UpdateBanners /> </AdminRouteProtect>} />
           <Route path="/pricing" element={<AdminRouteProtect> <Pricing /> </AdminRouteProtect>} />
@@ -43,6 +46,8 @@ function App() {
           <Route path="/addoutstationpricing" element={<AdminRouteProtect> <Addoutstationpricing /> </AdminRouteProtect>} />
           <Route path="/basepricing" element={<AdminRouteProtect> <Basepricing /> </AdminRouteProtect>} />
           <Route path="/taxes" element={<AdminRouteProtect> <Taxes /> </AdminRouteProtect>} />
+          <Route path="/add_service" element={<AdminRouteProtect> <Add_Service /> </AdminRouteProtect>} />
+          <Route path="/Update_Service/:id" element={<AdminRouteProtect> <Update_Service /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>

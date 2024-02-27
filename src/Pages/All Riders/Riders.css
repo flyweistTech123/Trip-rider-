@@ -107,10 +107,15 @@
 
 .rider7 table{
     width: 100%;
+    border-collapse: collapse;
+}
+
+.rider7 tbody{
+    
 }
 
 .rider7 table tr{
-    
+    border-bottom: 1px solid #E4E4E4;
 }
 
 .rider7 table th{
