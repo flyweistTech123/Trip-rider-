@@ -21,6 +21,10 @@ import Taxes from './Pages/Pricing/Taxes';
 import Services2 from './Pages/Services2/Services2';
 import Add_Service from './Pages/Services2/Add_Service';
 import Update_Service from './Pages/Services2/Update_Service';
+import Wallet_Management from './Pages/Wallet Management/Wallet_Management';
+import Payout_Management from './Pages/Payout Management/Payout_Management';
+import All_Referrals from './Pages/All Referrals/All_Referrals';
+import Vehicletype from './Pages/Vehicle type/Vehicletype';
 
 
 function App() {
@@ -48,6 +52,10 @@ function App() {
           <Route path="/taxes" element={<AdminRouteProtect> <Taxes /> </AdminRouteProtect>} />
           <Route path="/add_service" element={<AdminRouteProtect> <Add_Service /> </AdminRouteProtect>} />
           <Route path="/Update_Service/:id" element={<AdminRouteProtect> <Update_Service /> </AdminRouteProtect>} />
+          <Route path="/wallet_management" element={<AdminRouteProtect> <Wallet_Management /> </AdminRouteProtect>} />
+          <Route path="/payout_management" element={<AdminRouteProtect> <Payout_Management /> </AdminRouteProtect>} />
+          <Route path="/all_referrals" element={<AdminRouteProtect> <All_Referrals /> </AdminRouteProtect>} />
+          <Route path="/vehicletype" element={<AdminRouteProtect> <Vehicletype /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>

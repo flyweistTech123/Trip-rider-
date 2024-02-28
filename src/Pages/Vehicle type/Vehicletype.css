@@ -1,0 +1,46 @@
+.vehicle{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.vehicle p{
+    width: 93px;
+    height: 26px;
+    border-radius: 5px;
+    background-color: #24C5D8;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    color: #FFFFFF;
+    line-height:18px;
+    margin: 0;
+    padding-top: 5px;
+}
+.vehicle1{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.vehicle1 select{
+    width: 93px;
+    height: 26px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background-color: #0F2C64;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    color: #FFFFFF;
+    line-height:18px;
+    margin: 0;
+}
