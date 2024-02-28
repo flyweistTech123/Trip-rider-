@@ -149,11 +149,11 @@
 }
 
 .dailyprice5{
-    position: absolute;
-    right: 0;
-    bottom: 150px;
     display: flex;
-    gap: 20px;
+    align-items: end;
+    gap: 10px;
+    justify-content: end;
+    margin-top: 100px;
 }
 
 

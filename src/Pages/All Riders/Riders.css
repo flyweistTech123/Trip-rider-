@@ -291,7 +291,7 @@
     width: 110px;
     height: 55px;
     border-radius: 6.58px;
-    padding: 9.88px 10.53px 9.88px 10.53px;
+    /* padding: 9.88px 10.53px 9.88px 10.53px; */
     background-color: #F52D56;
     border: 1px solid #C3052C;
     display: flex;
@@ -329,7 +329,7 @@
 .rider_details9 p{
     font-family: "Mulish", sans-serif;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 14px;
     color: #FFFFFF;
     line-height: 18.83px;
     margin: 0;

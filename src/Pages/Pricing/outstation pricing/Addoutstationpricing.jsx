@@ -1,18 +1,21 @@
 import React from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import './Pricing.css'
-import HOC from '../../Components/HOC/HOC'
+import '../Pricing.css'
+import HOC from '../../../Components/HOC/HOC'
+import { useNavigate } from 'react-router-dom';
 
 import { IoSearch } from "react-icons/io5";
 
-import { useNavigate } from 'react-router-dom';
+import { FaSquarePlus } from "react-icons/fa6";
+
 
 
 
 // import img from '../../Images/img5.png'
 
 
-const Basepricing = () => {
+const Addoutstationpricing = () => {
+
     const navigate = useNavigate()
     return (
         <>
@@ -20,7 +23,7 @@ const Basepricing = () => {
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>Base Pricing</h6>
+                            <h6>Out Station Booking</h6>
                         </div>
 
                         <div className='rider4'>
@@ -35,20 +38,12 @@ const Basepricing = () => {
 
 
                     <div className='dailyprice'>
-                        <div className='dailyprice3'>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Time Charge</label>
-                                <input type="text" placeholder='Enter time charge' />
-                            </div>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Night Charge</label>
-                                <input type="text" placeholder='Enter night charge' />
-                            </div>
-                        </div>
-                        <div className='dailyprice3'>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Parking Charge</label>
-                                <input type="text" placeholder='Enter parking charge' />
+                        <div className='dailyprice1'>
+                            <div className='dailyprice2'>
+                                <label htmlFor="">Vehicle</label>
+                                <select name="" id="">
+                                    <option value="">Select Vehicle</option>
+                                </select>
                             </div>
                             <div className='dailyprice2'>
                                 <label htmlFor="">City</label>
@@ -57,30 +52,37 @@ const Basepricing = () => {
                                 </select>
                             </div>
                         </div>
+
                         <div className='dailyprice3'>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Booking Fees</label>
-                                <input type="text" placeholder='Enter time charge' />
+                                <label htmlFor="">From</label>
+                                <input type="text" placeholder='Enter pickup location' />
                             </div>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Toll Charges</label>
-                                <input type="text" placeholder='Enter night charge' />
+                                <label htmlFor="">To</label>
+                                <input type="text" placeholder='Enter drop location' />
                             </div>
                         </div>
                         <div className='dailyprice3'>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Tax</label>
-                                <input type="text" placeholder='Enter Tax' />
+                                <label htmlFor="">Date of Pickup</label>
+                                <input type="text" placeholder='Enter pickup location' />
                             </div>
                             <div className='dailyprice4'>
-                                <label htmlFor="">GST</label>
-                                <input type="text" placeholder='Enter GST' />
+                                <label htmlFor="">Time of Pickup</label>
+                                <input type="text" placeholder='Enter drop location' />
                             </div>
                         </div>
-
-
-
-
+                        <div className='dailyprice3'>
+                            <div className='dailyprice4'>
+                                <label htmlFor="">Date of Return</label>
+                                <input type="text" placeholder='Enter pickup location' />
+                            </div>
+                            <div className='dailyprice4'>
+                                <label htmlFor="">Time of Return</label>
+                                <input type="text" placeholder='Enter drop location' />
+                            </div>
+                        </div>
                         <div className='dailyprice5'>
                             <button onClick={() => navigate('/pricing')}>Cancel</button>
                             <button onClick={() => navigate('/pricing')}>Save Changes</button>
@@ -92,4 +94,4 @@ const Basepricing = () => {
     )
 }
 
-export default HOC(Basepricing)
+export default HOC(Addoutstationpricing)

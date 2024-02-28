@@ -1,7 +1,7 @@
 import React from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import './Pricing.css'
-import HOC from '../../Components/HOC/HOC'
+import '../Pricing.css'
+import HOC from '../../../Components/HOC/HOC'
 
 import { IoSearch } from "react-icons/io5";
 

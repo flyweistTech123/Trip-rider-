@@ -13,11 +13,12 @@ import Services from './Pages/Services/Services';
 import CarDetails from './Pages/Services/CarDetails';
 import UpdateBanners from './Pages/Update Banners/UpdateBanners';
 import Pricing from './Pages/Pricing/Pricing';
-import DailyPricing from './Pages/Pricing/DailyPricing';
-import Outstationpricing from './Pages/Pricing/Outstationpricing';
-import Addoutstationpricing from './Pages/Pricing/Addoutstationpricing';
-import Basepricing from './Pages/Pricing/Basepricing';
-import Taxes from './Pages/Pricing/Taxes';
+import AddDailyPricing from './Pages/Pricing/DailyPricing/AddDailyPricing';
+import UpdateDailypricing from './Pages/Pricing/DailyPricing/UpdateDailypricing';
+import Alldailypricing from './Pages/Pricing/DailyPricing/AllDailyPricing';
+import Outstationpricing from './Pages/Pricing/outstation pricing/Outstationpricing';
+import Addoutstationpricing from './Pages/Pricing/outstation pricing/Addoutstationpricing';
+import Taxes from './Pages/Pricing/Taxes/Taxes';
 import Services2 from './Pages/Services2/Services2';
 import Add_Service from './Pages/Services2/Add_Service';
 import Update_Service from './Pages/Services2/Update_Service';
@@ -25,6 +26,11 @@ import Wallet_Management from './Pages/Wallet Management/Wallet_Management';
 import Payout_Management from './Pages/Payout Management/Payout_Management';
 import All_Referrals from './Pages/All Referrals/All_Referrals';
 import Vehicletype from './Pages/Vehicle type/Vehicletype';
+import AllHourlyPricing from './Pages/Pricing/HourlyPricing/AllHourlyPricing';
+import UpdateHourlyPricing from './Pages/Pricing/HourlyPricing/UpdateHourlyPricing';
+import AddHourlyPricing from './Pages/Pricing/HourlyPricing/AddHourlyPricing';
+import AllBasepricing from './Pages/Pricing/base pricing/AllBasepricing';
+import AddBasepricing from './Pages/Pricing/base pricing/AddBasepricing';
 
 
 function App() {
@@ -34,7 +40,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/dashboard" element={<AdminRouteProtect> <Dashboard /> </AdminRouteProtect>} />
-          <Route path="/riders" element={<AdminRouteProtect> <Riders /> </AdminRouteProtect>}/>
+          <Route path="/riders" element={<AdminRouteProtect> <Riders /> </AdminRouteProtect>} />
           <Route path="/drivers" element={<AdminRouteProtect> <Drivers /> </AdminRouteProtect>} />
           <Route path="/vendors" element={<AdminRouteProtect> <Vendors /> </AdminRouteProtect>} />
           <Route path="/riders_details/:id" element={<AdminRouteProtect> <Riders_details /> </AdminRouteProtect>} />
@@ -45,10 +51,16 @@ function App() {
           <Route path="/cardetails" element={<AdminRouteProtect> <CarDetails /> </AdminRouteProtect>} />
           <Route path="/updatebanners" element={<AdminRouteProtect> <UpdateBanners /> </AdminRouteProtect>} />
           <Route path="/pricing" element={<AdminRouteProtect> <Pricing /> </AdminRouteProtect>} />
-          <Route path="/dailypricing" element={<AdminRouteProtect> <DailyPricing /> </AdminRouteProtect>} />
+          <Route path="/alldailypricing" element={<AdminRouteProtect> <Alldailypricing /> </AdminRouteProtect>} />
+          <Route path="/updatedailypricing/:id" element={<AdminRouteProtect> <UpdateDailypricing /> </AdminRouteProtect>} />
+          <Route path="/adddailypricing" element={<AdminRouteProtect> <AddDailyPricing /> </AdminRouteProtect>} />
+          <Route path="/allhourlypricing" element={<AdminRouteProtect> <AllHourlyPricing /> </AdminRouteProtect>} />
+          <Route path="/updatehourlypricing/:id" element={<AdminRouteProtect> <UpdateHourlyPricing /> </AdminRouteProtect>} />
+          <Route path="/addhourlypricing" element={<AdminRouteProtect> <AddHourlyPricing /> </AdminRouteProtect>} />
+          <Route path="/allbasepricing" element={<AdminRouteProtect> <AllBasepricing /> </AdminRouteProtect>} />
+          <Route path="/addbasepricing" element={<AdminRouteProtect> <AddBasepricing /> </AdminRouteProtect>} />
           <Route path="/outstationpricing" element={<AdminRouteProtect> <Outstationpricing /> </AdminRouteProtect>} />
           <Route path="/addoutstationpricing" element={<AdminRouteProtect> <Addoutstationpricing /> </AdminRouteProtect>} />
-          <Route path="/basepricing" element={<AdminRouteProtect> <Basepricing /> </AdminRouteProtect>} />
           <Route path="/taxes" element={<AdminRouteProtect> <Taxes /> </AdminRouteProtect>} />
           <Route path="/add_service" element={<AdminRouteProtect> <Add_Service /> </AdminRouteProtect>} />
           <Route path="/Update_Service/:id" element={<AdminRouteProtect> <Update_Service /> </AdminRouteProtect>} />

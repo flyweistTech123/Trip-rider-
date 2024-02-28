@@ -9,9 +9,7 @@ import img from '../../Images/img27.png'
 import img1 from '../../Images/img28.png'
 import { MdOutlineBlock } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { FiHome } from "react-icons/fi";
-import { MdWorkOutline } from "react-icons/md";
-import { LuUserSquare2 } from "react-icons/lu";
+
 
 
 import { useNavigate } from 'react-router-dom';

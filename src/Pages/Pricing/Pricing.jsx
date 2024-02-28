@@ -22,10 +22,23 @@ const Pricing = () => {
                 <div className='pricing1'>
                     <h6>Pricing Type</h6>
 
-                    <Link to={'/dailypricing'} className='sidebar-link'>
+                    <Link to={'/alldailypricing'} className='sidebar-link'>
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>Daily Pricing</h5>
+                                <div className='rider5'>
+                                    <div className='rider6'>
+                                        <IoSearch />
+                                    </div>
+                                    <input type="search" name="" id="" placeholder='Search User' />
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
+                    <Link to={'/allhourlypricing'} className='sidebar-link'>
+                        <div className='pricing2'>
+                            <div className='pricing3'>
+                                <h5>Hourly Pricing</h5>
                                 <div className='rider5'>
                                     <div className='rider6'>
                                         <IoSearch />
@@ -50,7 +63,7 @@ const Pricing = () => {
                         </div>
                     </Link>
 
-                    <Link to={'/basepricing'} className='sidebar-link'>
+                    <Link to={'/allbasepricing'} className='sidebar-link'>
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>Base Pricing</h5>
