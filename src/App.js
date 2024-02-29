@@ -36,6 +36,7 @@ import Updateoutstationpricing from './Pages/Pricing/outstation pricing/Updateou
 import AllAmbulancePricing from './Pages/Pricing/Ambulance Pricing/AllAmbulancePricing';
 import AddAmbulancePricing from './Pages/Pricing/Ambulance Pricing/AddAmbulancePricing';
 import UpdateAmbulancePricing from './Pages/Pricing/Ambulance Pricing/UpdateAmbulancePricing';
+import AllnormalVehicles from './Pages/Vehicle type/AllnormalVehicles';
 
 
 function App() {
@@ -78,6 +79,7 @@ function App() {
           <Route path="/payout_management" element={<AdminRouteProtect> <Payout_Management /> </AdminRouteProtect>} />
           <Route path="/all_referrals" element={<AdminRouteProtect> <All_Referrals /> </AdminRouteProtect>} />
           <Route path="/vehicletype" element={<AdminRouteProtect> <Vehicletype /> </AdminRouteProtect>} />
+          <Route path="/allnormalvehicles" element={<AdminRouteProtect> <AllnormalVehicles /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>
