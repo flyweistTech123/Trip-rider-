@@ -73,9 +73,9 @@ const Add_Service = () => {
                             <div className='service1'>
                                 <label htmlFor="">Type</label>
                                 <select onChange={(e) => setType(e.target.value)}>
-                                    <option value={"hour"}>Hourly</option>
-                                    <option value={"month"} >Monthly</option>
-                                    <option value={"superCar"} >superCar</option>
+                                    <option name="Hourly" value="Hourly">Hourly</option>
+                                    <option name="Monthly" value="Monthly" >Monthly</option>
+                                    <option name="superCar" value="superCar" >superCar</option>
                                 </select>
                             </div>
                         </div>

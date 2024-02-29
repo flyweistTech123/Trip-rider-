@@ -4,6 +4,7 @@ import '../Pricing.css'
 import HOC from '../../../Components/HOC/HOC'
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
+import img3 from '../../../Images/img43.png';
 
 
 import { useNavigate, useParams } from 'react-router-dom';
@@ -14,99 +15,78 @@ import axios from 'axios';
 // import img from '../../Images/img5.png'
 
 
-const UpdateBasepricing = () => {
+const UpdateAmbulancePricing = () => {
     const { id } = useParams();
-    const [vehicles, setVehicles] = useState([]);
-    const [citys, setCitys] = useState([]);
-    const [vehicleId, setVehicleId] = useState('');
-    const [cityId, setCityId] = useState('');
-    const [vehicle, setVehicle] = useState('');
-    const [city, setCity] = useState('');
+    const [name, setName] = useState('');
+    const [image, setImage] = useState('');
+    const [perkm, setPerKm] = useState('');
+    const [baseprice, setBaseprice] = useState('');
     const [taxrate, setTaxRate] = useState('')
     const [gstrate, setGstRate] = useState('');
     const [servicecharge, setServiceCharge] = useState('')
     const [nightcharge, setNightCharge] = useState('');
     const [waitingCharge, setWaitingCharge] = useState('');
     const [trafficcharge, setTrafficCharge] = useState('');
-    const [price, setPrice] = useState('');
     const navigate = useNavigate();
+
 
     useEffect(() => {
         const fetchPriceDetails = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/BasePricing/${id}`);
-                const { vehicle, city, basePrice, taxRate, gstRate, serviceCharge, nightCharges, waitingCharge, trafficCharge } = response.data.data;
-                setVehicleId(vehicle._id);
-                setVehicle(vehicle.name);
-                setCityId(city._id);
-                setCity(city.city);
+                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/ambulanceVehicle/${id}`);
+                const { name, perKm, basePrice, taxRate, gstRate, serviceCharge, nightCharges, waitingCharge, trafficCharge, image } = response.data.data;
+                setName(name);
+                setImage(image);
+                setPerKm(perKm);
+                setBaseprice(basePrice);
                 setTaxRate(taxRate);
                 setGstRate(gstRate);
                 setServiceCharge(serviceCharge);
                 setNightCharge(nightCharges);
                 setWaitingCharge(waitingCharge);
                 setTrafficCharge(trafficCharge);
-                setPrice(basePrice)
             } catch (error) {
-                console.error('Error fetching Base Pricing details:', error);
+                console.error('Error fetching Ambulance Pricing details:', error);
             }
         };
         fetchPriceDetails();
     }, [id]);
+
     const handlePutRequest = async () => {
-        const data = {
-            city: cityId,
-            vehicle: vehicleId,
-            taxRate: taxrate,
-            gstRate: gstrate,
-            serviceCharge: servicecharge,
-            nightCharges: nightcharge,
-            waitingCharge: waitingCharge,
-            trafficCharge: trafficcharge,
-        }
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('image', image);
+        formData.append('perKm', perkm);
+        formData.append('basePrice', baseprice);
+        formData.append('taxRate', taxrate);
+        formData.append('gstRate', gstrate);
+        formData.append('serviceCharge', servicecharge);
+        formData.append('nightCharges', nightcharge);
+        formData.append('waitingCharge', waitingCharge);
+        formData.append('trafficCharge', trafficcharge);
 
         try {
-            const response = await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/BasePricing/update/${id}`, data)
-            toast.success("Base Pricing Updated successfully");
-            navigate('/allbasepricing')
+            const response = await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/ambulanceVehicle/${id}`, formData)
+            toast.success("Base Ambulance price Updated successfully");
+            navigate('/allambulancepricing')
         } catch (error) {
-            console.log('Error to updating Base Pricing:', error)
-            toast.error("Error to updating Base Pricing")
+            console.log('Error to updating Ambulance Pricing:', error)
+            toast.error("Error to updating Ambulance Pricing")
         }
     }
 
-    useEffect(() => {
-        const fetchVehicles = async () => {
-            try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/vehicle`);
-                setVehicles(response.data.data);
+    const triggerFileInput1 = () => {
+        document.getElementById('fileInput1').click();
+    };
 
-            } catch (error) {
-                console.error('Error fetching vehicles:', error);
-            }
-        };
 
-        fetchVehicles();
-    }, []);
-    useEffect(() => {
-        const fetchCity = async () => {
-            try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/City`);
-                setCitys(response.data.data);
-            } catch (error) {
-                console.error('Error fetching City:', error);
-            }
-        };
-
-        fetchCity();
-    }, []);
     return (
         <>
             <div className='rider'>
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>Update Base Pricing</h6>
+                            <h6>Add Base Pricing</h6>
                         </div>
 
                         <div className='rider4'>
@@ -121,33 +101,17 @@ const UpdateBasepricing = () => {
 
 
                     <div className='dailyprice'>
-                        <div className='dailyprice1'>
-                            <div className='dailyprice2'>
-                                <label htmlFor="">Vehicle</label>
-                                <select value={vehicle} onChange={(e) => {
-                                    const selectedVehicle = vehicles.find(vehicle => vehicle.name === e.target.value);
-                                    setVehicleId(selectedVehicle._id);
-                                    setVehicle(e.target.value);
-                                }}>
-                                    <option>Select Vehicle</option>
-                                    {vehicles?.map(vehicle => (
-                                        <option key={vehicle._id} value={vehicle.name}>{vehicle.name}</option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            <div className='dailyprice2'>
-                                <label htmlFor="">City</label>
-                                <select value={city} onChange={(e) => {
-                                    const selectedCity = citys.find(city => city.city === e.target.value);
-                                    setCityId(selectedCity._id);
-                                    setCity(e.target.value);
-                                }}>
-                                    <option>Select City</option>
-                                    {citys?.map(City => (
-                                        <option key={City._id} value={City.city}>{City.city}</option>
-                                    ))}
-                                </select>
+                        <div className='outstationprice1'>
+                            <p>Ambulance Type:</p>
+                            <div className='outstationprice2'>
+                                <div className='outstationprice3'>
+                                    <input type="radio" name="ambulanceType" value="Normal" checked={name === "Normal"} onChange={(e) => setName(e.target.value)} />
+                                    <p>Normal</p>
+                                </div>
+                                <div className='outstationprice3'>
+                                    <input type="radio" name="ambulanceType" value="Configuration" checked={name === "Configuration"} onChange={(e) => setName(e.target.value)} />
+                                    <p>Configuration</p>
+                                </div>
                             </div>
                         </div>
                         <div className='dailyprice3'>
@@ -182,16 +146,35 @@ const UpdateBasepricing = () => {
                         </div>
                         <div className='dailyprice3'>
                             <div className='dailyprice4'>
-                                <label htmlFor="">price</label>
-                                <input type="number" placeholder='Enter Base price' value={price} onChange={(e) => setPrice(e.target.value)} />
+                                <label htmlFor="">price/Km</label>
+                                <input type="number" placeholder='Enter price' value={perkm} onChange={(e) => setPerKm(e.target.value)} />
+                            </div>
+                            <div className='dailyprice4'>
+                                <label htmlFor="">Base Price</label>
+                                <input type="number" placeholder='Enter Base price' value={baseprice} onChange={(e) => setBaseprice(e.target.value)} />
+                            </div>
+                        </div>
+                        <div className='dailyprice3'>
+                            <div className='dailyprice4'>
+                                <label htmlFor="">Upload Ambulance Image</label>
+                                <div className='ambulance2' onClick={triggerFileInput1}>
+                                    <div className='ambulance3'>
+                                        <img src={img3} alt="" />
+                                    </div>
+                                    <p>Drag and drop images here, or click to add image</p>
+                                    <button>Add Images</button>
+                                    <input type="file" id="fileInput1" style={{ display: 'none' }} onChange={(e) => setImage(e.target.files[0])} />
+                                </div>
                             </div>
                         </div>
 
 
 
 
+
+
                         <div className='dailyprice5'>
-                            <button onClick={() => navigate('/allbasepricing')}>Cancel</button>
+                            <button onClick={() => navigate('/allambulancepricing')}>Cancel</button>
                             <button onClick={handlePutRequest}>Save Changes</button>
                         </div>
                     </div>
@@ -201,4 +184,4 @@ const UpdateBasepricing = () => {
     )
 }
 
-export default HOC(UpdateBasepricing)
+export default HOC(UpdateAmbulancePricing)

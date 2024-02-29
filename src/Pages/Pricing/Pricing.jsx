@@ -49,7 +49,7 @@ const Pricing = () => {
                         </div>
                     </Link>
 
-                    <Link to={'/outstationpricing'} className='sidebar-link'>
+                    <Link to={'/alloutstationpricing'} className='sidebar-link'>
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>OutStation Pricing</h5>
@@ -67,6 +67,19 @@ const Pricing = () => {
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>Base Pricing</h5>
+                                <div className='rider5'>
+                                    <div className='rider6'>
+                                        <IoSearch />
+                                    </div>
+                                    <input type="search" name="" id="" placeholder='Search User' />
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
+                    <Link to={'/allambulancepricing'} className='sidebar-link'>
+                        <div className='pricing2'>
+                            <div className='pricing3'>
+                                <h5>Ambulance Pricing</h5>
                                 <div className='rider5'>
                                     <div className='rider6'>
                                         <IoSearch />

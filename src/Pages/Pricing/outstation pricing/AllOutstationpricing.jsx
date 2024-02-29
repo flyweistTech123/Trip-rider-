@@ -18,33 +18,33 @@ import { useNavigate } from 'react-router-dom';
 // import img from '../../Images/img5.png'
 
 
-const AllBasepricing = () => {
+const AllOutstationpricing = () => {
     const navigate = useNavigate()
-    const [basepriceeData, setBasepriceData] = useState([]);
+    const [outstationpriceeData, setOutstationpriceData] = useState([]);
 
     useEffect(() => {
-        fetchBasepriceData();
+        fetchOutstationpriceData();
     }, []);
 
-    const fetchBasepriceData = () => {
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/BasePricing/get')
+    const fetchOutstationpriceData = () => {
+        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/OutStationPricing/get')
             .then(response => {
-                setBasepriceData(response.data.data);
+                setOutstationpriceData(response.data.data);
             })
             .catch(error => {
-                console.error('Error fetching base Price data:', error);
+                console.error('Error fetching outstation Price data:', error);
             });
     };
 
-    const deleteDriver = (basepriceId) => {
-        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/BasePricing/delete/${basepriceId}`)
+    const deletePrice = (outstationpriceId) => {
+        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/OutStationPricing/delete/${outstationpriceId}`)
             .then(response => {
-                fetchBasepriceData();
-                toast.success("Base Price deleted successfully");
+                fetchOutstationpriceData();
+                toast.success("Outstation Price deleted successfully");
             })
             .catch(error => {
-                console.error('Error to delete Base Price:', error);
-                toast.error("Error to delete Base Price");
+                console.error('Error to delete Outstation Price:', error);
+                toast.error("Error to delete Outstation Price");
             });
     };
 
@@ -58,11 +58,11 @@ const AllBasepricing = () => {
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>All Base Pricing</h6>
+                            <h6>All OutStation Pricing</h6>
                         </div>
 
                         <div className='rider4'>
-                            <button onClick={()=>navigate('/addbasepricing')}>Add Pricing</button>
+                            <button onClick={() => navigate('/addoutstationpricing')}>Add Pricing</button>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
@@ -77,35 +77,33 @@ const AllBasepricing = () => {
                                 <tr>
                                     <th>Vehicle Name</th>
                                     <th>City</th>
-                                    <th>Service Charge</th>
-                                    <th>Night Charges</th>
-                                    <th>Waiting Charge</th>
-                                    <th>Traffic Charge</th>
-                                    <th>GST Rate</th>
-                                    <th>TAX Rate</th>
+                                    <th>km Limit</th>
+                                    <th>km Price</th>
+                                    <th>Hours Limit</th>
+                                    <th>Hours Price</th>
                                     <th>Price</th>
+                                    <th>Type</th>
                                     <th>Action Buttons</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {basepriceeData.map(baseprice => (
-                                    <tr key={baseprice.id}>
-                                        <td>{baseprice.vehicle.name}</td>
-                                        <td>{baseprice.city.city}</td>
-                                        <td>{baseprice.serviceCharge}</td>
-                                        <td>{baseprice.nightCharges}</td>
-                                        <td>{baseprice.waitingCharge}</td>
-                                        <td>{baseprice.trafficCharge}</td>
-                                        <td>{baseprice.gstRate}</td>
-                                        <td>{baseprice.taxRate}</td>
-                                        <td style={{ color: '#F52D56' }}>₹ {baseprice.basePrice}</td>
+                                {outstationpriceeData.map(outstationprice => (
+                                    <tr key={outstationprice.id}>
+                                        <td>{outstationprice.vehicle.name}</td>
+                                        <td>{outstationprice.city.city}</td>
+                                        <td>{outstationprice.kmLimit} Km</td>
+                                        <td style={{ color: '#F52D56' }}>₹ {outstationprice.kmPrice}</td>
+                                        <td>{outstationprice.hrLimit} hr</td>
+                                        <td style={{ color: '#F52D56' }}>₹ {outstationprice.hrPrice}</td>
+                                        <td style={{ color: '#F52D56' }}>₹ {outstationprice.price}</td>
+                                        <td>{outstationprice.type}</td>
                                         <td className='rider9'>
-                                            <div className='rider10' onClick={() => deleteDriver(baseprice._id)}>
+                                            <div className='rider10' onClick={() => deletePrice(outstationprice._id)}>
                                                 <RiDeleteBinLine color='#667085' size={20} />
                                                 <p>Delete</p>
                                             </div>
                                             <div className='rider10'>
-                                                <Link to={`/updatebasepricing/${baseprice._id}`} className='sidebar-link' >
+                                                <Link to={`/updateoutstationpricing/${outstationprice._id}`} className='sidebar-link' >
                                                     <MdEdit color='#667085' size={20} />
                                                     <p>Edit</p>
                                                 </Link>
@@ -122,4 +120,4 @@ const AllBasepricing = () => {
     )
 }
 
-export default HOC(AllBasepricing)
+export default HOC(AllOutstationpricing)

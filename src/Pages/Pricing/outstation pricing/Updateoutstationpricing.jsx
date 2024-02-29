@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -14,10 +14,12 @@ import axios from 'axios';
 // import img from '../../Images/img5.png'
 
 
-const Addoutstationpricing = () => {
-
+const Updateoutstationpricing = () => {
+    const { id } = useParams();
     const [vehicles, setVehicles] = useState([]);
     const [citys, setCitys] = useState([]);
+    const [vehicleId, setVehicleId] = useState('');
+    const [cityId, setCityId] = useState('');
     const [vehicle, setVehicle] = useState('');
     const [city, setCity] = useState('');
     const [type, setType] = useState('')
@@ -28,11 +30,31 @@ const Addoutstationpricing = () => {
     const [price, setPrice] = useState('');
     const navigate = useNavigate();
 
-
-    const handlePostRequest = async () => {
+    useEffect(() => {
+        const fetchPriceDetails = async () => {
+            try {
+                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/OutStationPricing/${id}`);
+                const { vehicle, city, type, price, kmLimit, kmPrice, hrPrice, hrLimit } = response.data.data;
+                setVehicleId(vehicle._id);
+                setVehicle(vehicle.name);
+                setCityId(city._id);
+                setCity(city.city);
+                setType(type);
+                setPrice(price);
+                setKmLimit(kmLimit);
+                setKmPrice(kmPrice);
+                setHrLimit(hrLimit);
+                setHrPrice(hrPrice);
+            } catch (error) {
+                console.error('Error fetching Outstation Pricing details:', error);
+            }
+        };
+        fetchPriceDetails();
+    }, [id]);
+    const handlePutRequest = async () => {
         const data = {
-            city: city,
-            vehicle: vehicle,
+            city: cityId,
+            vehicle: vehicleId,
             type: type,
             kmLimit: kmlimit,
             kmPrice: kmprice,
@@ -42,21 +64,12 @@ const Addoutstationpricing = () => {
         }
 
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/OutStationPricing/add', data)
-            toast.success("Outstation Pricing add successfully");
+            const response = await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/OutStationPricing/update/${id}`, data)
+            toast.success("Outstation Pricing Updated successfully");
             navigate('/alloutstationpricing')
-            setCity('');
-            setVehicle('');
-            setType('');
-            setKmLimit('');
-            setKmPrice('')
-            setHrLimit('');
-            setHrPrice('');
-            setPrice('');
-
         } catch (error) {
-            console.log('Error to add Outsation Pricing:', error)
-            toast.error("Error to add Outstation Pricing")
+            console.log('Error to updating Outstation Pricing:', error)
+            toast.error("Error to updating Outstation Pricing")
         }
     }
 
@@ -92,7 +105,7 @@ const Addoutstationpricing = () => {
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>Add Outstation Pricing</h6>
+                            <h6>Update Outstation Pricing</h6>
                         </div>
 
                         <div className='rider4'>
@@ -111,11 +124,11 @@ const Addoutstationpricing = () => {
                             <p>Trip Type:</p>
                             <div className='outstationprice2'>
                                 <div className='outstationprice3'>
-                                    <input type="radio" name="tripType" value="oneSide" onChange={(e) => setType(e.target.value)} />
+                                    <input type="radio" name="tripType" value="oneSide" checked={type === "oneSide"} onChange={(e) => setType(e.target.value)} />
                                     <p>One-way</p>
                                 </div>
                                 <div className='outstationprice3'>
-                                    <input type="radio" name="tripType" value="bothSide" onChange={(e) => setType(e.target.value)} />
+                                    <input type="radio" name="tripType" value="bothSide" checked={type === "bothSide"} onChange={(e) => setType(e.target.value)} />
                                     <p>Round Trip</p>
                                 </div>
                             </div>
@@ -124,20 +137,28 @@ const Addoutstationpricing = () => {
                         <div className='dailyprice1'>
                             <div className='dailyprice2'>
                                 <label htmlFor="">Vehicle</label>
-                                <select onChange={(e) => setVehicle(e.target.value)}>
-                                    <option value="">Select Vehicle</option>
+                                <select value={vehicle} onChange={(e) => {
+                                    const selectedVehicle = vehicles.find(vehicle => vehicle.name === e.target.value);
+                                    setVehicleId(selectedVehicle._id);
+                                    setVehicle(e.target.value);
+                                }}>
+                                    <option>Select Vehicle</option>
                                     {vehicles?.map(vehicle => (
-                                        <option key={vehicle._id} value={vehicle._id}>{vehicle.name}</option>
+                                        <option key={vehicle._id} value={vehicle.name}>{vehicle.name}</option>
                                     ))}
                                 </select>
                             </div>
 
                             <div className='dailyprice2'>
                                 <label htmlFor="">City</label>
-                                <select onChange={(e) => setCity(e.target.value)}>
-                                    <option value="">Select City</option>
+                                <select value={city} onChange={(e) => {
+                                    const selectedCity = citys.find(city => city.city === e.target.value);
+                                    setCityId(selectedCity._id);
+                                    setCity(e.target.value);
+                                }}>
+                                    <option>Select City</option>
                                     {citys?.map(City => (
-                                        <option key={City.id} value={City._id}>{City.city}</option>
+                                        <option key={City._id} value={City.city}>{City.city}</option>
                                     ))}
                                 </select>
                             </div>
@@ -171,7 +192,7 @@ const Addoutstationpricing = () => {
 
                         <div className='dailyprice5'>
                             <button onClick={() => navigate('/alloutstationpricing')}>Cancel</button>
-                            <button onClick={handlePostRequest}>Add Price</button>
+                            <button onClick={handlePutRequest}>Save Changes</button>
                         </div>
                     </div>
                 </div>
@@ -180,4 +201,4 @@ const Addoutstationpricing = () => {
     )
 }
 
-export default HOC(Addoutstationpricing)
+export default HOC(Updateoutstationpricing)

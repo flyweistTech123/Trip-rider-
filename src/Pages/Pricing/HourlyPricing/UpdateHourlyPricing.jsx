@@ -41,8 +41,8 @@ const UpdateHourlyPricing = () => {
 
     const handleUpdate = async () => {
         const data={
-            city:cityId, // Sending city ID
-            vehicle:vehicleId, // Sending vehicle ID
+            city:cityId, 
+            vehicle:vehicleId, 
             km:distance,
             hours:hours,
             price:price

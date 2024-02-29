@@ -1,542 +1,580 @@
-.pricing{
-
+.pricing {
 }
 
-
-.pricing1{
-
+.pricing1 {
 }
 
-
-.pricing1 h6{
-    font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    font-size: 20px;
-    color: #000000;
-    line-height:30px;
-    margin: 0;
+.pricing1 h6 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  color: #000000;
+  line-height: 30px;
+  margin: 0;
 }
 
-
-.pricing2{
-    width: 100%;
-    height: 86px;
-    border-radius: 18px;
-    background-color: #F52D56;
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-    cursor: pointer;
+.pricing2 {
+  width: 100%;
+  height: 86px;
+  border-radius: 18px;
+  background-color: #f52d56;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  cursor: pointer;
 }
 
-.pricing3{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 95%;
-    margin: auto;
+.pricing3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+  margin: auto;
 }
 
-
-.pricing2 h5{
-    font-family: "Poppins", sans-serif;
-    font-weight: 500;
-    font-size: 32px;
-    color: #FFFFFF;
-    line-height:48px;
-    margin: 0;
+.pricing2 h5 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 32px;
+  color: #ffffff;
+  line-height: 48px;
+  margin: 0;
 }
-
-
-
-
 
 /* DailyPricing */
 
-
-.dailyprice{
-    width: 95%;
-    height: 100%;
-    margin: auto;
-    margin-top: 30px;
-    position: relative;
+.dailyprice {
+  width: 95%;
+  height: 100%;
+  margin: auto;
+  margin-top: 30px;
+  position: relative;
 }
 
-
-.dailyprice1{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.dailyprice1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-
-.dailyprice2{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.dailyprice2 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.dailyprice2 label{
-    font-family: "Mulish", sans-serif;
-    font-weight: 500;
-    font-size: 17.92px;
-    color: #000000;
-    line-height:22.49px;
-    margin: 0;
+.dailyprice2 label {
+  font-family: "Mulish", sans-serif;
+  font-weight: 500;
+  font-size: 17.92px;
+  color: #000000;
+  line-height: 22.49px;
+  margin: 0;
 }
 
-.dailyprice2 select{
-    width: 500px;
-    height: 53px;
-    border-radius: 6.81px;
-    border: 1.36px solid #B7B7B7;
-    outline: none;
-    font-family: "Mulish", sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    color: #7D7D7D;
-    line-height:20.08px;
-    margin: 0;
+.dailyprice2 select {
+  width: 500px;
+  height: 53px;
+  border-radius: 6.81px;
+  border: 1.36px solid #b7b7b7;
+  outline: none;
+  font-family: "Mulish", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #7d7d7d;
+  line-height: 20.08px;
+  margin: 0;
 }
 
-
-.dailyprice3{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 40px;
+.dailyprice3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 40px;
 }
 
-
-.dailyprice4{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.dailyprice4 {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.dailyprice4 label{
-    font-family: "Mulish", sans-serif;
-    font-weight: 500;
-    font-size: 19.59px;
-    color: #000000;
-    line-height:24.58px;
-    margin: 0;
+.dailyprice4 label {
+  font-family: "Mulish", sans-serif;
+  font-weight: 500;
+  font-size: 19.59px;
+  color: #000000;
+  line-height: 24.58px;
+  margin: 0;
 }
 
-.dailyprice4 input{
-    width: 480px;
-    height: 53px;
-    border-radius: 6.81px;
-    border: 1.36px solid #B7B7B7;
-    outline: none;
-    padding-left: 20px;
-    font-family: "Mulish", sans-serif;
-    font-weight: 500;
-    font-size: 19.59px;
-    color: #000000;
-    line-height:24.58px;
-    margin: 0;
+.dailyprice4 input {
+  width: 480px;
+  height: 53px;
+  border-radius: 6.81px;
+  border: 1.36px solid #b7b7b7;
+  outline: none;
+  padding-left: 20px;
+  font-family: "Mulish", sans-serif;
+  font-weight: 500;
+  font-size: 19.59px;
+  color: #000000;
+  line-height: 24.58px;
+  margin: 0;
 }
 
-
-.dailyprice4 input::placeholder{
-    font-family: "Mulish", sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    color: #7D7D7D;
-    line-height:20.08px;
-    margin: 0;
+.dailyprice4 input::placeholder {
+  font-family: "Mulish", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #7d7d7d;
+  line-height: 20.08px;
+  margin: 0;
 }
 
-.dailyprice5{
-    display: flex;
-    align-items: end;
-    gap: 10px;
-    justify-content: end;
-    margin-top: 100px;
+.dailyprice5 {
+  display: flex;
+  align-items: end;
+  gap: 10px;
+  justify-content: end;
+  margin-top: 30px;
+  padding-bottom: 30px;
 }
 
-
-.dailyprice5 button:nth-child(1){
-    width: 126.87px;
-    height: 39.14px;
-    border: 1px solid #C3052C;
-    outline: none;
-    border-radius: 6.75px;
-    font-family: "Poppins", sans-serif;
-    font-weight: 500;
-    font-size: 16.2px;
-    color: #7D7D7D;
-    line-height:20.08px;
-    margin: 0;
-    color: #C3052C;
-    background-color: #F9F9F9;
-    cursor: pointer;
+.dailyprice5 button:nth-child(1) {
+  width: 126.87px;
+  height: 39.14px;
+  border: 1px solid #c3052c;
+  outline: none;
+  border-radius: 6.75px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 16.2px;
+  color: #7d7d7d;
+  line-height: 20.08px;
+  margin: 0;
+  color: #c3052c;
+  background-color: #f9f9f9;
+  cursor: pointer;
 }
 
-
-
-.dailyprice5 button:nth-child(2){
-    width: 126.87px;
-    height: 39.14px;
-    border: none;
-    outline: none;
-    border-radius: 6.75px;
-    font-family: "Poppins", sans-serif;
-    font-weight: 500;
-    font-size: 16.2px;
-    color: #FFFFFF;
-    line-height:20.08px;
-    margin: 0;
-    background-color: #F52D56;
-    cursor: pointer;
+.dailyprice5 button:nth-child(2) {
+  width: 126.87px;
+  height: 39.14px;
+  border: none;
+  outline: none;
+  border-radius: 6.75px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 16.2px;
+  color: #ffffff;
+  line-height: 20.08px;
+  margin: 0;
+  background-color: #f52d56;
+  cursor: pointer;
 }
 
-
-.dailyprice5 button:nth-child(2):hover{
-    background-color: #C3052C;
+.dailyprice5 button:nth-child(2):hover {
+  background-color: #c3052c;
 }
-
-
-
 
 /* outstationpricing */
 
-
-.outstationprice{
-    width: 160px;
-    height: 31px;
-    border-radius: 8px;
-    background-color: #C3052C;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    cursor: pointer;
+.outstationprice {
+  width: 160px;
+  height: 31px;
+  border-radius: 8px;
+  background-color: #c3052c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
 }
 
-
-.outstationprice p{
-    font-family: "Montserrat", sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    color: #FFFFFF;
-    line-height:20.08px;
-    margin: 0;
+.outstationprice p {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #ffffff;
+  line-height: 20.08px;
+  margin: 0;
 }
 
-.outstationprice1{
-    margin-bottom: 20px;
+.outstationprice1 {
+  margin-bottom: 20px;
 }
 
-.outstationprice1 p{
-    font-family: "Mulish", sans-serif;
-    font-weight: 500;
-    font-size: 17.92px;
-    color: #000000;
-    line-height:22.49px;
-    margin: 0;
+.outstationprice1 p {
+  font-family: "Mulish", sans-serif;
+  font-weight: 500;
+  font-size: 17.92px;
+  color: #000000;
+  line-height: 22.49px;
+  margin: 0;
 }
 
-
-.outstationprice2{
-    display: flex;
-    align-items: center;
-    gap: 20px;
+.outstationprice2 {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-.outstationprice3{
-    width: 155.17px;
-    height: 53.08px;
-    border-radius: 6.81px;
-    border: 1.36px solid #B7B7B7;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
+.outstationprice3 {
+  width: 155.17px;
+  height: 53.08px;
+  border-radius: 6.81px;
+  border: 1.36px solid #b7b7b7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
 }
 
-.outstationprice3 p{
-    font-family: "Mulish", sans-serif;
-    font-weight: 500;
-    font-size: 17.92px;
-    color: #000000;
-    line-height:22.49px;
-    margin: 0;
+.outstationprice3 p {
+  font-family: "Mulish", sans-serif;
+  font-weight: 500;
+  font-size: 17.92px;
+  color: #000000;
+  line-height: 22.49px;
+  margin: 0;
 }
 .outstationprice3 input[type="radio"] {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%; 
-    border: 1px solid #333; 
-    outline: none;
-    cursor: pointer;
+  /* appearance: none; */
+  /* -webkit-appearance: none;
+  -moz-appearance: none; */
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #333;
+  outline: none;
+  cursor: pointer;
 }
 
-.outstationprice3 input[type="radio"]:checked {
-    background-color: #000000; 
+/* .outstationprice3 input[type="radio"]:checked {
+  background-color: #000000;
+} */
+
+.outstationprice4 {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
 }
 
-
-
-
-
-.outstationprice4{
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
+.outstationprice4 p {
+  font-family: "Mulish", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: #000000;
+  line-height: 15.06px;
+  margin: 0;
 }
 
-.outstationprice4 p{
-    font-family: "Mulish", sans-serif;
-    font-weight: 700;
-    font-size: 12px;
-    color: #000000;
-    line-height:15.06px;
-    margin: 0;
+.outstationprice5 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 10px;
 }
 
-.outstationprice5{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    gap: 10px;
+.outstationprice6 {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-
-.outstationprice6{
-    display: flex;
-    align-items: center;
-    gap: 20px;
+.outstationprice7 {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-.outstationprice7{
-    display: flex;
-    align-items: center;
-    gap: 20px;
+.outstationprice8 {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-.outstationprice8  {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+.outstationprice9 {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-.outstationprice9{
-    display: flex;
-    align-items: center;
-    gap: 20px;
+.outstationprice6 p {
+  font-family: "Mulish", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  color: #969696;
+  line-height: 15.06px;
+  margin: 0;
 }
 
-.outstationprice6 p{
-    font-family: "Mulish", sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    color: #969696;
-    line-height:15.06px;
-    margin: 0;
+.outstationprice7 p {
+  font-family: "Mulish", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  color: #969696;
+  line-height: 15.06px;
+  margin: 0;
 }
 
-.outstationprice7 p{
-    font-family: "Mulish", sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    color: #969696;
-    line-height:15.06px;
-    margin: 0;
+.outstationprice6,
+.outstationprice7,
+.outstationprice8 span {
+  font-family: "Mulish", sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  color: #c3052c;
+  line-height: 15.06px;
+  letter-spacing: 3%;
+  margin: 0;
+  cursor: pointer;
 }
 
-.outstationprice6, .outstationprice7,.outstationprice8 span{
-    font-family: "Mulish", sans-serif;
-    font-weight: 600;
-    font-size: 12px;
-    color: #C3052C;
-    line-height:15.06px;
-    letter-spacing: 3%;
-    margin: 0;
-    cursor: pointer;
+.outstationprice9 p {
+  font-family: "Mulish", sans-serif;
+  font-weight: 900;
+  font-size: 18px;
+  color: #c3052c;
+  line-height: 22.59px;
+  margin: 0;
 }
 
-
-
-
-.outstationprice9 p{
-    font-family: "Mulish", sans-serif;
-    font-weight: 900;
-    font-size: 18px;
-    color: #C3052C;
-    line-height:22.59px;
-    margin: 0;
+.outstationprice9 span {
+  font-family: "Mulish", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: #c3052c;
+  line-height: 22.59px;
+  margin: 0;
 }
 
-.outstationprice9 span{
-    font-family: "Mulish", sans-serif;
-    font-weight: 600;
-    font-size: 18px;
-    color: #C3052C;
-    line-height:22.59px;
-    margin: 0;
+.outstationprice10 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 50px;
 }
 
-.outstationprice10{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 50px;
+.outstationprice11 {
 }
 
-.outstationprice11{
-
-}
-
-.outstationprice11 p{
-    font-family: "Mulish", sans-serif;
-    font-weight: 700;
-    font-size: 12px;
-    color: #000000;
-    line-height:15.06px;
-    margin: 0;
+.outstationprice11 p {
+  font-family: "Mulish", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: #000000;
+  line-height: 15.06px;
+  margin: 0;
 }
 
 .outstationprice12 {
-    border: 1px solid #E0E0E0;
-    width: 90%;
+  border: 1px solid #e0e0e0;
+  width: 90%;
 }
-
-
-
-
 
 /* taxes */
 
+.taxes {
+  width: 95%;
+  margin: auto;
+  margin-top: 30px;
+}
 
-.taxes{
-    width: 95%;
-    margin: auto;
-    margin-top: 30px
+.taxes1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.taxes2 {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.taxes2 label {
+  font-family: "Mulish", sans-serif;
+  font-weight: 500;
+  font-size: 19.59px;
+  color: #000000;
+  line-height: 24.58px;
+  margin: 0;
+}
+
+.taxes3 {
+  width: 480px;
+  height: 53px;
+  border-radius: 6.81px;
+  border: 1.36px solid #b7b7b7;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 10px;
+}
+
+.taxes3 input {
+  border: none;
+  outline: none;
+  padding-left: 20px;
+  font-family: "Mulish", sans-serif;
+  font-weight: 500;
+  font-size: 19.59px;
+  color: #000000;
+  line-height: 24.58px;
+  margin: 0;
+}
+
+.taxes3 input::placeholder {
+  font-family: "Mulish", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #7d7d7d;
+  line-height: 20.08px;
+  margin: 0;
+}
+
+.taxes4 {
+  border-left: 1px solid #393939;
+  padding-right: 10px;
+  padding-left: 10px;
+  height: 60%;
+  font-family: "Mulish", sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  color: #393939;
+  line-height: 22.59px;
+  margin: 0;
+}
+
+.taxes5 {
+  text-align: end;
+  padding-bottom: 10px;
+}
+
+.taxes5 button:nth-child(1) {
+  width: 126.87px;
+  height: 39.14px;
+  border: 1px solid #c3052c;
+  outline: none;
+  border-radius: 6.75px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 16.2px;
+  color: #7d7d7d;
+  line-height: 20.08px;
+  margin: 0;
+  color: #c3052c;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.taxes5 button:nth-child(2) {
+  width: 126.87px;
+  height: 39.14px;
+  border: none;
+  outline: none;
+  border-radius: 6.75px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 16.2px;
+  color: #ffffff;
+  line-height: 20.08px;
+  margin: 0;
+  background-color: #f52d56;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.taxes5 button:nth-child(2):hover {
+  background-color: #c3052c;
 }
 
 
-.taxes1{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 10px;
+
+
+.ambulance1{
+  margin-top: 20px;
 }
 
-.taxes2{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.taxes2 label{
-    font-family: "Mulish", sans-serif;
-    font-weight: 500;
-    font-size: 19.59px;
-    color: #000000;
-    line-height:24.58px;
-    margin: 0;
-}
-
-
-.taxes3{
-    width: 480px;
-    height: 53px;
-    border-radius: 6.81px;
-    border: 1.36px solid #B7B7B7;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 10px;
-
-}
-
-.taxes3 input{
-    border: none;
-    outline: none;
-    padding-left: 20px;
-    font-family: "Mulish", sans-serif;
-    font-weight: 500;
-    font-size: 19.59px;
-    color: #000000;
-    line-height:24.58px;
-    margin: 0;
-}
-
-.taxes3 input::placeholder{
-    font-family: "Mulish", sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    color: #7D7D7D;
-    line-height:20.08px;
-    margin: 0;
-}
-
-
-.taxes4{
-    border-left: 1px solid #393939;
-    padding-right: 10px;
-    padding-left: 10px;
-    height: 60%;
-    font-family: "Mulish", sans-serif;
-    font-weight: 800;
-    font-size: 18px;
-    color: #393939;
-    line-height:22.59px;
-    margin: 0;
-}
-
-
-.taxes5{
-    text-align: end;
-    padding-bottom: 10px;
-}
-
-
-.taxes5 button:nth-child(1){
-    width: 126.87px;
-    height: 39.14px;
-    border: 1px solid #C3052C;
-    outline: none;
-    border-radius: 6.75px;
-    font-family: "Poppins", sans-serif;
-    font-weight: 500;
-    font-size: 16.2px;
-    color: #7D7D7D;
-    line-height:20.08px;
-    margin: 0;
-    color: #C3052C;
-    background-color: #F9F9F9;
-    cursor: pointer;
-
+.ambulance1 label{
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #000000;
+  line-height: 19.5px;
+  letter-spacing: 0.2px; 
+  margin: 0;
 }
 
 
 
-.taxes5 button:nth-child(2){
-    width: 126.87px;
-    height: 39.14px;
-    border: none;
-    outline: none;
-    border-radius: 6.75px;
-    font-family: "Poppins", sans-serif;
-    font-weight: 500;
-    font-size: 16.2px;
-    color: #FFFFFF;
-    line-height:20.08px;
-    margin: 0;
-    background-color: #F52D56;
-    cursor: pointer;
-    margin-left: 10px
+.service6{
+  display: flex;
+  justify-content: space-around;
 }
 
 
-.taxes5 button:nth-child(2):hover{
-    background-color: #C3052C;
+.ambulance2 {
+  width: 100%;
+  height: 259px;
+  box-shadow: 2px 2px  5px 1px rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+  margin-top: 10px;
+}
+
+.ambulance2 p{
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #8F8F8F;
+  line-height: 24px;
+  margin: 0;
+}
+
+.ambulance3{
+  width: 82px;
+  height: 82px;
+  border-radius: 9px;
+  background-color: #F52D56;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.ambulance3 img{
+
+}
+
+
+.ambulance2 button{
+  width: 207px;
+  height: 50px;
+  background-color: #F52D56;
+  border: none;
+  outline: none;
+  border-radius: 14px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: #FFFFFF;
+  line-height: 33px;
+  margin: 0;
+  cursor: pointer;
+}
+
+
+.ambulance2 button:nth-child(2):hover{
+  background-color: #C3052C;
 }

@@ -83,7 +83,6 @@ const AddHourlyPricing = () => {
         fetchCity();
     }, []);
     const navigate = useNavigate()
-    console.log(vehicle, "vehicalajafuasuf")
     return (
         <>
             <div className='rider'>
