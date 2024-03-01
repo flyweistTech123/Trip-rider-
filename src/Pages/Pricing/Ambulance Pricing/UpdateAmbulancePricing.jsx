@@ -158,8 +158,8 @@ const UpdateAmbulancePricing = () => {
                             <div className='dailyprice4'>
                                 <label htmlFor="">Upload Ambulance Image</label>
                                 <div className='ambulance2' onClick={triggerFileInput1}>
-                                    <div className='ambulance3'>
-                                        <img src={img3} alt="" />
+                                    <div className='vehicle14'>
+                                        <img src={image} alt="" />
                                     </div>
                                     <p>Drag and drop images here, or click to add image</p>
                                     <button>Add Images</button>

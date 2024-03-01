@@ -1,0 +1,7 @@
+Fix this from backend side 
+
+->The Update Vehicle API is not functioning properly from the backend.
+->Total Riders and Drivers do not have a 'Total Trips' key; this should be added.
+->There is no API available to retrieve a hourly price by its ID in the hourly price section.
+->The 'Get All SuperCar' API is throwing an error: "Schema hasn't been registered for model 'superCarPricing'. Use mongoose.model(name, schema)".
+->There is no API available to retrieve a category by its ID in the Category section.

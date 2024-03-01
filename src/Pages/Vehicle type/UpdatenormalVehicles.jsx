@@ -85,6 +85,7 @@ const UpdatenormalVehicles = () => {
                             <div className='dailyprice2'>
                                 <label htmlFor="">Vehicle Type</label>
                                 <select onChange={(e) => SetType(e.target.value)}>
+                                    <option value="">Select vehicle Type</option>
                                     <option name="auto" value="auto" selected={type === "auto"}>Auto</option>
                                     <option name="bike" value="bike" selected={type === "bike"}>Bike</option>
                                     <option name="car" value="car" selected={type === "car"}>Car</option>
@@ -95,13 +96,18 @@ const UpdatenormalVehicles = () => {
                             <label htmlFor="">Updated Vehicle Image</label>
                             <div className='service7' onClick={triggerFileInput}>
                                 <div className='vehicle14'>
-                                    <img src={image} alt="" />
+                                    {image ? (
+                                        <img src={image instanceof File ? URL.createObjectURL(image) : image} alt="" />
+                                    ) : (
+                                        <img src={img3} alt="" />
+                                    )}
                                 </div>
                                 <p>Drag and drop images here, or click to add image</p>
                                 <button>Update Image</button>
                                 <input type="file" id="fileInput" style={{ display: 'none' }} onChange={(e) => setImage(e.target.files[0])} />
                             </div>
                         </div>
+
 
                         <div className='dailyprice5'>
                             <button onClick={() => navigate('/allnormalvehicles')}>Cancel</button>

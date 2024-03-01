@@ -15,8 +15,8 @@ const Add_Service = () => {
     const [category, setCategory] = useState('');
     const [type, setType] = useState('');
     const [description, setDescription] = useState('');
-    const [image, setImage] = useState("");
-    const [bannerimage, setBannerImage] = useState("");
+    const [image, setImage] = useState('');
+    const [bannerimage, setBannerImage] = useState('');
 
     const triggerFileInput = () => {
         document.getElementById('fileInput').click();
@@ -73,6 +73,7 @@ const Add_Service = () => {
                             <div className='service1'>
                                 <label htmlFor="">Type</label>
                                 <select onChange={(e) => setType(e.target.value)}>
+                                    <option value="">Select Type</option>
                                     <option name="Hourly" value="Hourly">Hourly</option>
                                     <option name="Monthly" value="Monthly" >Monthly</option>
                                     <option name="superCar" value="superCar" >superCar</option>
@@ -106,8 +107,8 @@ const Add_Service = () => {
                                 <label htmlFor="">Upload Banner Image</label>
                                 <div className='service7' onClick={triggerFileInput1}>
                                     <div className='vehicle14'>
-                                        {image ? (
-                                            <img src={URL.createObjectURL(image)} alt="" />
+                                        {bannerimage ? (
+                                            <img src={URL.createObjectURL(bannerimage)} alt="" />
                                         ) : (
                                             <img src={img3} alt="" />
                                         )}

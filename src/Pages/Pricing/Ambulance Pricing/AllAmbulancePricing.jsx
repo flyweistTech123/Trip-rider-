@@ -52,6 +52,8 @@ const AllAmbulancePricing = () => {
 
 
 
+
+
     return (
         <>
             <div className='rider'>
@@ -62,7 +64,7 @@ const AllAmbulancePricing = () => {
                         </div>
 
                         <div className='rider4'>
-                            <button onClick={()=>navigate('/addambulancepricing')}>Add Pricing</button>
+                            <button onClick={() => navigate('/addambulancepricing')}>Add Pricing</button>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
@@ -89,28 +91,30 @@ const AllAmbulancePricing = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {ambulancepriceeData.map(ambulanceprice => (
-                                    <tr key={ambulanceprice.id}>
-                                        <td>{ambulanceprice.name}</td>
-                                        <td><img src={ambulanceprice.image} alt="" /></td>
-                                        <td style={{ color: '#F52D56' }}>₹ {ambulanceprice.perKm}</td>
-                                        <td>₹ {ambulanceprice.basePrice}</td>
-                                        <td>{ambulanceprice.taxRate}</td>
-                                        <td>{ambulanceprice.gstRate}</td>
-                                        <td>{ambulanceprice.serviceCharge}</td>
-                                        <td>{ambulanceprice.nightCharges}</td>
-                                        <td>{ambulanceprice.waitingCharge}</td>
-                                        <td>{ambulanceprice.trafficCharge}</td>
-                                        <td className='rider9'>
-                                            <div className='rider10' onClick={() => deleteAmbulance(ambulanceprice._id)}>
-                                                <RiDeleteBinLine color='#667085' size={20} />
-                                                <p>Delete</p>
-                                            </div>
-                                            <div className='rider10'>
-                                                <Link to={`/updateambulancepricing/${ambulanceprice._id}`} className='sidebar-link' >
-                                                    <MdEdit color='#667085' size={20} />
-                                                    <p>Edit</p>
-                                                </Link>
+                                {ambulancepriceeData?.map(ambulanceprice => (
+                                    <tr key={ambulanceprice?.id}>
+                                        <td>{ambulanceprice?.name}</td>
+                                        <td className='vehicle12'><img src={ambulanceprice?.image} alt="" /></td>
+                                        <td style={{ color: '#F52D56' }}>₹ {ambulanceprice?.perKm}</td>
+                                        <td>₹ {ambulanceprice?.basePrice}</td>
+                                        <td>{ambulanceprice?.taxRate}</td>
+                                        <td>{ambulanceprice?.gstRate}</td>
+                                        <td>{ambulanceprice?.serviceCharge}</td>
+                                        <td>{ambulanceprice?.nightCharges}</td>
+                                        <td>{ambulanceprice?.waitingCharge}</td>
+                                        <td>{ambulanceprice?.trafficCharge}</td>
+                                        <td>
+                                            <div className='service11'>
+                                                <div className='rider10' onClick={() => deleteAmbulance(ambulanceprice._id)}>
+                                                    <RiDeleteBinLine color='#667085' size={20} />
+                                                    <p>Delete</p>
+                                                </div>
+                                                <div className='rider10'>
+                                                    <Link to={`/updateambulancepricing/${ambulanceprice._id}`} className='sidebar-link' >
+                                                        <MdEdit color='#667085' size={20} />
+                                                        <p>Edit</p>
+                                                    </Link>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>

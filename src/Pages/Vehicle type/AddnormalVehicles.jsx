@@ -73,6 +73,7 @@ const AddnormalVehicles = () => {
                             <div className='dailyprice2'>
                                 <label htmlFor="">Vehicle Type</label>
                                 <select onChange={(e) => SetType(e.target.value)}>
+                                <option value="">Select vehicle Type</option>
                                     <option name="auto" value="auto">Auto</option>
                                     <option name="bike" value="bike">Bike</option>
                                     <option name="car" value="car">Car</option>

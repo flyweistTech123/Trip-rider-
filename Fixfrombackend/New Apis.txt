@@ -1,0 +1,21 @@
+Here are the requested APIs to be created:
+
+1. User API
+2. Transactions APIs
+3. Earning/Invoices API
+4. Privileges API
+5. Push Notification API
+6. Wallet Management API
+7. Payout Management API
+8. All Referrals API
+9. SOS API
+10. Live Chat API
+11. Subscription Booking API
+12. Service Location API
+13. Manager Owners API
+14. All Admins API
+15. Master Data API
+16. Geofencing API
+17. Setting APIs
+18. Filters API (such as rating, experience, and distance)
+19. Update All Drivers API to accommodate Figma changes.

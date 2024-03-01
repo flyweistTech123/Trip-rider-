@@ -16,18 +16,20 @@ const Update_Service = () => {
     const [category, setCategory] = useState('');
     const [type, setType] = useState('');
     const [description, setDescription] = useState('');
-    const [image, setImage] = useState(null);
-    const [bannerimage, setBannerImage] = useState(null);
+    const [image, setImage] = useState('');
+    const [bannerimage, setBannerImage] = useState('');
 
     useEffect(() => {
         // Fetch service details by ID and populate the form
         const fetchServiceDetails = async () => {
             try {
                 const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/serviceCategory/${id}`);
-                const { category, type, description } = response.data.data; // Assuming API response has these fields
+                const { category, type, description, banner, image } = response.data.data; // Assuming API response has these fields
                 setCategory(category);
                 setType(type);
                 setDescription(description);
+                setBannerImage(banner)
+                setImage(image)
             } catch (error) {
                 console.error('Error fetching service details:', error);
             }
@@ -42,10 +44,9 @@ const Update_Service = () => {
         formData.append('image', image);
         formData.append('banner', bannerimage);
         formData.append('description', description);
-        
+
         try {
             const response = await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/serviceCategory/${id}`, formData);
-            console.log('Response:', response.data);
             toast.success("Service Updated successfully");
             navigate('/services')
         } catch (error) {
@@ -99,8 +100,12 @@ const Update_Service = () => {
                             <div className='service4'>
                                 <label htmlFor="">Upload Service Image</label>
                                 <div className='service7' onClick={triggerFileInput}>
-                                    <div className='service8'>
-                                        <img src={img3} alt="" />
+                                    <div className='vehicle14'>
+                                        {image ? (
+                                            <img src={image instanceof File ? URL.createObjectURL(image) : image} alt="" />
+                                        ) : (
+                                            <img src={img3} alt="" />
+                                        )}
                                     </div>
                                     <p>Drag and drop images here, or click to add image</p>
                                     <button>Add Images</button>
@@ -110,8 +115,12 @@ const Update_Service = () => {
                             <div className='service4'>
                                 <label htmlFor="">Upload Service Image</label>
                                 <div className='service7' onClick={triggerFileInput1}>
-                                    <div className='service8'>
-                                        <img src={img3} alt="" />
+                                    <div className='vehicle14'>
+                                        {bannerimage ? (
+                                            <img src={bannerimage instanceof File ? URL.createObjectURL(bannerimage) : bannerimage} alt="" />
+                                        ) : (
+                                            <img src={img3} alt="" />
+                                        )}
                                     </div>
                                     <p>Drag and drop images here, or click to add image</p>
                                     <button>Add Images</button>

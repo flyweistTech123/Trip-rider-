@@ -40,6 +40,9 @@ import AllnormalVehicles from './Pages/Vehicle type/AllnormalVehicles';
 import AddnormalVehicles from './Pages/Vehicle type/AddnormalVehicles';
 import UpdatenormalVehicles from './Pages/Vehicle type/UpdatenormalVehicles';
 import AllLocation from './Pages/Location/AllLocation';
+import AllPromoCode from './Pages/Promo Code/AllPromoCode';
+import AddPromoCode from './Pages/Promo Code/AddPromoCode';
+import UpdatePromoCode from './Pages/Promo Code/UpdatePromoCode';
 
 
 function App() {
@@ -86,6 +89,9 @@ function App() {
           <Route path="/addnormalvehicles" element={<AdminRouteProtect> <AddnormalVehicles /> </AdminRouteProtect>} />
           <Route path="/updatenormalvehicles/:id" element={<AdminRouteProtect> <UpdatenormalVehicles /> </AdminRouteProtect>} />
           <Route path="/alllocation" element={<AdminRouteProtect> <AllLocation /> </AdminRouteProtect>} />
+          <Route path="/allpromocode" element={<AdminRouteProtect> <AllPromoCode /> </AdminRouteProtect>} />
+          <Route path="/addpromocode" element={<AdminRouteProtect> <AddPromoCode /> </AdminRouteProtect>} />
+          <Route path="/updatepromocode/:id" element={<AdminRouteProtect> <UpdatePromoCode /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>
