@@ -30,7 +30,7 @@ const Pricing = () => {
                                     <div className='rider6'>
                                         <IoSearch />
                                     </div>
-                                    <input type="search" name="" id="" placeholder='Search User' />
+                                    <input type="search" name="" id="" placeholder='Search Pricing' />
                                 </div>
                             </div>
                         </div>
@@ -43,7 +43,7 @@ const Pricing = () => {
                                     <div className='rider6'>
                                         <IoSearch />
                                     </div>
-                                    <input type="search" name="" id="" placeholder='Search User' />
+                                    <input type="search" name="" id="" placeholder='Search Pricing' />
                                 </div>
                             </div>
                         </div>
@@ -57,7 +57,7 @@ const Pricing = () => {
                                     <div className='rider6'>
                                         <IoSearch />
                                     </div>
-                                    <input type="search" name="" id="" placeholder='Search User' />
+                                    <input type="search" name="" id="" placeholder='Search Pricing' />
                                 </div>
                             </div>
                         </div>
@@ -71,7 +71,7 @@ const Pricing = () => {
                                     <div className='rider6'>
                                         <IoSearch />
                                     </div>
-                                    <input type="search" name="" id="" placeholder='Search User' />
+                                    <input type="search" name="" id="" placeholder='Search Pricing' />
                                 </div>
                             </div>
                         </div>
@@ -84,7 +84,7 @@ const Pricing = () => {
                                     <div className='rider6'>
                                         <IoSearch />
                                     </div>
-                                    <input type="search" name="" id="" placeholder='Search User' />
+                                    <input type="search" name="" id="" placeholder='Search Pricing' />
                                 </div>
                             </div>
                         </div>
@@ -98,7 +98,7 @@ const Pricing = () => {
                                     <div className='rider6'>
                                         <IoSearch />
                                     </div>
-                                    <input type="search" name="" id="" placeholder='Search User' />
+                                    <input type="search" name="" id="" placeholder='Search Pricing' />
                                 </div>
                             </div>
                         </div>

@@ -99,7 +99,7 @@ const Add_Service = () => {
                                 </div>
                             </div>
                             <div className='service4'>
-                                <label htmlFor="">Upload Service Image</label>
+                                <label htmlFor="">Upload Banner Image</label>
                                 <div className='service7' onClick={triggerFileInput1}>
                                     <div className='service8'>
                                         <img src={img3} alt="" />

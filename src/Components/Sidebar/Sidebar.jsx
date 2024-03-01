@@ -63,7 +63,7 @@ const Sidebar = () => {
         { icon: img13, text: 'Update Banner' , link: '/updatebanners'},
         { icon: img14, text: 'Promo Code' },
         { icon: img15, text: 'Live Chat' },
-        { icon: img16, text: 'Location' },
+        { icon: img16, text: 'Location' , link: '/locatiolntype' },
         { icon: img17, text: 'Pricing' , link: '/pricing'},
         { icon: img14, text: 'Subscription Booking ' },
         { icon: img14, text: 'Service Location' },

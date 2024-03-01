@@ -37,6 +37,11 @@ import AllAmbulancePricing from './Pages/Pricing/Ambulance Pricing/AllAmbulanceP
 import AddAmbulancePricing from './Pages/Pricing/Ambulance Pricing/AddAmbulancePricing';
 import UpdateAmbulancePricing from './Pages/Pricing/Ambulance Pricing/UpdateAmbulancePricing';
 import AllnormalVehicles from './Pages/Vehicle type/AllnormalVehicles';
+import AddnormalVehicles from './Pages/Vehicle type/AddnormalVehicles';
+import UpdatenormalVehicles from './Pages/Vehicle type/UpdatenormalVehicles';
+import LocatiolnType from './Pages/Location/LocatiolnType';
+import AllLocation from './Pages/Location/AllLocation';
+import AddLocation from './Pages/Location/AddLocation';
 
 
 function App() {
@@ -80,6 +85,11 @@ function App() {
           <Route path="/all_referrals" element={<AdminRouteProtect> <All_Referrals /> </AdminRouteProtect>} />
           <Route path="/vehicletype" element={<AdminRouteProtect> <Vehicletype /> </AdminRouteProtect>} />
           <Route path="/allnormalvehicles" element={<AdminRouteProtect> <AllnormalVehicles /> </AdminRouteProtect>} />
+          <Route path="/addnormalvehicles" element={<AdminRouteProtect> <AddnormalVehicles /> </AdminRouteProtect>} />
+          <Route path="/updatenormalvehicles/:id" element={<AdminRouteProtect> <UpdatenormalVehicles /> </AdminRouteProtect>} />
+          <Route path="/locatiolntype" element={<AdminRouteProtect> <LocatiolnType /> </AdminRouteProtect>} />
+          <Route path="/alllocation" element={<AdminRouteProtect> <AllLocation /> </AdminRouteProtect>} />
+          <Route path="/addlocation" element={<AdminRouteProtect> <AddLocation /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>

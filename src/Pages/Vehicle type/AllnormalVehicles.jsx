@@ -4,12 +4,12 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Vehicletype.css'
 import HOC from '../../Components/HOC/HOC'
-import img from '../../Images/img44.png'
-import img1 from '../../Images/img45.png'
-import img2 from '../../Images/img46.png'
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { IoSearch } from "react-icons/io5";
-
+import { RiDeleteBinLine } from "react-icons/ri";
+import { MdEdit } from "react-icons/md";
 
 
 
@@ -18,7 +18,7 @@ import { IoSearch } from "react-icons/io5";
 
 
 const AllnormalVehicles = () => {
-
+    const navigate = useNavigate();
     const [vehicleData, setVehicleData] = useState([]);
 
     useEffect(() => {
@@ -35,6 +35,18 @@ const AllnormalVehicles = () => {
             });
     };
 
+    const deleteVehicle = (vehicleId) => {
+        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/vehicle/${vehicleId}`)
+            .then(response => {
+                // console.log('Rider deleted successfully');
+                toast.success("Vehicle deleted successfully");
+                fetchVehicleData();
+            })
+            .catch(error => {
+                console.error('Error deleting Vehicle:', error);
+                toast.error("Error deleting Vehicle");
+            });
+    };
 
 
     return (
@@ -47,7 +59,7 @@ const AllnormalVehicles = () => {
                         </div>
 
                         <div className='rider4'>
-                            <button>Add Type</button>
+                            <button onClick={() => navigate('/addnormalvehicles')}>Add Vehicle</button>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
@@ -63,6 +75,7 @@ const AllnormalVehicles = () => {
                                     <th>SR. No.</th>
                                     <th>Name</th>
                                     <th>Icon</th>
+                                    <th>Type</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -73,17 +86,35 @@ const AllnormalVehicles = () => {
                                         <td>{index + 1}</td>
                                         {/* <td>{Vehicle.SRno}</td> */}
                                         <td>{Vehicle.name}</td>
-                                        <td><img src={Vehicle.image} alt="" /></td>
+                                        <td className='vehicle12'><img src={Vehicle.image} alt="" /></td>
+                                        <td className='vehicle12'>{Vehicle.type}</td>
                                         <td className='vehicle3'>
                                             <div className='vehicle'><p>Active</p></div>
                                         </td>
-                                        <td className='vehicle1'>
-                                            <select name="" id="">
-                                                <option value="">Action</option>
-                                                <option value="">Edit</option>
-                                                <option value="">Inactive</option>
-                                            </select>
+                                        <td>
+                                            <div className='service11'>
+                                                <div className='rider10' onClick={() => deleteVehicle(Vehicle._id)}>
+                                                    <RiDeleteBinLine color='#667085' size={20} />
+                                                    <p>Delete</p>
+                                                </div>
+                                                <div className='rider10'>
+                                                    <Link to={`/updatenormalvehicles/${Vehicle._id}`} className='sidebar-link' >
+                                                        <MdEdit color='#667085' size={20} />
+                                                        <p>Edit</p>
+                                                    </Link>
+                                                </div>
+                                            </div>
+
                                         </td>
+                                        {/* <td>
+                                            <div className='vehicle1'>
+                                                <select name="" id="">
+                                                    <option value="">Action</option>
+                                                    <option value="">Edit</option>
+                                                    <option value="">Inactive</option>
+                                                </select>
+                                            </div>
+                                        </td> */}
                                     </tr>
                                 ))}
                             </tbody>

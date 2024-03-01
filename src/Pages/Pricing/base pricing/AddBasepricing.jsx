@@ -110,15 +110,7 @@ const AddBasepricing = () => {
 
                     <div className='dailyprice'>
                         <div className='dailyprice1'>
-                            <div className='dailyprice2'>
-                                <label htmlFor="">Vehicle</label>
-                                <select onChange={(e) => setVehicle(e.target.value)}>
-                                    <option value="">Select Vehicle</option>
-                                    {vehicles?.map(vehicle => (
-                                        <option key={vehicle._id} value={vehicle._id}>{vehicle.name}</option>
-                                    ))}
-                                </select>
-                            </div>
+                        
 
                             <div className='dailyprice2'>
                                 <label htmlFor="">City</label>

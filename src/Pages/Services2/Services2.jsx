@@ -87,7 +87,8 @@ const Services2 = () => {
                                         <td>{rider.category}</td>
                                         <td>{rider.type}</td>
                                         <td>{rider.description}</td>
-                                        <td className='rider9'>
+                                        <td>
+                                            <div className='service11'>
                                             <div className='rider10' onClick={() => deleteRider(rider._id)}>
                                                 <RiDeleteBinLine color='#667085' size={20} />
                                                 <p>Delete</p>
@@ -98,6 +99,8 @@ const Services2 = () => {
                                                     <p>Edit</p>
                                                 </Link>
                                             </div>
+                                            </div>
+                                        
                                         </td>
                                     </tr>
                                 ))}

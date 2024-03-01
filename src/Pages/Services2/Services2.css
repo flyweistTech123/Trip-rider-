@@ -67,6 +67,7 @@
     justify-content: end;
     margin-top: 50px;
     gap: 10px;
+    padding-bottom: 30px;
 }
 
 
@@ -188,26 +189,28 @@
 
 
 .service9{
-    /* border: 1px solid red; */
-    width: 20%;
-    height: 20%;
+
 }
 
 
 .service9 img{
-    width: 100%;
-    /* border: 1px solid; */
-
+    max-width: 100px;
 }
 
 
 .service10{
-    width: 20%;
-    height: 20%;
+    
 }
 
 
 
 .service10 img{
-    width: 50%;
+    max-width: 100px;
+}
+
+
+.service11{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
