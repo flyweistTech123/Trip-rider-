@@ -36,7 +36,7 @@ const Alldailypricing = () => {
             });
     };
 
-    const deleteDriver = (dailypriceId) => {
+    const deletePrice = (dailypriceId) => {
         axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/Pricing/${dailypriceId}`)
             .then(response => {
                 fetchDailypriceData();
@@ -86,13 +86,13 @@ const Alldailypricing = () => {
                             <tbody>
                                 {dailypriceData.map(dailyprice => (
                                     <tr key={dailyprice.id}>
-                                        <td>{dailyprice.vehicle.name}</td>
-                                        <td>{dailyprice.city.city}</td>
+                                        <td>{dailyprice?.vehicle?.name}</td>
+                                        <td>{dailyprice?.city?.city}</td>
                                         <td>{dailyprice.toKm} Km</td>
                                         <td>{dailyprice.fromKm} Km</td>
                                         <td style={{ color: '#F52D56' }}>₹ {dailyprice.price}</td>
                                         <td className='rider9'>
-                                            <div className='rider10' onClick={() => deleteDriver(dailyprice._id)}>
+                                            <div className='rider10' onClick={() => deletePrice(dailyprice._id)}>
                                                 <RiDeleteBinLine color='#667085' size={20} />
                                                 <p>Delete</p>
                                             </div>

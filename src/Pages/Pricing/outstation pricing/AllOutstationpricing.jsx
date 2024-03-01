@@ -89,8 +89,8 @@ const AllOutstationpricing = () => {
                             <tbody>
                                 {outstationpriceeData.map(outstationprice => (
                                     <tr key={outstationprice.id}>
-                                        <td>{outstationprice.vehicle.name}</td>
-                                        <td>{outstationprice.city.city}</td>
+                                        <td>{outstationprice?.vehicle?.name}</td>
+                                        <td>{outstationprice?.city?.city}</td>
                                         <td>{outstationprice.kmLimit} Km</td>
                                         <td style={{ color: '#F52D56' }}>₹ {outstationprice.kmPrice}</td>
                                         <td>{outstationprice.hrLimit} hr</td>

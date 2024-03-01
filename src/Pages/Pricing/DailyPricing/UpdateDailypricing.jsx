@@ -25,10 +25,10 @@ const UpdateDailypricing = () => {
             try {
                 const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/Pricing/${id}`);
                 const { vehicle, city, fromKm, toKm, price } = response.data.data;
-                setVehicleId(vehicle._id); // Set the vehicle ID
-                setVehicleName(vehicle.name); // Set the vehicle name
-                setCityId(city._id); // Set the city ID
-                setCityName(city.city); // Set the city name
+                setVehicleId(vehicle._id); 
+                setVehicleName(vehicle.name); 
+                setCityId(city._id);
+                setCityName(city.city); 
                 setForm(fromKm);
                 setTo(toKm);
                 setPrice(price);

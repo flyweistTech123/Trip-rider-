@@ -90,8 +90,12 @@ const Add_Service = () => {
                             <div className='service4'>
                                 <label htmlFor="">Upload Service Image</label>
                                 <div className='service7' onClick={triggerFileInput}>
-                                    <div className='service8'>
-                                        <img src={img3} alt="" />
+                                    <div className='vehicle14'>
+                                        {image ? (
+                                            <img src={URL.createObjectURL(image)} alt="" />
+                                        ) : (
+                                            <img src={img3} alt="" />
+                                        )}
                                     </div>
                                     <p>Drag and drop images here, or click to add image</p>
                                     <button>Add Images</button>
@@ -101,8 +105,12 @@ const Add_Service = () => {
                             <div className='service4'>
                                 <label htmlFor="">Upload Banner Image</label>
                                 <div className='service7' onClick={triggerFileInput1}>
-                                    <div className='service8'>
-                                        <img src={img3} alt="" />
+                                    <div className='vehicle14'>
+                                        {image ? (
+                                            <img src={URL.createObjectURL(image)} alt="" />
+                                        ) : (
+                                            <img src={img3} alt="" />
+                                        )}
                                     </div>
                                     <p>Drag and drop images here, or click to add image</p>
                                     <button>Add Images</button>

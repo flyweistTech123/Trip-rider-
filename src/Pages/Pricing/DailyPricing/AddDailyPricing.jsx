@@ -18,7 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const AddDailyPricing = () => {
     const [vehicles, setVehicles] = useState([]);
     const [vehicle, setVehicle] = useState('');
-    const [city1, setCity1] = useState('');
+    const [city, setCity] = useState('');
     const [form, setForm] = useState('');
     const [to, setTo] = useState('');
     const [price, setPrice] = useState('');
@@ -26,7 +26,7 @@ const AddDailyPricing = () => {
 
     const handlePostRequest = async () => {
         const data={
-            city:city1,
+            city:city,
             vehicle:vehicle,
             fromKm:form,
             toKm:to,
@@ -43,8 +43,8 @@ const AddDailyPricing = () => {
             setVehicle('');
             setForm('');
             setTo('');
-            setCity1('');
-            setPrice(null);
+            setCity('');
+            setPrice('');
             navigate('/alldailypricing')
         } catch (error) {
             console.error('Error to Add Daily Pricing:', error);
@@ -58,7 +58,6 @@ const AddDailyPricing = () => {
             try {
                 const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/vehicle`);
                 setVehicles(response.data.data);
-                console.log(response.data.data, "vechcal print")
                 
             } catch (error) {
                 console.error('Error fetching vehicles:', error);
@@ -68,13 +67,13 @@ const AddDailyPricing = () => {
         fetchVehicles();
     }, []);
 
-    const [city, setCity] = useState([]);
+    const [citys, setCitys] = useState([]);
 
     useEffect(() => {
         const fetchCity = async () => {
             try {
                 const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/City`);
-                setCity(response.data.data);
+                setCitys(response.data.data);
             } catch (error) {
                 console.error('Error fetching City:', error);
             }
@@ -107,7 +106,7 @@ const AddDailyPricing = () => {
                         <div className='dailyprice1'>
                             <div className='dailyprice2'>
                                 <label htmlFor="">Vehicle</label>
-                                <select onChange={(e) => setVehicle(e.target.value)}>
+                                <select value={vehicle} onChange={(e) => setVehicle(e.target.value)}>
                                     <option value="">Select Vehicle</option>
                                     {vehicles?.map(vehicle => (
                                         <option key={vehicle._id} value={vehicle._id}>{vehicle.name}</option>
@@ -117,9 +116,9 @@ const AddDailyPricing = () => {
                             
                             <div className='dailyprice2'>
                                 <label htmlFor="">City</label>
-                                <select onChange={(e) => setCity1(e.target.value)}>
+                                <select value={city} onChange={(e) => setCity(e.target.value)}>
                                     <option value="">Select City</option>
-                                    {city?.map(City => (
+                                    {citys?.map(City => (
                                         <option key={City.id} value={City._id}>{City.city}</option>
                                     ))}
                                 </select>

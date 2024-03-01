@@ -51,7 +51,6 @@ const AllLocation = () => {
                             <h6>Location</h6>
                         </div>
                         <div className='rider4'>
-                            <button onClick={() => navigate('/addlocation')}>Add <FaPlusSquare /></button>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />

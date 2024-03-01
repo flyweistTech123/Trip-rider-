@@ -90,7 +90,7 @@ const AllBasepricing = () => {
                             <tbody>
                                 {basepriceeData.map(baseprice => (
                                     <tr key={baseprice.id}>
-                                        <td>{baseprice.vehicle.name}</td>
+                                        <td>{baseprice?.vehicle?.name}</td>
                                         <td>{baseprice.city.city}</td>
                                         <td>{baseprice.serviceCharge}</td>
                                         <td>{baseprice.nightCharges}</td>

@@ -86,8 +86,8 @@ const AllHourlyPricing = () => {
                             <tbody>
                                 {hourlypriceData.map(hourlyprice => (
                                     <tr key={hourlyprice.id}>
-                                        <td>{hourlyprice.vehicle.name}</td>
-                                        <td>{hourlyprice.city.city}</td>
+                                        <td>{hourlyprice?.vehicle?.name}</td>
+                                        <td>{hourlyprice?.city?.city}</td>
                                         <td>{hourlyprice.km} Km</td>
                                         <td>{hourlyprice.hours}</td>
                                         <td  style={{ color: '#F52D56' }}>₹ {hourlyprice.price}</td>
