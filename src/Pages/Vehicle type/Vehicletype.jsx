@@ -35,7 +35,7 @@ const Vehicletype = () => {
                             </div>
                         </div>
                     </Link>
-                    <Link to={'/allhourlypricing'} className='sidebar-link'>
+                    <Link to={'/allsuperCarvehicles'} className='sidebar-link'>
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>Super Car Vehicle</h5>

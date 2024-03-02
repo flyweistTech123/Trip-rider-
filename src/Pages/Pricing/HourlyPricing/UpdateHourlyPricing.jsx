@@ -23,7 +23,7 @@ const UpdateHourlyPricing = () => {
     useEffect(() => {
         const fetchPriceDetails = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/Pricing/${id}`);
+                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/getHourlyPricingById/${id}`);
                 const { vehicle, city, km, hours, price } = response.data.data;
                 setVehicleId(vehicle._id); // Set the vehicle ID
                 setVehicleName(vehicle.name); // Set the vehicle name

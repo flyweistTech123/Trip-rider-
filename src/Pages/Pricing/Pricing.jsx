@@ -89,7 +89,19 @@ const Pricing = () => {
                             </div>
                         </div>
                     </Link>
-
+                    <Link to={'/allsupercarpricing'} className='sidebar-link'>
+                        <div className='pricing2'>
+                            <div className='pricing3'>
+                                <h5>Super Car Pricing</h5>
+                                <div className='rider5'>
+                                    <div className='rider6'>
+                                        <IoSearch />
+                                    </div>
+                                    <input type="search" name="" id="" placeholder='Search Pricing' />
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
                     <Link to={'/taxes'} className='sidebar-link'>
                         <div className='pricing2'>
                             <div className='pricing3'>

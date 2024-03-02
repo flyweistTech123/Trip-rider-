@@ -2,24 +2,7 @@ import React from 'react'
 import './Sidebar.css'
 import { Link } from 'react-router-dom';
 
-import { MdOutlineDashboardCustomize } from "react-icons/md";
-import { FiUsers } from "react-icons/fi";
-import { FaRegHandshake } from "react-icons/fa6";
-import { TbNotification } from "react-icons/tb";
-import { LuWallet } from "react-icons/lu";
-import { BsListCheck } from "react-icons/bs";
-import { FaRegCalendar } from "react-icons/fa6";
-import { GoCrossReference } from "react-icons/go";
-import { GrServices } from "react-icons/gr";
-import { TbNotes } from "react-icons/tb";
-import { MdWeb } from "react-icons/md";
-import { BiSolidDiscount } from "react-icons/bi";
-import { BsChatRightText } from "react-icons/bs";
-import { IoLocation } from "react-icons/io5";
-import { TbCoinRupeeFilled } from "react-icons/tb";
-import { BiSolidCoupon } from "react-icons/bi";
-import { FaCarSide } from "react-icons/fa";
-import { FaShop } from "react-icons/fa6";
+
 
 
 
@@ -41,6 +24,8 @@ import img14 from '../../Images/img23.png'
 import img15 from '../../Images/img24.png'
 import img16 from '../../Images/img25.png'
 import img17 from '../../Images/img26.png'
+import img18 from '../../Images/img47.png'
+import img19 from '../../Images/img48.png'
 
 
 
@@ -72,6 +57,8 @@ const Sidebar = () => {
         { icon: img14, text: 'Vehicle Types' , link: '/vehicletype' },
         { icon: img14, text: 'Master Data' },
         { icon: img14, text: 'Geofencing' },
+        { icon: img18, text: 'Terms and conditions' , link: '/termsandconditions' },
+        { icon: img19, text: 'Privacy policy', link: '/privacypolicy' },
     ];
 
     return (

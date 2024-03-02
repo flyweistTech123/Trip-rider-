@@ -35,7 +35,7 @@ const UpdatePromoCode = () => {
         };
         fetchPromocodeDetails();
     }, [id]);
-    const handlePostRequest = async () => {
+    const handlePutRequest = async () => {
         const data = {
             category: category,
             discountPer: discount,
@@ -80,11 +80,11 @@ const UpdatePromoCode = () => {
                             <p>Status</p>
                             <div className='outstationprice2'>
                                 <div className='outstationprice3'>
-                                    <input type="radio" name="active" value="true" checked={active === true} onChange={() => setActive(true)} />
+                                    <input type="radio" name="active" value={true} checked={active === true} onChange={() => setActive(true)} />
                                     <p>Active</p>
                                 </div>
                                 <div className='outstationprice3'>
-                                    <input type="radio" name="active" value="false" checked={active === false} onChange={() => setActive(false)} />
+                                    <input type="radio" name="active" value={false} checked={active === false} onChange={() => setActive(false)} />
                                     <p>Not Active</p>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@ const UpdatePromoCode = () => {
 
                         <div className='promo1'>
                             <button onClick={() => navigate('/allpromocode')}>Cancel</button>
-                            <button onClick={handlePostRequest}>Add Promo code</button>
+                            <button onClick={handlePutRequest}>Add Promo code</button>
                         </div>
                     </div>
                 </div>

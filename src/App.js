@@ -43,6 +43,15 @@ import AllLocation from './Pages/Location/AllLocation';
 import AllPromoCode from './Pages/Promo Code/AllPromoCode';
 import AddPromoCode from './Pages/Promo Code/AddPromoCode';
 import UpdatePromoCode from './Pages/Promo Code/UpdatePromoCode';
+import Termsandconditions from './Pages/Terms and conditions/Termsandconditions';
+import Privacypolicy from './Pages/Privacy policy/Privacypolicy';
+import AddTermsandconditions from './Pages/Terms and conditions/AddTermsandconditions';
+import UpdateTermsandconditions from './Pages/Terms and conditions/UpdateTermsandconditions';
+import AddPrivacypolicy from './Pages/Privacy policy/AddPrivacypolicy';
+import UpdatePrivacypolicy from './Pages/Privacy policy/UpdatePrivacypolicy';
+import AllSuperCarPricing from './Pages/Pricing/Super Car Pricing/AllSuperCarPricing';
+import AddSuperCarPricing from './Pages/Pricing/Super Car Pricing/AddSuperCarPricing';
+import AllsuperCarVehicles from './Pages/Vehicle type/AllsuperCarVehicles';
 
 
 function App() {
@@ -78,6 +87,8 @@ function App() {
           <Route path="/allambulancepricing" element={<AdminRouteProtect> <AllAmbulancePricing /> </AdminRouteProtect>} />
           <Route path="/addambulancepricing" element={<AdminRouteProtect> <AddAmbulancePricing /> </AdminRouteProtect>} />
           <Route path="/updateambulancepricing/:id" element={<AdminRouteProtect> <UpdateAmbulancePricing /> </AdminRouteProtect>} />
+          <Route path="/allsupercarpricing" element={<AdminRouteProtect> <AllSuperCarPricing /> </AdminRouteProtect>} />
+          <Route path="/addsupercarpricing" element={<AdminRouteProtect> <AddSuperCarPricing /> </AdminRouteProtect>} />
           <Route path="/taxes" element={<AdminRouteProtect> <Taxes /> </AdminRouteProtect>} />
           <Route path="/add_service" element={<AdminRouteProtect> <Add_Service /> </AdminRouteProtect>} />
           <Route path="/Update_Service/:id" element={<AdminRouteProtect> <Update_Service /> </AdminRouteProtect>} />
@@ -88,10 +99,17 @@ function App() {
           <Route path="/allnormalvehicles" element={<AdminRouteProtect> <AllnormalVehicles /> </AdminRouteProtect>} />
           <Route path="/addnormalvehicles" element={<AdminRouteProtect> <AddnormalVehicles /> </AdminRouteProtect>} />
           <Route path="/updatenormalvehicles/:id" element={<AdminRouteProtect> <UpdatenormalVehicles /> </AdminRouteProtect>} />
+          <Route path="/allsuperCarvehicles" element={<AdminRouteProtect> <AllsuperCarVehicles /> </AdminRouteProtect>} />
           <Route path="/alllocation" element={<AdminRouteProtect> <AllLocation /> </AdminRouteProtect>} />
           <Route path="/allpromocode" element={<AdminRouteProtect> <AllPromoCode /> </AdminRouteProtect>} />
           <Route path="/addpromocode" element={<AdminRouteProtect> <AddPromoCode /> </AdminRouteProtect>} />
           <Route path="/updatepromocode/:id" element={<AdminRouteProtect> <UpdatePromoCode /> </AdminRouteProtect>} />
+          <Route path="/termsandconditions" element={<AdminRouteProtect> <Termsandconditions /> </AdminRouteProtect>} />
+          <Route path="/addtermsandconditions" element={<AdminRouteProtect> <AddTermsandconditions /> </AdminRouteProtect>} />
+          <Route path="/updatetermsandconditions/:id" element={<AdminRouteProtect> <UpdateTermsandconditions /> </AdminRouteProtect>} />
+          <Route path="/privacypolicy" element={<AdminRouteProtect> <Privacypolicy /> </AdminRouteProtect>} />
+          <Route path="/addprivacypolicy" element={<AdminRouteProtect> <AddPrivacypolicy /> </AdminRouteProtect>} />
+          <Route path="/updateprivacypolicy/:id" element={<AdminRouteProtect> <UpdatePrivacypolicy /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>

@@ -72,11 +72,11 @@ const AddPromoCode = () => {
                             <p>Status</p>
                             <div className='outstationprice2'>
                                 <div className='outstationprice3'>
-                                    <input type="radio" name="active" value="true"  onChange={() => setActive(true)} />
+                                    <input type="radio" name="active" value={true}  onChange={() => setActive(true)} />
                                     <p>Active</p>
                                 </div>
                                 <div className='outstationprice3'>
-                                    <input type="radio" name="active" value="false" onChange={() => setActive(false)} />
+                                    <input type="radio" name="active" value= {false} onChange={() => setActive(false)} />
                                     <p>Not Active</p>
                                 </div>
                             </div>
