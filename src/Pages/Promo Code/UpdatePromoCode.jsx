@@ -103,7 +103,7 @@ const UpdatePromoCode = () => {
 
                         <div className='promo1'>
                             <button onClick={() => navigate('/allpromocode')}>Cancel</button>
-                            <button onClick={handlePutRequest}>Add Promo code</button>
+                            <button onClick={handlePutRequest}>Save Changes</button>
                         </div>
                     </div>
                 </div>

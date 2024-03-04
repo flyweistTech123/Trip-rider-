@@ -59,7 +59,7 @@ const AllsuperCarVehicles = () => {
                         </div>
 
                         <div className='rider4'>
-                            <button onClick={() => navigate('/addnormalvehicles')}>Add Super Car</button>
+                            <button onClick={() => navigate('/addsupercarvehicles')}>Add Super Car</button>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
@@ -105,7 +105,7 @@ const AllsuperCarVehicles = () => {
                                                             <p>Delete</p>
                                                         </div>
                                                         <div className='rider10'>
-                                                            <Link to={`/updatenormalvehicles/${pricing._id}`} className='sidebar-link' >
+                                                            <Link to={`/updatesupercarvehicles/${pricing._id}`} className='sidebar-link' >
                                                                 <MdEdit color='#667085' size={20} />
                                                                 <p>Edit</p>
                                                             </Link>

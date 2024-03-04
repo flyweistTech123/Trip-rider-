@@ -41,7 +41,7 @@ const AddPromoCode = () => {
             navigate('/allpromocode')
         } catch (error) {
             console.error('Error to Promo code:', error);
-            toast.error("Error to Add Promo code");
+            toast.error('Error to add Promo code');
         }
     }
 

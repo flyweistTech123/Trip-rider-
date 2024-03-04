@@ -1,0 +1,16 @@
+Good morning sir 
+
+Trip Rider admin panel.
+deployed link :- https://trip-rider-nu.vercel.app/
+
+API integrated Yesterday: 
+- Worked on add vehicle,-this from backend side this
+- update vehicle-properly  working 
+- all promo code
+- add promo code and update promo code.
+- Integrate the All location
+- add vehicles, update vehicle
+- delete vehicle
+- get all Promo code
+- add promo code
+- delete promo code and update promo code

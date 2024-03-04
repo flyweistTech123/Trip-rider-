@@ -52,6 +52,8 @@ import UpdatePrivacypolicy from './Pages/Privacy policy/UpdatePrivacypolicy';
 import AllSuperCarPricing from './Pages/Pricing/Super Car Pricing/AllSuperCarPricing';
 import AddSuperCarPricing from './Pages/Pricing/Super Car Pricing/AddSuperCarPricing';
 import AllsuperCarVehicles from './Pages/Vehicle type/AllsuperCarVehicles';
+import AddsuperCarVehicles from './Pages/Vehicle type/AddsuperCarVehicles';
+import UpdatesuperCarVehicles from './Pages/Vehicle type/UpdatesuperCarVehicles';
 
 
 function App() {
@@ -100,6 +102,8 @@ function App() {
           <Route path="/addnormalvehicles" element={<AdminRouteProtect> <AddnormalVehicles /> </AdminRouteProtect>} />
           <Route path="/updatenormalvehicles/:id" element={<AdminRouteProtect> <UpdatenormalVehicles /> </AdminRouteProtect>} />
           <Route path="/allsuperCarvehicles" element={<AdminRouteProtect> <AllsuperCarVehicles /> </AdminRouteProtect>} />
+          <Route path="/addsupercarvehicles" element={<AdminRouteProtect> <AddsuperCarVehicles /> </AdminRouteProtect>} />
+          <Route path="/updatesupercarvehicles/:id" element={<AdminRouteProtect> <UpdatesuperCarVehicles /> </AdminRouteProtect>} />
           <Route path="/alllocation" element={<AdminRouteProtect> <AllLocation /> </AdminRouteProtect>} />
           <Route path="/allpromocode" element={<AdminRouteProtect> <AllPromoCode /> </AdminRouteProtect>} />
           <Route path="/addpromocode" element={<AdminRouteProtect> <AddPromoCode /> </AdminRouteProtect>} />
