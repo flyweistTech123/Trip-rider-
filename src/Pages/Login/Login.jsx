@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css';
-import {  toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; 
-
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import img from '../../Images/img.png';
@@ -13,12 +11,14 @@ const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [role, setRole] = useState('admin'); // State for role selection
 
     const handleLogin = async () => {
         try {
             const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/admin/login', {
                 email: email,
-                password: password
+                password: password,
+                role: role // Include role in the request
             });
             const { token, isAdmin } = response.data;
             localStorage.setItem('token', token);
@@ -27,10 +27,9 @@ const Login = () => {
             navigate('/dashboard');
         } catch (error) {
             console.error('Error logging in:', error);
-            toast.error("Login Unsuccessfull");
+            toast.error("Login Unsuccessful");
         }
     };
-
 
     return (
         <>
@@ -64,6 +63,13 @@ const Login = () => {
                         <div className='login20'>
                             <label htmlFor="">Password*</label>
                             <input type="password" name="" id="" placeholder='Enter password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                        </div>
+                        <div className='login20'>
+                            <label htmlFor="">Role</label>
+                            <select value={role} onChange={(e) => setRole(e.target.value)}>
+                                <option value="admin">Admin</option>
+                                <option value="superAdmin">Super Admin</option>
+                            </select>
                         </div>
                     </div>
 
