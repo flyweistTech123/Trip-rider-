@@ -1,64 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Wallet_Management.css'
-import { Link } from 'react-router-dom';
 import HOC from '../../Components/HOC/HOC'
 
 import { IoSearch } from "react-icons/io5";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { MdOutlineBlock } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
-import { IoEyeOutline } from "react-icons/io5";
-
-
-
-
-// import img from '../../Images/img5.png'
-
-const WalletData = [
-    {
-        id: 1,
-        Transactionid: "#SGSV039292",
-        Date: "26/10/2023",
-        From: "Qashwah",
-        To: "Mukesh Raj",
-        Mode: "UPI",
-        Cashin: 850,
-        CashOut: 4000,
-        Balance: 4850,
-        Status: "Refunded"
-    },
-    {
-        id: 2,
-        Transactionid: "#SGSV039292",
-        Date: "26/10/2023",
-        From: "Qashwah",
-        To: "Mukesh Raj",
-        Mode: "UPI",
-        Cashin: 850,
-        CashOut: 4000,
-        Balance: 4850,
-        Status: "Refunded"
-    },
-    {
-        id: 3,
-        Transactionid: "#SGSV039292",
-        Date: "26/10/2023",
-        From: "Qashwah",
-        To: "Mukesh Raj",
-        Mode: "UPI",
-        Cashin: 850,
-        CashOut: 4000,
-        Balance: 4850,
-        Status: "Completed"
-    },
-];
-
 
 
 const Wallet_Management = () => {
+    const [walletdata, setWalletData] = useState([]);
+
+    const fetchWalletData = async () => {
+        try {
+            const response = await axios.get('https://rajiv-cab-mu.vercel.app/api/v1/getAllWalletTransaction');
+            setWalletData(response.data.data);
+        } catch (error) {
+            console.error('Error fetching wallet data:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchWalletData();
+    }, []);
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const formattedDate = `${date.getDate().toString().padStart(2, '0')} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+
+        return `${formattedDate} `;
+    };
+
+    const formatTime = (dateString) => {
+        const date = new Date(dateString);
+
+
+        let hours = date.getHours();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12 || 12; // Convert to 12-hour format
+        const formattedTime = `${hours.toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}${ampm}`;
+
+        // Combine date and time
+        return `${formattedTime} `;
+    };
+
 
 
     return (
@@ -71,7 +57,6 @@ const Wallet_Management = () => {
                         </div>
 
                         <div className='rider4'>
-                            <button>Add Driver</button>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
@@ -85,30 +70,32 @@ const Wallet_Management = () => {
                             <thead>
                                 <tr>
                                     <th>Transaction ID</th>
+                                    <th>Name</th>
                                     <th>Date</th>
-                                    <th>From</th>
-                                    <th>To</th>
+                                    <th>Time</th>
                                     <th>Mode</th>
                                     <th>Cash In</th>
-                                    <th>Cash Out</th>
-                                    <th>Balance</th>
-                                    <th>Status</th>
+                                    <th>Wallet</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {WalletData.map(Wallet  => (
-                                    <tr key={Wallet .id}>
-                                        <td className='rider8'>{Wallet.Transactionid}</td>
-                                        <td>{Wallet.Date}</td>
-                                        <td style={{ color: '#F52D56' }}>{Wallet.From}</td>
-                                        <td>{Wallet.To}</td>
-                                        <td>{Wallet.Mode}</td>
-                                        <td style={{ color: '#F52D56' }}>{Wallet.Cashin}</td>
-                                        <td>{Wallet.CashOut}</td>
-                                        <td>{Wallet.Balance}</td>
-                                        <td style={{ color: Wallet.Status === 'Refunded' ? '#F52D56' : 'green' }}>{Wallet.Status}</td>
+                                {walletdata && walletdata.length > 0 ? (
+                                    walletdata.map(Wallet => (
+                                        <tr key={Wallet.id}>
+                                            <td className='rider8'>{Wallet?.id}</td>
+                                            <td>{Wallet?.user?.name}</td>
+                                            <td>{formatDate(Wallet.date)}</td>
+                                            <td>{formatTime(Wallet.date)}</td>
+                                            <td>{Wallet.paymentMode}</td>
+                                            <td style={{ color: '#F52D56' }}>{Wallet.amount}</td>
+                                            <td>{Wallet?.user?.wallet}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="6">Loading...</td>
                                     </tr>
-                                ))}
+                                )}
                             </tbody>
                         </table>
                     </div>
@@ -118,4 +105,4 @@ const Wallet_Management = () => {
     )
 }
 
-export default HOC(Wallet_Management)
+export default HOC(Wallet_Management);

@@ -54,6 +54,12 @@ import AddSuperCarPricing from './Pages/Pricing/Super Car Pricing/AddSuperCarPri
 import AllsuperCarVehicles from './Pages/Vehicle type/AllsuperCarVehicles';
 import AddsuperCarVehicles from './Pages/Vehicle type/AddsuperCarVehicles';
 import UpdatesuperCarVehicles from './Pages/Vehicle type/UpdatesuperCarVehicles';
+import Privileges from './Pages/Privileges/Privileges';
+import Earnings from './Pages/Earnings/Earnings';
+import RefundTransaction from './Pages/Payout Management/RefundTransaction';
+import Pay_User from './Pages/Payout Management/Pay_User';
+import SOSUpdate from './Pages/SOS Update/SOSUpdate';
+import SOSLocation from './Pages/SOS Update/SOSLocation';
 
 
 function App() {
@@ -114,6 +120,12 @@ function App() {
           <Route path="/privacypolicy" element={<AdminRouteProtect> <Privacypolicy /> </AdminRouteProtect>} />
           <Route path="/addprivacypolicy" element={<AdminRouteProtect> <AddPrivacypolicy /> </AdminRouteProtect>} />
           <Route path="/updateprivacypolicy/:id" element={<AdminRouteProtect> <UpdatePrivacypolicy /> </AdminRouteProtect>} />
+          <Route path="/privileges" element={<AdminRouteProtect> <Privileges /> </AdminRouteProtect>} />
+          <Route path="/earnings" element={<AdminRouteProtect> <Earnings /> </AdminRouteProtect>} />
+          <Route path="/refundtransaction" element={<AdminRouteProtect> <RefundTransaction /> </AdminRouteProtect>} />
+          <Route path="/pay_user/:id" element={<AdminRouteProtect> <Pay_User /> </AdminRouteProtect>} />
+          <Route path="/sos" element={<AdminRouteProtect> <SOSUpdate /> </AdminRouteProtect>} />
+          <Route path="/soslocation/:id" element={<AdminRouteProtect> <SOSLocation /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>

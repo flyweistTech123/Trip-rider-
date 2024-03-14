@@ -120,7 +120,7 @@
 
 .rider7 table th{
     font-family: "Poppins", sans-serif;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 14px;
     color: #6D6D6D;
     line-height:21px;
@@ -133,8 +133,8 @@
 .rider7 table td{
     font-family: "Poppins", sans-serif;
     font-weight: 500;
-    font-size: 18px;
-    color: #101828;
+    font-size: 15px;
+    color: #000000;
     line-height:22.5px;
     margin: 0;
     text-align: center;

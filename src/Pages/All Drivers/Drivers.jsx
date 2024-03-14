@@ -124,7 +124,7 @@ const Drivers = () => {
                                 {DriverData.map(driver => (
                                     <tr key={driver.id}>
                                         <td className='rider8'>
-                                            <img src={driver.profilePicture} />
+                                            <img src={driver.profilePicture} style={{width:'50px'}} />
                                             {driver.name}
                                         </td>
                                         {/* <td>{user.vehicle}</td> */}

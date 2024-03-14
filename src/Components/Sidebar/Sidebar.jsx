@@ -26,6 +26,7 @@ import img16 from '../../Images/img25.png'
 import img17 from '../../Images/img26.png'
 import img18 from '../../Images/img47.png'
 import img19 from '../../Images/img48.png'
+import img20 from '../../Images/img49.png'
 
 
 
@@ -36,15 +37,16 @@ const Sidebar = () => {
         { icon: img1, text: 'Dashboard', link: '/dashboard' },
         { icon: img2, text: 'All Riders', link: '/riders' },
         { icon: img3, text: 'All Drivers', link: '/drivers' },
+        { icon: img20, text: 'All Drivers Earnings', link: '/earnings' },
         { icon: img4, text: 'All Vendors', link: '/vendors' },
-        { icon: img5, text: 'Privileges' },
+        { icon: img5, text: 'Privileges', link:'/privileges' },
         { icon: img6, text: 'Push Notification' },
         { icon: img7, text: 'Wallet Management', link: '/wallet_management' },
         { icon: img8, text: 'Payout Management' , link: '/payout_management' },
         { icon: img9, text: 'All Bookings' , link: '/bookings'},
         { icon: img12, text: 'All Referrals' , link: '/all_referrals' },
         { icon: img10, text: 'Services', link: '/services' },
-        { icon: img11, text: 'SOS Updates' },
+        { icon: img11, text: 'SOS Updates' ,link: '/sos'},
         { icon: img13, text: 'Update Banner' , link: '/updatebanners'},
         { icon: img14, text: 'Promo Code', link: '/allpromocode'  },
         { icon: img15, text: 'Live Chat' },

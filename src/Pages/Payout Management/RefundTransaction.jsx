@@ -4,15 +4,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import './Payout_Management.css'
 import HOC from '../../Components/HOC/HOC'
 import { useNavigate } from 'react-router-dom';
+
 import { IoSearch } from "react-icons/io5";
 
 
-const Payout_Management = () => {
+const RefundTransaction = () => {
     const [payoutdata, setPayoutData] = useState([]);
 
     const fetchPayoutData = async () => {
         try {
-            const response = await axios.get('https://rajiv-cab-mu.vercel.app/api/v1/getAllPayoutTransaction');
+            const response = await axios.get('https://rajiv-cab-mu.vercel.app/api/v1/getAllRefundTransaction');
             setPayoutData(response.data.data);
         } catch (error) {
             console.error('Error fetching wallet data:', error);
@@ -45,9 +46,7 @@ const Payout_Management = () => {
         return `${formattedTime} `;
     };
 
-
     const navigate = useNavigate();
-
 
 
     return (
@@ -56,11 +55,11 @@ const Payout_Management = () => {
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>Payout Management</h6>
+                            <h6>Refund Transaction</h6>
                         </div>
 
                         <div className='rider4'>
-                            <button onClick={()=>navigate('/refundtransaction')}>Refund list</button>
+                            <button onClick={() => navigate('/payout_management')}>Payout list</button>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
@@ -117,4 +116,4 @@ const Payout_Management = () => {
     )
 }
 
-export default HOC(Payout_Management);
+export default HOC(RefundTransaction);

@@ -30,7 +30,7 @@ const Dashboard = () => {
       const [ridreResponse, driversResponse, vendorsResponse] = await Promise.all([
         axios.get('https://rajiv-cab-mu.vercel.app/api/v1/admin/all/user'),
         axios.get('https://rajiv-cab-mu.vercel.app/api/v1/admin/all/driver'),
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/admin/all/vendor')
+        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/admin/all/vendor'),
       ]);
 
       setTotalRiders(ridreResponse.data.category.length);
