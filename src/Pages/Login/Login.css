@@ -154,6 +154,21 @@
   line-height: 40px;
 }
 
+
+.login20 select {
+  width: 450px;
+  border: none;
+  border-bottom: 1px solid #5d5d5d;
+  height: 47px;
+  margin-top: 20px;
+  outline: none;
+  font-weight: 400;
+  font-size: 16px;
+  color: #414143;
+  line-height: 40px;
+}
+
+
 .login20 input::placeholder {
   font-family: "Outfit", sans-serif;
   font-weight: 300;
