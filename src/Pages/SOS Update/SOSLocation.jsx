@@ -5,6 +5,7 @@ import './SOSUpdate.css'
 import HOC from '../../Components/HOC/HOC'
 import { useNavigate, useParams } from 'react-router-dom';
 import { IoSearch } from "react-icons/io5";
+import { FaShareNodes } from "react-icons/fa6";
 
 
 
@@ -16,7 +17,6 @@ const SOSLocation = () => {
     const [location, setLocation] = useState('');
     const [reason, setReason] = useState('');
     const [sosId, setSOSId] = useState('');
-    const [mapUrl, setMapUrl] = useState('');
     const [longitude, setLongitude] = useState('')
     const [latitude, setLatitude] = useState('')
 
@@ -33,10 +33,6 @@ const SOSLocation = () => {
                 setSOSId(id);
                 setLongitude(location?.coordinates[0]);
                 setLatitude(location?.coordinates[1]);
-
-                // Construct the map URL using latitude and longitude
-                const mapUrl = `https://www.google.com/maps/place//@${longitude},${latitude},16.25z?entry=ttu`
-                setMapUrl(mapUrl);
             } catch (error) {
                 console.error('Error fetching SOS details:', error);
             }
@@ -60,7 +56,7 @@ const SOSLocation = () => {
                         </div>
 
                         <div className='rider4'>
-                            {/* <button onClick={()=>navigate('/refundtransaction')}>Refund list</button> */}
+                            <button onClick={() => navigate('/sos')}>Back</button>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
@@ -100,8 +96,14 @@ const SOSLocation = () => {
                         </div>
 
                         <div className='sos2'>
-                            <iframe src={mapUrl} width="600" height="450" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224356.85923040553!2d77.23700973928679!3d28.522404037240705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce5a43173357b%3A0x37ffce30c87cc03f!2sNoida%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1710487985029!5m2!1sen!2sin" width="600" height="450" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
+                    </div>
+
+
+                    <div className='sos5'>
+                        <button><FaShareNodes /> Share on Whatsapp</button>
+                        <button>Send Details</button>
                     </div>
                 </div>
             </div>

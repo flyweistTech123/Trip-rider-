@@ -60,6 +60,7 @@ import RefundTransaction from './Pages/Payout Management/RefundTransaction';
 import Pay_User from './Pages/Payout Management/Pay_User';
 import SOSUpdate from './Pages/SOS Update/SOSUpdate';
 import SOSLocation from './Pages/SOS Update/SOSLocation';
+import Setting from './Pages/Setting/Setting';
 
 
 function App() {
@@ -126,6 +127,7 @@ function App() {
           <Route path="/pay_user/:id" element={<AdminRouteProtect> <Pay_User /> </AdminRouteProtect>} />
           <Route path="/sos" element={<AdminRouteProtect> <SOSUpdate /> </AdminRouteProtect>} />
           <Route path="/soslocation/:id" element={<AdminRouteProtect> <SOSLocation /> </AdminRouteProtect>} />
+          <Route path="/setting" element={<AdminRouteProtect> <Setting /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>

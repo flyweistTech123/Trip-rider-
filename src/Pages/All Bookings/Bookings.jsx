@@ -25,7 +25,7 @@ const Bookings = () => {
     const fetchRiderData = () => {
         axios.get('https://rajiv-cab-mu.vercel.app/api/v1/getBooking')
             .then(response => {
-                setRiderData(response.data.data);
+                setRiderData(response?.data?.data);
             })
             .catch(error => {
                 console.error('Error fetching rider data:', error);
@@ -130,18 +130,18 @@ const Bookings = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {riderData.map(rider => (
-                                    <tr key={rider.id}>
+                                {riderData?.map(rider => (
+                                    <tr key={rider?.id}>
                                         <td className='rider8'>
                                             {/* <img src={rider.profilePicture} /> */}
-                                            {rider.userId}
+                                            {rider?.userId}
                                         </td>
-                                        <td>{rider.date}</td>
-                                        <td>{rider.time}</td>
-                                        <td>{rider.distance} Km</td>
-                                        <td>₹{rider.totalPrice}</td>
+                                        <td>{rider?.date}</td>
+                                        <td>{rider?.time}</td>
+                                        <td>{rider?.distance} Km</td>
+                                        <td>₹{rider?.totalPrice}</td>
                                         <td>{rider?.car?.name}</td>
-                                        <td>{rider.status}</td>
+                                        <td>{rider?.status}</td>
                                         {/* <td className='rider9'>
                                             <div className='rider10' onClick={() => deleteRider(rider._id)}>
                                                 <RiDeleteBinLine color='#667085' size={20} />

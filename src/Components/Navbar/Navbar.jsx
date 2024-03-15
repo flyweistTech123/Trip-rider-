@@ -4,11 +4,13 @@ import { BiSearch } from 'react-icons/bi';
 import { AiOutlineSetting } from "react-icons/ai";
 import { MdHistory } from "react-icons/md";
 import { FiFilter } from "react-icons/fi";
+import { useNavigate } from 'react-router-dom';
 
 import img from '../../Images/img2.png'
 
 
 const Navbar = () => {
+    const navigate = useNavigate()
     return (
         <>
             <div className='navbar'>
@@ -34,7 +36,7 @@ const Navbar = () => {
                         </div>
 
                         <div className='navbar6'>
-                            <div className='navbar7'>
+                            <div className='navbar7' onClick={()=>navigate('/setting')}>
                                 <div className='navbar8'>
                                     <AiOutlineSetting />
                                 </div>

@@ -8,10 +8,16 @@ import { useNavigate } from 'react-router-dom';
 import { IoSearch } from "react-icons/io5";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
+import { Button, Form } from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
+import { toast } from "react-toastify";
 
 
 const SOSUpdate = () => {
     const [sosdata, setSosData] = useState([]);
+    const [modalShow, setModalShow] = React.useState(false);
+    const [sosId, setSOSId] = useState('')
+
 
     const fetchSOSData = async () => {
         try {
@@ -30,9 +36,94 @@ const SOSUpdate = () => {
     const navigate = useNavigate();
 
 
+    function SosStatusModal(props) {
+        const [sosstatus, setSOSstatus] = useState("");
+
+        useEffect(() => {
+            const fetchSOSDetails = async () => {
+                try {
+                    const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/getSosRequestById/${sosId}`)
+                    setSOSstatus(response.data.data.status);
+                } catch (error) {
+                    console.error('Error fetching Order details:', error);
+                }
+            };
+            fetchSOSDetails();
+        }, [sosId]);
+
+        const handlePut = async (e) => {
+            e.preventDefault();
+            try {
+                await axios.put(
+                    `https://rajiv-cab-mu.vercel.app/api/v1/approvedRejectSosRequestById/${sosId}`,
+                    {
+                        status: sosstatus,
+                    }
+                );
+                fetchSOSData();
+                props.onHide();
+                toast.success("SOS Status Updated successfully");
+            } catch (error) {
+                toast.error("Error to Update SOS Status");
+            }
+        }
+
+
+        return (
+            <Modal
+                {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">Update SOS Status</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={handlePut}>
+                        <Form.Group className="mb-3">
+                            <div style={{ display: "flex", gap: "20px" }}>
+                                <Form.Check
+                                    type="radio"
+                                    label="PENDING"
+                                    name="status"
+                                    checked={sosstatus === "PENDING"}
+                                    onChange={() => setSOSstatus("PENDING")}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    label="APPROVED"
+                                    name="status"
+                                    checked={sosstatus === "APPROVED"}
+                                    onChange={() => setSOSstatus("APPROVED")}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    label="REJECT"
+                                    name="status"
+                                    checked={sosstatus === "REJECT"}
+                                    onChange={() => setSOSstatus("REJECT")}
+                                />
+                            </div>
+                        </Form.Group>
+                        <Modal.Footer>
+                            <Button className='sos6' type="submit">Update</Button>
+                        </Modal.Footer>
+                    </Form>
+                </Modal.Body>
+            </Modal>
+        );
+    }
+
+
+
 
     return (
         <>
+            <SosStatusModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            />
             <div className='rider'>
                 <div className='rider1'>
                     <div className='rider2'>
@@ -79,11 +170,14 @@ const SOSUpdate = () => {
                                                         <p style={{ fontSize: '10px' }}>Track Live Location</p>
                                                     </Link>
                                                 </div>
-                                                <div className='rider10'>
-                                                    <Link to={`/updateoutstationpricing/${SOS._id}`} className='sidebar-link' >
-                                                        <MdEdit color='#000000' size={20} />
-                                                        <p>Edit</p>
-                                                    </Link>
+                                                <div className='rider10'
+                                                    onClick={() => {
+                                                        setSOSId(SOS?._id);
+                                                        setModalShow(true);
+                                                    }}
+                                                >
+                                                    <MdEdit color='#000000' size={20} />
+                                                    <p>Edit</p>
                                                 </div>
                                             </td>
                                         </tr>
