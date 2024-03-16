@@ -45,7 +45,7 @@ const SOSUpdate = () => {
                     const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/getSosRequestById/${sosId}`)
                     setSOSstatus(response.data.data.status);
                 } catch (error) {
-                    console.error('Error fetching Order details:', error);
+                    console.error('Error fetching SOS details:', error);
                 }
             };
             fetchSOSDetails();

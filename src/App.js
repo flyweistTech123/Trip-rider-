@@ -8,7 +8,7 @@ import AdminRouteProtect from '../src/Pages/Login/AdminRouteprotected';
 import Riders_details from './Pages/All Riders/Riders_details';
 import Driver_Details from './Pages/All Drivers/Driver_Details';
 import Vendors_Details from './Pages/All Vendors/Vendors_Details';
-import Bookings from './Pages/All Bookings/Bookings';
+import Bookings from './Pages/All Bookings/Bookings.jsx';
 // import Services from './Pages/Services/Services';
 import CarDetails from './Pages/Services/CarDetails';
 import UpdateBanners from './Pages/Update Banners/UpdateBanners';
@@ -61,6 +61,9 @@ import Pay_User from './Pages/Payout Management/Pay_User';
 import SOSUpdate from './Pages/SOS Update/SOSUpdate';
 import SOSLocation from './Pages/SOS Update/SOSLocation';
 import Setting from './Pages/Setting/Setting';
+import AdminProfile from './Pages/Admin/AdminProfile';
+import AllAdmin from './Pages/Admin/AllAdmin';
+import SettleBooking from './Pages/Subscription booking/SettleBooking.jsx';
 
 
 function App() {
@@ -128,6 +131,9 @@ function App() {
           <Route path="/sos" element={<AdminRouteProtect> <SOSUpdate /> </AdminRouteProtect>} />
           <Route path="/soslocation/:id" element={<AdminRouteProtect> <SOSLocation /> </AdminRouteProtect>} />
           <Route path="/setting" element={<AdminRouteProtect> <Setting /> </AdminRouteProtect>} />
+          <Route path="/adminprofile" element={<AdminRouteProtect> <AdminProfile /> </AdminRouteProtect>} />
+          <Route path="/alladmin" element={<AdminRouteProtect> <AllAdmin /> </AdminRouteProtect>} />
+          <Route path="/settlebooking" element={<AdminRouteProtect> <SettleBooking /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>

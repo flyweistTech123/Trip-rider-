@@ -11,6 +11,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { MdOutlineBlock } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 
@@ -26,7 +27,7 @@ const Drivers = () => {
     }, []);
 
     const fetchDriverData = () => {
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/admin/all/driver')
+        axios.get(`${BaseUrl}api/v1/admin/all/driver`, getAuthHeaders())
             .then(response => {
                 setDriverData(response.data.category);
             })
@@ -34,6 +35,7 @@ const Drivers = () => {
                 console.error('Error fetching driver data:', error);
             });
     };
+
 
     const deleteDriver = (driverId) => {
         axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/admin/delete/driver/${driverId}`)
@@ -124,7 +126,7 @@ const Drivers = () => {
                                 {DriverData.map(driver => (
                                     <tr key={driver.id}>
                                         <td className='rider8'>
-                                            <img src={driver.profilePicture} style={{width:'50px'}} />
+                                            <img src={driver.profilePicture} style={{ width: '50px' }} />
                                             {driver.name}
                                         </td>
                                         {/* <td>{user.vehicle}</td> */}
@@ -158,5 +160,5 @@ const Drivers = () => {
         </>
     )
 }
-
+     
 export default HOC(Drivers)

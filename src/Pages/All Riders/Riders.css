@@ -210,6 +210,11 @@
     gap: 15px;
 }
 
+.rider_details3 img{
+    max-width: 70px;
+    border-radius: 50%;
+}
+
 .rider_details4{
 
 }

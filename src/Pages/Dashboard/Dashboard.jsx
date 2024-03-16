@@ -4,6 +4,7 @@ import './Dashboard.css'
 import HOC from '../../Components/HOC/HOC'
 import { Link } from "react-router-dom"; // Import Link for routing
 
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 import { IoSearch } from "react-icons/io5";
 
@@ -21,8 +22,22 @@ const Dashboard = () => {
   const [totalEarnings, setTotalEarnings] = useState(0);
   const [newUsers, setNewUsers] = useState(0);
 
+  const [bookingtransaction, setBookingTransaction] = useState([])
+
+
+  const fetchTransactionData = () => {
+    axios.get(`${BaseUrl}api/v1/getAllBookingTransaction`, getAuthHeaders())
+      .then(response => {
+        setBookingTransaction(response.data.data);
+      })
+      .catch(error => {
+        console.error('Error fetching Transaction data:', error);
+      });
+  };
+
   useEffect(() => {
     fetchData();
+    fetchTransactionData();
   }, []);
 
   const fetchData = async () => {
@@ -41,10 +56,32 @@ const Dashboard = () => {
     }
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const formattedDate = `${date.getDate().toString().padStart(2, '0')} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+
+    return `${formattedDate} `;
+  };
+
+  const formatTime = (dateString) => {
+    const date = new Date(dateString);
+
+
+    let hours = date.getHours();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12; // Convert to 12-hour format
+    const formattedTime = `${hours.toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}${ampm}`;
+
+    // Combine date and time
+    return `${formattedTime} `;
+  };
+
   return (
     <>
       <div className='rider'>
-        <div className='rider1'>
+        <div className='dashboardconatiner'>
           <div className='rider2'>
             <div className='rider3'>
               <h6>Dashboard</h6>
@@ -108,6 +145,42 @@ const Dashboard = () => {
                   <h6>{newUsers}</h6>
                 </div>
               </Link>
+            </div>
+
+
+            <div className='dashboard4'>
+              <h6>Latest Transactions</h6>
+              <div className='dashboard3'>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Transaction No.</th>
+                      <th>Transfer From</th>
+                      <th>From Account</th>
+                      <th>Payment Method</th>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Partner’s Earning</th>
+                      <th>My Earning</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bookingtransaction.map(transaction => (
+                      <tr key={transaction.id}>
+                        <td>{transaction.id}</td>
+                        <td>{transaction.user.name}</td>
+                        <td>{transaction.driverId.name}</td>
+                        <td>{transaction.paymentMode}</td>
+                        <td>{formatDate(transaction.updatedAt)}</td>
+                        <td>{formatTime(transaction.updatedAt)}</td>
+                        <td>{transaction.paymentMode}</td>
+                        <td> <div className='dashboard5'>+{transaction.amount}</div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>

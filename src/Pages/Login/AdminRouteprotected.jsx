@@ -3,10 +3,10 @@ import { Navigate, useNavigate } from 'react-router-dom';
 
 const AdminRouteProtect = ({ children }) => {
     const navigate = useNavigate();
-    const isAdmin = localStorage.getItem('isAdmin');
+    const role = localStorage.getItem('role');
 
     // Check if user is logged in and is an admin
-    if (!isAdmin) {
+    if (role !== 'admin') {
         // Redirect to login page if not logged in or not admin
         navigate('/login');
         return null;

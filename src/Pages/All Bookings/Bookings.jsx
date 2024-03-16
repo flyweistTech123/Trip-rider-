@@ -1,14 +1,132 @@
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+// import { toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+// import './Bookings.css'
+// import HOC from '../../Components/HOC/HOC'
+// import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
+
+// import { IoSearch } from "react-icons/io5";
+// import { FaCalendarDays } from "react-icons/fa6";
+
+
+
+
+
+// // import img from '../../Images/img5.png'
+
+
+// const Bookings = () => {
+//     const [bookingData, setBookingData] = useState([]);
+
+
+
+//     const fetchBookingData = () => {
+//         axios.get(`${BaseUrl}api/v1/getBooking`, getAuthHeaders())
+//             .then(response => {
+//                 setBookingData(response?.data?.data);
+//             })
+//             .catch(error => {
+//                 console.error('Error fetching rider data:', error);
+//             });
+//     };
+
+
+
+
+//     useEffect(() => {
+//         fetchBookingData();
+//     }, []);
+
+
+//     const toggleCalendar = () => {
+//         const inputElement = document.getElementById('calendar-input');
+//         inputElement.focus();
+//     };
+//     return (
+//         <>
+//             <div className='rider'>
+//                 <div className='rider1'>
+//                     <div className='rider2'>
+//                         <div className='rider3'>
+//                             <h6>All Bookings</h6>
+//                         </div>
+
+//                         <div className='rider4'>
+//                             <div className='booking'>
+//                                 <p>08/17/2023</p>
+//                                 <div className='booking1'>
+//                                     <FaCalendarDays color='#FFFFFF' onClick={toggleCalendar} />
+//                                     <input type="date" id="calendar-input" style={{ display: 'none' }} />
+//                                 </div>
+//                             </div>
+
+//                             <div className='rider5'>
+//                                 <div className='rider6'>
+//                                     <IoSearch />
+//                                 </div>
+//                                 <input type="search" name="" id="" placeholder='Search User' />
+//                             </div>
+//                         </div>
+//                     </div>
+//                     <div className='rider7'>
+//                         <table>
+//                             <thead>
+//                                 <tr>
+//                                     <th>Booking ID</th>
+//                                     <th>Date</th>
+//                                     <th>Timing</th>
+//                                     <th>Distance</th>
+//                                     <th>Total Bill</th>
+//                                     <th>Vehicle Name</th>
+//                                     <th>Status</th>
+//                                 </tr>
+//                             </thead>
+//                             <tbody>
+//                                 {bookingData?.map((booking, index) => (
+//                                     <tr key={index}>
+//                                         <td className='rider8'>
+//                                             {booking?.userId || 'N/A'}
+//                                         </td>
+//                                         <td>{booking?.date}</td>
+//                                         <td>{booking?.time}</td>
+//                                         <td>{booking?.distance} Km</td>
+//                                         <td>₹{booking?.totalPrice}</td>
+//                                         <td>{booking?.car?.name || 'N/A'}</td>
+//                                         <td>{booking?.status}</td>
+//                                     </tr>
+//                                 ))}
+
+//                             </tbody>
+//                         </table>
+//                     </div>
+//                 </div>
+//             </div>
+//         </>
+//     )
+// }
+
+// export default HOC(Bookings)
+
+
+
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Bookings.css'
+import { Link } from 'react-router-dom';
 import HOC from '../../Components/HOC/HOC'
 
 import { IoSearch } from "react-icons/io5";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { MdOutlineBlock } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
+import { IoEyeOutline } from "react-icons/io5";
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
+
 import { FaCalendarDays } from "react-icons/fa6";
-
-
 
 
 
@@ -16,71 +134,19 @@ import { FaCalendarDays } from "react-icons/fa6";
 
 
 const Bookings = () => {
-    const [riderData, setRiderData] = useState([]);
+    const [bookingData, setBookingData] = useState([]);
 
     useEffect(() => {
-        fetchRiderData();
+        fetchBookingData();
     }, []);
 
-    const fetchRiderData = () => {
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/getBooking')
+    const fetchBookingData = () => {
+        axios.get(`${BaseUrl}api/v1/getBooking`, getAuthHeaders())
             .then(response => {
-                setRiderData(response?.data?.data);
+                setBookingData(response.data.data);
             })
             .catch(error => {
-                console.error('Error fetching rider data:', error);
-            });
-    };
-
-    const deleteRider = (riderId) => {
-        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/admin/delete/driver/${riderId}`)
-            .then(response => {
-                // console.log('Rider deleted successfully');
-                toast.success("Rider deleted successfully");
-                fetchRiderData();
-            })
-            .catch(error => {
-                console.error('Error deleting Rider:', error);
-                toast.error("Error deleting Rider");
-            });
-    };
-
-    const blockRider = (riderId) => {
-        axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/admin/block/driver/${riderId}`)
-            .then(response => {
-                // console.log('Rider is blocked successfully');
-                toast.success("Rider is blocked successfully");
-                fetchRiderData(prevRiderData => {
-                    return prevRiderData.map(rider => {
-                        if (rider._id === riderId) {
-                            return { ...rider, isBlock: true };
-                        }
-                        return rider;
-                    });
-                });
-            })
-            .catch(error => {
-                // console.error('Error blocking rider:', error);
-                toast.error("Error blocking rider");
-            });
-    };
-    const unblockRider = (riderId) => {
-        axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/admin/unblock/driver/${riderId}`)
-            .then(response => {
-                // console.log('Rider is unblocked successfully');
-                toast.success("Rider is unblocked successfully'");
-                fetchRiderData(prevRiderData => {
-                    return prevRiderData.map(rider => {
-                        if (rider._id === riderId) {
-                            return { ...rider, isBlock: false };
-                        }
-                        return rider;
-                    });
-                });
-            })
-            .catch(error => {
-                console.error('Error unblocking Rider:', error);
-                toast.error("Error unblocking Rider");
+                console.error('Error fetching Booking data:', error);
             });
     };
 
@@ -88,6 +154,9 @@ const Bookings = () => {
         const inputElement = document.getElementById('calendar-input');
         inputElement.focus();
     };
+
+
+
     return (
         <>
             <div className='rider'>
@@ -105,12 +174,11 @@ const Bookings = () => {
                                     <input type="date" id="calendar-input" style={{ display: 'none' }} />
                                 </div>
                             </div>
-
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search User' />
+                                <input type="search" name="" id="" placeholder='Search Driver' />
                             </div>
                         </div>
                     </div>
@@ -120,8 +188,6 @@ const Bookings = () => {
                                 <tr>
                                     <th>Booking ID</th>
                                     <th>Date</th>
-                                    {/* <th>Booking by</th> */}
-                                    {/* <th>Location</th> */}
                                     <th>Timing</th>
                                     <th>Distance</th>
                                     <th>Total Bill</th>
@@ -130,34 +196,17 @@ const Bookings = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {riderData?.map(rider => (
-                                    <tr key={rider?.id}>
+                                {bookingData.map(booking => (
+                                    <tr key={booking.id}>
                                         <td className='rider8'>
-                                            {/* <img src={rider.profilePicture} /> */}
-                                            {rider?.userId}
+                                            {booking?.userId || 'N/A'}
                                         </td>
-                                        <td>{rider?.date}</td>
-                                        <td>{rider?.time}</td>
-                                        <td>{rider?.distance} Km</td>
-                                        <td>₹{rider?.totalPrice}</td>
-                                        <td>{rider?.car?.name}</td>
-                                        <td>{rider?.status}</td>
-                                        {/* <td className='rider9'>
-                                            <div className='rider10' onClick={() => deleteRider(rider._id)}>
-                                                <RiDeleteBinLine color='#667085' size={20} />
-                                                <p>Delete</p>
-                                            </div>
-                                            <div className='rider10' onClick={() => { rider.isBlock ? unblockRider(rider._id) : blockRider(rider._id) }}>
-                                                <MdOutlineBlock color={rider.isBlock ? "red" : "#667085"} size={20} />
-                                                <p style={{ color: rider.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
-                                            </div>
-                                            <div className='rider10'>
-                                                <Link to={`/riders_details/${rider._id}`} className='sidebar-link' >
-                                                    <IoEyeOutline color='#667085' size={20} />
-                                                    <p>View</p>
-                                                </Link>
-                                            </div>
-                                        </td> */}
+                                        <td>{booking?.date}</td>
+                                        <td>{booking?.time}</td>
+                                        <td>{booking?.distance} Km</td>
+                                        <td>₹{booking?.totalPrice}</td>
+                                        <td>{booking?.car?.name || 'N/A'}</td>
+                                        <td>{booking?.status}</td>
                                     </tr>
                                 ))}
                             </tbody>

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import img from '../../Images/img.png';
 import google from '../../Images/img1.png';
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -15,14 +16,14 @@ const Login = () => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/admin/login', {
+            const response = await axios.post(`${BaseUrl}api/v1/admin/login`, {
                 email: email,
                 password: password,
                 role: role // Include role in the request
             });
-            const { token, isAdmin } = response.data;
+            const { token, user } = response.data.data;
             localStorage.setItem('token', token);
-            localStorage.setItem('isAdmin', isAdmin); 
+            localStorage.setItem('role',user.role);
             toast.success("Login successfully");
             navigate('/dashboard');
         } catch (error) {
