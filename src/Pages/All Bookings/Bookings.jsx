@@ -120,10 +120,6 @@ import { Link } from 'react-router-dom';
 import HOC from '../../Components/HOC/HOC'
 
 import { IoSearch } from "react-icons/io5";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { MdOutlineBlock } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
-import { IoEyeOutline } from "react-icons/io5";
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 import { FaCalendarDays } from "react-icons/fa6";
@@ -136,19 +132,21 @@ import { FaCalendarDays } from "react-icons/fa6";
 const Bookings = () => {
     const [bookingData, setBookingData] = useState([]);
 
+    const fetchBookingData = async () => {
+        try {
+            const response = await axios.get('https://rajiv-cab-mu.vercel.app/api/v1/getBooking');
+            setBookingData(response.data.data);
+        } catch (error) {
+            console.error('Error fetching Booking data:', error);
+        }
+
+    };
+
     useEffect(() => {
         fetchBookingData();
     }, []);
 
-    const fetchBookingData = () => {
-        axios.get(`${BaseUrl}api/v1/getBooking`, getAuthHeaders())
-            .then(response => {
-                setBookingData(response.data.data);
-            })
-            .catch(error => {
-                console.error('Error fetching Booking data:', error);
-            });
-    };
+
 
     const toggleCalendar = () => {
         const inputElement = document.getElementById('calendar-input');

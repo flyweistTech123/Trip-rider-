@@ -12,7 +12,7 @@ import { MdOutlineBlock } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
-
+import imgdoc from '../../Images/documents.png'
 
 
 
@@ -27,9 +27,9 @@ const Drivers = () => {
     }, []);
 
     const fetchDriverData = () => {
-        axios.get(`${BaseUrl}api/v1/admin/all/driver`, getAuthHeaders())
+        axios.get(`${BaseUrl}api/v1/allDriverDetailForAdmin`, getAuthHeaders())
             .then(response => {
-                setDriverData(response.data.category);
+                setDriverData(response.data.data);
             })
             .catch(error => {
                 console.error('Error fetching driver data:', error);
@@ -114,11 +114,13 @@ const Drivers = () => {
                             <thead>
                                 <tr>
                                     <th>Driver Name</th>
-                                    {/* <th>Vehicle No.</th> */}
+                                    <th>Service Location</th>
                                     <th>Email</th>
                                     <th>Phone No.</th>
+                                    <th>Type</th>
+                                    <th>Document View</th>
+                                    <th>Status</th>
                                     <th>Total Earnings</th>
-                                    {/* <th>Total Trips</th> */}
                                     <th>Action Buttons</th>
                                 </tr>
                             </thead>
@@ -126,14 +128,16 @@ const Drivers = () => {
                                 {DriverData.map(driver => (
                                     <tr key={driver.id}>
                                         <td className='rider8'>
-                                            <img src={driver.profilePicture} style={{ width: '50px' }} />
-                                            {driver.name}
+                                            <img src={driver.driver?.profilePicture} style={{ width: '50px' }} />
+                                            {driver?.driver?.name}
                                         </td>
-                                        {/* <td>{user.vehicle}</td> */}
-                                        <td>{driver.email}</td>
-                                        <td>{driver.mobileNumber}</td>
-                                        <td style={{ color: '#F52D56' }}>{driver.wallet}</td>
-                                        {/* <td>{user.totalTrips}</td> */}
+                                        <td>{driver?.city?.city}</td>
+                                        <td>{driver?.driver?.email}</td>
+                                        <td>{driver?.driver?.mobileNumber}</td>
+                                        <td>{driver?.maker_model}</td>
+                                        <td><img src={imgdoc} alt=""  style={{width:'30px', cursor:'pointer'}} /></td>
+                                        <td>{driver?.driver?.status}</td>
+                                        <td>{driver?.driver?.wallet}</td>
                                         <td className='rider9'>
                                             <div className='rider10' onClick={() => deleteDriver(driver._id)}>
                                                 <RiDeleteBinLine color='#667085' size={20} />

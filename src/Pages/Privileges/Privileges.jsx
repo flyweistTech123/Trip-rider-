@@ -121,7 +121,7 @@ const Privileges = () => {
                                 {admindata.map(admin => (
                                     <tr key={admin.id}>
                                         <td className='rider8'>
-                                            <img src={admin.profilePicture} />
+                                            <img src={admin.profilePicture}  style={{width:"50px"}} />
                                             {admin.name}
                                         </td>
                                         <td>{admin.email}</td>

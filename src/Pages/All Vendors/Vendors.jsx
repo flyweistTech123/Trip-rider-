@@ -122,7 +122,7 @@ const Vendors = () => {
                                 {vendorData.map(vendor => (
                                     <tr key={vendor.id}>
                                         <td className='rider8'>
-                                            <img src={vendor.profilePicture} />
+                                            <img src={vendor.profilePicture}  style={{width:"50px"}} />
                                             {vendor.name}
                                         </td>
                                         <td>{vendor.email}</td>

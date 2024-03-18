@@ -66,6 +66,7 @@ import AllAdmin from './Pages/Admin/AllAdmin';
 import SettleBooking from './Pages/Subscription booking/SettleBooking.jsx';
 import SettleBookingDetails from './Pages/Subscription booking/SettleBookingDetails.jsx';
 import Notification from './Pages/Notification/Notification.jsx';
+import Booking1 from './Pages/All Bookings/Booking1.jsx';
 
 
 function App() {

@@ -1,7 +1,16 @@
 Fix this from backend side 
 
-->The Update Vehicle API is not functioning properly from the backend.
-->Total Riders and Drivers do not have a 'Total Trips' key; this should be added.
-->There is no API available to retrieve a hourly price by its ID in the hourly price section.
-->The 'Get All SuperCar' API is throwing an error: "Schema hasn't been registered for model 'superCarPricing'. Use mongoose.model(name, schema)".
-->There is no API available to retrieve a category by its ID in the Category section.
+->Total trip key should be added in user and driver apis.
+->In driver api the rating , reason key should add and the delete,update and get by id api not working.
+->In notification the active and deactive should add In Post api of notification.
+->In wallete managerment page there are two manegement one driver and second is user so add user one.
+->In payout api the transaction id key should add and getallpayout api me amount nahi aa rh h.
+->same refund vali me.
+->Payout me withdraw vali api paid krne par 404 ka error but working.
+->getallbooking api me partner earning key add karna h
+->getsettle by booking id me error h
+->category api me status update nahi ho rh h
+->cancle and sheduled api bani h
+->get id by supercar not working
+->Hourly pricre me update api not working .
+->terms and privacy me data aleady exits is checking on the basis of content its wrong .
