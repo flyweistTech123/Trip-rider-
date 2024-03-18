@@ -40,7 +40,7 @@ const Sidebar = () => {
         { icon: img20, text: 'All Drivers Earnings', link: '/earnings' },
         { icon: img4, text: 'All Vendors', link: '/vendors' },
         { icon: img5, text: 'Privileges', link:'/privileges' },
-        { icon: img6, text: 'Push Notification' },
+        { icon: img6, text: 'Push Notification' , link: '/notification' },
         { icon: img7, text: 'Wallet Management', link: '/wallet_management' },
         { icon: img8, text: 'Payout Management' , link: '/payout_management' },
         { icon: img9, text: 'All Bookings' , link: '/bookings'},

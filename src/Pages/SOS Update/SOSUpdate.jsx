@@ -76,7 +76,7 @@ const SOSUpdate = () => {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
-                <Modal.Header closeButton>
+                <Modal.Header closeButton className='adminprofileupdate'>
                     <Modal.Title id="contained-modal-title-vcenter">Update SOS Status</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

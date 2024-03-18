@@ -64,6 +64,8 @@ import Setting from './Pages/Setting/Setting';
 import AdminProfile from './Pages/Admin/AdminProfile';
 import AllAdmin from './Pages/Admin/AllAdmin';
 import SettleBooking from './Pages/Subscription booking/SettleBooking.jsx';
+import SettleBookingDetails from './Pages/Subscription booking/SettleBookingDetails.jsx';
+import Notification from './Pages/Notification/Notification.jsx';
 
 
 function App() {
@@ -134,6 +136,8 @@ function App() {
           <Route path="/adminprofile" element={<AdminRouteProtect> <AdminProfile /> </AdminRouteProtect>} />
           <Route path="/alladmin" element={<AdminRouteProtect> <AllAdmin /> </AdminRouteProtect>} />
           <Route path="/settlebooking" element={<AdminRouteProtect> <SettleBooking /> </AdminRouteProtect>} />
+          <Route path="/settlebookingdetails/:id" element={<AdminRouteProtect> <SettleBookingDetails /> </AdminRouteProtect>} />
+          <Route path="/notification" element={<AdminRouteProtect> <Notification /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>

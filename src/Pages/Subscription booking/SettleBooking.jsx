@@ -3,23 +3,29 @@ import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import './SettleBooking.css'
 import HOC from '../../Components/HOC/HOC'
+import { Button, Form } from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
 import { Link } from 'react-router-dom';
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
-
 import { IoSearch } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
 import { IoEyeOutline } from "react-icons/io5";
+import { toast } from "react-toastify";
 
 const SettleBooking = () => {
     const [settledata, setSettleData] = useState([]);
+    const [modalShow, setModalShow] = React.useState(false);
+    const [bookingId, setBookingId] = useState('')
+    const [assignedDrivers, setAssignedDrivers] = useState({});
+
 
     const fetchSettleData = async () => {
         try {
             const response = await axios.get(`${BaseUrl}api/v1/getSettleBooking`, getAuthHeaders())
             setSettleData(response.data.data);
         } catch (error) {
-            console.error('Error fetching wallet data:', error);
+            console.error('Error fetching settle data:', error);
         }
     };
 
@@ -51,8 +57,87 @@ const SettleBooking = () => {
 
 
 
+
+    function AssignDriverModal(props) {
+        const [drivernames, setDriverNames] = useState([]);
+        const [drivername, setDrivername] = useState("")
+
+        useEffect(() => {
+            const fetchDriver = async () => {
+                try {
+                    const response = await axios.get(`${BaseUrl}api/v1/admin/all/driver`, getAuthHeaders());
+                    setDriverNames(response.data.category);
+
+                } catch (error) {
+                    console.error('Error fetching driver name:', error);
+                }
+            };
+
+            fetchDriver();
+        }, []);
+
+        const handlePut = async (e) => {
+            e.preventDefault();
+            try {
+                await axios.put(
+                    `${BaseUrl}api/v1/assignDriverOnSettleBooking/${bookingId}`,
+                    {
+                        driverId: drivername,
+                    }
+                );
+                props.onHide();
+                const updatedDrivers = { ...assignedDrivers, [bookingId]: drivername };
+                setAssignedDrivers(updatedDrivers);
+                localStorage.setItem('assignedDrivers', JSON.stringify(updatedDrivers));
+                toast.success("Driver Assigned successfully");
+            } catch (error) {
+                toast.error("Error assigning Driver");
+            }
+        }
+
+
+        return (
+            <Modal
+                {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton className='adminprofileupdate'>
+                    <Modal.Title id="contained-modal-title-vcenter">Assign a Driver</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={handlePut}>
+                        <div className='settledriver'>
+                            <div className='dailyprice2'>
+                                <label htmlFor="">Drivers</label>
+                                <select onChange={(e) => setDrivername(e.target.value)}>
+                                    <option value="">Select Driver</option>
+                                    {drivernames?.map(name => (
+                                        <option key={name._id} value={name._id}>{name.name}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+
+                        <Modal.Footer>
+                            <Button className='sos6' type="submit">Assign</Button>
+                        </Modal.Footer>
+                    </Form>
+                </Modal.Body>
+            </Modal>
+        );
+    }
+
+
+
+
     return (
         <>
+            <AssignDriverModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            />
             <div className='rider'>
                 <div className='rider1'>
                     <div className='rider2'>
@@ -98,8 +183,11 @@ const SettleBooking = () => {
                                             <td>{settle.km} KM</td>
                                             <td style={{ color: '#F52D56' }}>₹ {settle.pricing}</td>
                                             <td className='rider9'>
-                                                <div className='rider10'>
-                                                    <FaCheck color='#000000' size={20} />
+                                                <div className='rider10' onClick={() => {
+                                                    setBookingId(settle?._id);
+                                                    setModalShow(true);
+                                                }}>
+                                                    <FaCheck color={assignedDrivers[settle._id] ? '#00FF00' : '#000000'} size={20} />
                                                     <p>Aprove</p>
                                                 </div>
                                                 <div className='rider10'>
@@ -107,7 +195,7 @@ const SettleBooking = () => {
                                                     <p>Cancel</p>
                                                 </div>
                                                 <div className='rider10'>
-                                                    <Link to={`/driver_details`} className='sidebar-link' >
+                                                    <Link to={`/settlebookingdetails/${settle._id}`} className='sidebar-link' >
                                                         <IoEyeOutline color='#000000' size={20} />
                                                         <p>View</p>
                                                     </Link>
