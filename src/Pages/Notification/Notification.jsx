@@ -285,7 +285,13 @@ const Notification = () => {
                                     <tr key={notification.id}>
                                         <td>{notification.title}</td>
                                         <td>{notification.body}</td>
-                                        <td>{notification.status}</td>
+                                        <td style={{
+                                            color:
+                                                notification.status === 'ACTIVE' ? '#609527' : 'black',
+                                            fontWeight: '600'
+                                        }}>
+                                            {notification.status}
+                                        </td>
                                         <td>{notification.date}</td>
                                         <td>
                                             <div className='rider10' onClick={() => deleteData(notification._id)}>

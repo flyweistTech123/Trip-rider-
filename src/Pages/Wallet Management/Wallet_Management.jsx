@@ -61,7 +61,7 @@ const Wallet_Management = () => {
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search Driver' />
+                                <input type="search" name="" id="" placeholder='Search' />
                             </div>
                         </div>
                     </div>

@@ -17,6 +17,14 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Riders_details = () => {
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const formattedDate = `${date.getDate().toString().padStart(2, '0')} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+
+        return `${formattedDate} `;
+    };
     const { id } = useParams();
     const [RiderData, setRiderData] = useState(null);
     const [isBlocked, setIsBlocked] = useState(false); // Initialize isBlocked state to false
@@ -159,7 +167,7 @@ const Riders_details = () => {
                                             <div className='rider_details14'>
                                                 <label htmlFor="">DOB</label>
                                                 <div className='input11'>
-                                                    <p>{RiderData.birthday}</p>
+                                                    <p>{formatDate(RiderData.birthday)}</p>
                                                 </div>
                                             </div>
                                         </div>

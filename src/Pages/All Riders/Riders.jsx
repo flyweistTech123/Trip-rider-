@@ -9,8 +9,8 @@ import { Link } from 'react-router-dom';
 import { IoSearch } from "react-icons/io5";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { MdOutlineBlock } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 
@@ -19,6 +19,7 @@ import { IoEyeOutline } from "react-icons/io5";
 
 
 const Riders = () => {
+
     const [riderData, setRiderData] = useState([]);
 
     useEffect(() => {
@@ -26,7 +27,7 @@ const Riders = () => {
     }, []);
 
     const fetchRiderData = () => {
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/admin/all/user')
+        axios.get(`${BaseUrl}api/v1/admin/all/user`, getAuthHeaders())
             .then(response => {
                 setRiderData(response.data.category);
             })
@@ -36,22 +37,20 @@ const Riders = () => {
     };
 
     const deleteRider = (riderId) => {
-        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/admin/delete/driver/${riderId}`)
+        axios.delete(`${BaseUrl}api/v1/admin/delete/driver/${riderId}`, getAuthHeaders())
             .then(response => {
-                // console.log('Rider deleted successfully');
                 toast.success("Rider deleted successfully");
                 fetchRiderData();
             })
             .catch(error => {
-                console.error('Error deleting Rider:', error);
-                toast.error("Error deleting Rider");
+                console.error('Error to deleting Rider:', error);
+                toast.error("Error to deleting Rider");
             });
     };
 
     const blockRider = (riderId) => {
-        axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/admin/block/driver/${riderId}`)
+        axios.put(`${BaseUrl}api/v1/admin/block/driver/${riderId}`, getAuthHeaders())
             .then(response => {
-                // console.log('Rider is blocked successfully');
                 toast.success("Rider is blocked successfully");
                 fetchRiderData(prevRiderData => {
                     return prevRiderData.map(rider => {
@@ -68,7 +67,7 @@ const Riders = () => {
             });
     };
     const unblockRider = (riderId) => {
-        axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/admin/unblock/driver/${riderId}`)
+        axios.put(`${BaseUrl}api/v1/admin/unblock/driver/${riderId}`, getAuthHeaders())
             .then(response => {
                 // console.log('Rider is unblocked successfully');
                 toast.success("Rider is unblocked successfully'");
@@ -99,7 +98,6 @@ const Riders = () => {
                         </div>
 
                         <div className='rider4'>
-                            <button>Add user</button>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
@@ -142,7 +140,7 @@ const Riders = () => {
                                             </div>
                                             <div className='rider10'>
                                                 <Link to={`/riders_details/${rider._id}`} className='sidebar-link' >
-                                                    <IoEyeOutline   color='#667085' size={20} />
+                                                    <IoEyeOutline color='#667085' size={20} />
                                                     <p>View</p>
                                                 </Link>
                                             </div>

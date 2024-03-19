@@ -162,7 +162,15 @@ const SOSUpdate = () => {
                                             <td>{(SOS.id)}</td>
                                             <td>{(SOS.locationInWord)}</td>
                                             <td>{(SOS.reason)}</td>
-                                            <td>{(SOS.status)}</td>
+                                            {/* <td>{(SOS.status)}</td> */}
+                                            <td style={{
+                                                color: SOS.status === 'REJECT' ? '#F52D56' :
+                                                SOS.status === 'PENDING' ? '#FBAC2C' :
+                                                SOS.status === 'APPROVED' ? '#609527' : 'black',
+                                                fontWeight: '600'
+                                            }}>
+                                                {SOS.status}
+                                            </td>
                                             <td className='rider9'>
                                                 <div className='rider10'>
                                                     <Link to={`/soslocation/${SOS._id}`} className='sidebar-link' >

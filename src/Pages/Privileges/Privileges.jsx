@@ -5,13 +5,13 @@ import { toast } from 'react-toastify';
 import './Privileges.css'
 import HOC from '../../Components/HOC/HOC'
 import { Link } from 'react-router-dom';
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 import { IoSearch } from "react-icons/io5";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { MdOutlineBlock } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
-import { IoEyeOutline } from "react-icons/io5";
+
 
 
 const Privileges = () => {
@@ -19,7 +19,7 @@ const Privileges = () => {
 
     const fetchAdminData = async () => {
         try {
-            const response = await axios.get('https://rajiv-cab-mu.vercel.app/api/v1/admin/getPrivileges');
+            const response = await axios.get(`${BaseUrl}api/v1/admin/getPrivileges`, getAuthHeaders());
             setAdminData(response.data.data);
         } catch (error) {
             console.error('Error fetching Admin data:', error);
@@ -31,21 +31,21 @@ const Privileges = () => {
     }, []);
 
 
-    const deleteAdmin = (adminId) => {
+    const deleteAdmin = async (adminId) => {
         try {
-            axios.delete('https://rajiv-cab-mu.vercel.app/api/v1/admin/delete/driver/${driverId}')
-            fetchAdminData()
+            await axios.delete(`${BaseUrl}api/v1/admin/delete/driver/${adminId}`, getAuthHeaders());
+            fetchAdminData();
             toast.success("Admin Deleted Successfully");
         } catch (error) {
-            console.error('Error of deleting the admin', error);
-            toast.error("Error of deleting admin");
+            console.error('Error deleting the admin:', error);
+            toast.error("Error deleting admin");
         }
     }
 
+
     const BlockAdmin = (adminId) => {
-        axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/admin/block/driver/${adminId}`)
+        axios.put(`${BaseUrl}api/v1/admin/block/driver/${adminId}`, getAuthHeaders())
             .then(response => {
-                // console.log('Driver is blocked successfully');
                 toast.success('Admin is blocked successfully');
                 setAdminData(prevAdminData => {
                     return prevAdminData.map(admin => {
@@ -64,7 +64,7 @@ const Privileges = () => {
 
 
     const unblockAdmin = (adminId) => {
-        axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/admin/unblock/driver/${adminId}`)
+        axios.put(`${BaseUrl}api/v1/admin/unblock/driver/${adminId}`, getAuthHeaders())
             .then(response => {
                 toast.success('Admin is unblocked successfully');
                 setAdminData(prevAdminData => {
@@ -121,7 +121,7 @@ const Privileges = () => {
                                 {admindata.map(admin => (
                                     <tr key={admin.id}>
                                         <td className='rider8'>
-                                            <img src={admin.profilePicture}  style={{width:"50px"}} />
+                                            <img src={admin.profilePicture} style={{ width: "50px" }} />
                                             {admin.name}
                                         </td>
                                         <td>{admin.email}</td>
@@ -130,7 +130,14 @@ const Privileges = () => {
                                         <td>{admin.role}</td>
                                         <td>{admin.address}</td>
                                         <td>{admin.isVerified ? "Verified" : "Not Verified"}</td>
-                                        <td>{admin.status}</td>
+                                        <td style={{
+                                            color: admin.status === 'cancel' ? '#F52D56' :
+                                                admin.status === 'pending' ? '#FBAC2C' :
+                                                    admin.status === 'complete' ? '#609527' : 'black',
+                                            fontWeight: '600'
+                                        }}>
+                                            {admin.status}
+                                        </td>
                                         <td className='rider9'>
                                             <div className='rider10' onClick={() => deleteAdmin(admin._id)}>
                                                 <RiDeleteBinLine color='#667085' size={20} />

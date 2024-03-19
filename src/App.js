@@ -8,8 +8,6 @@ import AdminRouteProtect from '../src/Pages/Login/AdminRouteprotected';
 import Riders_details from './Pages/All Riders/Riders_details';
 import Driver_Details from './Pages/All Drivers/Driver_Details';
 import Vendors_Details from './Pages/All Vendors/Vendors_Details';
-import Bookings from './Pages/All Bookings/Bookings.jsx';
-// import Services from './Pages/Services/Services';
 import CarDetails from './Pages/Services/CarDetails';
 import UpdateBanners from './Pages/Update Banners/UpdateBanners';
 import Pricing from './Pages/Pricing/Pricing';
@@ -66,7 +64,10 @@ import AllAdmin from './Pages/Admin/AllAdmin';
 import SettleBooking from './Pages/Subscription booking/SettleBooking.jsx';
 import SettleBookingDetails from './Pages/Subscription booking/SettleBookingDetails.jsx';
 import Notification from './Pages/Notification/Notification.jsx';
-import Booking1 from './Pages/All Bookings/Booking1.jsx';
+import AllBookings from './Pages/All Bookings/AllBookings.jsx';
+import LiveChart from './Pages/Live Chart/LiveChart.jsx';
+import Register from './Pages/Register/Register.jsx';
+
 
 
 function App() {
@@ -74,7 +75,8 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Register />} />
           <Route path="/dashboard" element={<AdminRouteProtect> <Dashboard /> </AdminRouteProtect>} />
           <Route path="/riders" element={<AdminRouteProtect> <Riders /> </AdminRouteProtect>} />
           <Route path="/drivers" element={<AdminRouteProtect> <Drivers /> </AdminRouteProtect>} />
@@ -82,7 +84,6 @@ function App() {
           <Route path="/riders_details/:id" element={<AdminRouteProtect> <Riders_details /> </AdminRouteProtect>} />
           <Route path="/driver_details/:id" element={<AdminRouteProtect> <Driver_Details /> </AdminRouteProtect>} />
           <Route path="/vendors_details/:id" element={<AdminRouteProtect> <Vendors_Details /> </AdminRouteProtect>} />
-          <Route path="/bookings" element={<AdminRouteProtect> <Bookings /> </AdminRouteProtect>} />
           <Route path="/services" element={<AdminRouteProtect> <Services2 /> </AdminRouteProtect>} />
           <Route path="/cardetails" element={<AdminRouteProtect> <CarDetails /> </AdminRouteProtect>} />
           <Route path="/updatebanners" element={<AdminRouteProtect> <UpdateBanners /> </AdminRouteProtect>} />
@@ -139,6 +140,8 @@ function App() {
           <Route path="/settlebooking" element={<AdminRouteProtect> <SettleBooking /> </AdminRouteProtect>} />
           <Route path="/settlebookingdetails/:id" element={<AdminRouteProtect> <SettleBookingDetails /> </AdminRouteProtect>} />
           <Route path="/notification" element={<AdminRouteProtect> <Notification /> </AdminRouteProtect>} />
+          <Route path="/allbookings" element={<AdminRouteProtect> <AllBookings /> </AdminRouteProtect>} />
+          <Route path="/livechart" element={<AdminRouteProtect> <LiveChart /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>

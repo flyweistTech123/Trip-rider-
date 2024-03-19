@@ -134,7 +134,7 @@ const Dashboard = () => {
               <Link className='sidebar-link' >
                 <div className='dashboard1'>
                   <img src={img3} alt="" />
-                  <p>Total Earnings</p>
+                  <p>Total Earnings/Invoices</p>
                   <h6>{totalEarnings}</h6>
                 </div>
               </Link>

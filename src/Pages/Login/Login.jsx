@@ -6,31 +6,45 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import img from '../../Images/img.png';
 import google from '../../Images/img1.png';
-import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { BaseUrl } from '../../Components/BaseUrl/BaseUrl';
+import { auth  } from "../../Components/Firebase/Firebase";
+
+
 
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState('admin'); // State for role selection
+    const [role, setRole] = useState('admin');
 
     const handleLogin = async () => {
         try {
+            await signInWithEmailAndPassword(auth, email, password);
+
             const response = await axios.post(`${BaseUrl}api/v1/admin/login`, {
                 email: email,
                 password: password,
-                role: role // Include role in the request
+                role: role 
             });
+
             const { token, user } = response.data.data;
             localStorage.setItem('token', token);
-            localStorage.setItem('role',user.role);
+            localStorage.setItem('role', user.role);
             toast.success("Login successfully");
             navigate('/dashboard');
         } catch (error) {
-            console.error('Error logging in:', error);
-            toast.error("Login Unsuccessful");
+            if (error.code && error.message) {
+                toast.error(`error: ${error.message}`);
+            } else if (error.response && error.response.data && error.response.data.error) {
+                toast.error(`error: ${error.response.data.error}`);
+            } else {
+                console.error('Error:', error.message);
+                toast.error(`Error: ${error.message}`);
+            }
         }
     };
+
 
     return (
         <>
@@ -79,7 +93,7 @@ const Login = () => {
                     </div>
                     <div className='login6'>
                         <span>Don’t have an account?</span>
-                        <span>Signup Here</span>
+                        <span  onClick={() => navigate('/')}>Signup Here</span>
                     </div>
                 </div>
             </div>

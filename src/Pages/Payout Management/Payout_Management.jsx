@@ -60,7 +60,7 @@ const Payout_Management = () => {
                         </div>
 
                         <div className='rider4'>
-                            <button onClick={()=>navigate('/refundtransaction')}>Refund list</button>
+                            <button onClick={() => navigate('/refundtransaction')}>Refund list</button>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
@@ -99,7 +99,14 @@ const Payout_Management = () => {
                                             <td>{(payout.paymentMethod)}</td>
                                             <td>{formatDate(payout.createdAt)}</td>
                                             <td>{formatTime(payout.createdAt)}</td>
-                                            <td>{(payout.status)}</td>
+                                            <td style={{
+                                                color: payout.status === 'FAILED' ? '#F52D56' :
+                                                    payout.status === 'PENDING' ? '#FBAC2C' :
+                                                        payout.status === 'PAID' ? '#609527' : 'black',
+                                                fontWeight: '600'
+                                            }}>
+                                                {payout.status}
+                                            </td>
                                             <td className='payuser4'><button onClick={() => navigate(`/pay_user/${payout._id}`)}>Pay</button></td>
                                         </tr>
                                     ))

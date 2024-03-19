@@ -38,7 +38,7 @@ const Drivers = () => {
 
 
     const deleteDriver = (driverId) => {
-        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/admin/delete/driver/${driverId}`)
+        axios.delete(`${BaseUrl}api/v1/admin/delete/driver/${driverId}`, getAuthHeaders())
             .then(response => {
                 fetchDriverData();
                 toast.success("driver deleted successfully");
@@ -50,9 +50,8 @@ const Drivers = () => {
     };
 
     const blockDriver = (driverId) => {
-        axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/admin/block/driver/${driverId}`)
+        axios.put(`${BaseUrl}api/v1/admin/block/driver/${driverId}`, getAuthHeaders())
             .then(response => {
-                // console.log('Driver is blocked successfully');
                 toast.success('Driver is blocked successfully');
                 setDriverData(prevDriverData => {
                     return prevDriverData.map(driver => {
@@ -69,7 +68,7 @@ const Drivers = () => {
             });
     };
     const unblockDriver = (driverId) => {
-        axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/admin/unblock/driver/${driverId}`)
+        axios.put(`${BaseUrl}api/v1/admin/unblock/driver/${driverId}`, getAuthHeaders())
             .then(response => {
                 // console.log('Driver is unblocked successfully');
                 toast.success('Driver is unblocked successfully');
@@ -100,7 +99,6 @@ const Drivers = () => {
                         </div>
 
                         <div className='rider4'>
-                            <button>Add Driver</button>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
@@ -135,9 +133,16 @@ const Drivers = () => {
                                         <td>{driver?.driver?.email}</td>
                                         <td>{driver?.driver?.mobileNumber}</td>
                                         <td>{driver?.maker_model}</td>
-                                        <td><img src={imgdoc} alt=""  style={{width:'30px', cursor:'pointer'}} /></td>
-                                        <td>{driver?.driver?.status}</td>
-                                        <td>{driver?.driver?.wallet}</td>
+                                        <td><img src={imgdoc} alt="" style={{ width: '30px', cursor: 'pointer' }} /></td>
+                                        <td style={{
+                                            color: driver?.driver?.status === 'cancel' ? '#F52D56' :
+                                                driver?.driver?.status === 'pending' ? '#FBAC2C' :
+                                                    driver?.driver?.status === 'complete' ? '#609527' : 'black',
+                                            fontWeight: '600'
+                                        }}>
+                                            {driver?.driver?.status}
+                                        </td>
+                                        <td>₹ {driver?.driver?.wallet}</td>
                                         <td className='rider9'>
                                             <div className='rider10' onClick={() => deleteDriver(driver._id)}>
                                                 <RiDeleteBinLine color='#667085' size={20} />
@@ -164,5 +169,5 @@ const Drivers = () => {
         </>
     )
 }
-     
+
 export default HOC(Drivers)

@@ -31,57 +31,6 @@ const Earnings = () => {
     }, []);
 
 
-    // const deleteAdmin = (adminId) => {
-    //     try {
-    //         axios.delete('https://rajiv-cab-mu.vercel.app/api/v1/admin/delete/driver/${driverId}')
-    //         fetchAdminData()
-    //         toast.success("Admin Deleted Successfully");
-    //     } catch (error) {
-    //         console.error('Error of deleting the admin', error);
-    //         toast.error("Error of deleting admin");
-    //     }
-    // }
-
-    // const BlockAdmin = (adminId) => {
-    //     axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/admin/block/driver/${adminId}`)
-    //         .then(response => {
-    //             // console.log('Driver is blocked successfully');
-    //             toast.success('Admin is blocked successfully');
-    //             setAdminData(prevAdminData => {
-    //                 return prevAdminData.map(admin => {
-    //                     if (admin._id === adminId) {
-    //                         return { ...admin, isBlock: true };
-    //                     }
-    //                     return admin;
-    //                 });
-    //             });
-    //         })
-    //         .catch(error => {
-    //             console.error('Error blocking Admin:', error);
-    //             toast.error("Error blocking Admin");
-    //         });
-    // };
-
-
-    // const unblockAdmin = (adminId) => {
-    //     axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/admin/unblock/driver/${adminId}`)
-    //         .then(response => {
-    //             toast.success('Admin is unblocked successfully');
-    //             setAdminData(prevAdminData => {
-    //                 return prevAdminData.map(admin => {
-    //                     if (admin._id === adminId) {
-    //                         return { ...admin, isBlock: false };
-    //                     }
-    //                     return admin;
-    //                 });
-    //             });
-    //         })
-    //         .catch(error => {
-    //             console.error('Error unblocking Admin:', error);
-    //             toast.error("Error unblocking Admin");
-    //         });
-    // };
-
 
 
     return (
@@ -123,9 +72,9 @@ const Earnings = () => {
                                         </td>
                                         <td>{earn.email}</td>
                                         <td>{earn.mobileNumber}</td>
-                                        <td>{earn.wallet}</td>
-                                        <td>{earn.cashInHand}</td>
-                                        <td>{earn.adminCash}</td>
+                                        <td>₹ {earn.wallet}</td>
+                                        <td>₹ {earn.cashInHand}</td>
+                                        <td>₹ {earn.adminCash}</td>
                                     </tr>
                                 ))}
                             </tbody>

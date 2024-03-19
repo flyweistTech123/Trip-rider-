@@ -10,7 +10,7 @@ import { IoSearch } from "react-icons/io5";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { MdOutlineBlock } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
-
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 // import img from '../../Images/img5.png'
@@ -24,7 +24,7 @@ const Vendors = () => {
     }, []);
 
     const fetchVendorsData = () => {
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/admin/all/vendor')
+        axios.get(`${BaseUrl}api/v1/admin/all/vendor` , getAuthHeaders())
             .then(response => {
                 setVendorData(response.data.category);
             })
@@ -34,7 +34,7 @@ const Vendors = () => {
     };
 
     const deleteVendor = (vendorId) => {
-        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/admin/delete/driver/${vendorId}`)
+        axios.delete(`${BaseUrl}api/v1/admin/delete/driver/${vendorId}`, getAuthHeaders())
             .then(response => {
                 // console.log('vendor deleted successfully');
                 toast.success("vendor deleted successfully");
@@ -47,7 +47,7 @@ const Vendors = () => {
     };
 
     const blockVendor = (vendorId) => {
-        axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/admin/block/driver/${vendorId}`)
+        axios.put(`${BaseUrl}api/v1/admin/block/driver/${vendorId}`, getAuthHeaders())
             .then(response => {
                 // console.log('Vendor is blocked successfully');
                 toast.success("Vendor is blocked successfully");
@@ -66,7 +66,7 @@ const Vendors = () => {
             });
     };
     const unblockVendor = (vendorId) => {
-        axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/admin/unblock/driver/${vendorId}`)
+        axios.put(`${BaseUrl}api/v1/admin/unblock/driver/${vendorId}`, getAuthHeaders())
             .then(response => {
                 // console.log('Vendor is unblocked successfully');
                 toast.success("Vendor is unblocked successfully");
@@ -97,12 +97,11 @@ const Vendors = () => {
                         </div>
 
                         <div className='rider4'>
-                            <button>Add Vendor</button>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search Driver' />
+                                <input type="search" name="" id="" placeholder='Search Vendor' />
                             </div>
                         </div>
                     </div>
@@ -127,7 +126,7 @@ const Vendors = () => {
                                         </td>
                                         <td>{vendor.email}</td>
                                         <td>{vendor.mobileNumber}</td>
-                                        <td style={{ color: '#F52D56' }}>{vendor.wallet}</td>
+                                        <td style={{ color: '#F52D56' }}>₹ {vendor.wallet}</td>
                                         <td>{vendor.noOfVehicle}</td>
                                         <td className='rider9'>
                                             <div className='rider10' onClick={() => deleteVendor(vendor._id)}>
