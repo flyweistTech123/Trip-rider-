@@ -13,6 +13,7 @@ import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 
 
+
 const SOSUpdate = () => {
     const [sosdata, setSosData] = useState([]);
     const [modalShow, setModalShow] = React.useState(false);

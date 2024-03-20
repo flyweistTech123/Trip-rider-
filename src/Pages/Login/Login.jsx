@@ -8,7 +8,7 @@ import img from '../../Images/img.png';
 import google from '../../Images/img1.png';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { BaseUrl } from '../../Components/BaseUrl/BaseUrl';
-import { auth  } from "../../Components/Firebase/Firebase";
+import { auth, getCurrentUser  } from "../../Components/Firebase/Firebase";
 
 
 
@@ -21,12 +21,16 @@ const Login = () => {
     const handleLogin = async () => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
+    
+
 
             const response = await axios.post(`${BaseUrl}api/v1/admin/login`, {
                 email: email,
                 password: password,
                 role: role 
             });
+
+
 
             const { token, user } = response.data.data;
             localStorage.setItem('token', token);
@@ -43,7 +47,9 @@ const Login = () => {
                 toast.error(`Error: ${error.message}`);
             }
         }
+
     };
+
 
 
     return (

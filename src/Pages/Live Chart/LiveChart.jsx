@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './LiveChart.css'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import HOC from '../../Components/HOC/HOC'
 
 import { IoSearch } from "react-icons/io5";
@@ -11,18 +11,45 @@ import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 import { IoIosArrowDown } from "react-icons/io";
 import plus from '../../Images/Vector.png'
 import chat from '../../Images/chat.png'
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 import share from '../../Images/share.png'
 import send from '../../Images/send.png'
 // import img from '../../Images/img5.png'
+import {
+    collection,
+    query,
+    where,
+    getDocs,
+    setDoc,
+    doc,
+    updateDoc,
+    serverTimestamp,
+    getDoc,
+} from "firebase/firestore";
+import { db } from "../../Components/Firebase/Firebase";
+
 
 
 const LiveChart = () => {
     const [userData, setUserData] = useState([]);
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [currentUser, setCurrentUser] = useState(null);
+    const location = useLocation();
 
     useEffect(() => {
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setCurrentUser(user);
+            }
+        });
+
         fetchUserData();
     }, []);
+
+
+
 
     const fetchUserData = () => {
         axios.get(`${BaseUrl}api/v1/admin/getAllAdmin`, getAuthHeaders())
@@ -34,6 +61,62 @@ const LiveChart = () => {
             });
     };
 
+    const handleSelect = async (user) => {
+        setSelectedUser(user);
+        const combinedId =
+            currentUser.uid > user.uid
+                ? currentUser.uid + user.uid
+                : user.uid + currentUser.uid;
+
+        try {
+            const res = await getDoc(doc(db, "chats", combinedId));
+
+            if (!res.exists()) {
+                //create a chat in chats collection
+                await setDoc(doc(db, "chats", combinedId), { messages: [] });
+
+                //create user chats
+                await updateDoc(doc(db, "userChats", currentUser.uid), {
+                    [combinedId + ".userInfo"]: {
+                        uid: user.uid,
+                    },
+                    [combinedId + ".date"]: serverTimestamp(),
+                });
+
+                await updateDoc(doc(db, "userChats", user.uid), {
+                    [combinedId + ".userInfo"]: {
+                        uid: currentUser.uid,
+                        
+                    },
+                    [combinedId + ".date"]: serverTimestamp(),
+                });
+            }
+        } catch (err) {
+            console.error('Error creating chat:', err);
+        }
+
+        setSelectedUser(null);
+    };
+
+
+
+    const updateUserChats = async (userId, combinedId, otherUser) => {
+        try {
+            const timestamp = serverTimestamp();
+
+            const updateData = {
+                [`${combinedId}.userInfo`]: {
+                    uid: otherUser.uid,
+                },
+                [`${combinedId}.date`]: timestamp,
+            };
+
+            await updateDoc(doc(db, "userChats", userId), updateData);
+            console.log("User chats updated successfully.");
+        } catch (error) {
+            console.error("Error updating user chats:", error);
+        }
+    };
 
 
 
@@ -73,7 +156,7 @@ const LiveChart = () => {
 
                             <div className='livechart6'>
                                 {userData.map(user => (
-                                    <div className='livechart7'>
+                                    <div className={`livechart7 ${selectedUser && selectedUser.uid === user.uid ? 'selected' : ''}`} key={user.uid} onClick={() => handleSelect(user)}>
                                         <div className='livechart8'>
                                             <div className='livechart852'>
                                                 <img src={user.profilePicture} alt="" />
@@ -89,7 +172,6 @@ const LiveChart = () => {
                                     </div>
                                 ))}
                             </div>
-
 
                         </div>
 

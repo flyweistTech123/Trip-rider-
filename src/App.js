@@ -67,6 +67,7 @@ import Notification from './Pages/Notification/Notification.jsx';
 import AllBookings from './Pages/All Bookings/AllBookings.jsx';
 import LiveChart from './Pages/Live Chart/LiveChart.jsx';
 import Register from './Pages/Register/Register.jsx';
+import Geofencing from './Pages/Geofencing view/Geofencing.jsx';
 
 
 
@@ -142,6 +143,7 @@ function App() {
           <Route path="/notification" element={<AdminRouteProtect> <Notification /> </AdminRouteProtect>} />
           <Route path="/allbookings" element={<AdminRouteProtect> <AllBookings /> </AdminRouteProtect>} />
           <Route path="/livechart" element={<AdminRouteProtect> <LiveChart /> </AdminRouteProtect>} />
+          <Route path="/geofencing_view" element={<AdminRouteProtect> <Geofencing /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>

@@ -58,7 +58,7 @@ const Sidebar = () => {
         { icon: img14, text: 'Admin', link: '/alladmin' },
         { icon: img14, text: 'Vehicle Types' , link: '/vehicletype' },
         { icon: img14, text: 'Master Data' },
-        { icon: img14, text: 'Geofencing' },
+        { icon: img14, text: 'Geofencing' , link: '/geofencing_view' },
         { icon: img18, text: 'Terms and conditions' , link: '/termsandconditions' },
         { icon: img19, text: 'Privacy policy', link: '/privacypolicy' },
     ];
