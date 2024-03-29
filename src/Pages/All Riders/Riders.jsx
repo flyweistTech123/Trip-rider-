@@ -114,7 +114,7 @@ const Riders = () => {
                                     <th>Email</th>
                                     <th>Phone No.</th>
                                     <th>Wallet Balance</th>
-                                    {/* <th>Total Trips</th> */}
+                                    <th>Total Trips</th>
                                     <th>Action Buttons</th>
                                 </tr>
                             </thead>
@@ -128,7 +128,7 @@ const Riders = () => {
                                         <td>{rider.email}</td>
                                         <td>{rider.mobileNumber}</td>
                                         <td style={{ color: '#F52D56' }}>{rider.wallet}</td>
-                                        {/* <td>{user.totalTrips}</td> */}
+                                        <td>{rider.totalBooking}</td>
                                         <td className='rider9'>
                                             <div className='rider10' onClick={() => deleteRider(rider._id)}>
                                                 <RiDeleteBinLine color='#667085' size={20} />

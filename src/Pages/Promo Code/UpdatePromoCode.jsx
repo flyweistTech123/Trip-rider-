@@ -6,6 +6,7 @@ import HOC from '../../Components/HOC/HOC'
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 
@@ -24,7 +25,7 @@ const UpdatePromoCode = () => {
     useEffect(() => {
         const fetchPromocodeDetails = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/category/${id}`);
+                const response = await axios.get(`${BaseUrl}api/v1/category/${id}`, getAuthHeaders());
                 const { category, discountPer, isDiscount } = response.data.data;
                 setCategory(category);
                 setDiscount(discountPer);
@@ -44,13 +45,17 @@ const UpdatePromoCode = () => {
 
 
         try {
-            const response = await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/category/${id}`, data);
+            const response = await axios.put(`${BaseUrl}api/v1/category/${id}`, data, getAuthHeaders());
             toast.success("Promo code Updated successfully");
             navigate('/allpromocode');
         } catch (error) {
             console.error('Error updating Promo code:', error);
             toast.error("Error updating Promo code");
         }
+    }
+
+    const handleActiveChange = (event) => {
+        setActive(event.target.value === "true"); // Convert the string value to boolean
     }
 
 
@@ -80,11 +85,11 @@ const UpdatePromoCode = () => {
                             <p>Status</p>
                             <div className='outstationprice2'>
                                 <div className='outstationprice3'>
-                                    <input type="radio" name="active" value={true} checked={active === true} onChange={() => setActive(true)} />
+                                    <input type="radio" name="active" value="true" checked={active === true} onChange={handleActiveChange} />
                                     <p>Active</p>
                                 </div>
                                 <div className='outstationprice3'>
-                                    <input type="radio" name="active" value={false} checked={active === false} onChange={() => setActive(false)} />
+                                    <input type="radio" name="active" value="false" checked={active === false} onChange={handleActiveChange} />
                                     <p>Not Active</p>
                                 </div>
                             </div>

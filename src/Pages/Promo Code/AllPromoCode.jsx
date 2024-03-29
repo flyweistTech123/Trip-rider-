@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { IoSearch } from "react-icons/io5";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { MdEdit } from "react-icons/md";
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 
@@ -26,7 +27,7 @@ const AllPromoCode = () => {
     }, []);
 
     const fetchPromoCodeData = () => {
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/category')
+        axios.get(`${BaseUrl}api/v1/category`,  getAuthHeaders())
             .then(response => {
                 setPromoCodeData(response.data.category);
             })
@@ -36,7 +37,7 @@ const AllPromoCode = () => {
     };
 
     const deletePromoCode = (promocodeId) => {
-        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/category/${promocodeId}`)
+        axios.delete(`${BaseUrl}api/v1/category/${promocodeId}`, getAuthHeaders())
             .then(response => {
                 // console.log('Rider deleted successfully');
                 toast.success("Promo code deleted successfully");

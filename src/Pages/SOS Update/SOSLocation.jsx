@@ -6,7 +6,7 @@ import HOC from '../../Components/HOC/HOC'
 import { useNavigate, useParams } from 'react-router-dom';
 import { IoSearch } from "react-icons/io5";
 import { FaShareNodes } from "react-icons/fa6";
-import MyComponent from '../../Components/Map/Map'
+import MapComponent from '../../Components/Map/Map'
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
@@ -102,7 +102,7 @@ const SOSLocation = () => {
                         </div>
 
                         <div className='sos2'>
-                            <MyComponent latitude={latitude} longitude={longitude} />
+                            <MapComponent latitude={latitude} longitude={longitude} />
                         </div>
                     </div>
 

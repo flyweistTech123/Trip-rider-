@@ -161,6 +161,7 @@ const Dashboard = () => {
                       <th>Date</th>
                       <th>Time</th>
                       <th>Partner’s Earning</th>
+                      <th>Admin’s Earning</th>
                       <th>My Earning</th>
                     </tr>
                   </thead>
@@ -173,7 +174,8 @@ const Dashboard = () => {
                         <td>{transaction.paymentMode}</td>
                         <td>{formatDate(transaction.updatedAt)}</td>
                         <td>{formatTime(transaction.updatedAt)}</td>
-                        <td>{transaction.paymentMode}</td>
+                        <td>{transaction.driverAmount}</td>
+                        <td>{transaction.adminAmount}</td>
                         <td> <div className='dashboard5'>+{transaction.amount}</div>
                         </td>
                       </tr>

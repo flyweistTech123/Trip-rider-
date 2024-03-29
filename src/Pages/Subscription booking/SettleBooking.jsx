@@ -90,6 +90,7 @@ const SettleBooking = () => {
                 setAssignedDrivers(updatedDrivers);
                 localStorage.setItem('assignedDrivers', JSON.stringify(updatedDrivers));
                 toast.success("Driver Assigned successfully");
+                fetchSettleData();
             } catch (error) {
                 toast.error("Error assigning Driver");
             }
@@ -179,7 +180,14 @@ const SettleBooking = () => {
                                             <td>{settle?.bookingId}</td>
                                             <td>{settle?.current?.address}</td>
                                             <td>{settle?.drop?.address}</td>
-                                            <td>{settle.status}</td>
+                                            <td style={{
+                                                color: settle?.status === 'cancel' ? '#F52D56' :
+                                                settle?.status === 'pending' ? '#FBAC2C' :
+                                                settle?.status === 'Accept' ? '#609527' : 'black',
+                                                fontWeight: '600'
+                                            }}>
+                                                {settle?.status}
+                                            </td>
                                             <td>{settle.km} KM</td>
                                             <td style={{ color: '#F52D56' }}>₹ {settle.pricing}</td>
                                             <td className='rider9'>
@@ -187,7 +195,7 @@ const SettleBooking = () => {
                                                     setBookingId(settle?._id);
                                                     setModalShow(true);
                                                 }}>
-                                                    <FaCheck color={assignedDrivers[settle._id] ? '#00FF00' : '#000000'} size={20} />
+                                                    <FaCheck color='#000000' size={20} />
                                                     <p>Aprove</p>
                                                 </div>
                                                 <div className='rider10'>
@@ -214,7 +222,7 @@ const SettleBooking = () => {
                 </div>
 
                 <div className='pricing1'>
-                    <Link to={'/alldailypricing'} className='sidebar-link'>
+                    <Link to={'/scheduled_booking'} className='sidebar-link'>
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>Scheduled Rides</h5>
@@ -227,7 +235,7 @@ const SettleBooking = () => {
                             </div>
                         </div>
                     </Link>
-                    <Link to={'/allhourlypricing'} className='sidebar-link'>
+                    <Link to={'/cancellled_booking'} className='sidebar-link'>
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>Cancelled Rides</h5>

@@ -20,8 +20,8 @@ const Geofencing = () => {
 
 
     const containerStyle = {
-        width: '400px',
-        height: '400px'
+        width: '1000px',
+        height: '500px'
     };
     const center = {
         lat: 27.17667,
@@ -73,7 +73,7 @@ const Geofencing = () => {
                             <h6>Eagle’s Eye</h6>
                         </div>
                     </div>
-                    <div>
+                    <div className='geo1'>
                         <MyComponent />
                     </div>
                 </div>

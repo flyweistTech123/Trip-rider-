@@ -20,16 +20,16 @@ import imgdoc from '../../Images/documents.png'
 
 
 const Drivers = () => {
-    const [DriverData, setDriverData] = useState([]);
+    const [driverData, setDriverData] = useState([]);
 
     useEffect(() => {
         fetchDriverData();
     }, []);
 
     const fetchDriverData = () => {
-        axios.get(`${BaseUrl}api/v1/allDriverDetailForAdmin`, getAuthHeaders())
+        axios.get(`${BaseUrl}api/v1/admin/all/driver`, getAuthHeaders())
             .then(response => {
-                setDriverData(response.data.data);
+                setDriverData(response.data.category);
             })
             .catch(error => {
                 console.error('Error fetching driver data:', error);
@@ -112,37 +112,39 @@ const Drivers = () => {
                             <thead>
                                 <tr>
                                     <th>Driver Name</th>
-                                    <th>Service Location</th>
                                     <th>Email</th>
                                     <th>Phone No.</th>
-                                    <th>Type</th>
-                                    <th>Document View</th>
+                                    {/* <th>Type</th> */}
+                                    <th>Total Trips</th>
+                                    {/* <th>Document View</th> */}
+                                    {/* <th>Rating</th> */}
                                     <th>Status</th>
                                     <th>Total Earnings</th>
                                     <th>Action Buttons</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {DriverData.map(driver => (
+                                {driverData?.map(driver => (
                                     <tr key={driver.id}>
                                         <td className='rider8'>
-                                            <img src={driver.driver?.profilePicture} style={{ width: '50px' }} />
-                                            {driver?.driver?.name}
+                                            <img src={driver?.profilePicture} style={{ width: '50px' }} />
+                                            {driver?.name}
                                         </td>
-                                        <td>{driver?.city?.city}</td>
-                                        <td>{driver?.driver?.email}</td>
-                                        <td>{driver?.driver?.mobileNumber}</td>
-                                        <td>{driver?.maker_model}</td>
-                                        <td><img src={imgdoc} alt="" style={{ width: '30px', cursor: 'pointer' }} /></td>
+                                        <td>{driver?.email}</td>
+                                        <td>{driver?.mobileNumber}</td>
+                                        {/* <td>{driver?.driverDocument?.maker_model}</td> */}
+                                        <td>{driver?.totalBooking}</td>
+                                        {/* <td><img src={imgdoc} alt="" style={{ width: '30px', cursor: 'pointer' }} /></td> */}
+                                        {/* <td>{driver?.rating}</td> */}
                                         <td style={{
-                                            color: driver?.driver?.status === 'cancel' ? '#F52D56' :
-                                                driver?.driver?.status === 'pending' ? '#FBAC2C' :
-                                                    driver?.driver?.status === 'complete' ? '#609527' : 'black',
+                                            color: driver?.status === 'cancel' ? '#F52D56' :
+                                                driver?.status === 'pending' ? '#FBAC2C' :
+                                                    driver?.status === 'complete' ? '#609527' : 'black',
                                             fontWeight: '600'
                                         }}>
-                                            {driver?.driver?.status}
+                                            {driver?.status}
                                         </td>
-                                        <td>₹ {driver?.driver?.wallet}</td>
+                                        <td>₹ {driver?.wallet}</td>
                                         <td className='rider9'>
                                             <div className='rider10' onClick={() => deleteDriver(driver._id)}>
                                                 <RiDeleteBinLine color='#667085' size={20} />

@@ -3,12 +3,10 @@ import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import './SettleBooking.css'
 import HOC from '../../Components/HOC/HOC'
-import { Button, Form } from "react-bootstrap";
-import Modal from "react-bootstrap/Modal";
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
-import { toast } from "react-toastify";
 
 import { useNavigate, useParams } from 'react-router-dom';
+import MapComponentone from '../../Components/Map/Mapone'
 
 const SettleBookingDetails = () => {
 
@@ -72,7 +70,7 @@ const SettleBookingDetails = () => {
                                 </div>
 
                                 <div className='settledriver2'>
-                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224356.85923040556!2d77.23700973928678!3d28.522404037240698!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce5a43173357b%3A0x37ffce30c87cc03f!2sNoida%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1710743800478!5m2!1sen!2sin" width="1000" height="253" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                    <MapComponentone pickupLatitude={bookingdata.current.latitude} pickupLongitude={bookingdata.current.longitude} dropLatitude={bookingdata.drop.latitude}  dropLongitude={bookingdata.drop.longitude}  />
                                 </div>
 
                                 <div className='settledriver3'>
@@ -107,7 +105,7 @@ const SettleBookingDetails = () => {
                                         <div className='settledriver5'>
                                             <label htmlFor="">Time</label>
                                             <div className='settledriver6'>
-                                                <p>10:42 AM</p>
+                                                <p>{bookingdata.dropTime}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -119,19 +117,19 @@ const SettleBookingDetails = () => {
                                         <div className='settledriver5'>
                                             <label htmlFor="">Name</label>
                                             <div className='settledriver66'>
-                                                <p>John Doe</p>
+                                                <p>{bookingdata.user?.name}</p>
                                             </div>
                                         </div>
                                         <div className='settledriver5'>
                                             <label htmlFor="">Email</label>
                                             <div className='settledriver66'>
-                                                <p>johndoe@example.com</p>
+                                                <p>{bookingdata.user?.email}</p>
                                             </div>
                                         </div>
                                         <div className='settledriver5'>
                                             <label htmlFor="">Mobile Number</label>
                                             <div className='settledriver66'>
-                                                <p>+91 1234567895</p>
+                                                <p>{bookingdata.user?.mobileNumber}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -143,19 +141,19 @@ const SettleBookingDetails = () => {
                                         <div className='settledriver5'>
                                             <label htmlFor="">Name</label>
                                             <div className='settledriver66'>
-                                                <p>John Doe</p>
+                                                <p>{bookingdata.driver?.name}</p>
                                             </div>
                                         </div>
                                         <div className='settledriver5'>
                                             <label htmlFor="">Email</label>
                                             <div className='settledriver66'>
-                                                <p>johndoe@example.com</p>
+                                                <p>{bookingdata.driver?.email}</p>
                                             </div>
                                         </div>
                                         <div className='settledriver5'>
                                             <label htmlFor="">Mobile Number</label>
                                             <div className='settledriver66'>
-                                                <p>+91 1234567895</p>
+                                                <p>{bookingdata.driver?.mobileNumber}</p>
                                             </div>
                                         </div>
                                     </div>

@@ -9,7 +9,7 @@ const containerStyle = {
 
 
 
-function MyComponent({ latitude, longitude }) {
+function MapComponent({ latitude, longitude }) {
 
     console.log('Latitude:', typeof latitude);
     console.log('Longitude:', typeof longitude);
@@ -58,4 +58,4 @@ function MyComponent({ latitude, longitude }) {
     ) : <></>
 }
 
-export default React.memo(MyComponent)
+export default React.memo(MapComponent)

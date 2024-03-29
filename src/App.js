@@ -68,6 +68,8 @@ import AllBookings from './Pages/All Bookings/AllBookings.jsx';
 import LiveChart from './Pages/Live Chart/LiveChart.jsx';
 import Register from './Pages/Register/Register.jsx';
 import Geofencing from './Pages/Geofencing view/Geofencing.jsx';
+import AllCancledBooking from './Pages/All Bookings/AllCancledBooking.jsx';
+import AllScheduledBooking from './Pages/All Bookings/AllScheduledBooking.jsx';
 
 
 
@@ -144,6 +146,8 @@ function App() {
           <Route path="/allbookings" element={<AdminRouteProtect> <AllBookings /> </AdminRouteProtect>} />
           <Route path="/livechart" element={<AdminRouteProtect> <LiveChart /> </AdminRouteProtect>} />
           <Route path="/geofencing_view" element={<AdminRouteProtect> <Geofencing /> </AdminRouteProtect>} />
+          <Route path="/cancellled_booking" element={<AdminRouteProtect> <AllCancledBooking /> </AdminRouteProtect>} />
+          <Route path="/scheduled_booking" element={<AdminRouteProtect> <AllScheduledBooking /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>
