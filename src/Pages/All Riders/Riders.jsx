@@ -122,7 +122,7 @@ const Riders = () => {
                                 {riderData.map(rider => (
                                     <tr key={rider.id}>
                                         <td className='rider8'>
-                                            <img src={rider.profilePicture} />
+                                            <img src={rider.profilePicture} style={{ width: '50px' }} />
                                             {rider.name}
                                         </td>
                                         <td>{rider.email}</td>

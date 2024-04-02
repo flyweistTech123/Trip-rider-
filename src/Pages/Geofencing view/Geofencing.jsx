@@ -9,6 +9,7 @@ import HOC from '../../Components/HOC/HOC'
 import { IoSearch } from "react-icons/io5";
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
+import MapTwogeo from '../../Components/Map/MapTwogeo';
 
 
 
@@ -16,50 +17,27 @@ import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 
 const Geofencing = () => {
 
+    const [locationdata, setLoctionData] = useState([]);
 
-
-
-    const containerStyle = {
-        width: '1000px',
-        height: '500px'
+    const fetchLocationData = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}api/v1/admin/all/driver`, getAuthHeaders());
+            const locations = response.data.category.map(item => ({
+                latitude: item.location.coordinates[0], 
+                longitude: item.location.coordinates[1]
+            }));
+            setLoctionData(locations);
+        } catch (error) {
+            console.error('Error fetching Location data:', error);
+        }
     };
-    const center = {
-        lat: 27.17667,
-        lng: 78.008072
-    };
 
-    function MyComponent() {
-        const { isLoaded } = useJsApiLoader({
-            id: 'google-map-script',
-            googleMapsApiKey: "AIzaSyB44XbRmsr64bo44DZvkwudZ9gF4aRqum8"
-        })
 
-        const [map, setMap] = React.useState(null)
+    useEffect(() => {
+        fetchLocationData();
+    }, []);
 
-        const onLoad = React.useCallback(function callback(map) {
-            // This is just an example of getting and using the map instance!!! don't just blindly copy!
-            const bounds = new window.google.maps.LatLngBounds(center);
-            map.fitBounds(bounds);
 
-            setMap(map)
-        }, [])
-
-        const onUnmount = React.useCallback(function callback(map) {
-            setMap(null)
-        }, [])
-
-        return isLoaded ? (
-            <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={center}
-                zoom={10}
-                onLoad={onLoad}
-                onUnmount={onUnmount}
-            >
-                <Marker position={center} icon={{ url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png' }} />
-            </GoogleMap>
-        ) : <></>
-    }
 
 
 
@@ -74,7 +52,7 @@ const Geofencing = () => {
                         </div>
                     </div>
                     <div className='geo1'>
-                        <MyComponent />
+                        <MapTwogeo locations={locationdata} />
                     </div>
                 </div>
             </div>
