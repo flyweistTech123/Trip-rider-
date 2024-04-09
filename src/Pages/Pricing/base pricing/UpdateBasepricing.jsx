@@ -8,6 +8,8 @@ import { toast } from 'react-toastify';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
+
 
 
 
@@ -17,36 +19,27 @@ import axios from 'axios';
 const UpdateBasepricing = () => {
     const { id } = useParams();
     const [vehicles, setVehicles] = useState([]);
-    const [citys, setCitys] = useState([]);
     const [vehicleId, setVehicleId] = useState('');
+    const [vehicleName, setVehicleName] = useState('');
+    const [city, setCity] = useState([]);
     const [cityId, setCityId] = useState('');
-    const [vehicle, setVehicle] = useState('');
-    const [city, setCity] = useState('');
-    const [taxrate, setTaxRate] = useState('')
-    const [gstrate, setGstRate] = useState('');
-    const [servicecharge, setServiceCharge] = useState('')
-    const [nightcharge, setNightCharge] = useState('');
-    const [waitingCharge, setWaitingCharge] = useState('');
-    const [trafficcharge, setTrafficCharge] = useState('');
-    const [price, setPrice] = useState('');
+    const [cityName, setCityName] = useState('');
+    const [baseprice, setBasePrice] = useState('');
+    const [pricePerMin, setPricePerMin] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchPriceDetails = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/BasePricing/${id}`);
-                const { vehicle, city, basePrice, taxRate, gstRate, serviceCharge, nightCharges, waitingCharge, trafficCharge } = response.data.data;
+                const response = await axios.get(`${BaseUrl}api/v1/BasePricing/${id}`, getAuthHeaders());
+                const { city, vehicle, pricePerMin, price } = response.data.data;
                 setVehicleId(vehicle._id);
-                setVehicle(vehicle.name);
+                setVehicleName(vehicle.name);
                 setCityId(city._id);
-                setCity(city.city);
-                setTaxRate(taxRate);
-                setGstRate(gstRate);
-                setServiceCharge(serviceCharge);
-                setNightCharge(nightCharges);
-                setWaitingCharge(waitingCharge);
-                setTrafficCharge(trafficCharge);
-                setPrice(basePrice)
+                setCityName(city.city);
+                setBasePrice(price);
+                setPricePerMin(pricePerMin);
+
             } catch (error) {
                 console.error('Error fetching Base Pricing details:', error);
             }
@@ -57,16 +50,12 @@ const UpdateBasepricing = () => {
         const data = {
             city: cityId,
             vehicle: vehicleId,
-            taxRate: taxrate,
-            gstRate: gstrate,
-            serviceCharge: servicecharge,
-            nightCharges: nightcharge,
-            waitingCharge: waitingCharge,
-            trafficCharge: trafficcharge,
+            pricePerMin: pricePerMin,
+            price: baseprice,
         }
 
         try {
-            const response = await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/BasePricing/update/${id}`, data)
+            const response = await axios.put(`${BaseUrl}api/v1/BasePricing/update/${id}`, data, getAuthHeaders())
             toast.success("Base Pricing Updated successfully");
             navigate('/allbasepricing')
         } catch (error) {
@@ -74,11 +63,10 @@ const UpdateBasepricing = () => {
             toast.error("Error to updating Base Pricing")
         }
     }
-
     useEffect(() => {
         const fetchVehicles = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/vehicle`);
+                const response = await axios.get(`${BaseUrl}api/v1/vehicle`, getAuthHeaders());
                 setVehicles(response.data.data);
 
             } catch (error) {
@@ -88,11 +76,13 @@ const UpdateBasepricing = () => {
 
         fetchVehicles();
     }, []);
+
+
     useEffect(() => {
         const fetchCity = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/City`);
-                setCitys(response.data.data);
+                const response = await axios.get(`${BaseUrl}api/v1/City`, getAuthHeaders());
+                setCity(response.data.data);
             } catch (error) {
                 console.error('Error fetching City:', error);
             }
@@ -100,6 +90,7 @@ const UpdateBasepricing = () => {
 
         fetchCity();
     }, []);
+
     return (
         <>
             <div className='rider'>
@@ -124,10 +115,10 @@ const UpdateBasepricing = () => {
                         <div className='dailyprice1'>
                             <div className='dailyprice2'>
                                 <label htmlFor="">Vehicle</label>
-                                <select value={vehicle} onChange={(e) => {
+                                <select value={vehicleName} onChange={(e) => {
                                     const selectedVehicle = vehicles.find(vehicle => vehicle.name === e.target.value);
                                     setVehicleId(selectedVehicle._id);
-                                    setVehicle(e.target.value);
+                                    setVehicleName(e.target.value);
                                 }}>
                                     <option>Select Vehicle</option>
                                     {vehicles?.map(vehicle => (
@@ -135,16 +126,15 @@ const UpdateBasepricing = () => {
                                     ))}
                                 </select>
                             </div>
-
                             <div className='dailyprice2'>
                                 <label htmlFor="">City</label>
-                                <select value={city} onChange={(e) => {
-                                    const selectedCity = citys.find(city => city.city === e.target.value);
+                                <select value={cityName} onChange={(e) => {
+                                    const selectedCity = city.find(city => city.city === e.target.value);
                                     setCityId(selectedCity._id);
-                                    setCity(e.target.value);
+                                    setCityName(e.target.value);
                                 }}>
                                     <option>Select City</option>
-                                    {citys?.map(City => (
+                                    {city?.map(City => (
                                         <option key={City._id} value={City.city}>{City.city}</option>
                                     ))}
                                 </select>
@@ -152,38 +142,12 @@ const UpdateBasepricing = () => {
                         </div>
                         <div className='dailyprice3'>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Service Charge</label>
-                                <input type="number" placeholder='Enter service charge' value={servicecharge} onChange={(e) => setServiceCharge(e.target.value)} />
+                                <label htmlFor="">Base Price</label>
+                                <input type="number" placeholder='Enter Base price' value={baseprice} onChange={(e) => setBasePrice(e.target.value)} />
                             </div>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Night Charge</label>
-                                <input type="number" placeholder='Enter night charge' value={nightcharge} onChange={(e) => setNightCharge(e.target.value)} />
-                            </div>
-                        </div>
-                        <div className='dailyprice3'>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Waiting Charge</label>
-                                <input type="number" placeholder='Enter waiting charge' value={waitingCharge} onChange={(e) => setWaitingCharge(e.target.value)} />
-                            </div>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Traffic Charge</label>
-                                <input type="number" placeholder='Enter traffic charge' value={trafficcharge} onChange={(e) => setTrafficCharge(e.target.value)} />
-                            </div>
-                        </div>
-                        <div className='dailyprice3'>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Tax</label>
-                                <input type="number" placeholder='Enter Tax' value={taxrate} onChange={(e) => setTaxRate(e.target.value)} />
-                            </div>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">GST</label>
-                                <input type="number" placeholder='Enter GST' value={gstrate} onChange={(e) => setGstRate(e.target.value)} />
-                            </div>
-                        </div>
-                        <div className='dailyprice3'>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">price</label>
-                                <input type="number" placeholder='Enter Base price' value={price} onChange={(e) => setPrice(e.target.value)} />
+                                <label htmlFor="">Price Per Minutes</label>
+                                <input type="number" placeholder='Enter price Per Minutes' value={pricePerMin} onChange={(e) => setPricePerMin(e.target.value)} />
                             </div>
                         </div>
 

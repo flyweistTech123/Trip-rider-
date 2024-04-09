@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { IoSearch } from "react-icons/io5";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
 
 
 
@@ -21,7 +22,7 @@ const AddDailyPricing = () => {
     const [city, setCity] = useState('');
     const [form, setForm] = useState('');
     const [to, setTo] = useState('');
-    const [price, setPrice] = useState('');
+    const [pricePerKm, setpricePerKm] = useState('');
 
 
     const handlePostRequest = async () => {
@@ -30,12 +31,12 @@ const AddDailyPricing = () => {
             vehicle:vehicle,
             fromKm:form,
             toKm:to,
-            price:price
+            pricePerKm:pricePerKm
         }
         
 
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/Pricing', data);
+            const response = await axios.post(`${BaseUrl}api/v1/Pricing`, data, getAuthHeaders());
             
             toast.success("Daily Pricing add successfully");
 
@@ -44,7 +45,7 @@ const AddDailyPricing = () => {
             setForm('');
             setTo('');
             setCity('');
-            setPrice('');
+            setpricePerKm('');
             navigate('/alldailypricing')
         } catch (error) {
             console.error('Error to Add Daily Pricing:', error);
@@ -56,7 +57,7 @@ const AddDailyPricing = () => {
     useEffect(() => {
         const fetchVehicles = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/vehicle`);
+                const response = await axios.get(`${BaseUrl}api/v1/vehicle`, getAuthHeaders());
                 setVehicles(response.data.data);
                 
             } catch (error) {
@@ -72,7 +73,7 @@ const AddDailyPricing = () => {
     useEffect(() => {
         const fetchCity = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/City`);
+                const response = await axios.get(`${BaseUrl}api/v1/City`, getAuthHeaders());
                 setCitys(response.data.data);
             } catch (error) {
                 console.error('Error fetching City:', error);
@@ -137,8 +138,8 @@ const AddDailyPricing = () => {
                         </div>
                         <div className='dailyprice3'>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Price</label>
-                                <input type="number" placeholder='Enter Daily Price'value={price} onChange={(e) => setPrice(e.target.value)}  />
+                                <label htmlFor="">Price Per Km</label>
+                                <input type="number" placeholder='Enter price Per Km'value={pricePerKm} onChange={(e) => setpricePerKm(e.target.value)}  />
                             </div>
                         </div>
 

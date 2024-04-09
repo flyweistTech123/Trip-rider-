@@ -5,6 +5,7 @@ import HOC from '../../../Components/HOC/HOC';
 import { useNavigate, useParams } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
+import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
 
 
 const UpdateDailypricing = () => {
@@ -18,20 +19,20 @@ const UpdateDailypricing = () => {
     const [cityName, setCityName] = useState('');
     const [form, setForm] = useState('');
     const [to, setTo] = useState('');
-    const [price, setPrice] = useState('');
+    const [pricePerKm, setpricePerKm] = useState('');
 
     useEffect(() => {
         const fetchPriceDetails = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/Pricing/${id}`);
-                const { vehicle, city, fromKm, toKm, price } = response.data.data;
-                setVehicleId(vehicle._id); 
-                setVehicleName(vehicle.name); 
+                const response = await axios.get(`${BaseUrl}api/v1/Pricing/${id}`, getAuthHeaders());
+                const { vehicle, city, fromKm, toKm, pricePerKm } = response.data.data;
+                setVehicleId(vehicle._id);
+                setVehicleName(vehicle.name);
                 setCityId(city._id);
-                setCityName(city.city); 
+                setCityName(city.city);
                 setForm(fromKm);
                 setTo(toKm);
-                setPrice(price);
+                setpricePerKm(pricePerKm);
             } catch (error) {
                 console.error('Error fetching Daily Pricing details:', error);
             }
@@ -40,17 +41,17 @@ const UpdateDailypricing = () => {
     }, [id]);
 
     const handleUpdate = async () => {
-        const data={
-            city:cityId, // Sending city ID
-            vehicle:vehicleId, // Sending vehicle ID
-            fromKm:form,
-            toKm:to,
-            price:price
+        const data = {
+            city: cityId, // Sending city ID
+            vehicle: vehicleId, // Sending vehicle ID
+            fromKm: form,
+            toKm: to,
+            pricePerKm: pricePerKm
         }
-        
+
 
         try {
-            const response = await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/Pricing/${id}`, data);
+            const response = await axios.put(`${BaseUrl}api/v1/Pricing/${id}`, data, getAuthHeaders());
             console.log('Response:', response.data);
             toast.success("Daily Pricing Updated successfully");
             navigate('/alldailypricing');
@@ -63,10 +64,10 @@ const UpdateDailypricing = () => {
     useEffect(() => {
         const fetchVehicles = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/vehicle`);
+                const response = await axios.get(`${BaseUrl}api/v1/vehicle`, getAuthHeaders());
                 setVehicles(response.data.data);
                 console.log(response.data.data, "vechcal print")
-                
+
             } catch (error) {
                 console.error('Error fetching vehicles:', error);
             }
@@ -75,11 +76,11 @@ const UpdateDailypricing = () => {
         fetchVehicles();
     }, []);
 
-    
+
     useEffect(() => {
         const fetchCity = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/City`);
+                const response = await axios.get(`${BaseUrl}api/v1/City`, getAuthHeaders());
                 setCity(response.data.data);
             } catch (error) {
                 console.error('Error fetching City:', error);
@@ -147,8 +148,8 @@ const UpdateDailypricing = () => {
                         </div>
                         <div className='dailyprice3'>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Price</label>
-                                <input type="number" placeholder='Enter Daily Price' value={price} onChange={(e) => setPrice(e.target.value)} />
+                                <label htmlFor="">Price Per Km</label>
+                                <input type="number" placeholder='Enter price Per Km' value={pricePerKm} onChange={(e) => setpricePerKm(e.target.value)} />
                             </div>
                         </div>
                         <div className='dailyprice5'>

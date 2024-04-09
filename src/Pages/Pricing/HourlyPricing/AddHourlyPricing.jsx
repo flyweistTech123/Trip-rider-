@@ -21,7 +21,10 @@ const AddHourlyPricing = () => {
     const [city1, setCity1] = useState('');
     const [distance, setDistance] = useState('');
     const [hours, setHours] = useState('');
-    const [price, setPrice] = useState('');
+    const [pricePerMin, setPricePerMin] = useState('');
+    const [pricePerkm, setPricePerkm] = useState('');
+    const [pricePerKmGreater, setPricePerKmGreater] = useState('');
+    const [pricePerMinGreater, setPricePerMinGreater] = useState('');
 
 
     const handlePostRequest = async () => {
@@ -30,7 +33,10 @@ const AddHourlyPricing = () => {
             vehicle:vehicle,
             km:distance,
             hours:hours,
-            price:price
+            pricePerMin:pricePerMin,
+            pricePerkm:pricePerkm,
+            pricePerKmGreater:pricePerKmGreater,
+            pricePerMinGreater:pricePerMinGreater,
         }
         
 
@@ -44,7 +50,10 @@ const AddHourlyPricing = () => {
             setDistance('');
             setHours('');
             setCity1('');
-            setPrice(null);
+            setPricePerMin(null);
+            setPricePerkm(null);
+            setPricePerKmGreater(null);
+            setPricePerMinGreater(null);
             navigate('/allhourlypricing')
         } catch (error) {
             console.error('Error Adding Price:', error);
@@ -138,8 +147,22 @@ const AddHourlyPricing = () => {
                         </div>
                         <div className='dailyprice3'>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Price</label>
-                                <input type="number" placeholder='Enter Hourly Price'value={price} onChange={(e) => setPrice(e.target.value)}  />
+                                <label htmlFor="">Price Per Minutes</label>
+                                <input type="number" placeholder='Enter Price'value={pricePerMin} onChange={(e) => setPricePerMin(e.target.value)}  />
+                            </div>
+                            <div className='dailyprice4'>
+                                <label htmlFor="">Price Per Km</label>
+                                <input type="number" placeholder='Enter  Price'value={pricePerkm} onChange={(e) => setPricePerkm(e.target.value)}  />
+                            </div>
+                        </div>
+                        <div className='dailyprice3'>
+                            <div className='dailyprice4'>
+                                <label htmlFor="">Price Per Min Greater</label>
+                                <input type="number" placeholder='Enter Price'value={pricePerMinGreater} onChange={(e) => setPricePerMinGreater(e.target.value)}  />
+                            </div>
+                            <div className='dailyprice4'>
+                                <label htmlFor="">Price Per Km Greater</label>
+                                <input type="number" placeholder='Enter  Price'value={pricePerKmGreater} onChange={(e) => setPricePerKmGreater(e.target.value)}  />
                             </div>
                         </div>
 

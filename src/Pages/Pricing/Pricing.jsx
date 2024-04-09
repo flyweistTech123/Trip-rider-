@@ -102,7 +102,7 @@ const Pricing = () => {
                             </div>
                         </div>
                     </Link>
-                    <Link to={'/taxes'} className='sidebar-link'>
+                    <Link to={'/alltaxpricing'} className='sidebar-link'>
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>Taxes</h5>

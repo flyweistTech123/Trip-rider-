@@ -79,7 +79,10 @@ const AllHourlyPricing = () => {
                                     <th>City</th>
                                     <th>Distance</th>
                                     <th>Hours</th>
-                                    <th>Price</th>
+                                    <th>price/Min</th>
+                                    <th>price/Km</th>
+                                    <th>price/MinGreater</th>
+                                    <th>price/KmGreater</th>
                                     <th>Action Buttons</th>
                                 </tr>
                             </thead>
@@ -90,7 +93,10 @@ const AllHourlyPricing = () => {
                                         <td>{hourlyprice?.city?.city}</td>
                                         <td>{hourlyprice.km} Km</td>
                                         <td>{hourlyprice.hours}</td>
-                                        <td  style={{ color: '#F52D56' }}>₹ {hourlyprice.price}</td>
+                                        <td  style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerMin}</td>
+                                        <td  style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerkm}</td>
+                                        <td  style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerMinGreater}</td>
+                                        <td  style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerKmGreater}</td>
                                         <td className='rider9'>
                                             <div className='rider10' onClick={() => deleteDriver(hourlyprice._id)}>
                                                 <RiDeleteBinLine color='#667085' size={20} />

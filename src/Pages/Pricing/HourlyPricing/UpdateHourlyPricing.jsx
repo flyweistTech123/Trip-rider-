@@ -18,20 +18,25 @@ const UpdateHourlyPricing = () => {
     const [cityName, setCityName] = useState('');
     const [distance, setDistance] = useState('');
     const [hours, setHours] = useState('');
-    const [price, setPrice] = useState('');
-
+    const [pricePerMin, setPricePerMin] = useState('');
+    const [pricePerkm, setPricePerkm] = useState('');
+    const [pricePerKmGreater, setPricePerKmGreater] = useState('');
+    const [pricePerMinGreater, setPricePerMinGreater] = useState('');
     useEffect(() => {
         const fetchPriceDetails = async () => {
             try {
                 const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/getHourlyPricingById/${id}`);
-                const { vehicle, city, km, hours, price } = response.data.data;
-                setVehicleId(vehicle._id); // Set the vehicle ID
-                setVehicleName(vehicle.name); // Set the vehicle name
-                setCityId(city._id); // Set the city ID
-                setCityName(city.city); // Set the city name
+                const { vehicle, city, km, hours, pricePerMin, pricePerkm, pricePerKmGreater, pricePerMinGreater } = response.data.data;
+                setVehicleId(vehicle._id);
+                setVehicleName(vehicle.name);
+                setCityId(city._id);
+                setCityName(city.city);
                 setDistance(km);
                 setHours(hours);
-                setPrice(price);
+                setPricePerMin(pricePerMin);
+                setPricePerkm(pricePerkm);
+                setPricePerKmGreater(pricePerKmGreater);
+                setPricePerMinGreater(pricePerMinGreater);
             } catch (error) {
                 console.error('Error fetching Hourly Pricing details:', error);
             }
@@ -40,14 +45,17 @@ const UpdateHourlyPricing = () => {
     }, [id]);
 
     const handleUpdate = async () => {
-        const data={
-            city:cityId, 
-            vehicle:vehicleId, 
-            km:distance,
-            hours:hours,
-            price:price
+        const data = {
+            city: cityId,
+            vehicle: vehicleId,
+            km: distance,
+            hours: hours,
+            pricePerMin: pricePerMin,
+            pricePerkm: pricePerkm,
+            pricePerKmGreater: pricePerKmGreater,
+            pricePerMinGreater: pricePerMinGreater,
         }
-        
+
 
         try {
             const response = await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/updateHourlyPricing/${id}`, data);
@@ -64,7 +72,7 @@ const UpdateHourlyPricing = () => {
             try {
                 const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/vehicle`);
                 setVehicles(response.data.data);
-                
+
             } catch (error) {
                 console.error('Error fetching vehicles:', error);
             }
@@ -73,7 +81,7 @@ const UpdateHourlyPricing = () => {
         fetchVehicles();
     }, []);
 
-    
+
     useEffect(() => {
         const fetchCity = async () => {
             try {
@@ -145,8 +153,22 @@ const UpdateHourlyPricing = () => {
                         </div>
                         <div className='dailyprice3'>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Price</label>
-                                <input type="number" placeholder='Enter Hourly Price' value={price} onChange={(e) => setPrice(e.target.value)} />
+                                <label htmlFor="">Price Per Minutes</label>
+                                <input type="number" placeholder='Enter Price' value={pricePerMin} onChange={(e) => setPricePerMin(e.target.value)} />
+                            </div>
+                            <div className='dailyprice4'>
+                                <label htmlFor="">Price Per Km</label>
+                                <input type="number" placeholder='Enter  Price' value={pricePerkm} onChange={(e) => setPricePerkm(e.target.value)} />
+                            </div>
+                        </div>
+                        <div className='dailyprice3'>
+                            <div className='dailyprice4'>
+                                <label htmlFor="">Price Per Min Greater</label>
+                                <input type="number" placeholder='Enter Price' value={pricePerMinGreater} onChange={(e) => setPricePerMinGreater(e.target.value)} />
+                            </div>
+                            <div className='dailyprice4'>
+                                <label htmlFor="">Price Per Km Greater</label>
+                                <input type="number" placeholder='Enter  Price' value={pricePerKmGreater} onChange={(e) => setPricePerKmGreater(e.target.value)} />
                             </div>
                         </div>
                         <div className='dailyprice5'>

@@ -8,6 +8,8 @@ import { toast } from 'react-toastify';
 
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
+
 
 
 
@@ -15,18 +17,12 @@ import axios from 'axios';
 
 
 const AddBasepricing = () => {
-
+    const [baseprice, setBasePrice] = useState('');
     const [vehicles, setVehicles] = useState([]);
+    const [vehicle, setVehicle] = useState('')
     const [citys, setCitys] = useState([]);
-    const [vehicle, setVehicle] = useState('');
     const [city, setCity] = useState('');
-    const [taxrate, setTaxRate] = useState('')
-    const [gstrate, setGstRate] = useState('');
-    const [servicecharge, setServiceCharge] = useState('')
-    const [nightcharge, setNightCharge] = useState('');
-    const [waitingCharge, setWaitingCharge] = useState('');
-    const [trafficcharge, setTrafficCharge] = useState('');
-    const [price, setPrice] = useState('');
+    const [pricePerMin, setPricePerMin] = useState('');
     const navigate = useNavigate();
 
 
@@ -34,27 +30,18 @@ const AddBasepricing = () => {
         const data = {
             city: city,
             vehicle: vehicle,
-            taxRate: taxrate,
-            gstRate: gstrate,
-            serviceCharge: servicecharge,
-            nightCharges: nightcharge,
-            waitingCharge: waitingCharge,
-            trafficCharge: trafficcharge,
+            pricePerMin: pricePerMin,
+            price: baseprice,
         }
 
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/BasePricing/add', data)
+            const response = await axios.post(`${BaseUrl}api/v1/BasePricing/add`, data, getAuthHeaders())
             toast.success("Base Pricing add successfully");
             navigate('/allbasepricing')
-            setCity('');
+            setBasePrice('');
             setVehicle('');
-            setTaxRate('');
-            setGstRate('');
-            setWaitingCharge('')
-            setServiceCharge('');
-            setNightCharge('');
-            setTrafficCharge('');
-            setPrice('');
+            setCity('');
+            setPricePerMin('');
 
         } catch (error) {
             console.log('Error to add Base Pricing:', error)
@@ -65,7 +52,7 @@ const AddBasepricing = () => {
     useEffect(() => {
         const fetchVehicles = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/vehicle`);
+                const response = await axios.get(`${BaseUrl}api/v1/vehicle`, getAuthHeaders());
                 setVehicles(response.data.data);
                 console.log(response.data.data, "vechcal print")
 
@@ -76,10 +63,13 @@ const AddBasepricing = () => {
 
         fetchVehicles();
     }, []);
+
+
+
     useEffect(() => {
         const fetchCity = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/City`);
+                const response = await axios.get(`${BaseUrl}api/v1/City`, getAuthHeaders());
                 setCitys(response.data.data);
             } catch (error) {
                 console.error('Error fetching City:', error);
@@ -88,6 +78,8 @@ const AddBasepricing = () => {
 
         fetchCity();
     }, []);
+
+
     return (
         <>
             <div className='rider'>
@@ -110,7 +102,15 @@ const AddBasepricing = () => {
 
                     <div className='dailyprice'>
                         <div className='dailyprice1'>
-                        
+                            <div className='dailyprice2'>
+                                <label htmlFor="">Vehicle</label>
+                                <select onChange={(e) => setVehicle(e.target.value)}>
+                                    <option value="">Select Vehicle</option>
+                                    {vehicles?.map(vehicle => (
+                                        <option key={vehicle._id} value={vehicle._id}>{vehicle.name}</option>
+                                    ))}
+                                </select>
+                            </div>
 
                             <div className='dailyprice2'>
                                 <label htmlFor="">City</label>
@@ -124,44 +124,14 @@ const AddBasepricing = () => {
                         </div>
                         <div className='dailyprice3'>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Service Charge</label>
-                                <input type="number" placeholder='Enter service charge' value={servicecharge} onChange={(e) => setServiceCharge(e.target.value)}  />
+                                <label htmlFor="">Base Price</label>
+                                <input type="number" placeholder='Enter Base price' value={baseprice} onChange={(e) => setBasePrice(e.target.value)} />
                             </div>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Night Charge</label>
-                                <input type="number" placeholder='Enter night charge' value={nightcharge} onChange={(e) => setNightCharge(e.target.value)}  />
+                                <label htmlFor="">Price Per Minutes</label>
+                                <input type="number" placeholder='Enter price Per Minutes' value={pricePerMin} onChange={(e) => setPricePerMin(e.target.value)} />
                             </div>
                         </div>
-                        <div className='dailyprice3'>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Waiting Charge</label>
-                                <input type="number" placeholder='Enter waiting charge' value={waitingCharge} onChange={(e) => setWaitingCharge(e.target.value)} />
-                            </div>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Traffic Charge</label>
-                                <input type="number" placeholder='Enter traffic charge' value={trafficcharge} onChange={(e) => setTrafficCharge(e.target.value)}  />
-                            </div>
-                        </div>
-                        <div className='dailyprice3'>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Tax</label>
-                                <input type="number" placeholder='Enter Tax' value={taxrate} onChange={(e) => setTaxRate(e.target.value)}  />
-                            </div>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">GST</label>
-                                <input type="number" placeholder='Enter GST' value={gstrate} onChange={(e) => setGstRate(e.target.value)}  />
-                            </div>
-                        </div>
-                        <div className='dailyprice3'>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">price</label>
-                                <input type="number" placeholder='Enter Base price' value={price} onChange={(e) => setPrice(e.target.value)}  />
-                            </div>
-                        </div>
-
-
-
-
                         <div className='dailyprice5'>
                             <button onClick={() => navigate('/allbasepricing')}>Cancel</button>
                             <button onClick={handlePostRequest}>Add Price</button>

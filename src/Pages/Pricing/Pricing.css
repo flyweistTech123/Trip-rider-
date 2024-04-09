@@ -123,6 +123,22 @@
   margin: 0;
 }
 
+
+.dailyprice4 textarea {
+  width: 480px;
+  border-radius: 6.81px;
+  border: 1.36px solid #b7b7b7;
+  outline: none;
+  padding-left: 20px;
+  padding-top: 10px;
+  font-family: "Mulish", sans-serif;
+  font-weight: 500;
+  font-size: 19.59px;
+  color: #000000;
+  line-height: 24.58px;
+  margin: 0;
+}
+
 .dailyprice4 input::placeholder {
   font-family: "Mulish", sans-serif;
   font-weight: 400;

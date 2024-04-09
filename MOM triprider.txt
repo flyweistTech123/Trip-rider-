@@ -1,0 +1,26 @@
+MOM Of trip Rider
+
+->The admin should change the percenatage of commission in  total price (admin commision) 
+->Booking Id missing in booking list
+->The location senio not clear , the admin  can change range of area within city 
+->In daily pricing the hours also add means the the priceing calculate with time also.
+->all outstation the price should calculate in minutes .
+-> the service charges should not correct the admin said 
+
+
+
+
+
+1. The admin needs to adjust the percentage of commission taken from the total price (admin commission).
+
+2. The Booking IDs missing in booking list.
+
+3. The location settings are unclear. The admin should be able to change the range of the area within the city.
+
+4. In daily pricing, the hours should also be considered in the calculation of price. 
+
+5. For outstation bookings, the price should be calculated based on minutes.
+
+6. The service charges are incorrect according to the client's statement.
+
+

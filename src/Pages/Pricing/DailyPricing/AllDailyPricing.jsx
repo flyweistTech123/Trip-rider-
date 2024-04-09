@@ -11,6 +11,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { MdEdit } from "react-icons/md";
 
 import { useNavigate } from 'react-router-dom';
+import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
 
 
 
@@ -27,7 +28,7 @@ const Alldailypricing = () => {
     }, []);
 
     const fetchDailypriceData = () => {
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/Pricing')
+        axios.get(`${BaseUrl}api/v1/Pricing`, getAuthHeaders())
             .then(response => {
                 setDailypriceData(response.data.data);
             })
@@ -37,7 +38,7 @@ const Alldailypricing = () => {
     };
 
     const deletePrice = (dailypriceId) => {
-        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/Pricing/${dailypriceId}`)
+        axios.delete(`${BaseUrl}api/v1/Pricing/${dailypriceId}`,getAuthHeaders() )
             .then(response => {
                 fetchDailypriceData();
                 toast.success("Daily Price deleted successfully");
@@ -79,7 +80,8 @@ const Alldailypricing = () => {
                                     <th>City</th>
                                     <th>To</th>
                                     <th>From</th>
-                                    <th>Price</th>
+                                    <th>Price/Km</th>
+                                    {/* <th>Price</th> */}
                                     <th>Action Buttons</th>
                                 </tr>
                             </thead>
@@ -90,7 +92,8 @@ const Alldailypricing = () => {
                                         <td>{dailyprice?.city?.city}</td>
                                         <td>{dailyprice.toKm} Km</td>
                                         <td>{dailyprice.fromKm} Km</td>
-                                        <td style={{ color: '#F52D56' }}>₹ {dailyprice.price}</td>
+                                        <td style={{ color: '#F52D56' }}>₹ {dailyprice.pricePerKm}/Km</td>
+                                        {/* <td style={{ color: '#F52D56' }}>₹ {dailyprice.price}</td> */}
                                         <td className='rider9'>
                                             <div className='rider10' onClick={() => deletePrice(dailyprice._id)}>
                                                 <RiDeleteBinLine color='#667085' size={20} />
