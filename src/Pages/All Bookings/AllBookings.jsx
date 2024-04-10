@@ -71,7 +71,7 @@ const AllBookings = () => {
                             <tbody>
                                 {bookingData.map(booking => (
                                     <tr key={booking.id}>
-                                        <td className='rider8'>{booking.Id}</td>
+                                        <td className='rider8'>{booking.bookingId}</td>
                                         <td>{booking?.date}</td>
                                         <td>{booking?.userId?.name}</td>
                                         <td>{booking?.current?.address}</td>

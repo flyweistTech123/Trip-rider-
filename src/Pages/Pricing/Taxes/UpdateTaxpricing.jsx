@@ -35,7 +35,7 @@ const UpdateTaxpricing = () => {
     useEffect(() => {
         const fetchPriceDetails = async () => {
             try {
-                const response = await axios.get(`${BaseUrl}api/v1/Taxes/${id}`,  getAuthHeaders());
+                const response = await axios.get(`${BaseUrl}api/v1/Taxes/${id}`, getAuthHeaders());
                 const { basePrice, serviceCharge, nightCharges, waitingCharge, ParkingRate, kmRate, timeRate, plateFormCharges, otherCharge, surgeCharges, tollCharge, ridetimeCharges, cancellationCharges, description } = response.data.data;
                 setBasePrice(basePrice)
                 setNightCharge(nightCharges);
@@ -76,9 +76,9 @@ const UpdateTaxpricing = () => {
         }
 
         try {
-            const response = await axios.put(`${BaseUrl}/api/v1/Taxes/update/${id}`, data,getAuthHeaders())
+            const response = await axios.put(`${BaseUrl}api/v1/Taxes/update/${id}`, data, getAuthHeaders())
             toast.success("Tax Pricing Updated successfully");
-            navigate('/alltaxpricing')
+            navigate('/taxpricing')
         } catch (error) {
             console.log('Error to updating Tax Pricing:', error)
             toast.error("Error to updating Tax Pricing")
@@ -118,52 +118,62 @@ const UpdateTaxpricing = () => {
                         </div>
                         <div className='dailyprice3'>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Waiting Charge</label>
-                                <input type="number" placeholder='Enter waiting charge' value={waitingCharge} onChange={(e) => setWaitingCharge(e.target.value)} />
+                                <label htmlFor="">Service Charge</label>
+                                <input type="number" placeholder='Enter service charge' value={servicecharge} onChange={(e) => setServiceCharge(e.target.value)} />
                             </div>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Parking Rate</label>
-                                <input type="number" placeholder='Enter Parking rate' value={parkingRate} onChange={(e) => setParkingRate(e.target.value)} />
+                                <label htmlFor="">Waiting Charge</label>
+                                <input type="number" placeholder='Enter Waiting Charge' value={waitingCharge} onChange={(e) => setWaitingCharge(e.target.value)} />
                             </div>
                         </div>
                         <div className='dailyprice3'>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Km Rate</label>
-                                <input type="number" placeholder='Enter km rate' value={kmRate} onChange={(e) => setKmRate(e.target.value)} />
+                                <label htmlFor="">Parking Rate</label>
+                                <input type="number" placeholder='Enter parking Rate' value={parkingRate}   onChange={(e) => setParkingRate(e.target.value)}/>
                             </div>
+                            <div className='dailyprice4'>
+                                <label htmlFor="">Km Rate</label>
+                                <input type="number" placeholder='Enter km rate' value={kmRate}   onChange={(e) => setKmRate(e.target.value)} />
+                            </div>
+                        </div>
+                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Time Rate</label>
                                 <input type="number" placeholder='Enter time Rate' value={timeRate} onChange={(e) => setTimeRate(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Plate Form Charges</label>
                                 <input type="number" placeholder='Enter plate Form Charges' value={plateFormCharges} onChange={(e) => setPlateFormCharges(e.target.value)} />
                             </div>
+                        </div>
+                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Surge Charges</label>
                                 <input type="number" placeholder='Enter surge Charges' value={surgeCharges} onChange={(e) => setSurgeCharges(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Toll Charge</label>
                                 <input type="number" placeholder='Enter toll Charge' value={tollCharge} onChange={(e) => setTollCharge(e.target.value)} />
                             </div>
+                        </div>
+                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Ride Time Charges</label>
                                 <input type="number" placeholder='Enter ride time Charges' value={ridetimeCharges} onChange={(e) => setRidetimeCharges(e.target.value)} />
                             </div>
+                            <div className='dailyprice4'>
+                                <label htmlFor="">Cancellation Charges</label>
+                                <input type="number" placeholder='Enter cancellation Charges' value={cancellationCharges} onChange={(e) => setCancellationCharges(e.target.value)} />
+                            </div>
                         </div>
                         <div className='dailyprice3'>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Cancellation Charges</label>
-                                <input type="number" placeholder='Enter cancellation Charges' value={tollCharge} onChange={(e) => setCancellationCharges(e.target.value)} />
+                                <label htmlFor="">Other Charge</label>
+                                <input type="number" placeholder='Enter other Charge' value={otherCharge} onChange={(e) => otherCharge(e.target.value)} />
                             </div>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Other Charge</label>
-                                <input type="number" placeholder='Enter other Charge' value={otherCharge} onChange={(e) => setOtherCharge(e.target.value)} />
+                                <label htmlFor="">Description</label>
+                                <textarea name="" id="" cols="30" rows="5" value={description} onChange={(e) => setDescription(e.target.value)} ></textarea>
                             </div>
                         </div>
 
@@ -171,7 +181,7 @@ const UpdateTaxpricing = () => {
 
 
                         <div className='dailyprice5'>
-                            <button onClick={() => navigate('/alltaxpricing')}>Cancel</button>
+                            <button onClick={() => navigate('/taxpricing')}>Cancel</button>
                             <button onClick={handlePutRequest}>Save Changes</button>
                         </div>
                     </div>

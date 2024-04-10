@@ -16,164 +16,128 @@ import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
 
 
 const AddTaxpricing = () => {
-    const [baseprice, setBasePrice] = useState('');
-    const [nightcharge, setNightCharge] = useState('');
-    const [servicecharge, setServiceCharge] = useState('')
-    const [waitingCharge, setWaitingCharge] = useState('');
-    const [parkingRate, setParkingRate] = useState('');
-    const [kmRate, setKmRate] = useState('')
-    const [timeRate, setTimeRate] = useState('');
-    const [plateFormCharges, setPlateFormCharges] = useState('');
-    const [otherCharge, setOtherCharge] = useState('');
-    const [surgeCharges, setSurgeCharges] = useState('');
-    const [tollCharge, setTollCharge] = useState('');
-    const [ridetimeCharges, setRidetimeCharges] = useState('');
-    const [cancellationCharges, setCancellationCharges] = useState('');
-    const [description, setDescription] = useState('');
     const navigate = useNavigate();
 
 
-    const handlePostRequest = async () => {
-        const data = {
-            basePrice: baseprice,
-            nightCharges: nightcharge,
-            serviceCharge: servicecharge,
-            waitingCharge: waitingCharge,
-            ParkingRate: parkingRate,
-            kmRate: kmRate,
-            timeRate: timeRate,
-            plateFormCharges: plateFormCharges,
-            otherCharge: otherCharge,
-            surgeCharges: surgeCharges,
-            tollCharge: tollCharge,
-            ridetimeCharges: ridetimeCharges,
-            cancellationCharges: cancellationCharges,
-            description: description
-        }
+    const [taxpriceeData, setTaxpriceData] = useState([]);
 
-        try {
-            const response = await axios.post(`${BaseUrl}api/v1/Taxes/add`, data, getAuthHeaders())
-            toast.success("Tax Pricing add successfully");
-            navigate('/alltaxpricing')
-            setBasePrice('')
-            setNightCharge('')
-            setServiceCharge('')
-            setWaitingCharge('')
-            setParkingRate('')
-            setKmRate('')
-            setTimeRate('')
-            setPlateFormCharges('')
-            setOtherCharge('')
-            setSurgeCharges('')
-            setTollCharge('')
-            setRidetimeCharges('')
-            setCancellationCharges('')
-            setDescription('')
+    useEffect(() => {
+        fetchTaxpriceData();
+    }, []);
 
-        } catch (error) {
-            console.log('Error to add Tax Pricing:', error)
-            toast.error("Error to add Tax Pricing")
-        }
-    }
+    const fetchTaxpriceData = () => {
+        axios.get(`${BaseUrl}api/v1/Taxes/get`, getAuthHeaders())
+            .then(response => {
+                setTaxpriceData(response.data.data);
+            })
+            .catch(error => {
+                console.error('Error fetching Tax Price data:', error);
+            });
+    };
+
+
+
+
 
     return (
         <>
-            <div className='rider'>
-                <div className='rider1'>
-                    <div className='rider2'>
-                        <div className='rider3'>
-                            <h6>Add Tax Pricing</h6>
-                        </div>
+            {taxpriceeData.map(taxprice => (
+                <div className='rider'>
+                    <div className='rider1'>
+                        <div className='rider2'>
+                            <div className='rider3'>
+                                <h6>Tax Pricing</h6>
+                            </div>
 
-                        <div className='rider4'>
-                            {/* <div className='rider5'>
+                            <div className='rider4'>
+                                <button onClick={() => navigate(`/updatetaxpricing/${taxprice._id}`)}>Update Pricing</button>
+                                {/* <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
                                 <input type="search" name="" id="" placeholder='Search User' />
                             </div> */}
+                            </div>
                         </div>
-                    </div>
+                        <div style={{marginBottom:"50px"}}>
+                            <div className='dailyprice'>
+                                <div className='dailyprice3'>
+                                    <div className='dailyprice4'>
+                                        <label htmlFor="">Base Price</label>
+                                        <input type="number" placeholder='Enter Base price' value={taxprice.basePrice} />
+                                    </div>
+                                    <div className='dailyprice4'>
+                                        <label htmlFor="">Night Charge</label>
+                                        <input type="number" placeholder='Enter night charge' value={taxprice.nightCharges}  />
+                                    </div>
+                                </div>
+                                <div className='dailyprice3'>
+                                    <div className='dailyprice4'>
+                                        <label htmlFor="">Service Charge</label>
+                                        <input type="number" placeholder='Enter service charge' value={taxprice.serviceCharge}  />
+                                    </div>
+                                    <div className='dailyprice4'>
+                                        <label htmlFor="">Waiting Charge</label>
+                                        <input type="number" placeholder='Enter Waiting Charge' value={taxprice.waitingCharge} />
+                                    </div>
+                                </div>
+                                <div className='dailyprice3'>
+                                    <div className='dailyprice4'>
+                                        <label htmlFor="">Parking Rate</label>
+                                        <input type="number" placeholder='Enter parking Rate' value={taxprice.ParkingRate}  />
+                                    </div>
+                                    <div className='dailyprice4'>
+                                        <label htmlFor="">Km Rate</label>
+                                        <input type="number" placeholder='Enter km rate' value={taxprice.kmRate}  />
+                                    </div>
+                                </div>
+                                <div className='dailyprice3'>
+                                    <div className='dailyprice4'>
+                                        <label htmlFor="">Time Rate</label>
+                                        <input type="number" placeholder='Enter time Rate' value={taxprice.timeRate}  />
+                                    </div>
+                                    <div className='dailyprice4'>
+                                        <label htmlFor="">Plate Form Charges</label>
+                                        <input type="number" placeholder='Enter plate Form Charges' value={taxprice.plateFormCharges}  />
+                                    </div>
+                                </div>
+                                <div className='dailyprice3'>
+                                    <div className='dailyprice4'>
+                                        <label htmlFor="">Surge Charges</label>
+                                        <input type="number" placeholder='Enter surge Charges' value={taxprice.surgeCharges}  />
+                                    </div>
+                                    <div className='dailyprice4'>
+                                        <label htmlFor="">Toll Charge</label>
+                                        <input type="number" placeholder='Enter toll Charge' value={taxprice.tollCharge}  />
+                                    </div>
+                                </div>
+                                <div className='dailyprice3'>
+                                    <div className='dailyprice4'>
+                                        <label htmlFor="">Ride Time Charges</label>
+                                        <input type="number" placeholder='Enter ride time Charges' value={taxprice.ridetimeCharges}  />
+                                    </div>
+                                    <div className='dailyprice4'>
+                                        <label htmlFor="">Cancellation Charges</label>
+                                        <input type="number" placeholder='Enter cancellation Charges' value={taxprice.cancellationCharges}  />
+                                    </div>
+                                </div>
+                                <div className='dailyprice3'>
+                                    <div className='dailyprice4'>
+                                        <label htmlFor="">Other Charge</label>
+                                        <input type="number" placeholder='Enter other Charge' value={taxprice.otherCharge}  />
+                                    </div>
+                                    <div className='dailyprice4'>
+                                        <label htmlFor="">Description</label>
+                                        <textarea name="" id="" cols="30" rows="5" value={taxprice.description} ></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 
-                    <div className='dailyprice'>
-                        <div className='dailyprice3'>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Base Price</label>
-                                <input type="number" placeholder='Enter Base price' value={baseprice} onChange={(e) => setBasePrice(e.target.value)} />
-                            </div>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Night Charge</label>
-                                <input type="number" placeholder='Enter night charge' value={nightcharge} onChange={(e) => setNightCharge(e.target.value)} />
-                            </div>
-                        </div>
-                        <div className='dailyprice3'>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Service Charge</label>
-                                <input type="number" placeholder='Enter service charge' value={servicecharge} onChange={(e) => setServiceCharge(e.target.value)} />
-                            </div>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Waiting Charge</label>
-                                <input type="number" placeholder='Enter Waiting Charge' value={waitingCharge} onChange={(e) => setWaitingCharge(e.target.value)} />
-                            </div>
-                        </div>
-                        <div className='dailyprice3'>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Parking Rate</label>
-                                <input type="number" placeholder='Enter parking Rate' value={parkingRate} onChange={(e) => setParkingRate(e.target.value)} />
-                            </div>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Km Rate</label>
-                                <input type="number" placeholder='Enter km rate' value={kmRate} onChange={(e) => setKmRate(e.target.value)} />
-                            </div>
-                        </div>
-                        <div className='dailyprice3'>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Time Rate</label>
-                                <input type="number" placeholder='Enter time Rate' value={timeRate} onChange={(e) => setTimeRate(e.target.value)} />
-                            </div>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Plate Form Charges</label>
-                                <input type="number" placeholder='Enter plate Form Charges' value={plateFormCharges} onChange={(e) => setPlateFormCharges(e.target.value)} />
-                            </div>
-                        </div>
-                        <div className='dailyprice3'>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Surge Charges</label>
-                                <input type="number" placeholder='Enter surge Charges' value={surgeCharges} onChange={(e) => setSurgeCharges(e.target.value)} />
-                            </div>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Toll Charge</label>
-                                <input type="number" placeholder='Enter toll Charge' value={tollCharge} onChange={(e) => setTollCharge(e.target.value)} />
-                            </div>
-                        </div>
-                        <div className='dailyprice3'>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Ride Time Charges</label>
-                                <input type="number" placeholder='Enter ride time Charges' value={ridetimeCharges} onChange={(e) => setRidetimeCharges(e.target.value)} />
-                            </div>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Cancellation Charges</label>
-                                <input type="number" placeholder='Enter cancellation Charges' value={tollCharge} onChange={(e) => setCancellationCharges(e.target.value)} />
-                            </div>
-                        </div>
-                        <div className='dailyprice3'>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Other Charge</label>
-                                <input type="number" placeholder='Enter other Charge' value={otherCharge} onChange={(e) => setOtherCharge(e.target.value)} />
-                            </div>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Description</label>
-                                <textarea name="" id="" cols="30" rows="5" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-                            </div>
-                        </div>
-                        <div className='dailyprice5'>
-                            <button onClick={() => navigate('/alltaxpricing')}>Cancel</button>
-                            <button onClick={handlePostRequest}>Add Price</button>
-                        </div>
                     </div>
                 </div>
-            </div>
+            ))}
         </>
     )
 }
