@@ -99,18 +99,17 @@ const Dashboard = () => {
 
           <div className='dashboard'>
             <div className='dashboard2'>
-              <Link className='sidebar-link'>
+              <Link to={'/vendors'} className='sidebar-link' >
                 <div className='dashboard1'>
-                  <img src={img} alt="" />
-                  <p>Total Users</p>
-                  <h6>{totalUsers}</h6>
+                  <img src={img2} alt="" />
+                  <p>Total Vendors</p>
+                  <h6>{totalVendors}</h6>
                 </div>
               </Link>
-
               <Link to={'/riders'} className='sidebar-link'>
                 <div className='dashboard1'>
                   <img src={img} alt="" />
-                  <p>Total Riders</p>
+                  <p>Total User</p>
                   <h6>{totalRiders}</h6>
                 </div>
               </Link>
@@ -124,13 +123,7 @@ const Dashboard = () => {
               </Link>
             </div>
             <div className='dashboard2'>
-              <Link to={'/vendors'} className='sidebar-link' >
-                <div className='dashboard1'>
-                  <img src={img2} alt="" />
-                  <p>Total Vendors</p>
-                  <h6>{totalVendors}</h6>
-                </div>
-              </Link>
+
               <Link className='sidebar-link' >
                 <div className='dashboard1'>
                   <img src={img3} alt="" />
@@ -138,13 +131,13 @@ const Dashboard = () => {
                   <h6>{totalEarnings}</h6>
                 </div>
               </Link>
-              <Link className='sidebar-link' >
+              {/* <Link className='sidebar-link' >
                 <div className='dashboard1'>
                   <img src={img} alt="" />
                   <p>New Users</p>
                   <h6>{newUsers}</h6>
                 </div>
-              </Link>
+              </Link> */}
             </div>
 
 

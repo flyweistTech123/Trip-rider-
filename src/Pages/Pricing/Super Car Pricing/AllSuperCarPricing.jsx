@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../Pricing.css'
 import { Link } from 'react-router-dom';
+import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
+
 import HOC from '../../../Components/HOC/HOC'
 
 import { IoSearch } from "react-icons/io5";
@@ -27,7 +29,7 @@ const AllSuperCarPricing = () => {
     }, []);
 
     const fetchSupercarpriceData = () => {
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/SuperCarPricing?superCar=65ba340ea4036b1d793b3bcd')
+        axios.get(`${BaseUrl}api/v1/SuperCarPricing`, getAuthHeaders())
             .then(response => {
                 setSuperCarpriceData(response.data.data);
             })
@@ -36,8 +38,8 @@ const AllSuperCarPricing = () => {
             });
     };
 
-    const deleteSuperCar = (supercarpriceId) => {
-        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/BasePricing/delete/${supercarpriceId}`)
+    const deleteSuperCarPricing = (supercarpriceId) => {
+        axios.delete(`${BaseUrl}api/v1/SuperCarPricing/${supercarpriceId}`, getAuthHeaders())
             .then(response => {
                 fetchSupercarpriceData();
                 toast.success("Super car Price deleted successfully");
@@ -89,9 +91,11 @@ const AllSuperCarPricing = () => {
                                 {supercarpriceeData.map(supercarprice => (
                                     <tr key={supercarprice.id}>
                                         <td>{supercarprice?.name}</td>
-                                        <td className='vehicle12'>
-                                            <img src={supercarprice.image[0].img} alt="" />
-                                        </td>
+                                        {supercarprice.image.length > 0 && (
+                                            <td className='vehicle12'>
+                                                <img src={supercarprice.image[0].img} alt="" />
+                                            </td>
+                                        )}
                                         <td>{supercarprice.kmLimit}</td>
                                         <td>{supercarprice.kmPrice}</td>
                                         <td>{supercarprice.hrLimit}</td>
@@ -99,12 +103,12 @@ const AllSuperCarPricing = () => {
                                         <td style={{ color: '#F52D56' }}>₹ {supercarprice.price}</td>
                                         <td>
                                             <div className='service11'>
-                                                <div className='rider10' onClick={() => deleteSuperCar(supercarprice._id)}>
+                                                <div className='rider10' onClick={() => deleteSuperCarPricing(supercarprice._id)}>
                                                     <RiDeleteBinLine color='#667085' size={20} />
                                                     <p>Delete</p>
                                                 </div>
                                                 <div className='rider10'>
-                                                    <Link to={`/updatenormalvehicles/${supercarprice._id}`} className='sidebar-link' >
+                                                    <Link to={`/updatesupercarpricing/${supercarprice._id}`} className='sidebar-link' >
                                                         <MdEdit color='#667085' size={20} />
                                                         <p>Edit</p>
                                                     </Link>

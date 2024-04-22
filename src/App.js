@@ -74,6 +74,7 @@ import AllScheduledBooking from './Pages/All Bookings/AllScheduledBooking.jsx';
 import AddTaxpricing from './Pages/Pricing/Taxes/AddTaxpricing.jsx';
 import UpdateTaxpricing from './Pages/Pricing/Taxes/UpdateTaxpricing.jsx';
 import AllBasepricing from './Pages/Pricing/base pricing/AllBasepricing.jsx';
+import UpdateSuperCarPricing from './Pages/Pricing/Super Car Pricing/UpdateSuperCarPricing.jsx';
 
 
 
@@ -155,6 +156,7 @@ function App() {
           <Route path="/geofencing_view" element={<AdminRouteProtect> <Geofencing /> </AdminRouteProtect>} />
           <Route path="/cancellled_booking" element={<AdminRouteProtect> <AllCancledBooking /> </AdminRouteProtect>} />
           <Route path="/scheduled_booking" element={<AdminRouteProtect> <AllScheduledBooking /> </AdminRouteProtect>} />
+          <Route path="/updatesupercarpricing/:id" element={<AdminRouteProtect> <UpdateSuperCarPricing /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>

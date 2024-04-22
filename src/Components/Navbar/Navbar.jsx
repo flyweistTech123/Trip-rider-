@@ -66,7 +66,7 @@ const Navbar = () => {
                                 </div>
                                 <p>Settings</p>
                             </div>
-                            <div className='navbar7'>
+                            {/* <div className='navbar7'>
                                 <div className='navbar88'>
                                     <MdHistory />
                                 </div>
@@ -77,7 +77,7 @@ const Navbar = () => {
                                     <FiFilter />
                                 </div>
                                 <p>Filter</p>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

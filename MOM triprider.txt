@@ -24,3 +24,22 @@ MOM Of trip Rider
 6. The service charges are incorrect according to the client's statement.
 
 
+
+16/14/24
+MOM Of trip Rider
+-> The Rider table change into Users Table.
+->The super admin should provide access to admin of admin should limited.
+->The Live chart and faizan said that he completed the there end the should meet with to complete my side 
+->In base pricing the there is miskate of word.
+-> In tax pricing the other charge change to the gst 
+
+
+
+Here's a revised version of your text:
+
+MOM of Trip Rider:
+- The Rider table has been converted into the Users table.
+- The super admin should grant access to the admin, with the admin's permissions being limited.
+-The live chart and Faizan said they finished their work. We should meet up to finish my part.
+- There is a spelling mistake in the base pricing section.
+- In the tax pricing section, change 'other charge' to 'GST'.

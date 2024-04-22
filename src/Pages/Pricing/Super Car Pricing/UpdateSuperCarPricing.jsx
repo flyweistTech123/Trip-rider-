@@ -1,38 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import '../Pricing.css'
 import HOC from '../../../Components/HOC/HOC'
-import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import img3 from '../../../Images/img43.png';
 
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-
 
 
 // import img from '../../Images/img5.png'
 
 
-const AddSuperCarPricing = () => {
+const UpdateSuperCarPricing = () => {
+    const { id } = useParams();
     const [name, setName] = useState('');
-    const [image, setImage] = useState('');
-    const [superCar, setSuperCar] = useState('');
-    const [superCars, setSuperCars] = useState([]);
+    const [image, setImage] = useState([]);
+    const [imageData, setImageData] = useState([]);
     const [price, setPrice] = useState('');
     const [kmLimit, setKmLimit] = useState('');
     const [kmPrice, setKmPrice] = useState('')
     const [hrPrice, setHrPrice] = useState('');
     const [hrLimit, setHrLimit] = useState('');
-    const navigate = useNavigate();
 
 
-    const handlePostRequest = async () => {
+    useEffect(() => {
+        const fetchSuperCarDetails = async () => {
+            try {
+                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/SuperCarPricing/${id}`);
+                const { name, image, price, kmLimit, kmPrice, hrPrice, hrLimit } = response.data.data;
+                setName(name);
+                setImage(image[0].img);
+                setPrice(price);
+                setKmLimit(kmLimit);
+                setKmPrice(kmPrice);
+                setHrPrice(hrPrice);
+                setHrLimit(hrLimit);
+            } catch (error) {
+                console.error('Error fetching Super car Pricing details:', error);
+            }
+        };
+        fetchSuperCarDetails();
+    }, [id]);
+    const handlePutRequest = async () => {
         const formData = new FormData();
         formData.append('name', name);
         formData.append('image', image);
-        formData.append('superCar', superCar);
         formData.append('price', price);
         formData.append('kmLimit', kmLimit);
         formData.append('kmPrice', kmPrice);
@@ -40,51 +54,41 @@ const AddSuperCarPricing = () => {
         formData.append('hrLimit', hrLimit);
 
 
-        try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/SuperCarPricing', formData)
-            const message = response.data.message;
-            toast.success("Super car Pricing added successfully");
-            navigate('/allsupercarpricing')
-            setName('');
-            setImage('');
-            setPrice('');
-            setKmLimit('');
-            setKmPrice('');
-            setHrPrice('');
-            setHrLimit('')
-            setSuperCar('')
 
+        try {
+            const response = await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/SuperCarPricing/${id}`, formData);
+            toast.success("Super Car Pricing Updated successfully");
+            navigate('/allsupercarpricing');
         } catch (error) {
-            console.log('Error to add Super car Pricing:', error)
-            toast.error("Error to add Super car Pricing")
+            console.error('Error updating Super Car Pricing:', error);
+            toast.error("Error updating Super Car Pricing");
         }
     }
 
-    useEffect(() => {
-        const fetchSuperCar = async () => {
-            try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/SuperCar`);
-                setSuperCars(response.data.data);
-            } catch (error) {
-                console.error('Error fetching Super car:', error);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchSuperCar = async () => {
+    //         try {
+    //             const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/SuperCar`);
+    //             setSuperCars(response.data.data);
+    //         } catch (error) {
+    //             console.error('Error fetching Super car:', error);
+    //         }
+    //     };
 
-        fetchSuperCar();
-    }, []);
+    //     fetchSuperCar();
+    // }, []);
 
-    const triggerFileInput1 = () => {
-        document.getElementById('fileInput1').click();
+    const triggerFileInput = () => {
+        document.getElementById('fileInput').click();
     };
-
-
+    const navigate = useNavigate()
     return (
         <>
             <div className='rider'>
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>Add Super car Pricing</h6>
+                            <h6>Update Super Car Pricing</h6>
                         </div>
 
                         <div className='rider4'>
@@ -130,38 +134,41 @@ const AddSuperCarPricing = () => {
                             </div>
                         </div>
                         <div className='dailyprice3'>
-                            <div className='dailyprice2'>
+                            {/* <div className='dailyprice2'>
                                 <label htmlFor="">Super Cars</label>
-                                <select onChange={(e) => setSuperCar(e.target.value)}>
-                                    <option value="">Select Super Cars</option>
+                                <select value={superCar} onChange={(e) => {
+                                    const selectedSupercar = superCars.find(supercar => supercar.name === e.target.value);
+                                    setSuperCarID(selectedSupercar._id);
+                                    setSuperCar(e.target.value);
+                                }}>
+                                    <option>Select Super Cars</option>
                                     {superCars?.map(Supercar => (
-                                        <option key={Supercar.id} value={Supercar._id}>{Supercar.name}</option>
+                                        <option key={Supercar._id} value={Supercar.name}>{Supercar.name}</option>
                                     ))}
                                 </select>
-                            </div>
+                            </div> */}
                         </div>
 
-
-
                         <div className='vehicle13'>
-                            <label htmlFor="">Upload Super car Image</label>
-                            <div className='ambulance2' onClick={triggerFileInput1}>
+                            <label htmlFor="">Updated Super Car Image</label>
+                            <div className='service7' onClick={triggerFileInput}>
                                 <div className='vehicle14'>
                                     {image ? (
-                                        <img src={URL.createObjectURL(image)} alt="" />
+                                        <img src={image instanceof File ? URL.createObjectURL(image) : image} alt="" />
                                     ) : (
                                         <img src={img3} alt="" />
                                     )}
                                 </div>
                                 <p>Drag and drop images here, or click to add image</p>
-                                <button>Add Images</button>
-                                <input type="file" id="fileInput1" style={{ display: 'none' }} onChange={(e) => setImage(e.target.files[0])} />
+                                <button>Update Image</button>
+                                <input type="file" id="fileInput" style={{ display: 'none' }} onChange={(e) => setImage(e.target.files[0])} />
                             </div>
                         </div>
 
-                        <div className='dailyprice5'>
+
+                        <div className='promo1'>
                             <button onClick={() => navigate('/allsupercarpricing')}>Cancel</button>
-                            <button onClick={handlePostRequest}>Add Price</button>
+                            <button onClick={handlePutRequest}>Save Changes</button>
                         </div>
                     </div>
                 </div>
@@ -170,4 +177,4 @@ const AddSuperCarPricing = () => {
     )
 }
 
-export default HOC(AddSuperCarPricing)
+export default HOC(UpdateSuperCarPricing)

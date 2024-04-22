@@ -20,31 +20,22 @@ const AddsuperCarVehicles = () => {
 
     const [supercarname, setSuperCarName] = useState('');
     const [image, setImage] = useState('');
-    const [active, setActive] = useState('')
-    const [price, setPrice] = useState('')
-    const [serviceCategory, setServiceCategory] = useState('');
-    const [serviceCategorys, setServiceCategorys] = useState([]);
+    // const [serviceCategory, setServiceCategory] = useState('');
+    // const [serviceCategorys, setServiceCategorys] = useState([]);
 
     const handlePostRequest = async () => {
         const formData = new FormData();
         formData.append('name', supercarname);
         formData.append('image', image);
-        formData.append('isActive', active);
-        formData.append('price', price)
-        formData.append('serviceCategory', serviceCategory)
+        // formData.append('serviceCategory', serviceCategory)
 
 
         try {
             const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/SuperCar', formData);
             const message = response.data.message;
-            toast.success(message);
-
-            // Reset state variables to clear input fields
+            toast.success("Super car added successfully");
             setSuperCarName('');
             setImage('');
-            setActive('');
-            setPrice('');
-            setServiceCategory('')
             navigate('/allsuperCarvehicles')
         } catch (error) {
             console.error('Error to Super Car:', error);
@@ -52,18 +43,18 @@ const AddsuperCarVehicles = () => {
         }
     }
 
-    useEffect(() => {
-        const fetchServiceCategory = async () => {
-            try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/serviceCategory`);
-                setServiceCategorys(response.data.data);
-            } catch (error) {
-                console.error('Error fetching Service Category:', error);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchServiceCategory = async () => {
+    //         try {
+    //             const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/serviceCategory`);
+    //             setServiceCategorys(response.data.data);
+    //         } catch (error) {
+    //             console.error('Error fetching Service Category:', error);
+    //         }
+    //     };
 
-        fetchServiceCategory();
-    }, []);
+    //     fetchServiceCategory();
+    // }, []);
 
     const triggerFileInput = () => {
         document.getElementById('fileInput').click();
@@ -90,32 +81,12 @@ const AddsuperCarVehicles = () => {
 
 
                     <div className='dailyprice'>
-                        <div className='outstationprice1'>
-                            <p>Status</p>
-                            <div className='outstationprice2'>
-                                <div className='outstationprice3'>
-                                    <input type="radio" name="active" value={true} onChange={() => setActive(true)} />
-                                    <p>Active</p>
-                                </div>
-                                <div className='outstationprice3'>
-                                    <input type="radio" name="active" value={false} onChange={() => setActive(false)} />
-                                    <p>Not Active</p>
-                                </div>
-                            </div>
-
-                        </div>
                         <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Super Car Name</label>
                                 <input type="text" placeholder='Enter category' value={supercarname} onChange={(e) => setSuperCarName(e.target.value)} />
                             </div>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Price</label>
-                                <input type="number" placeholder='Enter Discount' value={price} onChange={(e) => setPrice(e.target.value)} />
-                            </div>
-                        </div>
-                        <div className='vehicle18'>
-                            <div className='dailyprice2'>
+                            {/* <div className='dailyprice2'>
                                 <label htmlFor="">Category</label>
                                 <select onChange={(e) => setServiceCategory(e.target.value)}>
                                     <option value="">Select Categorys</option>
@@ -123,10 +94,8 @@ const AddsuperCarVehicles = () => {
                                         <option key={Categorys.id} value={Categorys._id}>{Categorys.category}</option>
                                     ))}
                                 </select>
-                            </div>
+                            </div> */}
                         </div>
-
-
                         <div className='vehicle13'>
                             <label htmlFor="">Upload Super Car Image</label>
                             <div className='service7' onClick={triggerFileInput}>

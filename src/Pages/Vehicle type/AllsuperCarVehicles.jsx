@@ -6,6 +6,8 @@ import './Vehicletype.css'
 import HOC from '../../Components/HOC/HOC'
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
+
 
 import { IoSearch } from "react-icons/io5";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -26,7 +28,7 @@ const AllsuperCarVehicles = () => {
     }, []);
 
     const fetchSuperCarData = () => {
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/SuperCar')
+        axios.get(`${BaseUrl}api/v1/SuperCar`,  getAuthHeaders())
             .then(response => {
                 setSuperCarData(response.data.data);
             })
@@ -36,9 +38,8 @@ const AllsuperCarVehicles = () => {
     };
 
     const deleteSuperCar = (supercarId) => {
-        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/vehicle/${supercarId}`)
+        axios.delete(`${BaseUrl}api/v1/SuperCar/${supercarId}`, getAuthHeaders())
             .then(response => {
-                // console.log('Rider deleted successfully');
                 toast.success("Super Car deleted successfully");
                 fetchSuperCarData();
             })
@@ -75,13 +76,11 @@ const AllsuperCarVehicles = () => {
                                     <th>SR. No.</th>
                                     <th>Super car Name</th>
                                     <th>Image</th>
-                                    <th>Price</th>
-                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {supercarData.map((supercar, index) => (
+                                {/* {supercarData.map((supercar, index) => (
                                     <React.Fragment key={supercar._id}>
                                         {supercar.superCarPricing.map((pricing, pricingIndex) => (
                                             <tr key={pricing._id}>
@@ -115,6 +114,25 @@ const AllsuperCarVehicles = () => {
                                             </tr>
                                         ))}
                                     </React.Fragment>
+                                ))} */}
+                                {supercarData.map((supercar, index)  => (
+                                    <tr key={supercar.id}>
+                                        <td>{index + 1}</td>
+                                        <td>{supercar?.name}</td>
+                                        <td><img src={supercar?.image} style={{ width: '50px' }} /></td>
+                                        <td className='rider9'>
+                                            <div className='rider10' onClick={() => deleteSuperCar(supercar._id)}>
+                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                <p>Delete</p>
+                                            </div>
+                                            <div className='rider10'>
+                                                <Link to={`/updatesupercarvehicles/${supercar._id}`} className='sidebar-link' >
+                                                    <MdEdit color='#667085' size={20} />
+                                                    <p>Edit</p>
+                                                </Link>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 ))}
                             </tbody>
 
