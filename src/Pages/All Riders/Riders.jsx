@@ -94,7 +94,7 @@ const Riders = () => {
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>All Riders</h6>
+                            <h6>All Users</h6>
                         </div>
 
                         <div className='rider4'>

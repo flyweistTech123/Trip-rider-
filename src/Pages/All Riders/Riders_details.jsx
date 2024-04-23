@@ -87,7 +87,7 @@ const Riders_details = () => {
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>Rider’s Details</h6>
+                            <h6>User’s Details</h6>
                         </div>
                     </div>
                     {RiderData && (

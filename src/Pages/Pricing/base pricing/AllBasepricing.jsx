@@ -194,8 +194,8 @@ const AllBasepricing = () => {
                         <table>
                             <thead>
                                 <tr>
-                                    <th>City</th>
                                     <th>Vehicle</th>
+                                    <th>City</th>
                                     <th>Price/Min</th>
                                     <th>Price</th>
                                     <th>Action Buttons</th>

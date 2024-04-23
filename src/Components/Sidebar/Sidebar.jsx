@@ -35,7 +35,7 @@ const Sidebar = () => {
 
     const sidebarItems = [
         { icon: img1, text: 'Dashboard', link: '/dashboard' },
-        { icon: img2, text: 'All Riders', link: '/riders' },
+        { icon: img2, text: 'All Users', link: '/riders' },
         { icon: img3, text: 'All Drivers', link: '/drivers' },
         { icon: img20, text: 'All Drivers Earnings', link: '/earnings' },
         { icon: img4, text: 'All Vendors', link: '/vendors' },

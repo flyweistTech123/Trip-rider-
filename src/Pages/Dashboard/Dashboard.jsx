@@ -122,7 +122,7 @@ const Dashboard = () => {
                 </div>
               </Link>
             </div>
-            <div className='dashboard2'>
+            {/* <div className='dashboard2'>
 
               <Link className='sidebar-link' >
                 <div className='dashboard1'>
@@ -131,14 +131,7 @@ const Dashboard = () => {
                   <h6>{totalEarnings}</h6>
                 </div>
               </Link>
-              {/* <Link className='sidebar-link' >
-                <div className='dashboard1'>
-                  <img src={img} alt="" />
-                  <p>New Users</p>
-                  <h6>{newUsers}</h6>
-                </div>
-              </Link> */}
-            </div>
+            </div> */}
 
 
             <div className='dashboard4'>
