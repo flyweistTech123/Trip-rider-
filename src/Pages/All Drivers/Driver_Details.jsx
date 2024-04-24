@@ -9,9 +9,8 @@ import img from '../../Images/img27.png'
 import img1 from '../../Images/img28.png'
 import { MdOutlineBlock } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { FiHome } from "react-icons/fi";
-import { MdWorkOutline } from "react-icons/md";
-import { LuUserSquare2 } from "react-icons/lu";
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
+
 
 
 import { useNavigate } from 'react-router-dom';
@@ -19,6 +18,18 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Driver_Details = () => {
+
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+
+        const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${date.getMonth() + 1}-${date.getFullYear()}`;
+
+        return `${formattedDate}`;
+    };
+
+
+
     const { id } = useParams();
     const [DriverData, setDriverData] = useState(null);
     const [isBlocked, setIsBlocked] = useState(false); // Initialize isBlocked state to false
@@ -27,7 +38,7 @@ const Driver_Details = () => {
     useEffect(() => {
         const fetchDriverData = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/getUserById/${id}`); // Use the ID from the URL
+                const response = await axios.get(`${BaseUrl}api/v1/getUserById/${id}`, getAuthHeaders()); // Use the ID from the URL
                 const driverDataFromApi = response.data.data;
                 setDriverData(driverDataFromApi);
                 setIsBlocked(driverDataFromApi.isBlock);
@@ -41,7 +52,7 @@ const Driver_Details = () => {
 
     const handleDeleteDriver = async () => {
         try {
-            await axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/admin/delete/driver/${id}`);
+            await axios.delete(`${BaseUrl}api/v1/admin/delete/driver/${id}`, getAuthHeaders());
             toast.success("Driver deleted successfully");
             navigate('/drivers');
         } catch (error) {
@@ -54,7 +65,7 @@ const Driver_Details = () => {
 
     const blockDriver = async () => {
         try {
-            await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/admin/block/driver/${id}`);
+            await axios.put(`${BaseUrl}api/v1/admin/block/driver/${id}`, getAuthHeaders());
             setIsBlocked(true); // Update isBlocked state
             toast.success("Driver is blocked successfully");
         } catch (error) {
@@ -65,7 +76,7 @@ const Driver_Details = () => {
 
     const unblockDriver = async () => {
         try {
-            await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/admin/unblock/driver/${id}`);
+            await axios.put(`${BaseUrl}api/v1/admin/unblock/driver/${id}`, getAuthHeaders());
             setIsBlocked(false); // Update isBlocked state
             toast.success("Driver is unblocked successfully'");
         } catch (error) {
@@ -89,12 +100,12 @@ const Driver_Details = () => {
                                 <div className='rider_details1'>
                                     <div className='rider_details2'>
                                         <div className='rider_details3'>
-                                            <img src={img} alt="" />
+                                            <img src={DriverData.profilePicture} alt=""  style={{ width: '50px' }}/>
                                             <div className='rider_details4'>
                                                 <h6>{DriverData.name}<div className='rider_details5'>
-                                                    <p>Host</p>
+                                                    <p>{DriverData.role}</p>
                                                 </div></h6>
-                                                <p>Completed  Profile</p>
+                                                {/* <p>Completed  Profile</p> */}
                                             </div>
                                             <div className='rider_details6'>
                                                 <div className='rider_details7' onClick={handleDeleteDriver}>
@@ -115,14 +126,14 @@ const Driver_Details = () => {
                                                     <img src={img1} alt="" />
                                                     <p>{DriverData.wallet}</p>
                                                     <div className='rider_details11'>
-                                                        <p>Expires</p>
-                                                        <p>09/21</p>
+                                                        {/* <p>Expires</p>
+                                                        <p>09/21</p> */}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className='rider_details99'>
                                                 <p>Total  Trips</p>
-                                                <p>36</p>
+                                                <p>{DriverData?.totalBooking}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -169,84 +180,253 @@ const Driver_Details = () => {
                                             <div className='rider_details14'>
                                                 <label htmlFor="">Aadhar Card Number</label>
                                                 <div className='input11'>
-                                                    <p>{DriverData.aadhar}</p>
+                                                    <p>{DriverData?.driverDocument?.aadhar}</p>
                                                 </div>
                                             </div>
                                             <div className='rider_details14'>
                                                 <label htmlFor="">First Line Address</label>
                                                 <div className='input11'>
-                                                    <p>{DriverData.present_address}</p>
+                                                    <p>{DriverData?.driverDocument?.present_address}</p>
                                                 </div>
                                             </div>
                                             <div className='rider_details14'>
                                                 <label htmlFor="">Second Line Address</label>
                                                 <div className='input11'>
-                                                    <p>{DriverData.permanent_address}</p>
+                                                    <p>{DriverData?.driverDocument?.permanent_address}</p>
                                                 </div>
                                             </div>
                                             <div className='rider_details14'>
-                                                <label htmlFor="">District</label>
+                                                <label htmlFor="">Driver license Number</label>
                                                 <div className='input11'>
-                                                    <p>{DriverData.registered_at}</p>
-                                                </div>
-                                            </div>
-                                            <div className='rider_details14'>
-                                                <label htmlFor="">Pin Code</label>
-                                                <div className='input11'>
-                                                    <p>{DriverData.registered_at}</p>
-                                                </div>
-                                            </div>
-                                            <div className='rider_details14'>
-                                                <label htmlFor="">Country</label>
-                                                <div className='input11'>
-                                                    <p>{DriverData.registered_at}</p>
-                                                </div>
-                                            </div>
-                                            <div className='rider_details14'>
-                                                <label htmlFor="">State</label>
-                                                <div className='input11'>
-                                                    <p>{DriverData.registered_at}</p>
-                                                </div>
-                                            </div>
-                                            <div className='rider_details14'>
-                                                <label htmlFor="">Vehicle Type</label>
-                                                <div className='input11'>
-                                                    <p>{DriverData.vehicle_category}</p>
-                                                </div>
-                                            </div>
-                                            <div className='rider_details14'>
-                                                <label htmlFor="">Vehicle Number</label>
-                                                <div className='input11'>
-                                                    <p>{DriverData.permit_number}</p>
-                                                </div>
-                                            </div>
-                                            <div className='rider_details14'>
-                                                <label htmlFor="">Vehicle Name</label>
-                                                <div className='input11'>
-                                                    <p>{DriverData.maker_model}</p>
+                                                    <p>{DriverData?.driverDocument?.dlno}</p>
                                                 </div>
                                             </div>
                                         </div>    
                                     </div>
 
-                                    {/* <div className='rider_details15'>
-                                        <p>Saved As</p>
-                                        <div className='rider_details18'>
-                                            <div className='rider_details16'>
-                                                <FiHome color='#FFFFFF' />
-                                                <p>Home</p>
+                                    <div className='rider_details12'>
+                                        <h6>Vehicle Information</h6>
+                                        <div className='rider_details13'>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Rc Number</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.rc_number}</p>
+                                                </div>
                                             </div>
-                                            <div className='rider_details17'>
-                                                <MdWorkOutline color='#C3052C' />
-                                                <p>Work</p>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Registration Date</label>
+                                                <div className='input11'>
+                                                    <p>{formatDate(DriverData?.driverDocument?.registration_date)}</p>
+                                                </div>
                                             </div>
-                                            <div className='rider_details17'>
-                                                <LuUserSquare2 color='#C3052C' />
-                                                <p>Other</p>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Owner Name</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.owner_name}</p>
+                                                </div>
                                             </div>
-                                        </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Vehicle Category</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.vehicle_category}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Vehicle Chasi Number</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.vehicle_chasi_number}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Vehicle Engine Number</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.vehicle_engine_number}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Maker Description</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.maker_description}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Maker Model</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.maker_model}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Fuel Type</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.fuel_type}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Color</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.color}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Insurance Company</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.insurance_company}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Insurance Policy Number</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.insurance_policy_number}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Insurance Upto</label>
+                                                <div className='input11'>
+                                                    <p>{formatDate(DriverData?.driverDocument?.insurance_upto)}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Manufacturing Date</label>
+                                                <div className='input11'>
+                                                    <p>{formatDate(DriverData?.driverDocument?.manufacturing_date)}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Registered at</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.registered_at}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Vehicle Gross Weight</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.vehicle_gross_weight}</p>
+                                                </div>
+                                            </div>
 
-                                    </div> */}
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Number Of Cylinders</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.no_cylinders}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Seat Capacity</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.seat_capacity}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Vehicle Category Description</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.vehicle_category_description}</p>
+                                                </div>
+                                            </div>
+
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Pucc Number</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.pucc_number}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Pucc Upto</label>
+                                                <div className='input11'>
+                                                    <p>{formatDate(DriverData?.driverDocument?.pucc_upto)}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Permit Number</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.permit_number}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Permit Issue Date</label>
+                                                <div className='input11'>
+                                                    <p>{formatDate(DriverData?.driverDocument?.permit_issue_date)}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Permit Valid From</label>
+                                                <div className='input11'>
+                                                    <p>{formatDate(DriverData?.driverDocument?.permit_valid_from)}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Permit Valid Upto</label>
+                                                <div className='input11'>
+                                                    <p>{formatDate(DriverData?.driverDocument?.permit_valid_upto)}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Permit Type</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.permit_type}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">National Permit Number</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.national_permit_number}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">National Permit Upto</label>
+                                                <div className='input11'>
+                                                    <p>{formatDate(DriverData?.driverDocument?.national_permit_upto)}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">National Permit Issued by</label>
+                                                <div className='input11'>
+                                                    <p>{formatDate(DriverData?.driverDocument?.national_permit_issued_by)}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Noc Details</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.noc_details}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Owner Number</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.owner_number}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Challan Details</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.challan_details}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Financed</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.financed}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Financer</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.financer}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Norms Type</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.norms_type}</p>
+                                                </div>
+                                            </div>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Fit Up To</label>
+                                                <div className='input11'>
+                                                    <p>{formatDate(DriverData?.driverDocument?.fit_up_to)}</p>
+                                                </div>
+                                            </div>
+                                        </div>    
+                                    </div>
 
                                     <div className='rider_details19'>
                                         {/* <button>Cancel</button> */}

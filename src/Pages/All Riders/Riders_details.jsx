@@ -97,10 +97,10 @@ const Riders_details = () => {
                                 <div className='rider_details1'>
                                     <div className='rider_details2'>
                                         <div className='rider_details3'>
-                                            <img src={RiderData.profilePicture} alt="profile" style={{ width: '50px', height:'50px' }} />
+                                            <img src={RiderData.profilePicture} alt="profile" style={{ width: '50px', height:"50px" }} />
                                             <div className='rider_details4'>
                                                 <h6>{RiderData.name}<div className='rider_details5'>
-                                                    <p>Host</p>
+                                                <p>{RiderData.role}</p>
                                                 </div></h6>
                                                 {/* <p>Completed  Profile</p> */}
                                             </div>

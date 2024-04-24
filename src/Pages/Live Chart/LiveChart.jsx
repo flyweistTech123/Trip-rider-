@@ -21,40 +21,65 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "../../Components/Firebase/Firebase";
 
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
+import axios from 'axios';
+
 
 
 const LiveChart = () => {
     const [messages, setMessages] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [newMessage, setNewMessage] = useState('');
+
 
     useEffect(() => {
-        const fetchMessages = async () => {
-            try {
-                // Create a reference to the messages collection
-                
-                const messagesRef = collection(db, 'chatwithadmin', '660d244d36c7dbb1fcae541f', 'messages');
+        if (selectedUser) {
+          fetchMessages();
+        }
+      }, [selectedUser]);
 
-                // Create a query to order messages by timestamp in descending order
-                const q = query(messagesRef, orderBy('timestamp', 'desc'));
+    useEffect(() => {
+        fetchRiderData();
+    }, []);
+    const fetchMessages = async () => {
+        console.log('boss')
+        try {
+            if (!selectedUser || !selectedUser._id) return;
 
-                // Fetch the documents based on the query
-                const querySnapshot = await getDocs(q);
+            // Fetch messages based on the selected user
+            console.log(selectedUser._id)
+            const messagesRef = collection(db, 'chatwithadmin', selectedUser._id, 'messages');
+            const q = query(messagesRef, orderBy('timestamp', 'desc'));
+            const querySnapshot = await getDocs(q);
 
-                // Process the query snapshot and extract document data
-                const allMessages = [];
-                querySnapshot.forEach(doc => {
-                    allMessages.push({ id: doc.id, ...doc.data() });
-                });
+            const allMessages = [];
+            querySnapshot.forEach(doc => {
+                allMessages.push({ id: doc.id, ...doc.data() });
+            });
+            setMessages(allMessages);
+            console.log("hello", allMessages);
+        } catch (error) {
+            console.error('Error fetching messages:', error);
+        }
+    };
 
-                // Set the fetched messages in state
-                setMessages(allMessages);
-            } catch (error) {
-                console.error('Error fetching messages:', error);
-            }
-        };
+    const fetchRiderData = () => {
+        axios.get(`${BaseUrl}api/v1/admin/all/user`, getAuthHeaders())
+            .then(response => {
+                setUsers(response.data.category);
+            })
+            .catch(error => {
+                console.error('Error fetching rider data:', error);
+            });
+    };
 
-        // Call the fetchMessages function
-        fetchMessages();
-    }, ['660d244d36c7dbb1fcae541f']); //
+    const handleUserClick = (user) => {
+        setSelectedUser(user);
+    };
+
+
+
 
     return (
         <>
@@ -88,64 +113,68 @@ const LiveChart = () => {
                                 <input type="search" placeholder='Search messages' />
                             </div>
 
-                            {messages.map(message => (
-                                <div className='livechart6' key={message.id}>
-                                    <div className='livechart7'>
+
+                            <div className='livechart6' >
+                                {users.map(user => (
+                                    <div className='livechart7' key={user.id} onClick={() => handleUserClick(user)}>
                                         <div className='livechart8'>
                                             <div className='livechart852'>
-                                                <img src={chat} alt="" />
+                                                <img src={user.profilePicture} alt="" />
                                             </div>
                                             <div className='livechart9'>
-                                                <h6>{message.name}</h6>
-                                                <p>Haha oh man<span>🔥</span></p>
+                                                <h6>{user.name}</h6>
+                                                <p>{user.message}<span>🔥</span></p>
                                             </div>
                                         </div>
                                         <div className='livechart10'>
                                             <p>12m</p>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
 
                         </div>
 
                         <div className='livechart11'>
                             <div className='livechart12'>
-                                <div className='livechart13'>
-                                    <div className='livechart14'>
-                                        <img src={chat} alt="" />
-                                    </div>
-                                    <div className='livechart15'>
-                                        <h6>Florencio Dorrance</h6>
-                                        <div className='livechart16'>
-                                            <div className='livechart17'></div>
-                                            <p>Online</p>
+                                {selectedUser && (
+                                    <div className='livechart13'>
+                                        <div className='livechart14'>
+                                            <img src={selectedUser.profilePicture} alt="" />
+                                        </div>
+                                        <div className='livechart15'>
+                                            <h6>{selectedUser.name}</h6>
+                                            <div className='livechart16'>
+                                                <div className='livechart17'></div>
+                                                <p>Online</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                )}
 
-                                <div className='livechart18'>
-                                    <div className='livechart19'>
-                                        <div className='livechart20'>
-                                            <img src={chat} alt="" />
-                                        </div>
-                                        <div className='livechart21'>
-                                            <div className='livechart22'><p>omg, this is amazing</p></div>
-                                            <div className='livechart22'><p>perfect! ✅</p></div>
-                                            <div className='livechart22'><p>Wow, this is really epic</p></div>
-                                        </div>
-                                    </div>
 
-                                    <div className='livechart24'>
-                                        <div className='livechart21'>
-                                            <div className='livechart23'><p>How are you?</p></div>
+                                {messages.map(message => (
+                                    <div className='livechart18' key={message.id}>
+                                        <div className={`${message.type === 'user' ? 'livechart19' : 'livechart24'}`}>
+                                            <div className='livechart20'>
+                                                <img src={message.image} alt="" />
+                                            </div>
+                                            <div className='livechart21'>
+                                                <div className={`${message.type === 'user' ? 'livechart22' : 'livechart23'}`}><p>{message.message}</p></div>
+                                                {/* <div className='livechart22'><p>perfect! ✅</p></div>
+                                                <div className='livechart22'><p>Wow, this is really epic</p></div> */}
+                                            </div>
                                         </div>
-                                        <div className='livechart20'>
-                                            <img src={chat} alt="" />
-                                        </div>
+                                        {/* <div className='livechart24'>
+                                            <div className='livechart21'>
+                                                <div className='livechart23'><p>{message.message}</p></div>
+                                            </div>
+                                            <div className='livechart20'>
+                                                <img src={message.image} alt="" />
+                                            </div>
+                                        </div> */}
                                     </div>
-                                </div>
-
+                                ))}
                                 <div className='livechart25'>
                                     <div className='livechart26'>
                                         <div className='livechart27'>

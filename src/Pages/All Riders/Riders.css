@@ -375,6 +375,17 @@
 }
 
 
+.rider_details12 h6{
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: #000000;
+    line-height: 19.5px;
+    letter-spacing: 0.2px; 
+    margin: 0;
+}
+
+
 .rider_details13{
     display: flex;
     flex-wrap: wrap;
@@ -500,6 +511,7 @@
     align-items: end;
     justify-content: end;
     gap: 20px;
+    margin-bottom: 50px;
 }
 
 

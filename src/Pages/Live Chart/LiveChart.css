@@ -11,6 +11,8 @@
     border-right: 1px solid #E2E8F0;
     width: 37%;
     padding-right: 10px;
+    height: 700px;
+    overflow: auto;
 }
 
 
