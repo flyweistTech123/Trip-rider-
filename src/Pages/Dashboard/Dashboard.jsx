@@ -87,14 +87,14 @@ const Dashboard = () => {
               <h6>Dashboard</h6>
             </div>
 
-            <div className='rider4'>
+            {/* <div className='rider4'>
               <div className='rider5'>
                 <div className='rider6'>
                   <IoSearch />
                 </div>
                 <input type="search" name="" id="" placeholder='Search Driver' />
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className='dashboard'>

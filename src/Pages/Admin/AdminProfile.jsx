@@ -134,7 +134,7 @@ const AdminProfile = () => {
                     formData,
                     {
                         headers: {
-                            Authorization: `Bearer ${token}`, // Use the retrieved token here
+                            Authorization: `Bearer ${token}`, 
                         },
                     }
                 );
@@ -234,7 +234,6 @@ const AdminProfile = () => {
                             <Form.Label>D.O.B</Form.Label>
                             <Form.Control
                                 type="date"
-                                placeholder="Enter Address"
                                 value={birthday}
                                 onChange={(e) => setBirthday(e.target.value)}
                             />

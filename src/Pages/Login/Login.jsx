@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Login.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,9 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import img from '../../Images/img.png';
 import google from '../../Images/img1.png';
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { BaseUrl } from '../../Components/BaseUrl/BaseUrl';
-import { auth, getCurrentUser  } from "../../Components/Firebase/Firebase";
 
 
 
@@ -17,20 +15,17 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('admin');
+    useEffect(() => {
+        localStorage.removeItem('token')
+    }, [])
 
     const handleLogin = async () => {
         try {
-            await signInWithEmailAndPassword(auth, email, password);
-    
-
-
             const response = await axios.post(`${BaseUrl}api/v1/admin/login`, {
                 email: email,
                 password: password,
-                role: role 
+                role: role
             });
-
-
 
             const { token, user } = response.data.data;
             localStorage.setItem('token', token);
@@ -38,16 +33,13 @@ const Login = () => {
             toast.success("Login successfully");
             navigate('/dashboard');
         } catch (error) {
-            if (error.code && error.message) {
-                toast.error(`error: ${error.message}`);
-            } else if (error.response && error.response.data && error.response.data.error) {
+            if (error.response && error.response.data && error.response.data.error) {
                 toast.error(`error: ${error.response.data.error}`);
             } else {
                 console.error('Error:', error.message);
                 toast.error(`Error: ${error.message}`);
             }
         }
-
     };
 
 
@@ -63,9 +55,6 @@ const Login = () => {
                         <h3>Explore new ways to travel with Trip Rider</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris non sollicitudin leo, et egestas diam.</p>
                     </div>
-                    {/* <div>
-                        <img src={img1} alt="" />
-                    </div> */}
                 </div>
 
                 <div className='login2'>
@@ -99,7 +88,7 @@ const Login = () => {
                     </div>
                     <div className='login6'>
                         <span>Don’t have an account?</span>
-                        <span  onClick={() => navigate('/')}>Signup Here</span>
+                        <span onClick={() => navigate('/')}>Signup Here</span>
                     </div>
                 </div>
             </div>

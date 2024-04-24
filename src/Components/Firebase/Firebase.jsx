@@ -20,15 +20,3 @@ export const storage = getStorage();
 
 
 
-export const getCurrentUser = (auth) => {
-    return new Promise((resolve, reject) => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                resolve(user);
-            } else {
-                reject(new Error('No user signed in'));
-            }
-        });
-    });
-};
-

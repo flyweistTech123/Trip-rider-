@@ -7,12 +7,10 @@ import { FiFilter } from "react-icons/fi";
 import { useNavigate } from 'react-router-dom';
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
-import img from '../../Images/img2.png'
 import axios from 'axios';
 
 
 const Navbar = () => {
-    const [adminData, setAdminData] = useState(null);
     const [name, setName] = useState('');
     const [role, setRole] = useState('');
     const [image, setImage] = useState('')

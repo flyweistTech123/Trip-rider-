@@ -21,6 +21,9 @@ import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 const Riders = () => {
 
     const [riderData, setRiderData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
         fetchRiderData();
@@ -33,8 +36,20 @@ const Riders = () => {
             })
             .catch(error => {
                 console.error('Error fetching rider data:', error);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
+
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredRiderData = riderData.filter(rider =>
+        rider.name && rider.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     const deleteRider = (riderId) => {
         axios.delete(`${BaseUrl}api/v1/admin/delete/driver/${riderId}`, getAuthHeaders())
@@ -88,6 +103,7 @@ const Riders = () => {
 
 
 
+
     return (
         <>
             <div className='rider'>
@@ -102,7 +118,8 @@ const Riders = () => {
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search User' />
+                                <input type="search" name="" id="" placeholder='Search User' value={searchQuery}
+                                    onChange={handleSearch} />
                             </div>
                         </div>
                     </div>
@@ -119,34 +136,78 @@ const Riders = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {riderData.map(rider => (
-                                    <tr key={rider.id}>
-                                        <td className='rider8'>
-                                            <img src={rider.profilePicture} style={{ width: '50px' }} />
-                                            {rider.name}
-                                        </td>
-                                        <td>{rider.email}</td>
-                                        <td>{rider.mobileNumber}</td>
-                                        <td style={{ color: '#F52D56' }}>{rider.wallet}</td>
-                                        <td>{rider.totalBooking}</td>
-                                        <td className='rider9'>
-                                            <div className='rider10' onClick={() => deleteRider(rider._id)}>
-                                                <RiDeleteBinLine color='#667085' size={20} />
-                                                <p>Delete</p>
-                                            </div>
-                                            <div className='rider10' onClick={() => { rider.isBlock ? unblockRider(rider._id) : blockRider(rider._id) }}>
-                                                <MdOutlineBlock color={rider.isBlock ? "red" : "#667085"} size={20} />
-                                                <p style={{ color: rider.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
-                                            </div>
-                                            <div className='rider10'>
-                                                <Link to={`/riders_details/${rider._id}`} className='sidebar-link' >
-                                                    <IoEyeOutline color='#667085' size={20} />
-                                                    <p>View</p>
-                                                </Link>
-                                            </div>
-                                        </td>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="6"  style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading...</td>
                                     </tr>
-                                ))}
+                                ) :
+                                     searchQuery && filteredRiderData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>No matching users found</td>
+                                        </tr>
+                                    ) : (
+                                        searchQuery
+                                            ?
+                                            filteredRiderData.map(rider => (
+                                                <tr key={rider.id}>
+                                                    <td className='rider8'>
+                                                        <img src={rider.profilePicture} style={{ width: '50px' }} />
+                                                        {rider.name}
+                                                    </td>
+                                                    <td>{rider.email}</td>
+                                                    <td>{rider.mobileNumber}</td>
+                                                    <td style={{ color: '#F52D56' }}>{rider.wallet}</td>
+                                                    <td>{rider.totalBooking}</td>
+                                                    <td className='rider9'>
+                                                        <div className='rider10' onClick={() => deleteRider(rider._id)}>
+                                                            <RiDeleteBinLine color='#667085' size={20} />
+                                                            <p>Delete</p>
+                                                        </div>
+                                                        <div className='rider10' onClick={() => { rider.isBlock ? unblockRider(rider._id) : blockRider(rider._id) }}>
+                                                            <MdOutlineBlock color={rider.isBlock ? "red" : "#667085"} size={20} />
+                                                            <p style={{ color: rider.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                        </div>
+                                                        <div className='rider10'>
+                                                            <Link to={`/riders_details/${rider._id}`} className='sidebar-link' >
+                                                                <IoEyeOutline color='#667085' size={20} />
+                                                                <p>View</p>
+                                                            </Link>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+
+                                            :
+                                            riderData.map(rider => (
+                                                <tr key={rider.id}>
+                                                    <td className='rider8'>
+                                                        <img src={rider.profilePicture} style={{ width: '50px' }} />
+                                                        {rider.name}
+                                                    </td>
+                                                    <td>{rider.email}</td>
+                                                    <td>{rider.mobileNumber}</td>
+                                                    <td style={{ color: '#F52D56' }}>{rider.wallet}</td>
+                                                    <td>{rider.totalBooking}</td>
+                                                    <td className='rider9'>
+                                                        <div className='rider10' onClick={() => deleteRider(rider._id)}>
+                                                            <RiDeleteBinLine color='#667085' size={20} />
+                                                            <p>Delete</p>
+                                                        </div>
+                                                        <div className='rider10' onClick={() => { rider.isBlock ? unblockRider(rider._id) : blockRider(rider._id) }}>
+                                                            <MdOutlineBlock color={rider.isBlock ? "red" : "#667085"} size={20} />
+                                                            <p style={{ color: rider.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                        </div>
+                                                        <div className='rider10'>
+                                                            <Link to={`/riders_details/${rider._id}`} className='sidebar-link' >
+                                                                <IoEyeOutline color='#667085' size={20} />
+                                                                <p>View</p>
+                                                            </Link>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+
+                                    )}
                             </tbody>
                         </table>
                     </div>

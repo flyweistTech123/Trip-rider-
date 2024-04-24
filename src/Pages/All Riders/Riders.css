@@ -181,8 +181,6 @@
 
 
 
-
-
 /* Rider_Details */
 
 
@@ -243,7 +241,8 @@
 }
 
 .rider_details5{
-    width: 48px;
+    width: auto;
+    padding: 10px;
     height: 22px;
     border: 1.08px solid  #C3052C;
     border-radius: 6.48px;
@@ -405,13 +404,17 @@
 .input11{
     width: 265px;
     padding-right: 30px;
-    height: 36px;
+    min-height: 36px;
+    height: auto;
     border: 1px solid #DADADA;
     border-radius: 5px;
     padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     outline: none;
     display: flex;
     align-items: center;
+    overflow-wrap: anywhere;
 }
 
 .input11 p{
@@ -419,7 +422,7 @@
     font-weight: 500;
     font-size: 16px;
     color: #000000;
-    line-height: 12.4px;
+    line-height: 20.4px;
     margin: 0;
 }
 

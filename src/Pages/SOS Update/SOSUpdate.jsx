@@ -193,7 +193,7 @@ const SOSUpdate = () => {
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="6">Loading...</td>
+                                        <td colSpan="6"  style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading...</td>
                                     </tr>
                                 )}
                             </tbody>

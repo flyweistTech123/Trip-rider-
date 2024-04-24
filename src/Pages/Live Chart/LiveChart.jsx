@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './LiveChart.css'
-import { Link, useLocation } from 'react-router-dom';
 import HOC from '../../Components/HOC/HOC'
-
-import { IoSearch } from "react-icons/io5";
-import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 import { IoIosArrowDown } from "react-icons/io";
 import plus from '../../Images/Vector.png'
 import chat from '../../Images/chat.png'
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-
 import share from '../../Images/share.png'
 import send from '../../Images/send.png'
-// import img from '../../Images/img5.png'
 import {
     collection,
     query,
@@ -23,103 +14,47 @@ import {
     getDocs,
     setDoc,
     doc,
+    orderBy,
     updateDoc,
     serverTimestamp,
     getDoc,
 } from "firebase/firestore";
-import { db } from "../../Components/Firebase/Firebase";
+import { db, auth } from "../../Components/Firebase/Firebase";
 
 
 
 const LiveChart = () => {
-    const [userData, setUserData] = useState([]);
-    const [selectedUser, setSelectedUser] = useState(null);
-    const [currentUser, setCurrentUser] = useState(null);
-    const location = useLocation();
+    const [messages, setMessages] = useState([]);
 
     useEffect(() => {
-        const auth = getAuth();
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setCurrentUser(user);
-            }
-        });
+        const fetchMessages = async () => {
+            try {
+                // Create a reference to the messages collection
+                
+                const messagesRef = collection(db, 'chatwithadmin', '660d244d36c7dbb1fcae541f', 'messages');
 
-        fetchUserData();
-    }, []);
+                // Create a query to order messages by timestamp in descending order
+                const q = query(messagesRef, orderBy('timestamp', 'desc'));
 
+                // Fetch the documents based on the query
+                const querySnapshot = await getDocs(q);
 
-
-
-    const fetchUserData = () => {
-        axios.get(`${BaseUrl}api/v1/admin/getAllAdmin`, getAuthHeaders())
-            .then(response => {
-                setUserData(response.data.data);
-            })
-            .catch(error => {
-                console.error('Error fetching user data:', error);
-            });
-    };
-
-    const handleSelect = async (user) => {
-        setSelectedUser(user);
-        const combinedId =
-            currentUser.uid > user.uid
-                ? currentUser.uid + user.uid
-                : user.uid + currentUser.uid;
-
-        try {
-            const res = await getDoc(doc(db, "chats", combinedId));
-
-            if (!res.exists()) {
-                //create a chat in chats collection
-                await setDoc(doc(db, "chats", combinedId), { messages: [] });
-
-                //create user chats
-                await updateDoc(doc(db, "userChats", currentUser.uid), {
-                    [combinedId + ".userInfo"]: {
-                        uid: user.uid,
-                    },
-                    [combinedId + ".date"]: serverTimestamp(),
+                // Process the query snapshot and extract document data
+                const allMessages = [];
+                querySnapshot.forEach(doc => {
+                    allMessages.push({ id: doc.id, ...doc.data() });
                 });
 
-                await updateDoc(doc(db, "userChats", user.uid), {
-                    [combinedId + ".userInfo"]: {
-                        uid: currentUser.uid,
-                        
-                    },
-                    [combinedId + ".date"]: serverTimestamp(),
-                });
+                // Set the fetched messages in state
+                setMessages(allMessages);
+            } catch (error) {
+                console.error('Error fetching messages:', error);
             }
-        } catch (err) {
-            console.error('Error creating chat:', err);
-        }
+        };
 
-        setSelectedUser(null);
-    };
-
-
-
-    const updateUserChats = async (userId, combinedId, otherUser) => {
-        try {
-            const timestamp = serverTimestamp();
-
-            const updateData = {
-                [`${combinedId}.userInfo`]: {
-                    uid: otherUser.uid,
-                },
-                [`${combinedId}.date`]: timestamp,
-            };
-
-            await updateDoc(doc(db, "userChats", userId), updateData);
-            console.log("User chats updated successfully.");
-        } catch (error) {
-            console.error("Error updating user chats:", error);
-        }
-    };
-
-
-
+        // Call the fetchMessages function
+        fetchMessages();
+    }, ['660d244d36c7dbb1fcae541f']); //
 
     return (
         <>
@@ -153,16 +88,15 @@ const LiveChart = () => {
                                 <input type="search" placeholder='Search messages' />
                             </div>
 
-
-                            <div className='livechart6'>
-                                {userData.map(user => (
-                                    <div className={`livechart7 ${selectedUser && selectedUser.uid === user.uid ? 'selected' : ''}`} key={user.uid} onClick={() => handleSelect(user)}>
+                            {messages.map(message => (
+                                <div className='livechart6' key={message.id}>
+                                    <div className='livechart7'>
                                         <div className='livechart8'>
                                             <div className='livechart852'>
-                                                <img src={user.profilePicture} alt="" />
+                                                <img src={chat} alt="" />
                                             </div>
                                             <div className='livechart9'>
-                                                <h6>{user.name}</h6>
+                                                <h6>{message.name}</h6>
                                                 <p>Haha oh man<span>🔥</span></p>
                                             </div>
                                         </div>
@@ -170,8 +104,8 @@ const LiveChart = () => {
                                             <p>12m</p>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            ))}
 
                         </div>
 

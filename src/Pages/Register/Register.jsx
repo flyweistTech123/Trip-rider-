@@ -1,26 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import img from '../../Images/img.png';
-import google from '../../Images/img1.png';
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { BaseUrl } from '../../Components/BaseUrl/BaseUrl';
-import { auth, db, storage } from "../../Components/Firebase/Firebase";
-import { doc, setDoc } from "firebase/firestore";
 
 const Register = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('admin'); // Default role is set to 'admin'
+    useEffect(() => {
+        localStorage.removeItem('token');
+    }, []);
 
     const handleRegister = async () => {
         try {
-            const res = await createUserWithEmailAndPassword(auth, email, password);
-
-            if (role !== 'admin' && role !== 'superadmin') {
+            if (role !== 'admin' && role !== 'superAdmin') {
                 toast.error('Invalid role selected. Please select a valid role.');
                 return;
             }
@@ -31,15 +28,6 @@ const Register = () => {
                 role: role
             });
 
-            //create user on firestore
-            await setDoc(doc(db, "users", res.user.uid), {
-                uid: res.user.uid,
-                email,
-            });
-
-            await setDoc(doc(db, "userChats", res.user.uid), {});
-            //create empty user chats on firestore
-            await setDoc(doc(db, "userChats", res.user.uid), {});
             const { token, newUser } = response.data.data;
             localStorage.setItem('token', token);
             localStorage.setItem('role', newUser.role);
@@ -54,7 +42,6 @@ const Register = () => {
             }
         }
     };
-
 
 
     return (

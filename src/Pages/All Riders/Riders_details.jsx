@@ -9,6 +9,7 @@ import img from '../../Images/img27.png'
 import img1 from '../../Images/img28.png'
 import { MdOutlineBlock } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 
@@ -33,7 +34,7 @@ const Riders_details = () => {
     useEffect(() => {
         const fetchRiderData = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/getUserById/${id}`); // Use the ID from the URL
+                const response = await axios.get(`${BaseUrl}api/v1/getUserById/${id}`, getAuthHeaders()); 
                 const riderDataFromApi = response.data.data;
                 setRiderData(riderDataFromApi);
                 setIsBlocked(riderDataFromApi.isBlock);
@@ -47,7 +48,7 @@ const Riders_details = () => {
 
     const handleDeleteRider = async () => {
         try {
-            await axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/admin/delete/driver/${id}`);
+            await axios.delete(`${BaseUrl}api/v1/admin/delete/driver/${id}`, getAuthHeaders());
             toast.success("Rider deleted successfully");
             navigate('/riders');
         } catch (error) {
@@ -60,7 +61,7 @@ const Riders_details = () => {
 
     const blockRider = async () => {
         try {
-            await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/admin/block/driver/${id}`);
+            await axios.put(`${BaseUrl}api/v1/admin/block/driver/${id}`, getAuthHeaders());
             setIsBlocked(true); // Update isBlocked state
             toast.success("Rider is blocked successfully");
         } catch (error) {
@@ -72,7 +73,7 @@ const Riders_details = () => {
 
     const unblockRider = async () => {
         try {
-            await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/admin/unblock/driver/${id}`);
+            await axios.put(`${BaseUrl}api/v1/admin/unblock/driver/${id}`, getAuthHeaders());
             setIsBlocked(false); // Update isBlocked state
             toast.success("Rider is unblocked successfully'");
         } catch (error) {
@@ -96,12 +97,12 @@ const Riders_details = () => {
                                 <div className='rider_details1'>
                                     <div className='rider_details2'>
                                         <div className='rider_details3'>
-                                            <img src={img} alt="" />
+                                            <img src={RiderData.profilePicture} alt="profile" style={{ width: '50px', height:'50px' }} />
                                             <div className='rider_details4'>
                                                 <h6>{RiderData.name}<div className='rider_details5'>
                                                     <p>Host</p>
                                                 </div></h6>
-                                                <p>Completed  Profile</p>
+                                                {/* <p>Completed  Profile</p> */}
                                             </div>
                                             <div className='rider_details6'>
                                                 <div className='rider_details7' onClick={handleDeleteRider}>
@@ -121,15 +122,15 @@ const Riders_details = () => {
                                                 <div className='rider_details10'>
                                                     <img src={img1} alt="" />
                                                     <p>{RiderData.wallet}</p>
-                                                    <div className='rider_details11'>
+                                                    {/* <div className='rider_details11'>
                                                         <p>Expires</p>
                                                         <p>09/21</p>
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                             </div>
                                             <div className='rider_details99'>
                                                 <p>Total  Trips</p>
-                                                <p>36</p>
+                                                <p>{RiderData.totalBooking}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -141,12 +142,6 @@ const Riders_details = () => {
                                                 <label htmlFor="">Email</label>
                                                 <div className='input11'>
                                                     <p>{RiderData.email}</p>
-                                                </div>
-                                            </div>
-                                            <div className='rider_details14'>
-                                                <label htmlFor="">Alternate Phone Number</label>
-                                                <div className='input11'>
-                                                    <p>{RiderData.altMobileNumber}</p>
                                                 </div>
                                             </div>
                                             <div className='rider_details14'>
@@ -173,27 +168,7 @@ const Riders_details = () => {
                                         </div>
                                     </div>
 
-                                    {/* <div className='rider_details15'>
-                                        <p>Saved As</p>
-                                        <div className='rider_details18'>
-                                            <div className='rider_details16'>
-                                                <FiHome color='#FFFFFF' />
-                                                <p>Home</p>
-                                            </div>
-                                            <div className='rider_details17'>
-                                                <MdWorkOutline color='#C3052C' />
-                                                <p>Work</p>
-                                            </div>
-                                            <div className='rider_details17'>
-                                                <LuUserSquare2 color='#C3052C' />
-                                                <p>Other</p>
-                                            </div>
-                                        </div>
-
-                                    </div> */}
-
                                     <div className='rider_details19'>
-                                        {/* <button>Cancel</button> */}
                                         <button onClick={() => navigate('/riders')}>Close</button>
                                     </div>
                                 </div>
