@@ -7,18 +7,7 @@ import plus from '../../Images/Vector.png'
 import chat from '../../Images/chat.png'
 import share from '../../Images/share.png'
 import send from '../../Images/send.png'
-import {
-    collection,
-    query,
-    where,
-    getDocs,
-    setDoc,
-    doc,
-    orderBy,
-    updateDoc,
-    serverTimestamp,
-    getDoc,
-} from "firebase/firestore";
+import { collection, query, orderBy, getDocs, limit, addDoc } from 'firebase/firestore';
 import { db, auth } from "../../Components/Firebase/Firebase";
 
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
@@ -31,17 +20,39 @@ const LiveChart = () => {
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     const [newMessage, setNewMessage] = useState('');
+    const [name, setName] = useState('');
+    const [image, setImage] = useState('');
+    const [totalNewMessages, setTotalNewMessages] = useState(0); // State to track total new messages
 
 
     useEffect(() => {
         if (selectedUser) {
-          fetchMessages();
+            fetchMessages();
         }
-      }, [selectedUser]);
+    }, [selectedUser, messages]);
 
     useEffect(() => {
         fetchRiderData();
+        fetchAdminData();
     }, []);
+    useEffect(() => {
+        const totalNewMsg = messages.filter(msg => !msg.read).length;
+        setTotalNewMessages(totalNewMsg);
+    }, [messages]);
+
+    const fetchAdminData = async () => {
+        try {
+            // const token = localStorage.getItem("token"); 
+            const response = await axios.get(`${BaseUrl}api/v1/admin/me`, getAuthHeaders())
+            const AdminName = response.data.data.name;
+            const AdminImage = response.data.data.profilePicture;
+            setName(AdminName);
+            setImage(AdminImage);
+        } catch (error) {
+            console.error('Error fetching Admin data:', error);
+        }
+    };
+
     const fetchMessages = async () => {
         console.log('boss')
         try {
@@ -50,7 +61,7 @@ const LiveChart = () => {
             // Fetch messages based on the selected user
             console.log(selectedUser._id)
             const messagesRef = collection(db, 'chatwithadmin', selectedUser._id, 'messages');
-            const q = query(messagesRef, orderBy('timestamp', 'desc'));
+            const q = query(messagesRef, orderBy('timestamp', 'asc'));
             const querySnapshot = await getDocs(q);
 
             const allMessages = [];
@@ -64,19 +75,59 @@ const LiveChart = () => {
         }
     };
 
-    const fetchRiderData = () => {
-        axios.get(`${BaseUrl}api/v1/admin/all/user`, getAuthHeaders())
-            .then(response => {
-                setUsers(response.data.category);
-            })
-            .catch(error => {
-                console.error('Error fetching rider data:', error);
-            });
+    const fetchRiderData = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}api/v1/admin/all/user`, getAuthHeaders());
+            const usersData = response.data.category;
+
+            // Fetch and attach last message for each user from Firebase
+            const usersWithLastMessage = await Promise.all(usersData.map(async user => {
+                const messagesRef = collection(db, 'chatwithadmin', user._id, 'messages');
+                const q = query(messagesRef, orderBy('timestamp', 'desc'), limit(1));
+                const querySnapshot = await getDocs(q);
+                const lastMessageDoc = querySnapshot.docs[0];
+                const lastMessage = lastMessageDoc ? lastMessageDoc.data().message : ''; // Get last message or empty string if no message
+                return { ...user, lastMessage };
+            }));
+
+            setUsers(usersWithLastMessage);
+        } catch (error) {
+            console.error('Error fetching rider data:', error);
+        }
     };
+
 
     const handleUserClick = (user) => {
         setSelectedUser(user);
     };
+
+
+    const handleSendMessage = async () => {
+        if (!selectedUser || !newMessage.trim()) return;
+
+        try {
+            // Add the new message to Firebase
+            const messagesRef = collection(db, 'chatwithadmin', selectedUser._id, 'messages');
+            const newMessageDoc = {
+                message: newMessage,
+                type: 'admin',
+                image: image,
+                name: name, // You can replace 'Admin' with the actual admin name
+                timestamp: new Date()
+            };
+            await addDoc(messagesRef, newMessageDoc);
+
+            // Update local state with the new message
+            setMessages(prevMessages => [newMessageDoc, ...prevMessages]);
+
+            // Clear the input field after sending the message
+            setNewMessage('');
+        } catch (error) {
+            console.error('Error sending message:', error);
+        }
+    };
+
+
 
 
 
@@ -97,7 +148,7 @@ const LiveChart = () => {
                                 <div className='livechart3'>
                                     <h5>Messages</h5>
                                     <IoIosArrowDown color='#000000' size={20} />
-                                    <p>12</p>
+                                    <p>{totalNewMessages}</p>
                                 </div>
 
                                 <div className='livechart4'>
@@ -123,7 +174,7 @@ const LiveChart = () => {
                                             </div>
                                             <div className='livechart9'>
                                                 <h6>{user.name}</h6>
-                                                <p>{user.message}<span>🔥</span></p>
+                                                <p>{user.lastMessage}<span>🔥</span></p>
                                             </div>
                                         </div>
                                         <div className='livechart10'>
@@ -153,36 +204,45 @@ const LiveChart = () => {
                                 )}
 
 
-                                {messages.map(message => (
-                                    <div className='livechart18' key={message.id}>
-                                        <div className={`${message.type === 'user' ? 'livechart19' : 'livechart24'}`}>
-                                            <div className='livechart20'>
-                                                <img src={message.image} alt="" />
-                                            </div>
+
+                                <div className='livechart18'>
+                                    {messages.map(message => (
+                                        <div className={`${message.type === 'user' ? 'livechart19' : 'livechart24'}`} key={message.id}>
+                                            {message.type === 'user' ? (
+                                                <div className='livechart20'>
+                                                    <img src={message.image} alt="" />
+                                                </div>
+                                            ) : (
+                                                ""
+                                            )}
                                             <div className='livechart21'>
                                                 <div className={`${message.type === 'user' ? 'livechart22' : 'livechart23'}`}><p>{message.message}</p></div>
-                                                {/* <div className='livechart22'><p>perfect! ✅</p></div>
-                                                <div className='livechart22'><p>Wow, this is really epic</p></div> */}
                                             </div>
+                                            {message.type === 'admin' ? (
+                                                <div className='livechart20'>
+                                                    <img src={message.image} alt="" />
+                                                </div>
+                                            ) : (
+                                                ""
+                                            )}
                                         </div>
-                                        {/* <div className='livechart24'>
-                                            <div className='livechart21'>
-                                                <div className='livechart23'><p>{message.message}</p></div>
-                                            </div>
-                                            <div className='livechart20'>
-                                                <img src={message.image} alt="" />
-                                            </div>
-                                        </div> */}
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
+
                                 <div className='livechart25'>
                                     <div className='livechart26'>
                                         <div className='livechart27'>
                                             <img src={share} alt="" />
                                         </div>
                                         <div className='livechart28'>
-                                            <input type="text" placeholder='Type a message' />
-                                            <img src={send} alt="" />
+                                            <input
+                                                type="text"
+                                                placeholder='Type a message'
+                                                value={newMessage}
+                                                onChange={(e) => setNewMessage(e.target.value)}
+                                            />
+                                            <img src={send} alt="" onClick={handleSendMessage} />
+
                                         </div>
                                     </div>
                                 </div>
