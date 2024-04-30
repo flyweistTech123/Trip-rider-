@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
 import './Earnings.css'
 import HOC from '../../Components/HOC/HOC'
-import { Link } from 'react-router-dom';
 
 
 import { IoSearch } from "react-icons/io5";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { MdOutlineBlock } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
-import { IoEyeOutline } from "react-icons/io5";
 
 
 const Earnings = () => {

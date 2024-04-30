@@ -13,25 +13,38 @@ import { IoEyeOutline } from "react-icons/io5";
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
-// import img from '../../Images/img5.png'
+import img2 from '../../Images/user.webp'
 
 
 const Vendors = () => {
     const [vendorData, setVendorData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchVendorsData();
     }, []);
 
     const fetchVendorsData = () => {
-        axios.get(`${BaseUrl}api/v1/admin/all/vendor` , getAuthHeaders())
+        axios.get(`${BaseUrl}api/v1/admin/all/vendor`, getAuthHeaders())
             .then(response => {
                 setVendorData(response.data.category);
             })
             .catch(error => {
                 console.error('Error fetching vendor data:', error);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredVendorData = vendorData.filter(vindor =>
+        vindor.name && vindor.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     const deleteVendor = (vendorId) => {
         axios.delete(`${BaseUrl}api/v1/admin/delete/driver/${vendorId}`, getAuthHeaders())
@@ -101,7 +114,7 @@ const Vendors = () => {
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search Vendor' />
+                                <input type="search" name="" id="" placeholder='Search Vendor' onChange={handleSearch} />
                             </div>
                         </div>
                     </div>
@@ -109,6 +122,7 @@ const Vendors = () => {
                         <table>
                             <thead>
                                 <tr>
+                                    <th>Profile Image</th>
                                     <th>Vendor Name</th>
                                     <th>Email</th>
                                     <th>Phone No.</th>
@@ -118,34 +132,79 @@ const Vendors = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {vendorData.map(vendor => (
-                                    <tr key={vendor.id}>
-                                        <td className='rider8'>
-                                            <img src={vendor.profilePicture}  style={{width:"50px"}} />
-                                            {vendor.name}
-                                        </td>
-                                        <td>{vendor.email}</td>
-                                        <td>{vendor.mobileNumber}</td>
-                                        <td style={{ color: '#F52D56' }}>₹ {vendor.wallet}</td>
-                                        <td>{vendor.noOfVehicle}</td>
-                                        <td className='rider9'>
-                                            <div className='rider10' onClick={() => deleteVendor(vendor._id)}>
-                                                <RiDeleteBinLine color='#667085' size={20} />
-                                                <p>Delete</p>
-                                            </div>
-                                            <div className='rider10' onClick={() => { vendor.isBlock ? unblockVendor(vendor._id) : blockVendor(vendor._id) }}>
-                                                <MdOutlineBlock color={vendor.isBlock ? "red" : "#667085"} size={20} />
-                                                <p style={{ color: vendor.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
-                                            </div>
-                                            <div className='rider10'>
-                                                <Link to={`/vendors_details/${vendor._id}`} className='sidebar-link' >
-                                                    <IoEyeOutline color='#667085' size={20} />
-                                                    <p>View</p>
-                                                </Link>
-                                            </div>
-                                        </td>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading vendors...</td>
                                     </tr>
-                                ))}
+                                ) :
+                                    searchQuery && filteredVendorData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Vendor not found</td>
+                                        </tr>
+                                    ) : (
+                                        searchQuery
+                                            ?
+                                            filteredVendorData.map(vendor => (
+                                                <tr key={vendor.id}>
+                                                    <td>
+                                                        <img src={vendor?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
+                                                    </td>
+                                                    <td>{vendor?.name}</td>
+                                                    <td>{vendor.email}</td>
+                                                    <td>{vendor.mobileNumber}</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {vendor.wallet}</td>
+                                                    <td>{vendor.noOfVehicle}</td>
+                                                    <td>
+                                                        <div className='rider9'>
+                                                            <div className='rider10' onClick={() => deleteVendor(vendor._id)}>
+                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                <p>Delete</p>
+                                                            </div>
+                                                            <div className='rider10' onClick={() => { vendor.isBlock ? unblockVendor(vendor._id) : blockVendor(vendor._id) }}>
+                                                                <MdOutlineBlock color={vendor.isBlock ? "red" : "#667085"} size={20} />
+                                                                <p style={{ color: vendor.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/vendors_details/${vendor._id}`} className='sidebar-link' >
+                                                                    <IoEyeOutline color='#667085' size={20} />
+                                                                    <p>View</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                            : vendorData.map(vendor => (
+                                                <tr key={vendor.id}>
+                                                    <td>
+                                                        <img src={vendor?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
+                                                    </td>
+                                                    <td>{vendor?.name}</td>
+                                                    <td>{vendor.email}</td>
+                                                    <td>{vendor.mobileNumber}</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {vendor.wallet}</td>
+                                                    <td>{vendor.noOfVehicle}</td>
+                                                    <td>
+                                                        <div className='rider9'>
+                                                            <div className='rider10' onClick={() => deleteVendor(vendor._id)}>
+                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                <p>Delete</p>
+                                                            </div>
+                                                            <div className='rider10' onClick={() => { vendor.isBlock ? unblockVendor(vendor._id) : blockVendor(vendor._id) }}>
+                                                                <MdOutlineBlock color={vendor.isBlock ? "red" : "#667085"} size={20} />
+                                                                <p style={{ color: vendor.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/vendors_details/${vendor._id}`} className='sidebar-link' >
+                                                                    <IoEyeOutline color='#667085' size={20} />
+                                                                    <p>View</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                    )}
                             </tbody>
                         </table>
                     </div>

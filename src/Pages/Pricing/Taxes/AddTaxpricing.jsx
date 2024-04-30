@@ -3,7 +3,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../Pricing.css'
 import HOC from '../../../Components/HOC/HOC'
 import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
 
 
 import { useNavigate } from 'react-router-dom';
@@ -59,22 +58,22 @@ const AddTaxpricing = () => {
                             </div> */}
                             </div>
                         </div>
-                        <div style={{marginBottom:"50px"}}>
+                        <div style={{ marginBottom: "50px" }}>
                             <div className='dailyprice'>
                                 <div className='dailyprice3'>
                                     <div className='dailyprice4'>
-                                        <label htmlFor="">Base Price</label>
-                                        <input type="number" placeholder='Enter Base price' value={taxprice.basePrice} />
+                                        <label htmlFor="">Night Charges</label>
+                                        <input type="number" placeholder='Enter night charges tax' value={taxprice.nightCharges} />
                                     </div>
                                     <div className='dailyprice4'>
-                                        <label htmlFor="">Night Charge</label>
-                                        <input type="number" placeholder='Enter night charge' value={taxprice.nightCharges}  />
+                                        <label htmlFor="">Night Charges Tax</label>
+                                        <input type="number" placeholder='Enter night charge' value={taxprice.nightChargesTax} />
                                     </div>
                                 </div>
                                 <div className='dailyprice3'>
                                     <div className='dailyprice4'>
                                         <label htmlFor="">Service Charge</label>
-                                        <input type="number" placeholder='Enter service charge' value={taxprice.serviceCharge}  />
+                                        <input type="number" placeholder='Enter service charge' value={taxprice.serviceCharge} />
                                     </div>
                                     <div className='dailyprice4'>
                                         <label htmlFor="">Waiting Charge</label>
@@ -83,48 +82,68 @@ const AddTaxpricing = () => {
                                 </div>
                                 <div className='dailyprice3'>
                                     <div className='dailyprice4'>
-                                        <label htmlFor="">Parking Rate</label>
-                                        <input type="number" placeholder='Enter parking Rate' value={taxprice.ParkingRate}  />
+                                        <label htmlFor="">Time Rate</label>
+                                        <input type="number" placeholder='Enter parking Rate' value={taxprice.timeRate} />
                                     </div>
                                     <div className='dailyprice4'>
                                         <label htmlFor="">Km Rate</label>
-                                        <input type="number" placeholder='Enter km rate' value={taxprice.kmRate}  />
+                                        <input type="number" placeholder='Enter km rate' value={taxprice.kmRate} />
                                     </div>
                                 </div>
                                 <div className='dailyprice3'>
                                     <div className='dailyprice4'>
-                                        <label htmlFor="">Time Rate</label>
-                                        <input type="number" placeholder='Enter time Rate' value={taxprice.timeRate}  />
+                                        <label htmlFor="">Plate Form Charges</label>
+                                        <input type="number" placeholder='Enter time Rate' value={taxprice.plateFormCharges} />
                                     </div>
                                     <div className='dailyprice4'>
-                                        <label htmlFor="">Plate Form Charges</label>
-                                        <input type="number" placeholder='Enter plate Form Charges' value={taxprice.plateFormCharges}  />
+                                        <label htmlFor="">Plate Form Charges Gst</label>
+                                        <input type="number" placeholder='Enter plate Form Charges' value={taxprice.plateFormChargesGst} />
                                     </div>
                                 </div>
                                 <div className='dailyprice3'>
                                     <div className='dailyprice4'>
                                         <label htmlFor="">Surge Charges</label>
-                                        <input type="number" placeholder='Enter surge Charges' value={taxprice.surgeCharges}  />
+                                        <input type="number" placeholder='Enter surge Charges' value={taxprice.surgeCharges} />
                                     </div>
                                     <div className='dailyprice4'>
-                                        <label htmlFor="">Toll Charge</label>
-                                        <input type="number" placeholder='Enter toll Charge' value={taxprice.tollCharge}  />
+                                        <label htmlFor="">Surge Charges Tax</label>
+                                        <input type="number" placeholder='Enter toll Charge' value={taxprice.surgeChargesTax} />
                                     </div>
                                 </div>
                                 <div className='dailyprice3'>
                                     <div className='dailyprice4'>
                                         <label htmlFor="">Ride Time Charges</label>
-                                        <input type="number" placeholder='Enter ride time Charges' value={taxprice.ridetimeCharges}  />
+                                        <input type="number" placeholder='Enter ride time Charges' value={taxprice.ridetimeCharges} />
                                     </div>
                                     <div className='dailyprice4'>
-                                        <label htmlFor="">Cancellation Charges</label>
-                                        <input type="number" placeholder='Enter cancellation Charges' value={taxprice.cancellationCharges}  />
+                                        <label htmlFor="">Parking Rate</label>
+                                        <input type="number" placeholder='Enter cancellation Charges' value={taxprice.ParkingRate} />
                                     </div>
                                 </div>
                                 <div className='dailyprice3'>
                                     <div className='dailyprice4'>
-                                        <label htmlFor="">Other Charge</label>
-                                        <input type="number" placeholder='Enter other Charge' value={taxprice.otherCharge}  />
+                                        <label htmlFor="">Toll Charge</label>
+                                        <input type="number" placeholder='Enter ride time Charges' value={taxprice.tollCharge} />
+                                    </div>
+                                    <div className='dailyprice4'>
+                                        <label htmlFor="">Railway PickUp Charge</label>
+                                        <input type="number" placeholder='Enter cancellation Charges' value={taxprice.railwayPickUpCharge} />
+                                    </div>
+                                </div>
+                                <div className='dailyprice3'>
+                                    <div className='dailyprice4'>
+                                        <label htmlFor="">Insurance Premium</label>
+                                        <input type="number" placeholder='Enter ride time Charges' value={taxprice.otherCharge} />
+                                    </div>
+                                    <div className='dailyprice4'>
+                                        <label htmlFor="">Cancellation Charges</label>
+                                        <input type="number" placeholder='Enter cancellation Charges' value={taxprice.cancellationCharges} />
+                                    </div>
+                                </div>
+                                <div className='dailyprice3'>
+                                    <div className='dailyprice4'>
+                                        <label htmlFor="">GST</label>
+                                        <input type="number" placeholder='Enter other Charge' value={taxprice.basePrice} />
                                     </div>
                                     <div className='dailyprice4'>
                                         <label htmlFor="">Description</label>

@@ -6,22 +6,39 @@ import HOC from '../../Components/HOC/HOC'
 
 import { IoSearch } from "react-icons/io5";
 
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
+
+
 
 const Wallet_Management = () => {
     const [walletdata, setWalletData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
 
     const fetchWalletData = async () => {
         try {
-            const response = await axios.get('https://rajiv-cab-mu.vercel.app/api/v1/getAllWalletTransaction');
+            const response = await axios.get(`${BaseUrl}api/v1/getAllWalletTransaction`, getAuthHeaders());
             setWalletData(response.data.data);
         } catch (error) {
             console.error('Error fetching wallet data:', error);
         }
+        finally {
+            setLoading(false);
+        };
     };
 
     useEffect(() => {
         fetchWalletData();
     }, []);
+
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredWalletData = walletdata.filter(wallet =>
+        wallet?.user?.name && wallet?.user?.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -61,7 +78,7 @@ const Wallet_Management = () => {
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search' />
+                                <input type="search" name="" id="" placeholder='Search' onChange={handleSearch} />
                             </div>
                         </div>
                     </div>
@@ -79,23 +96,44 @@ const Wallet_Management = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {walletdata && walletdata.length > 0 ? (
-                                    walletdata.map(Wallet => (
-                                        <tr key={Wallet.id}>
-                                            <td className='rider8'>{Wallet?.id}</td>
-                                            <td>{Wallet?.user?.name}</td>
-                                            <td>{formatDate(Wallet.date)}</td>
-                                            <td>{formatTime(Wallet.date)}</td>
-                                            <td>{Wallet.paymentMode}</td>
-                                            <td style={{ color: '#F52D56' }}>{Wallet.amount}</td>
-                                            <td>{Wallet?.user?.wallet}</td>
-                                        </tr>
-                                    ))
-                                ) : (
+
+                                {loading ? (
                                     <tr>
-                                        <td colSpan="6">Loading...</td>
+                                        <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading wallet...</td>
                                     </tr>
-                                )}
+                                ) :
+                                    searchQuery && filteredWalletData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>detail not found</td>
+                                        </tr>
+                                    ) : (
+                                        searchQuery
+                                            ?
+
+                                            filteredWalletData.map(Wallet => (
+                                                <tr key={Wallet.id}>
+                                                    <td className='rider8'>{Wallet?.id}</td>
+                                                    <td>{Wallet?.user?.name}</td>
+                                                    <td>{formatDate(Wallet.date)}</td>
+                                                    <td>{formatTime(Wallet.date)}</td>
+                                                    <td>{Wallet.paymentMode}</td>
+                                                    <td style={{ color: '#F52D56' }}>{Wallet.amount}</td>
+                                                    <td>{Wallet?.user?.wallet}</td>
+                                                </tr>
+                                            ))
+                                            :
+                                            walletdata.map(Wallet => (
+                                                <tr key={Wallet.id}>
+                                                    <td className='rider8'>{Wallet?.id}</td>
+                                                    <td>{Wallet?.user?.name}</td>
+                                                    <td>{formatDate(Wallet.date)}</td>
+                                                    <td>{formatTime(Wallet.date)}</td>
+                                                    <td>{Wallet.paymentMode}</td>
+                                                    <td style={{ color: '#F52D56' }}>{Wallet.amount}</td>
+                                                    <td>{Wallet?.user?.wallet}</td>
+                                                </tr>
+                                            ))
+                                    )}
                             </tbody>
                         </table>
                     </div>

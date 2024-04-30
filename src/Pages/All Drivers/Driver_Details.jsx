@@ -5,8 +5,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import './Drivers.css'
 import HOC from '../../Components/HOC/HOC'
 import { useParams } from 'react-router-dom';
-import img from '../../Images/img27.png'
+import img from '../../Images/imgno.jpg'
 import img1 from '../../Images/img28.png'
+import img2 from '../../Images/user.webp'
 import { MdOutlineBlock } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
@@ -100,7 +101,7 @@ const Driver_Details = () => {
                                 <div className='rider_details1'>
                                     <div className='rider_details2'>
                                         <div className='rider_details3'>
-                                            <img src={DriverData.profilePicture} alt=""  style={{ width: '50px' }}/>
+                                            <img src={DriverData.profilePicture || img2} alt="No image"/>
                                             <div className='rider_details4'>
                                                 <h6>{DriverData.name}<div className='rider_details5'>
                                                     <p>{DriverData.role}</p>
@@ -140,7 +141,17 @@ const Driver_Details = () => {
 
 
                                     <div className='rider_details12'>
+                                        <div className='rider_details12111'>
+                                            <h6>Driver's personal information</h6>
+                                            <div className='rider_details12112'></div>
+                                        </div>
                                         <div className='rider_details13'>
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Client Id</label>
+                                                <div className='input11'>
+                                                    <p>{DriverData?.driverDocument?.client_id}</p>
+                                                </div>
+                                            </div>
                                             <div className='rider_details14'>
                                                 <label htmlFor="">Email</label>
                                                 <div className='input11'>
@@ -201,11 +212,14 @@ const Driver_Details = () => {
                                                     <p>{DriverData?.driverDocument?.dlno}</p>
                                                 </div>
                                             </div>
-                                        </div>    
+                                        </div>
                                     </div>
 
                                     <div className='rider_details12'>
-                                        <h6>Vehicle Information</h6>
+                                        <div className='rider_details12114'>
+                                            <h6>Vehicle Information</h6>
+                                            <div className='rider_details12113'></div>
+                                        </div>
                                         <div className='rider_details13'>
                                             <div className='rider_details14'>
                                                 <label htmlFor="">Rc Number</label>
@@ -425,11 +439,97 @@ const Driver_Details = () => {
                                                     <p>{formatDate(DriverData?.driverDocument?.fit_up_to)}</p>
                                                 </div>
                                             </div>
-                                        </div>    
+                                        </div>
+                                    </div>
+
+                                    <div className='rider_details12'>
+                                        <div className='rider_details12114'>
+                                            <h6>Driver's All Documents</h6>
+                                            <div className='rider_details12112'></div>
+                                        </div>
+
+                                        <div className='rider_details20'>
+                                            <div className='rider_details21'>
+                                                <img
+                                                    src={DriverData?.driverDocument?.interior || img}
+                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                />
+                                                <h6>Interior</h6>
+                                            </div>
+                                            <div className='rider_details21'>
+                                                <img
+                                                    src={DriverData?.driverDocument?.interior || img}
+                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                />
+                                                <h6>Exterior</h6>
+                                            </div>
+                                            <div className='rider_details21'>
+                                                <img
+                                                    src={DriverData?.driverDocument?.interior || img}
+                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                />
+                                                <h6>Rc</h6>
+                                            </div>
+                                            <div className='rider_details21'>
+                                                <img
+                                                    src={DriverData?.driverDocument?.interior || img}
+                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                />
+                                                <h6>Fitness</h6>
+                                            </div>
+                                            <div className='rider_details21'>
+                                                <img
+                                                    src={DriverData?.driverDocument?.interior || img}
+                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                />
+                                                <h6>Permit</h6>
+                                            </div>
+                                            <div className='rider_details21'>
+                                                <img
+                                                    src={DriverData?.driverDocument?.interior || img}
+                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                />
+                                                <h6>Insurance</h6>
+                                            </div>
+                                            <div className='rider_details21'>
+                                                <img
+                                                    src={DriverData?.driverDocument?.interior || img}
+                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                />
+                                                <h6>Driving license</h6>
+                                            </div>
+                                            <div className='rider_details21'>
+                                                <img
+                                                    src={DriverData?.driverDocument?.interior || img}
+                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                />
+                                                <h6>Aadhar Card</h6>
+                                            </div>
+                                            <div className='rider_details21'>
+                                                <img
+                                                    src={DriverData?.driverDocument?.interior || img}
+                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                />
+                                                <h6>Cancel Check</h6>
+                                            </div>
+                                            <div className='rider_details21'>
+                                                <img
+                                                    src={DriverData?.driverDocument?.interior || img}
+                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                />
+                                                <h6>Bank Statement</h6>
+                                            </div>
+                                            <div className='rider_details21'>
+                                                <img
+                                                    src={DriverData?.driverDocument?.interior || img}
+                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                />
+                                                <h6>Aadhar Card</h6>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div className='rider_details19'>
-                                        {/* <button>Cancel</button> */}
                                         <button onClick={() => navigate('/drivers')}>Close</button>
                                     </div>
                                 </div>

@@ -18,17 +18,21 @@ const UpdateTaxpricing = () => {
     const { id } = useParams();
     const [baseprice, setBasePrice] = useState('');
     const [nightcharge, setNightCharge] = useState('');
+    const [nightchargestax, setnightchargestax] = useState('');
     const [servicecharge, setServiceCharge] = useState('')
     const [waitingCharge, setWaitingCharge] = useState('');
     const [parkingRate, setParkingRate] = useState('');
     const [kmRate, setKmRate] = useState('')
     const [timeRate, setTimeRate] = useState('');
     const [plateFormCharges, setPlateFormCharges] = useState('');
+    const [plateFormChargesGst, setPlateFormChargesGst] = useState('');
     const [otherCharge, setOtherCharge] = useState('');
     const [surgeCharges, setSurgeCharges] = useState('');
+    const [surgeChargesTax, setSurgeChargesTax] = useState('');
     const [tollCharge, setTollCharge] = useState('');
     const [ridetimeCharges, setRidetimeCharges] = useState('');
     const [cancellationCharges, setCancellationCharges] = useState('');
+    const [railwayPickUpCharge, setRailwayPickUpCharge] = useState('');
     const [description, setDescription] = useState('');
     const navigate = useNavigate();
 
@@ -36,20 +40,41 @@ const UpdateTaxpricing = () => {
         const fetchPriceDetails = async () => {
             try {
                 const response = await axios.get(`${BaseUrl}api/v1/Taxes/${id}`, getAuthHeaders());
-                const { basePrice, serviceCharge, nightCharges, waitingCharge, ParkingRate, kmRate, timeRate, plateFormCharges, otherCharge, surgeCharges, tollCharge, ridetimeCharges, cancellationCharges, description } = response.data.data;
+                const { basePrice,
+                    serviceCharge,
+                    nightCharges,
+                    nightChargesTax, 
+                    waitingCharge,
+                    ParkingRate,
+                    kmRate,
+                    timeRate,
+                    plateFormCharges,
+                    plateFormChargesGst,
+                    otherCharge,
+                    surgeCharges,
+                    surgeChargesTax,
+                    tollCharge,
+                    ridetimeCharges,
+                    cancellationCharges,
+                    railwayPickUpCharge,
+                    description } = response.data.data;
                 setBasePrice(basePrice)
                 setNightCharge(nightCharges);
+                setnightchargestax(nightChargesTax);
                 setServiceCharge(serviceCharge);
                 setWaitingCharge(waitingCharge);
                 setParkingRate(ParkingRate);
                 setKmRate(kmRate);
                 setTimeRate(timeRate);
                 setPlateFormCharges(plateFormCharges);
+                setPlateFormChargesGst(plateFormChargesGst);
                 setOtherCharge(otherCharge);
                 setSurgeCharges(surgeCharges);
+                setSurgeChargesTax(surgeChargesTax);
                 setTollCharge(tollCharge);
                 setRidetimeCharges(ridetimeCharges);
                 setCancellationCharges(cancellationCharges);
+                setRailwayPickUpCharge(railwayPickUpCharge);
                 setDescription(description)
             } catch (error) {
                 console.error('Error fetching Tax Pricing details:', error);
@@ -61,17 +86,21 @@ const UpdateTaxpricing = () => {
         const data = {
             basePrice: baseprice,
             nightCharges: nightcharge,
+            nightChargesTax: nightchargestax,
             serviceCharge: servicecharge,
             waitingCharge: waitingCharge,
             ParkingRate: parkingRate,
             kmRate: kmRate,
             timeRate: timeRate,
             plateFormCharges: plateFormCharges,
+            plateFormChargesGst: plateFormChargesGst,
             otherCharge: otherCharge,
             surgeCharges: surgeCharges,
+            surgeChargesTax:surgeChargesTax,
             tollCharge: tollCharge,
             ridetimeCharges: ridetimeCharges,
             cancellationCharges: cancellationCharges,
+            railwayPickUpCharge: railwayPickUpCharge,
             description: description
         }
 
@@ -108,12 +137,12 @@ const UpdateTaxpricing = () => {
                     <div className='dailyprice'>
                         <div className='dailyprice3'>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Base Price</label>
-                                <input type="number" placeholder='Enter Base price' value={baseprice} onChange={(e) => setBasePrice(e.target.value)} />
+                                <label htmlFor="">Night Charges</label>
+                                <input type="number" placeholder='Enter Base price' value={nightcharge} onChange={(e) => setNightCharge(e.target.value)} />
                             </div>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Night Charge</label>
-                                <input type="number" placeholder='Enter night charge' value={nightcharge} onChange={(e) => setNightCharge(e.target.value)} />
+                                <label htmlFor="">Night Charges Tax</label>
+                                <input type="number" placeholder='Enter night charge tax' value={nightchargestax} onChange={(e) => setnightchargestax(e.target.value)} />
                             </div>
                         </div>
                         <div className='dailyprice3'>
@@ -128,22 +157,22 @@ const UpdateTaxpricing = () => {
                         </div>
                         <div className='dailyprice3'>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Parking Rate</label>
-                                <input type="number" placeholder='Enter parking Rate' value={parkingRate}   onChange={(e) => setParkingRate(e.target.value)}/>
-                            </div>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Km Rate</label>
-                                <input type="number" placeholder='Enter km rate' value={kmRate}   onChange={(e) => setKmRate(e.target.value)} />
-                            </div>
-                        </div>
-                        <div className='dailyprice3'>
-                            <div className='dailyprice4'>
                                 <label htmlFor="">Time Rate</label>
                                 <input type="number" placeholder='Enter time Rate' value={timeRate} onChange={(e) => setTimeRate(e.target.value)} />
                             </div>
                             <div className='dailyprice4'>
+                                <label htmlFor="">Km Rate</label>
+                                <input type="number" placeholder='Enter km rate' value={kmRate} onChange={(e) => setKmRate(e.target.value)} />
+                            </div>
+                        </div>
+                        <div className='dailyprice3'>
+                            <div className='dailyprice4'>
                                 <label htmlFor="">Plate Form Charges</label>
-                                <input type="number" placeholder='Enter plate Form Charges' value={plateFormCharges} onChange={(e) => setPlateFormCharges(e.target.value)} />
+                                <input type="number" placeholder='Enter platfrom charge' value={plateFormCharges} onChange={(e) => setPlateFormCharges(e.target.value)} />
+                            </div>
+                            <div className='dailyprice4'>
+                                <label htmlFor="">Plate Form Charges Gst</label>
+                                <input type="number" placeholder='Enter plate Form Charges gst' value={plateFormChargesGst} onChange={(e) => setPlateFormChargesGst(e.target.value)} />
                             </div>
                         </div>
                         <div className='dailyprice3'>
@@ -152,8 +181,8 @@ const UpdateTaxpricing = () => {
                                 <input type="number" placeholder='Enter surge Charges' value={surgeCharges} onChange={(e) => setSurgeCharges(e.target.value)} />
                             </div>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Toll Charge</label>
-                                <input type="number" placeholder='Enter toll Charge' value={tollCharge} onChange={(e) => setTollCharge(e.target.value)} />
+                                <label htmlFor="">Surge Charges Tax</label>
+                                <input type="number" placeholder='Enter surge Charges tax' value={surgeChargesTax} onChange={(e) =>setSurgeChargesTax(e.target.value)} />
                             </div>
                         </div>
                         <div className='dailyprice3'>
@@ -162,23 +191,40 @@ const UpdateTaxpricing = () => {
                                 <input type="number" placeholder='Enter ride time Charges' value={ridetimeCharges} onChange={(e) => setRidetimeCharges(e.target.value)} />
                             </div>
                             <div className='dailyprice4'>
+                                <label htmlFor="">Parking Rate</label>
+                                <input type="number" placeholder='Enter parking rate' value={parkingRate} onChange={(e) => setParkingRate(e.target.value)} />
+                            </div>
+                        </div>
+                        <div className='dailyprice3'>
+                            <div className='dailyprice4'>
+                                <label htmlFor="">Toll Charge</label>
+                                <input type="number" placeholder='Enter ride time Charges' value={tollCharge} onChange={(e) => setTimeRate(e.target.value)} />
+                            </div>
+                            <div className='dailyprice4'>
+                                <label htmlFor="">Railway PickUp Charge</label>
+                                <input type="number" placeholder='Enter railway pickup charges' value={railwayPickUpCharge} onChange={(e) => setRailwayPickUpCharge(e.target.value)} />
+                            </div>
+                        </div>
+                        <div className='dailyprice3'>
+                            <div className='dailyprice4'>
+                                <label htmlFor="">Insurance Premium</label>
+                                <input type="number" placeholder='Enter insurance premium' value={otherCharge} onChange={(e) => setOtherCharge(e.target.value)} />
+                            </div>
+                            <div className='dailyprice4'>
                                 <label htmlFor="">Cancellation Charges</label>
                                 <input type="number" placeholder='Enter cancellation Charges' value={cancellationCharges} onChange={(e) => setCancellationCharges(e.target.value)} />
                             </div>
                         </div>
                         <div className='dailyprice3'>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Other Charge</label>
-                                <input type="number" placeholder='Enter other Charge' value={otherCharge} onChange={(e) => otherCharge(e.target.value)} />
+                                <label htmlFor="">GST</label>
+                                <input type="number" placeholder='Enter gst Charge' value={baseprice} onChange={(e) => setBasePrice(e.target.value)} />
                             </div>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Description</label>
                                 <textarea name="" id="" cols="30" rows="5" value={description} onChange={(e) => setDescription(e.target.value)} ></textarea>
                             </div>
                         </div>
-
-
-
 
                         <div className='dailyprice5'>
                             <button onClick={() => navigate('/taxpricing')}>Cancel</button>

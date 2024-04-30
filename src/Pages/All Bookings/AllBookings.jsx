@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import HOC from '../../Components/HOC/HOC'
 
 import { IoSearch } from "react-icons/io5";
+import { IoEyeOutline } from "react-icons/io5";
+
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
@@ -16,6 +18,8 @@ import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 const AllBookings = () => {
     const [bookingData, setBookingData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchBookingData();
@@ -28,12 +32,21 @@ const AllBookings = () => {
             })
             .catch(error => {
                 console.error('Error fetching Bookings data:', error);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
 
 
 
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
 
+    const filteredBookingData = bookingData.filter(booking =>
+        booking?.userId?.name && booking?.userId?.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     return (
         <>
@@ -49,7 +62,11 @@ const AllBookings = () => {
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search' />
+                                <input type="search" name="" id=""
+                                    placeholder='Search booking'
+                                    onChange={handleSearch}
+                                    value={searchQuery}
+                                />
                             </div>
                         </div>
                     </div>
@@ -66,29 +83,75 @@ const AllBookings = () => {
                                     <th>Total Bill</th>
                                     <th>Vehicle Name</th>
                                     <th>Status</th>
+                                    <th>Action Buttons</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {bookingData.map(booking => (
-                                    <tr key={booking.id}>
-                                        <td className='rider8'>{booking.bookingId}</td>
-                                        <td>{booking?.date}</td>
-                                        <td>{booking?.userId?.name}</td>
-                                        <td>{booking?.current?.address}</td>
-                                        <td>{booking?.time}</td>
-                                        <td>{booking?.distance} Km</td>
-                                        <td>₹ {booking?.totalPrice}</td>
-                                        <td>{booking?.car?.name}</td>
-                                        <td style={{
-                                            color: booking?.status === 'cancel' ? '#F52D56' :
-                                                booking?.status === 'pending' ? '#FBAC2C' :
-                                                    booking?.status === 'complete' ? '#609527' : 'black',
-                                                    fontWeight: '600' 
-                                        }}>
-                                            {booking?.status}
-                                        </td>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading users...</td>
                                     </tr>
-                                ))}
+                                ) :
+                                    searchQuery && filteredBookingData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>User not found</td>
+                                        </tr>
+                                    ) : (
+                                        searchQuery
+                                            ?
+                                            filteredBookingData.map(booking => (
+                                                <tr key={booking.id}>
+                                                    <td className='rider8'>{booking.bookingId}</td>
+                                                    <td>{booking?.date}</td>
+                                                    <td>{booking?.userId?.name}</td>
+                                                    <td>{booking?.current?.address}</td>
+                                                    <td>{booking?.time}</td>
+                                                    <td>{booking?.distance} Km</td>
+                                                    <td>₹ {booking?.totalPrice}</td>
+                                                    <td>{booking?.car?.name}</td>
+                                                    <td style={{
+                                                        color: booking?.status === 'cancel' ? '#F52D56' :
+                                                            booking?.status === 'pending' ? '#FBAC2C' :
+                                                                booking?.status === 'complete' ? '#609527' : 'black',
+                                                        fontWeight: '600'
+                                                    }}>
+                                                        {booking?.status}
+                                                    </td>
+                                                </tr>
+                                            ))
+                                            :
+                                            bookingData.map(booking => (
+                                                <tr key={booking.id}>
+                                                    <td>{booking.bookingId}</td>
+                                                    <td>{booking?.date}</td>
+                                                    <td>{booking?.userId?.name}</td>
+                                                    <td>{booking?.current?.address}</td>
+                                                    <td>{booking?.time}</td>
+                                                    <td>{booking?.distance} Km</td>
+                                                    <td>₹ {booking?.totalPrice}</td>
+                                                    <td>{booking?.car?.name}</td>
+                                                    <td style={{
+                                                        color: booking?.status === 'cancel' ? '#F52D56' :
+                                                            booking?.status === 'pending' ? '#FBAC2C' :
+                                                                booking?.status === 'complete' ? '#609527' : 'black',
+                                                        fontWeight: '600'
+                                                    }}>
+                                                        {booking?.status}
+                                                    </td>
+                                                    <td>
+                                                        <div className='rider9'>
+                                                            <div className='rider10'>
+                                                                <Link to={`/riders_details/${booking._id}`} className='sidebar-link' >
+                                                                    <IoEyeOutline color='#667085' size={20} />
+                                                                    <p>View</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+
+                                    )}
                             </tbody>
                         </table>
                     </div>

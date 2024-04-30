@@ -15,7 +15,7 @@ import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 
-// import img from '../../Images/img5.png'
+import img2 from '../../Images/user.webp'
 
 
 const Riders = () => {
@@ -127,6 +127,7 @@ const Riders = () => {
                         <table>
                             <thead>
                                 <tr>
+                                    <th>Profile Image</th>
                                     <th>User Name</th>
                                     <th>Email</th>
                                     <th>Phone No.</th>
@@ -138,40 +139,42 @@ const Riders = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="6"  style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading...</td>
+                                        <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading users...</td>
                                     </tr>
                                 ) :
-                                     searchQuery && filteredRiderData.length === 0 ? (
+                                    searchQuery && filteredRiderData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>No matching users found</td>
+                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>User not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery
                                             ?
                                             filteredRiderData.map(rider => (
                                                 <tr key={rider.id}>
-                                                    <td className='rider8'>
-                                                        <img src={rider.profilePicture} style={{ width: '50px' }} />
-                                                        {rider.name}
+                                                    <td>
+                                                        <img src={rider?.profilePicture || img2} alt="No image" style={{ width: '60px', height:"60px",  borderRadius: "100%" }} />
                                                     </td>
+                                                    <td>{rider?.name}</td>
                                                     <td>{rider.email}</td>
                                                     <td>{rider.mobileNumber}</td>
                                                     <td style={{ color: '#F52D56' }}>{rider.wallet}</td>
                                                     <td>{rider.totalBooking}</td>
-                                                    <td className='rider9'>
-                                                        <div className='rider10' onClick={() => deleteRider(rider._id)}>
-                                                            <RiDeleteBinLine color='#667085' size={20} />
-                                                            <p>Delete</p>
-                                                        </div>
-                                                        <div className='rider10' onClick={() => { rider.isBlock ? unblockRider(rider._id) : blockRider(rider._id) }}>
-                                                            <MdOutlineBlock color={rider.isBlock ? "red" : "#667085"} size={20} />
-                                                            <p style={{ color: rider.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
-                                                        </div>
-                                                        <div className='rider10'>
-                                                            <Link to={`/riders_details/${rider._id}`} className='sidebar-link' >
-                                                                <IoEyeOutline color='#667085' size={20} />
-                                                                <p>View</p>
-                                                            </Link>
+                                                    <td>
+                                                        <div className='rider9'>
+                                                            <div className='rider10' onClick={() => deleteRider(rider._id)}>
+                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                <p>Delete</p>
+                                                            </div>
+                                                            <div className='rider10' onClick={() => { rider.isBlock ? unblockRider(rider._id) : blockRider(rider._id) }}>
+                                                                <MdOutlineBlock color={rider.isBlock ? "red" : "#667085"} size={20} />
+                                                                <p style={{ color: rider.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/riders_details/${rider._id}`} className='sidebar-link' >
+                                                                    <IoEyeOutline color='#667085' size={20} />
+                                                                    <p>View</p>
+                                                                </Link>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -180,34 +183,36 @@ const Riders = () => {
                                             :
                                             riderData.map(rider => (
                                                 <tr key={rider.id}>
-                                                    <td className='rider8'>
-                                                        <img src={rider.profilePicture} style={{ width: '50px' }} />
-                                                        {rider.name}
+                                                    <td>
+                                                        <img src={rider?.profilePicture || img2} alt="No image" style={{ width: '60px', height:"60px", borderRadius: "100%" }} />
                                                     </td>
+                                                    <td>{rider?.name}</td>
                                                     <td>{rider.email}</td>
                                                     <td>{rider.mobileNumber}</td>
                                                     <td style={{ color: '#F52D56' }}>{rider.wallet}</td>
                                                     <td>{rider.totalBooking}</td>
-                                                    <td className='rider9'>
-                                                        <div className='rider10' onClick={() => deleteRider(rider._id)}>
-                                                            <RiDeleteBinLine color='#667085' size={20} />
-                                                            <p>Delete</p>
-                                                        </div>
-                                                        <div className='rider10' onClick={() => { rider.isBlock ? unblockRider(rider._id) : blockRider(rider._id) }}>
-                                                            <MdOutlineBlock color={rider.isBlock ? "red" : "#667085"} size={20} />
-                                                            <p style={{ color: rider.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
-                                                        </div>
-                                                        <div className='rider10'>
-                                                            <Link to={`/riders_details/${rider._id}`} className='sidebar-link' >
-                                                                <IoEyeOutline color='#667085' size={20} />
-                                                                <p>View</p>
-                                                            </Link>
+                                                    <td>
+                                                        <div className='rider9'>
+                                                            <div className='rider10' onClick={() => deleteRider(rider._id)}>
+                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                <p>Delete</p>
+                                                            </div>
+                                                            <div className='rider10' onClick={() => { rider.isBlock ? unblockRider(rider._id) : blockRider(rider._id) }}>
+                                                                <MdOutlineBlock color={rider.isBlock ? "red" : "#667085"} size={20} />
+                                                                <p style={{ color: rider.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/riders_details/${rider._id}`} className='sidebar-link' >
+                                                                    <IoEyeOutline color='#667085' size={20} />
+                                                                    <p>View</p>
+                                                                </Link>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                 </tr>
                                             ))
 
-                                    )}
+                                        )}
                             </tbody>
                         </table>
                     </div>

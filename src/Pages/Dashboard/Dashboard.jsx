@@ -15,12 +15,12 @@ import img2 from '../../Images/img8.png'
 import img3 from '../../Images/img9.png'
 
 const Dashboard = () => {
-  const [totalUsers, setTotalUsers] = useState(0);
+  const [totalbookings, setTotalbookings] = useState(0);
   const [totalRiders, setTotalRiders] = useState(0);
   const [totalDrivers, setTotalDrivers] = useState(0);
   const [totalVendors, setTotalVendors] = useState(0);
   const [totalEarnings, setTotalEarnings] = useState(0);
-  const [newUsers, setNewUsers] = useState(0);
+  const [totalcancel, setcancel] = useState(0);
 
   const [bookingtransaction, setBookingTransaction] = useState([])
 
@@ -42,15 +42,20 @@ const Dashboard = () => {
 
   const fetchData = async () => {
     try {
-      const [ridreResponse, driversResponse, vendorsResponse] = await Promise.all([
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/admin/all/user'),
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/admin/all/driver'),
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/admin/all/vendor'),
+      const [ridreResponse, driversResponse, vendorsResponse, cancelRides, booking] = await Promise.all([
+        axios.get(`${BaseUrl}api/v1/admin/all/user` , getAuthHeaders()),
+        axios.get(`${BaseUrl}api/v1/admin/all/driver` , getAuthHeaders()),
+        axios.get(`${BaseUrl}api/v1/admin/all/vendor`, getAuthHeaders()),
+        axios.get(`${BaseUrl}api/v1/getBooking?status=cancel`, getAuthHeaders()),
+        axios.get(`${BaseUrl}api/v1/getBooking`, getAuthHeaders()),
       ]);
 
       setTotalRiders(ridreResponse.data.category.length);
       setTotalDrivers(driversResponse.data.category.length);
       setTotalVendors(vendorsResponse.data.category.length);
+      setTotalVendors(vendorsResponse.data.category.length);
+      setcancel(cancelRides.data.data.length);
+      setTotalbookings(booking.data.data.length);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -121,18 +126,30 @@ const Dashboard = () => {
                   <h6>{totalDrivers}</h6>
                 </div>
               </Link>
-            </div>
-            {/* <div className='dashboard2'>
 
-              <Link className='sidebar-link' >
+              <Link to={'/earnings'} className='sidebar-link'>
                 <div className='dashboard1'>
                   <img src={img3} alt="" />
                   <p>Total Earnings/Invoices</p>
-                  <h6>{totalEarnings}</h6>
+                  <h6>{totalDrivers}</h6>
                 </div>
               </Link>
-            </div> */}
-
+              <Link to={'/cancellled_booking'} className='sidebar-link'>
+                <div className='dashboard1'>
+                  <img src={img1} alt="" />
+                  <p>Total Cancel Rides</p>
+                  <h6>{totalcancel}</h6>
+                </div>
+              </Link>
+              <Link to={'/allbookings'} className='sidebar-link'>
+                <div className='dashboard1'>
+                  <img src={img1} alt="" />
+                  <p>Total Booking</p>
+                  <h6>{totalbookings}</h6>
+                </div>
+              </Link>
+            </div>
+        
 
             <div className='dashboard4'>
               <h6>Latest Transactions</h6>

@@ -6,13 +6,16 @@ import './Drivers.css'
 import { Link } from 'react-router-dom';
 import HOC from '../../Components/HOC/HOC'
 
+
+
 import { IoSearch } from "react-icons/io5";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { MdOutlineBlock } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
-import imgdoc from '../../Images/documents.png'
+
+
+import img2 from '../../Images/user.webp'
 
 
 
@@ -21,6 +24,9 @@ import imgdoc from '../../Images/documents.png'
 
 const Drivers = () => {
     const [driverData, setDriverData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
         fetchDriverData();
@@ -33,9 +39,19 @@ const Drivers = () => {
             })
             .catch(error => {
                 console.error('Error fetching driver data:', error);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
 
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredDriverData = driverData.filter(driver =>
+        driver.name && driver.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     const deleteDriver = (driverId) => {
         axios.delete(`${BaseUrl}api/v1/admin/delete/driver/${driverId}`, getAuthHeaders())
@@ -103,7 +119,7 @@ const Drivers = () => {
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search Driver' />
+                                <input type="search" name="" id="" placeholder='Search Driver' onChange={handleSearch} />
                             </div>
                         </div>
                     </div>
@@ -111,58 +127,107 @@ const Drivers = () => {
                         <table>
                             <thead>
                                 <tr>
+                                    <th>Profile Image</th>
                                     <th>Driver Name</th>
                                     <th>Email</th>
                                     <th>Phone No.</th>
-                                    {/* <th>Type</th> */}
                                     <th>Total Trips</th>
-                                    {/* <th>Document View</th> */}
-                                    {/* <th>Rating</th> */}
                                     <th>Status</th>
                                     <th>Total Earnings</th>
                                     <th>Action Buttons</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {driverData?.map(driver => (
-                                    <tr key={driver.id}>
-                                        <td className='rider8'>
-                                            <img src={driver?.profilePicture} style={{ width: '50px' }} />
-                                            {driver?.name}
-                                        </td>
-                                        <td>{driver?.email}</td>
-                                        <td>{driver?.mobileNumber}</td>
-                                        {/* <td>{driver?.driverDocument?.maker_model}</td> */}
-                                        <td>{driver?.totalBooking}</td>
-                                        {/* <td><img src={imgdoc} alt="" style={{ width: '30px', cursor: 'pointer' }} /></td> */}
-                                        {/* <td>{driver?.rating}</td> */}
-                                        <td style={{
-                                            color: driver?.status === 'cancel' ? '#F52D56' :
-                                                driver?.status === 'pending' ? '#FBAC2C' :
-                                                    driver?.status === 'complete' ? '#609527' : 'black',
-                                            fontWeight: '600'
-                                        }}>
-                                            {driver?.status}
-                                        </td>
-                                        <td>₹ {driver?.wallet}</td>
-                                        <td className='rider9'>
-                                            <div className='rider10' onClick={() => deleteDriver(driver._id)}>
-                                                <RiDeleteBinLine color='#667085' size={20} />
-                                                <p>Delete</p>
-                                            </div>
-                                            <div className='rider10' onClick={() => { driver.isBlock ? unblockDriver(driver._id) : blockDriver(driver._id) }}>
-                                                <MdOutlineBlock color={driver.isBlock ? "red" : "#667085"} size={20} />
-                                                <p style={{ color: driver.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
-                                            </div>
-                                            <div className='rider10'>
-                                                <Link to={`/driver_details/${driver._id}`} className='sidebar-link' >
-                                                    <IoEyeOutline color='#667085' size={20} />
-                                                    <p>View</p>
-                                                </Link>
-                                            </div>
-                                        </td>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading drivers...</td>
                                     </tr>
-                                ))}
+                                ) :
+                                    searchQuery && filteredDriverData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Driver not found</td>
+                                        </tr>
+                                    ) : (
+                                        searchQuery
+                                            ?
+                                            filteredDriverData?.map(driver => (
+                                                <tr key={driver.id}>
+                                                    <td>
+                                                        <img src={driver?.profilePicture || img2} alt="No image" style={{ width: '60px', height:"60px",  borderRadius: "100%" }} />
+                                                    </td>
+                                                    <td>{driver?.name}</td>
+                                                    <td>{driver?.email}</td>
+                                                    <td>{driver?.mobileNumber}</td>
+                                                    <td>{driver?.totalBooking}</td>
+                                                    <td style={{
+                                                        color: driver?.status === 'cancel' ? '#F52D56' :
+                                                            driver?.status === 'pending' ? '#FBAC2C' :
+                                                                driver?.status === 'complete' ? '#609527' : 'black',
+                                                        fontWeight: '600'
+                                                    }}>
+                                                        {driver?.status}
+                                                    </td>
+                                                    <td>₹ {driver?.wallet}</td>
+                                                    <td>
+                                                        <div className='rider9'>
+                                                            <div className='rider10' onClick={() => deleteDriver(driver._id)}>
+                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                <p>Delete</p>
+                                                            </div>
+                                                            <div className='rider10' onClick={() => { driver.isBlock ? unblockDriver(driver._id) : blockDriver(driver._id) }}>
+                                                                <MdOutlineBlock color={driver.isBlock ? "red" : "#667085"} size={20} />
+                                                                <p style={{ color: driver.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/driver_details/${driver._id}`} className='sidebar-link' >
+                                                                    <IoEyeOutline color='#667085' size={20} />
+                                                                    <p>View</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                            :
+                                            driverData?.map(driver => (
+                                                <tr key={driver.id}>
+                                                    <td>
+                                                        <img src={driver?.profilePicture || img2} alt="No image" style={{ width: '60px', height:"60px",  borderRadius: "100%" }} />
+                                                    </td>
+                                                    <td>{driver?.name}</td>
+                                                    <td>{driver?.email}</td>
+                                                    <td>{driver?.mobileNumber}</td>
+                                                    <td>{driver?.totalBooking}</td>
+                                                    <td style={{
+                                                        color: driver?.status === 'cancel' ? '#F52D56' :
+                                                            driver?.status === 'pending' ? '#FBAC2C' :
+                                                                driver?.status === 'complete' ? '#609527' : 'black',
+                                                        fontWeight: '600'
+                                                    }}>
+                                                        {driver?.status}
+                                                    </td>
+                                                    <td>₹ {driver?.wallet}</td>
+                                                    <td>
+                                                        <div className='rider9'>
+                                                            <div className='rider10' onClick={() => deleteDriver(driver._id)}>
+                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                <p>Delete</p>
+                                                            </div>
+                                                            <div className='rider10' onClick={() => { driver.isBlock ? unblockDriver(driver._id) : blockDriver(driver._id) }}>
+                                                                <MdOutlineBlock color={driver.isBlock ? "red" : "#667085"} size={20} />
+                                                                <p style={{ color: driver.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/driver_details/${driver._id}`} className='sidebar-link' >
+                                                                    <IoEyeOutline color='#667085' size={20} />
+                                                                    <p>View</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                    )}
                             </tbody>
                         </table>
                     </div>

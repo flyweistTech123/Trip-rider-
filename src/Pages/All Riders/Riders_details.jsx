@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './Riders.css'
 import HOC from '../../Components/HOC/HOC'
 import { useParams } from 'react-router-dom';
-import img from '../../Images/img27.png'
+import img2 from '../../Images/user.webp'
 import img1 from '../../Images/img28.png'
 import { MdOutlineBlock } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -28,13 +28,13 @@ const Riders_details = () => {
     };
     const { id } = useParams();
     const [RiderData, setRiderData] = useState(null);
-    const [isBlocked, setIsBlocked] = useState(false); // Initialize isBlocked state to false
+    const [isBlocked, setIsBlocked] = useState(false);
     const navigate = useNavigate()
 
     useEffect(() => {
         const fetchRiderData = async () => {
             try {
-                const response = await axios.get(`${BaseUrl}api/v1/getUserById/${id}`, getAuthHeaders()); 
+                const response = await axios.get(`${BaseUrl}api/v1/getUserById/${id}`, getAuthHeaders());
                 const riderDataFromApi = response.data.data;
                 setRiderData(riderDataFromApi);
                 setIsBlocked(riderDataFromApi.isBlock);
@@ -97,10 +97,10 @@ const Riders_details = () => {
                                 <div className='rider_details1'>
                                     <div className='rider_details2'>
                                         <div className='rider_details3'>
-                                            <img src={RiderData.profilePicture} alt="profile" style={{ width: '50px', height:"50px" }} />
+                                            <img src={RiderData.profilePicture || img2} alt="No image" />
                                             <div className='rider_details4'>
                                                 <h6>{RiderData.name}<div className='rider_details5'>
-                                                <p>{RiderData.role}</p>
+                                                    <p>{RiderData.role}</p>
                                                 </div></h6>
                                                 {/* <p>Completed  Profile</p> */}
                                             </div>
@@ -137,6 +137,10 @@ const Riders_details = () => {
 
 
                                     <div className='rider_details12'>
+                                        <div className='rider_details12111'>
+                                            <h6>User's personal information</h6>
+                                            <div className='rider_details12112'></div>
+                                        </div>
                                         <div className='rider_details13'>
                                             <div className='rider_details14'>
                                                 <label htmlFor="">Email</label>
@@ -150,9 +154,6 @@ const Riders_details = () => {
                                                     <p>{RiderData.mobileNumber}</p>
                                                 </div>
                                             </div>
-
-                                        </div>
-                                        <div className='rider_details13'>
                                             <div className='rider_details14'>
                                                 <label htmlFor="">Gender</label>
                                                 <div className='input11'>
@@ -165,6 +166,7 @@ const Riders_details = () => {
                                                     <p>{formatDate(RiderData.birthday)}</p>
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
 

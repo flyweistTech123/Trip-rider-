@@ -6,23 +6,41 @@ import HOC from '../../Components/HOC/HOC'
 import { useNavigate } from 'react-router-dom';
 
 import { IoSearch } from "react-icons/io5";
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
+
 
 
 const RefundTransaction = () => {
     const [payoutdata, setPayoutData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
+
 
     const fetchPayoutData = async () => {
         try {
-            const response = await axios.get('https://rajiv-cab-mu.vercel.app/api/v1/getAllRefundTransaction');
+            const response = await axios.get(`${BaseUrl}api/v1/getAllRefundTransaction`, getAuthHeaders());
             setPayoutData(response.data.data);
         } catch (error) {
             console.error('Error fetching wallet data:', error);
         }
+        finally {
+            setLoading(false);
+        };
     };
 
     useEffect(() => {
         fetchPayoutData();
     }, []);
+
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredrefundData = payoutdata.filter(payout =>
+        payout.name && payout.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -64,7 +82,8 @@ const RefundTransaction = () => {
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search Driver' />
+                                <input type="search" name="" id="" placeholder='Search name' value={searchQuery}
+                                    onChange={handleSearch} />
                             </div>
                         </div>
                     </div>
@@ -86,34 +105,64 @@ const RefundTransaction = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {payoutdata && payoutdata.length > 0 ? (
-                                    payoutdata.map(payout => (
-                                        <tr key={payout.id}>
-                                            <td className='rider8'>{payout?.id}</td>
-                                            <td>{(payout.name)}</td>
-                                            <td>{(payout.mobileNumber)}</td>
-                                            <td>{(payout.accountNumber)}</td>
-                                            <td>{(payout.ifsc)}</td>
-                                            <td>{(payout.upiId)}</td>
-                                            <td>{(payout.paymentMethod)}</td>
-                                            <td>{formatDate(payout.createdAt)}</td>
-                                            <td>{formatTime(payout.createdAt)}</td>
-                                            <td style={{
-                                                color: payout.status === 'FAILED' ? '#F52D56' :
-                                                    payout.status === 'PENDING' ? '#FBAC2C' :
-                                                        payout.status === 'PAID' ? '#609527' : 'black',
-                                                fontWeight: '600'
-                                            }}>
-                                                {payout.status}
-                                            </td>
-                                            <td className='payuser4'><button onClick={() => navigate(`/pay_user/${payout._id}`)}>Pay</button></td>
-                                        </tr>
-                                    ))
-                                ) : (
+                                {loading ? (
                                     <tr>
-                                        <td colSpan="6">Loading...</td>
+                                        <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Refund...</td>
                                     </tr>
-                                )}
+                                ) :
+                                    searchQuery && filteredrefundData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Data not found</td>
+                                        </tr>
+                                    ) : (
+                                        searchQuery
+                                            ?
+                                            filteredrefundData.map(payout => (
+                                                <tr key={payout.id}>
+                                                    <td className='rider8'>{payout?.id}</td>
+                                                    <td>{(payout.name)}</td>
+                                                    <td>{(payout.mobileNumber)}</td>
+                                                    <td>{(payout.accountNumber)}</td>
+                                                    <td>{(payout.ifsc)}</td>
+                                                    <td>{(payout.upiId)}</td>
+                                                    <td>{(payout.paymentMethod)}</td>
+                                                    <td>{formatDate(payout.createdAt)}</td>
+                                                    <td>{formatTime(payout.createdAt)}</td>
+                                                    <td style={{
+                                                        color: payout.status === 'FAILED' ? '#F52D56' :
+                                                            payout.status === 'PENDING' ? '#FBAC2C' :
+                                                                payout.status === 'PAID' ? '#609527' : 'black',
+                                                        fontWeight: '600'
+                                                    }}>
+                                                        {payout.status}
+                                                    </td>
+                                                    <td className='payuser4'><button onClick={() => navigate(`/pay_user/${payout._id}`)}>Pay</button></td>
+                                                </tr>
+                                            ))
+                                            :
+                                            payoutdata.map(payout => (
+                                                <tr key={payout.id}>
+                                                    <td className='rider8'>{payout?.id}</td>
+                                                    <td>{(payout.name)}</td>
+                                                    <td>{(payout.mobileNumber)}</td>
+                                                    <td>{(payout.accountNumber)}</td>
+                                                    <td>{(payout.ifsc)}</td>
+                                                    <td>{(payout.upiId)}</td>
+                                                    <td>{(payout.paymentMethod)}</td>
+                                                    <td>{formatDate(payout.createdAt)}</td>
+                                                    <td>{formatTime(payout.createdAt)}</td>
+                                                    <td style={{
+                                                        color: payout.status === 'FAILED' ? '#F52D56' :
+                                                            payout.status === 'PENDING' ? '#FBAC2C' :
+                                                                payout.status === 'PAID' ? '#609527' : 'black',
+                                                        fontWeight: '600'
+                                                    }}>
+                                                        {payout.status}
+                                                    </td>
+                                                    <td className='payuser4'><button onClick={() => navigate(`/pay_user/${payout._id}`)}>Pay</button></td>
+                                                </tr>
+                                            ))
+                                    )}
                             </tbody>
                         </table>
                     </div>
