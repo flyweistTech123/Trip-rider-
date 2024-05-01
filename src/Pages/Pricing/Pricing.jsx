@@ -26,12 +26,6 @@ const Pricing = () => {
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>Daily Pricing</h5>
-                                <div className='rider5'>
-                                    <div className='rider6'>
-                                        <IoSearch />
-                                    </div>
-                                    <input type="search" name="" id="" placeholder='Search Pricing' />
-                                </div>
                             </div>
                         </div>
                     </Link>
@@ -39,12 +33,6 @@ const Pricing = () => {
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>Hourly Pricing</h5>
-                                <div className='rider5'>
-                                    <div className='rider6'>
-                                        <IoSearch />
-                                    </div>
-                                    <input type="search" name="" id="" placeholder='Search Pricing' />
-                                </div>
                             </div>
                         </div>
                     </Link>
@@ -53,12 +41,6 @@ const Pricing = () => {
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>OutStation Pricing</h5>
-                                <div className='rider5'>
-                                    <div className='rider6'>
-                                        <IoSearch />
-                                    </div>
-                                    <input type="search" name="" id="" placeholder='Search Pricing' />
-                                </div>
                             </div>
                         </div>
                     </Link>
@@ -67,12 +49,6 @@ const Pricing = () => {
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>Base Pricing</h5>
-                                <div className='rider5'>
-                                    <div className='rider6'>
-                                        <IoSearch />
-                                    </div>
-                                    <input type="search" name="" id="" placeholder='Search Pricing' />
-                                </div>
                             </div>
                         </div>
                     </Link>
@@ -80,12 +56,6 @@ const Pricing = () => {
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>Ambulance Pricing</h5>
-                                <div className='rider5'>
-                                    <div className='rider6'>
-                                        <IoSearch />
-                                    </div>
-                                    <input type="search" name="" id="" placeholder='Search Pricing' />
-                                </div>
                             </div>
                         </div>
                     </Link>
@@ -93,12 +63,6 @@ const Pricing = () => {
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>Super Car Pricing</h5>
-                                <div className='rider5'>
-                                    <div className='rider6'>
-                                        <IoSearch />
-                                    </div>
-                                    <input type="search" name="" id="" placeholder='Search Pricing' />
-                                </div>
                             </div>
                         </div>
                     </Link>
@@ -106,12 +70,6 @@ const Pricing = () => {
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>Taxes</h5>
-                                <div className='rider5'>
-                                    <div className='rider6'>
-                                        <IoSearch />
-                                    </div>
-                                    <input type="search" name="" id="" placeholder='Search Pricing' />
-                                </div>
                             </div>
                         </div>
                     </Link>

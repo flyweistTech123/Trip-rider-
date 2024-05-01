@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './AdminProfile.css'
 import HOC from '../../Components/HOC/HOC'
-import { useParams } from 'react-router-dom';
 import img1 from '../../Images/img28.png'
 import Modal from "react-bootstrap/Modal";
 import { Button, Form } from "react-bootstrap";
@@ -13,6 +12,7 @@ import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 import { useNavigate } from 'react-router-dom';
 
+import img2 from '../../Images/user.webp'
 
 
 const AdminProfile = () => {
@@ -50,14 +50,6 @@ const AdminProfile = () => {
     };
 
 
-    // const formatDate1 = (dateString) => {
-    //     const date = new Date(dateString);
-
-    //     const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${date.getMonth() + 1}-${date.getFullYear()}`;
-
-    //     return `${formattedDate}`;
-    // };
-
 
 
     const formatTime = (dateString) => {
@@ -73,12 +65,6 @@ const AdminProfile = () => {
         return `${formattedTime}`;
     };
 
-
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        toast.success("Logout successfully");
-        navigate('/')
-    }
 
 
     const triggerFileInput = () => {
@@ -134,7 +120,7 @@ const AdminProfile = () => {
                     formData,
                     {
                         headers: {
-                            Authorization: `Bearer ${token}`, 
+                            Authorization: `Bearer ${token}`,
                         },
                     }
                 );
@@ -147,7 +133,7 @@ const AdminProfile = () => {
             }
         }
 
-        
+
         useEffect(() => {
             fetchadminDetails();
         }, []);
@@ -263,7 +249,6 @@ const AdminProfile = () => {
                         </div>
                         <div className='rider4'>
                             <button onClick={() => setModalShow(true)}>Update Profile</button>
-                            <button onClick={handleLogout}>Logout</button>
                         </div>
                     </div>
                     {adminData && (
@@ -272,12 +257,12 @@ const AdminProfile = () => {
                                 <div className='rider_details1'>
                                     <div className='rider_details2'>
                                         <div className='rider_details3'>
-                                            <img src={adminData.profilePicture} alt="" />
+                                            <img src={adminData?.profilePicture || img2} alt="No image"  />
                                             <div className='rider_details4'>
                                                 <h6>{adminData.name}<div className='rider_details5'>
                                                     <p>{adminData.role}</p>
                                                 </div></h6>
-                                                <p>Completed  Profile</p>
+                                                {/* <p>Completed  Profile</p> */}
                                             </div>
                                         </div>
 
@@ -287,21 +272,17 @@ const AdminProfile = () => {
                                                 <div className='rider_details10'>
                                                     <img src={img1} alt="" />
                                                     <p>{adminData.wallet}</p>
-                                                    <div className='rider_details11'>
-                                                        <p>Expires</p>
-                                                        <p>09/21</p>
-                                                    </div>
                                                 </div>
                                             </div>
-                                            {/* <div className='rider_details99'>
-                                                <p>Total  Trips</p>
-                                                <p>36</p>
-                                            </div> */}
                                         </div>
                                     </div>
 
 
                                     <div className='rider_details12'>
+                                        <div className='rider_details12111'>
+                                            <h6>Admin's personal information</h6>
+                                            <div className='rider_details12112'></div>
+                                        </div>
                                         <div className='rider_details13'>
                                             <div className='rider_details14'>
                                                 <label htmlFor="">Email</label>
@@ -349,7 +330,6 @@ const AdminProfile = () => {
                                     </div>
 
                                     <div className='rider_details19'>
-                                        {/* <button>Cancel</button> */}
                                         <button onClick={() => navigate('/dashboard')}>Close</button>
                                     </div>
                                 </div>

@@ -80,6 +80,7 @@
 .livechart6{
     display: flex;
     flex-direction: column;
+    margin-top: 20px;
 }
 
 
@@ -97,9 +98,9 @@
     gap: 10px;
 }
 
-.livechart852 img{
+/* .livechart852 img{
     max-width: 50px;
-}
+} */
 
 
 .livechart9{
@@ -144,7 +145,7 @@
 
 .livechart11{
     width: 58%;
-    height: 700px;
+    height: 720px;
     overflow-y: scroll;
     position: relative;
 }
@@ -164,9 +165,9 @@
 
 }
 
-.livechart14 img{
+/* .livechart14 img{
     max-width: 50px;
-}
+} */
 
 
 .livechart15{
@@ -212,7 +213,9 @@
     height: 500px;
     overflow-y: scroll;
     margin-top: 30px;
-    padding-bottom: 30px;
+    /* padding-bottom: 30px; */
+
+    /* border: 1px solid red; */
 }
 
 
@@ -302,10 +305,11 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 48px;
+    height: auto;
     border: 2px solid #E2E8F0;
     border-radius: 12px;
-    padding: 20px;
+    padding: 10px;
+    overflow-wrap: anywhere;
 }
 
 
@@ -313,8 +317,28 @@
     border: none;
     outline: none;
     width: 100%;
+    background-color: transparent;
 }
 
 .livechart28 img{
     cursor: pointer;
+}
+
+
+
+
+.no-messages{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.no-messages h6{
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    line-height:21px;
+    margin: 0;
+    color: #F52D56;
 }

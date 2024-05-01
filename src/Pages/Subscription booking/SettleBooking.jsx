@@ -13,12 +13,16 @@ import { RxCross2 } from "react-icons/rx";
 import { IoEyeOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 
+import img2 from '../../Images/user.webp'
+
+
 const SettleBooking = () => {
     const [settledata, setSettleData] = useState([]);
     const [modalShow, setModalShow] = React.useState(false);
     const [bookingId, setBookingId] = useState('')
     const [assignedDrivers, setAssignedDrivers] = useState({});
-
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
 
     const fetchSettleData = async () => {
         try {
@@ -27,11 +31,25 @@ const SettleBooking = () => {
         } catch (error) {
             console.error('Error fetching settle data:', error);
         }
+        finally {
+            setLoading(false);
+        };
     };
 
     useEffect(() => {
         fetchSettleData();
     }, []);
+
+
+
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredbookingData = settledata.filter(booking =>
+        booking?.user?.name && booking?.user?.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -151,7 +169,8 @@ const SettleBooking = () => {
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search Driver' />
+                                <input type="search" name="" id="" placeholder='Search user' value={searchQuery}
+                                    onChange={handleSearch} />
                             </div>
                         </div>
                     </div>
@@ -159,6 +178,7 @@ const SettleBooking = () => {
                         <table>
                             <thead>
                                 <tr>
+                                    <th>User Profile</th>
                                     <th>User Name</th>
                                     <th>Request Id</th>
                                     <th>Route From</th>
@@ -170,52 +190,107 @@ const SettleBooking = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {settledata && settledata.length > 0 ? (
-                                    settledata.map(settle => (
-                                        <tr key={settle.id}>
-                                            <td className='rider8'>
-                                                <img src={settle?.user?.profilePicture} style={{ width: '50px' }} />
-                                                {settle?.user?.name}
-                                            </td>
-                                            <td>{settle?.bookingId}</td>
-                                            <td>{settle?.current?.address}</td>
-                                            <td>{settle?.drop?.address}</td>
-                                            <td style={{
-                                                color: settle?.status === 'cancel' ? '#F52D56' :
-                                                settle?.status === 'pending' ? '#FBAC2C' :
-                                                settle?.status === 'Accept' ? '#609527' : 'black',
-                                                fontWeight: '600'
-                                            }}>
-                                                {settle?.status}
-                                            </td>
-                                            <td>{settle.km} KM</td>
-                                            <td style={{ color: '#F52D56' }}>₹ {settle.pricing}</td>
-                                            <td className='rider9'>
-                                                <div className='rider10' onClick={() => {
-                                                    setBookingId(settle?._id);
-                                                    setModalShow(true);
-                                                }}>
-                                                    <FaCheck color='#000000' size={20} />
-                                                    <p>Aprove</p>
-                                                </div>
-                                                <div className='rider10'>
-                                                    <RxCross2 color='#000000' size={20} />
-                                                    <p>Cancel</p>
-                                                </div>
-                                                <div className='rider10'>
-                                                    <Link to={`/settlebookingdetails/${settle._id}`} className='sidebar-link' >
-                                                        <IoEyeOutline color='#000000' size={20} />
-                                                        <p>View</p>
-                                                    </Link>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))
-                                ) : (
+                                {loading ? (
                                     <tr>
-                                        <td colSpan="6">Loading...</td>
+                                        <td colSpan="9" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Subscription booking...</td>
                                     </tr>
-                                )}
+                                ) :
+                                    searchQuery && filteredbookingData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="9" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Subscription booking not found</td>
+                                        </tr>
+                                    ) : (
+                                        searchQuery
+                                            ?
+
+                                            filteredbookingData.map(settle => (
+                                                <tr key={settle.id}>
+                                                    <td className='rider8'>
+                                                        <img src={settle?.user?.profilePicture} style={{ width: '50px' }} />
+                                                        {settle?.user?.name}
+                                                    </td>
+                                                    <td>{settle?.bookingId}</td>
+                                                    <td>{settle?.current?.address}</td>
+                                                    <td>{settle?.drop?.address}</td>
+                                                    <td style={{
+                                                        color: settle?.status === 'cancel' ? '#F52D56' :
+                                                            settle?.status === 'pending' ? '#FBAC2C' :
+                                                                settle?.status === 'Accept' ? '#609527' : 'black',
+                                                        fontWeight: '600'
+                                                    }}>
+                                                        {settle?.status}
+                                                    </td>
+                                                    <td>{settle.km} KM</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {settle.pricing}</td>
+                                                    <td>
+                                                        <div className='rider9'>
+                                                            <div className='rider10' onClick={() => {
+                                                                setBookingId(settle?._id);
+                                                                setModalShow(true);
+                                                            }}>
+                                                                <FaCheck color='#000000' size={20} />
+                                                                <p>Aprove</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <RxCross2 color='#000000' size={20} />
+                                                                <p>Cancel</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/settlebookingdetails/${settle._id}`} className='sidebar-link' >
+                                                                    <IoEyeOutline color='#000000' size={20} />
+                                                                    <p>View</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                            ))
+                                            : settledata.map(settle => (
+                                                <tr key={settle.id}>
+                                                    <td>
+                                                        <img src={settle?.user?.profilePicture || img2} alt="No image" style={{ width: '60px', height:"60px", borderRadius: "100%" }} />
+                                                    </td>
+                                                    <td>{settle?.user?.name}</td>
+                                                    <td>{settle?.bookingId}</td>
+                                                    <td>{settle?.current?.address}</td>
+                                                    <td>{settle?.drop?.address}</td>
+                                                    <td style={{
+                                                        color: settle?.status === 'cancel' ? '#F52D56' :
+                                                            settle?.status === 'pending' ? '#FBAC2C' :
+                                                                settle?.status === 'Accept' ? '#609527' : 'black',
+                                                        fontWeight: '600'
+                                                    }}>
+                                                        {settle?.status}
+                                                    </td>
+                                                    <td>{settle.km} KM</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {settle.pricing}</td>
+                                                    <td>
+                                                        <div className='rider9'>
+                                                            <div className='rider10' onClick={() => {
+                                                                setBookingId(settle?._id);
+                                                                setModalShow(true);
+                                                            }}>
+                                                                <FaCheck color='#000000' size={20} />
+                                                                <p>Aprove</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <RxCross2 color='#000000' size={20} />
+                                                                <p>Cancel</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/settlebookingdetails/${settle._id}`} className='sidebar-link' >
+                                                                    <IoEyeOutline color='#000000' size={20} />
+                                                                    <p>View</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                            ))
+
+                                    )}
                             </tbody>
                         </table>
                     </div>
@@ -226,12 +301,6 @@ const SettleBooking = () => {
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>Scheduled Rides</h5>
-                                <div className='rider5'>
-                                    <div className='rider6'>
-                                        <IoSearch />
-                                    </div>
-                                    <input type="search" name="" id="" placeholder='Search Pricing' />
-                                </div>
                             </div>
                         </div>
                     </Link>
@@ -239,12 +308,6 @@ const SettleBooking = () => {
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>Cancelled Rides</h5>
-                                <div className='rider5'>
-                                    <div className='rider6'>
-                                        <IoSearch />
-                                    </div>
-                                    <input type="search" name="" id="" placeholder='Search Pricing' />
-                                </div>
                             </div>
                         </div>
                     </Link>

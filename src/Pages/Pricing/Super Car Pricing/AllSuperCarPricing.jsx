@@ -23,6 +23,8 @@ import { useNavigate } from 'react-router-dom';
 const AllSuperCarPricing = () => {
     const navigate = useNavigate()
     const [supercarpriceeData, setSuperCarpriceData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchSupercarpriceData();
@@ -35,8 +37,20 @@ const AllSuperCarPricing = () => {
             })
             .catch(error => {
                 console.error('Error fetching Super car Price data:', error);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
+
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredPriceData = supercarpriceeData.filter(price =>
+        price?.name && price?.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     const deleteSuperCarPricing = (supercarpriceId) => {
         axios.delete(`${BaseUrl}api/v1/SuperCarPricing/${supercarpriceId}`, getAuthHeaders())
@@ -69,7 +83,8 @@ const AllSuperCarPricing = () => {
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search Pricing' />
+                                <input type="search" name="" id="" placeholder='Search Vehicle' value={searchQuery}
+                                    onChange={handleSearch} />
                             </div>
                         </div>
                     </div>
@@ -88,35 +103,78 @@ const AllSuperCarPricing = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {supercarpriceeData.map(supercarprice => (
-                                    <tr key={supercarprice.id}>
-                                        <td>{supercarprice?.name}</td>
-                                        {supercarprice.image.length > 0 && (
-                                            <td className='vehicle12'>
-                                                <img src={supercarprice.image[0].img} alt="" />
-                                            </td>
-                                        )}
-                                        <td>{supercarprice.kmLimit}</td>
-                                        <td>{supercarprice.kmPrice}</td>
-                                        <td>{supercarprice.hrLimit}</td>
-                                        <td>{supercarprice.hrPrice}</td>
-                                        <td style={{ color: '#F52D56' }}>₹ {supercarprice.price}</td>
-                                        <td>
-                                            <div className='service11'>
-                                                <div className='rider10' onClick={() => deleteSuperCarPricing(supercarprice._id)}>
-                                                    <RiDeleteBinLine color='#667085' size={20} />
-                                                    <p>Delete</p>
-                                                </div>
-                                                <div className='rider10'>
-                                                    <Link to={`/updatesupercarpricing/${supercarprice._id}`} className='sidebar-link' >
-                                                        <MdEdit color='#667085' size={20} />
-                                                        <p>Edit</p>
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                        </td>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="8" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Super Car pricing...</td>
                                     </tr>
-                                ))}
+                                ) :
+                                    searchQuery && filteredPriceData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="8" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Price not found</td>
+                                        </tr>
+                                    ) : (
+                                        searchQuery
+                                            ?
+                                            filteredPriceData.map(supercarprice => (
+                                                <tr key={supercarprice.id}>
+                                                    <td>{supercarprice?.name}</td>
+                                                    {supercarprice.image.length > 0 && (
+                                                        <td className='vehicle12'>
+                                                            <img src={supercarprice.image[0].img} alt="" />
+                                                        </td>
+                                                    )}
+                                                    <td>{supercarprice.kmLimit}</td>
+                                                    <td>{supercarprice.kmPrice}</td>
+                                                    <td>{supercarprice.hrLimit}</td>
+                                                    <td>{supercarprice.hrPrice}</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {supercarprice.price}</td>
+                                                    <td>
+                                                        <div className='service11'>
+                                                            <div className='rider10' onClick={() => deleteSuperCarPricing(supercarprice._id)}>
+                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                <p>Delete</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/updatesupercarpricing/${supercarprice._id}`} className='sidebar-link' >
+                                                                    <MdEdit color='#667085' size={20} />
+                                                                    <p>Edit</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                            :
+                                            supercarpriceeData.map(supercarprice => (
+                                                <tr key={supercarprice.id}>
+                                                    <td>{supercarprice?.name}</td>
+                                                    {supercarprice.image.length > 0 && (
+                                                        <td className='vehicle12'>
+                                                            <img src={supercarprice.image[0].img} alt="" />
+                                                        </td>
+                                                    )}
+                                                    <td>{supercarprice.kmLimit}</td>
+                                                    <td>{supercarprice.kmPrice}</td>
+                                                    <td>{supercarprice.hrLimit}</td>
+                                                    <td>{supercarprice.hrPrice}</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {supercarprice.price}</td>
+                                                    <td>
+                                                        <div className='service11'>
+                                                            <div className='rider10' onClick={() => deleteSuperCarPricing(supercarprice._id)}>
+                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                <p>Delete</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/updatesupercarpricing/${supercarprice._id}`} className='sidebar-link' >
+                                                                    <MdEdit color='#667085' size={20} />
+                                                                    <p>Edit</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                    )}
                             </tbody>
                         </table>
                     </div>

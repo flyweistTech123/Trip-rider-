@@ -6,7 +6,9 @@ import HOC from '../../Components/HOC/HOC'
 import { useNavigate, useParams } from 'react-router-dom';
 import { IoSearch } from "react-icons/io5";
 import { FaShareNodes } from "react-icons/fa6";
+import { FaShareAlt } from "react-icons/fa";
 import MapComponent from '../../Components/Map/Map'
+import { WhatsappShareButton } from 'react-share';
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
@@ -58,7 +60,7 @@ const SOSLocation = () => {
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>SOS Update</h6>
+                            <h6>SOS Details</h6>
                         </div>
 
                         <div className='rider4'>
@@ -108,8 +110,20 @@ const SOSLocation = () => {
 
 
                     <div className='sos5'>
-                        <button><FaShareNodes /> Share on Whatsapp</button>
-                        <button>Send Details</button>
+                        <WhatsappShareButton
+                            url={`Your URL or content to share`}
+                            title={`SOS details: 
+                                SOS ID - ${sosId},
+                                User - ${username}, 
+                                Location - ${location}, 
+                                Reason - ${reason}`
+                            }
+                            separator=" - "
+                        >
+                            <button>
+                                <FaShareAlt /> Share on WhatsApp
+                            </button>
+                        </WhatsappShareButton>
                     </div>
                 </div>
             </div>

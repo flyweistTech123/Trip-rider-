@@ -31,7 +31,7 @@ import img20 from '../../Images/img49.png'
 
 
 
-const Sidebar = () => {
+const Sidebar = (admindata) => {
 
     const sidebarItems = [
         { icon: img1, text: 'Dashboard', link: '/dashboard' },
@@ -39,29 +39,50 @@ const Sidebar = () => {
         { icon: img3, text: 'All Drivers', link: '/drivers' },
         { icon: img20, text: 'All Drivers Earnings', link: '/earnings' },
         { icon: img4, text: 'All Vendors', link: '/vendors' },
-        { icon: img5, text: 'Privileges', link:'/privileges' },
-        { icon: img6, text: 'Push Notification' , link: '/notification' },
+        { icon: img5, text: 'Privileges', link: '/privileges' },
+        { icon: img6, text: 'Push Notification', link: '/notification' },
         { icon: img7, text: 'Wallet Management', link: '/wallet_management' },
-        { icon: img8, text: 'Payout Management' , link: '/payout_management' },
-        { icon: img9, text: 'All Bookings' , link: '/allbookings'},
-        { icon: img12, text: 'All Referrals' , link: '/all_referrals' },
+        { icon: img8, text: 'Payout Management', link: '/payout_management' },
+        { icon: img9, text: 'All Bookings', link: '/allbookings' },
+        { icon: img12, text: 'All Referrals', link: '/all_referrals' },
         { icon: img10, text: 'Services', link: '/services' },
-        { icon: img11, text: 'SOS Updates' ,link: '/sos'},
-        { icon: img13, text: 'Update Banner' , link: '/updatebanners'},
-        { icon: img14, text: 'Promo Code', link: '/allpromocode'  },
+        { icon: img11, text: 'SOS Updates', link: '/sos' },
+        { icon: img13, text: 'Update Banner', link: '/updatebanners' },
+        { icon: img14, text: 'Promo Code', link: '/allpromocode' },
         { icon: img15, text: 'Live Chat', link: '/livechart' },
-        { icon: img16, text: 'Location' , link: '/alllocation' },
-        { icon: img17, text: 'Pricing' , link: '/pricing'},
-        { icon: img14, text: 'Subscription Booking ' , link: '/settlebooking'},
-        // { icon: img14, text: 'Service Location' },
-        // { icon: img14, text: 'Manage Owners' },
+        { icon: img16, text: 'Location', link: '/alllocation' },
+        { icon: img17, text: 'Pricing', link: '/pricing' },
+        { icon: img14, text: 'Subscription Booking ', link: '/settlebooking' },
         { icon: img14, text: 'Admin', link: '/alladmin' },
-        { icon: img14, text: 'Vehicle Types' , link: '/vehicletype' },
-        // { icon: img14, text: 'Master Data' },
-        { icon: img14, text: 'Geofencing' , link: '/geofencing_view' },
-        { icon: img18, text: 'Terms and conditions' , link: '/termsandconditions' },
+        { icon: img14, text: 'Vehicle Types', link: '/vehicletype' },
+        { icon: img14, text: 'Geofencing', link: '/geofencing_view' },
+        { icon: img18, text: 'Terms and conditions', link: '/termsandconditions' },
         { icon: img19, text: 'Privacy policy', link: '/privacypolicy' },
     ];
+
+
+
+    // Function to filter sidebar items based on user permissions
+    const filterSidebarItems = () => {
+        // Use optional chaining (?.) to safely access nested properties
+        const { role, permissions } = admindata?.admindata || {};
+
+        console.log("role", role);
+        console.log("permissions", permissions);
+
+        // If role is not defined or permissions are not available, return an empty array
+        if (!role || !permissions) {
+            return [];
+        }
+
+        // If user is a super admin, display all sidebar items
+        if (role === 'superAdmin') {
+            return sidebarItems;
+        }
+
+        // Filter sidebar items based on user permissions
+        return sidebarItems.filter(item => permissions.includes(item.text));
+    };
 
     return (
         <>
@@ -72,7 +93,7 @@ const Sidebar = () => {
                     </div>
 
                     <div className='sidebar3'>
-                        {sidebarItems.map((item, index) => (
+                        {filterSidebarItems().map((item, index) => (
                             <Link to={item.link} key={index} className='sidebar-link'>
                                 <div className='sidebar4'>
                                     <div className='sidebar5'><img src={item.icon} alt="" /></div>

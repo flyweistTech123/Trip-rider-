@@ -14,25 +14,39 @@ import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 
-// import img from '../../Images/img5.png'
 
 
 
 const AllPromoCode = () => {
     const navigate = useNavigate();
     const [promocodeData, setPromoCodeData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchPromoCodeData();
     }, []);
 
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredPromoData = promocodeData.filter(promo =>
+        promo.category && promo.category.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+
     const fetchPromoCodeData = () => {
-        axios.get(`${BaseUrl}api/v1/category`,  getAuthHeaders())
+        axios.get(`${BaseUrl}api/v1/category`, getAuthHeaders())
             .then(response => {
                 setPromoCodeData(response.data.category);
             })
             .catch(error => {
                 console.error('Error fetching Promo code data:', error);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
 
@@ -65,7 +79,11 @@ const AllPromoCode = () => {
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search Promo Code' />
+                                <input type="search" name="" id=""
+                                    placeholder='Search Promo Code'
+                                    value={searchQuery}
+                                    onChange={handleSearch}
+                                />
                             </div>
                         </div>
                     </div>
@@ -81,35 +99,47 @@ const AllPromoCode = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {promocodeData?.map((PromoCode, index) => (
-                                    <tr key={PromoCode.id}>
-                                        <td>{index + 1}</td>
-                                        <td>{PromoCode.category}</td>
-                                        <td className='vehicle12'>{PromoCode.discountPer}</td>
-                                        <td className='vehicle3'>
-                                            {PromoCode.isDiscount ? (
-                                                <div className='vehicle'><p>Active</p></div>
-                                            ) : (
-                                                <div className='promo'><p>Not Active</p></div>
-                                            )}
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="5" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading promocode...</td>
+                                    </tr>
+                                ) :
+                                    searchQuery && filteredPromoData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="5" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Promo code not found</td>
+                                        </tr>
+                                    ) : (
+                                        searchQuery
+                                            ?
+                                            filteredPromoData?.map((PromoCode, index) => (
+                                                <tr key={PromoCode.id}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{PromoCode.category}</td>
+                                                    <td className='vehicle12'>{PromoCode.discountPer}</td>
+                                                    <td className='vehicle3'>
+                                                        {PromoCode.isDiscount ? (
+                                                            <div className='vehicle'><p>Active</p></div>
+                                                        ) : (
+                                                            <div className='promo'><p>Not Active</p></div>
+                                                        )}
 
-                                        </td>
-                                        <td>
-                                            <div className='service11'>
-                                                <div className='rider10' onClick={() => deletePromoCode(PromoCode._id)}>
-                                                    <RiDeleteBinLine color='#667085' size={20} />
-                                                    <p>Delete</p>
-                                                </div>
-                                                <div className='rider10'>
-                                                    <Link to={`/updatepromocode/${PromoCode._id}`} className='sidebar-link' >
-                                                        <MdEdit color='#667085' size={20} />
-                                                        <p>Edit</p>
-                                                    </Link>
-                                                </div>
-                                            </div>
+                                                    </td>
+                                                    <td>
+                                                        <div className='service11'>
+                                                            <div className='rider10' onClick={() => deletePromoCode(PromoCode._id)}>
+                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                <p>Delete</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/updatepromocode/${PromoCode._id}`} className='sidebar-link' >
+                                                                    <MdEdit color='#667085' size={20} />
+                                                                    <p>Edit</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
 
-                                        </td>
-                                        {/* <td>
+                                                    </td>
+                                                    {/* <td>
                                             <div className='vehicle1'>
                                                 <select name="" id="">
                                                     <option value="">Action</option>
@@ -118,8 +148,39 @@ const AllPromoCode = () => {
                                                 </select>
                                             </div>
                                         </td> */}
-                                    </tr>
-                                ))}
+                                                </tr>
+                                            ))
+                                            :
+                                            promocodeData?.map((PromoCode, index) => (
+                                                <tr key={PromoCode.id}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{PromoCode.category}</td>
+                                                    <td className='vehicle12'>{PromoCode.discountPer}</td>
+                                                    <td className='vehicle3'>
+                                                        {PromoCode.isDiscount ? (
+                                                            <div className='vehicle'><p>Active</p></div>
+                                                        ) : (
+                                                            <div className='promo'><p>Not Active</p></div>
+                                                        )}
+
+                                                    </td>
+                                                    <td>
+                                                        <div className='service11'>
+                                                            <div className='rider10' onClick={() => deletePromoCode(PromoCode._id)}>
+                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                <p>Delete</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/updatepromocode/${PromoCode._id}`} className='sidebar-link' >
+                                                                    <MdEdit color='#667085' size={20} />
+                                                                    <p>Edit</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                    )}
                             </tbody>
                         </table>
                     </div>

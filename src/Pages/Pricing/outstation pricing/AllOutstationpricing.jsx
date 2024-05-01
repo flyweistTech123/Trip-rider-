@@ -21,6 +21,9 @@ import { useNavigate } from 'react-router-dom';
 const AllOutstationpricing = () => {
     const navigate = useNavigate()
     const [outstationpriceeData, setOutstationpriceData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
         fetchOutstationpriceData();
@@ -33,8 +36,21 @@ const AllOutstationpricing = () => {
             })
             .catch(error => {
                 console.error('Error fetching outstation Price data:', error);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
+
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredPriceData = outstationpriceeData.filter(price =>
+        price?.vehicle?.name && price?.vehicle?.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
 
     const deletePrice = (outstationpriceId) => {
         axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/OutStationPricing/delete/${outstationpriceId}`)
@@ -67,7 +83,8 @@ const AllOutstationpricing = () => {
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search Pricing' />
+                                <input type="search" name="" id="" placeholder='Search Vehicle' value={searchQuery}
+                                    onChange={handleSearch} />
                             </div>
                         </div>
                     </div>
@@ -87,30 +104,67 @@ const AllOutstationpricing = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {outstationpriceeData.map(outstationprice => (
-                                    <tr key={outstationprice.id}>
-                                        <td>{outstationprice?.vehicle?.name}</td>
-                                        <td>{outstationprice?.city?.city}</td>
-                                        <td>{outstationprice.kmLimit} Km</td>
-                                        <td style={{ color: '#F52D56' }}>₹ {outstationprice.kmPrice}</td>
-                                        <td>{outstationprice.hrLimit} hr</td>
-                                        <td style={{ color: '#F52D56' }}>₹ {outstationprice.hrPrice}</td>
-                                        <td style={{ color: '#F52D56' }}>₹ {outstationprice.price}</td>
-                                        <td>{outstationprice.type}</td>
-                                        <td className='rider9'>
-                                            <div className='rider10' onClick={() => deletePrice(outstationprice._id)}>
-                                                <RiDeleteBinLine color='#667085' size={20} />
-                                                <p>Delete</p>
-                                            </div>
-                                            <div className='rider10'>
-                                                <Link to={`/updateoutstationpricing/${outstationprice._id}`} className='sidebar-link' >
-                                                    <MdEdit color='#667085' size={20} />
-                                                    <p>Edit</p>
-                                                </Link>
-                                            </div>
-                                        </td>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="9" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Outstation Pricing...</td>
                                     </tr>
-                                ))}
+                                ) :
+                                    searchQuery && filteredPriceData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="9" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Price not found</td>
+                                        </tr>
+                                    ) : (
+                                        searchQuery
+                                            ?
+                                            filteredPriceData.map(outstationprice => (
+                                                <tr key={outstationprice.id}>
+                                                    <td>{outstationprice?.vehicle?.name}</td>
+                                                    <td>{outstationprice?.city?.city}</td>
+                                                    <td>{outstationprice.kmLimit} Km</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {outstationprice.kmPrice}</td>
+                                                    <td>{outstationprice.hrLimit} hr</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {outstationprice.hrPrice}</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {outstationprice.price}</td>
+                                                    <td>{outstationprice.type}</td>
+                                                    <td className='rider9'>
+                                                        <div className='rider10' onClick={() => deletePrice(outstationprice._id)}>
+                                                            <RiDeleteBinLine color='#667085' size={20} />
+                                                            <p>Delete</p>
+                                                        </div>
+                                                        <div className='rider10'>
+                                                            <Link to={`/updateoutstationpricing/${outstationprice._id}`} className='sidebar-link' >
+                                                                <MdEdit color='#667085' size={20} />
+                                                                <p>Edit</p>
+                                                            </Link>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                            : outstationpriceeData.map(outstationprice => (
+                                                <tr key={outstationprice.id}>
+                                                    <td>{outstationprice?.vehicle?.name}</td>
+                                                    <td>{outstationprice?.city?.city}</td>
+                                                    <td>{outstationprice.kmLimit} Km</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {outstationprice.kmPrice}</td>
+                                                    <td>{outstationprice.hrLimit} hr</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {outstationprice.hrPrice}</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {outstationprice.price}</td>
+                                                    <td>{outstationprice.type}</td>
+                                                    <td className='rider9'>
+                                                        <div className='rider10' onClick={() => deletePrice(outstationprice._id)}>
+                                                            <RiDeleteBinLine color='#667085' size={20} />
+                                                            <p>Delete</p>
+                                                        </div>
+                                                        <div className='rider10'>
+                                                            <Link to={`/updateoutstationpricing/${outstationprice._id}`} className='sidebar-link' >
+                                                                <MdEdit color='#667085' size={20} />
+                                                                <p>Edit</p>
+                                                            </Link>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                    )}
                             </tbody>
                         </table>
                     </div>

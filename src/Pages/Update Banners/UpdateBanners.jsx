@@ -18,6 +18,8 @@ import img3 from '../../Images/img43.png'
 
 const UpdateBanners = () => {
     const [modalShow, setModalShow] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
 
     const handleClose = () => setModalShow(false);
     const handleShow = () => setModalShow(true);
@@ -35,8 +37,19 @@ const UpdateBanners = () => {
             })
             .catch(error => {
                 console.error('Error fetching driver data:', error);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredBannerData = bannerData.filter(banner =>
+        banner.name && banner.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
     const deleteDriver = (driverId) => {
         axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/banner/${driverId}`)
             .then(response => {
@@ -81,41 +94,75 @@ const UpdateBanners = () => {
                         </div>
 
                         <div className='rider4'>
-                            <div className='services'>
+                            {/* <div className='services'>
                                 <p>Disable</p>
                                 <label className="services1">
                                     <input type="checkbox" />
                                     <div class="services2"></div>
                                 </label>
 
-                            </div>
+                            </div> */}
 
 
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search Driver' />
+                                <input type="search" name="" id="" placeholder='Search Banner'
+                                    value={searchQuery} onChange={handleSearch}
+                                />
                             </div>
                         </div>
                     </div>
 
                     <div className='banner'>
-                        <div className='banner1'>
-                            <p>Current Banners</p>
-
-                            <div className='banner212'>
-                                {bannerData.map(banner => (
-                                    <div className='banner2'>
-                                        <img src={banner.image} alt={banner.name} />
-                                        <div className='banner253'>
-                                            <IoIosCloseCircle  size={25} color='#FFFFFF' onClick={() => deleteDriver(banner._id)}/>
+                        {loading ? (
+                            <tr>
+                                <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading banners...</td>
+                            </tr>
+                        ) :
+                            searchQuery && filteredBannerData.length === 0 ? (
+                                <tr>
+                                    <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Banner not found</td>
+                                </tr>
+                            ) : (
+                                searchQuery
+                                    ?
+                                    <div className='banner1'>
+                                        <p>Search Banners</p>
+                                        <div className='banner212'>
+                                            {filteredBannerData.map(banner => (
+                                                <div className='banner2'>
+                                                    <div className='banner10'>
+                                                        <img src={banner.image} alt={banner.name} />
+                                                    </div>
+                                                    <div className='banner253'>
+                                                        <IoIosCloseCircle size={25} color='red' onClick={() => deleteDriver(banner._id)} />
+                                                    </div>
+                                                    <h6>{banner.name}</h6>
+                                                </div>
+                                            ))}
                                         </div>
-                                        <h6>{banner.name}</h6>
                                     </div>
-                                ))}
-                            </div>
-                        </div>
+                                    :
+                                    <div className='banner1'>
+                                        <p>Current Banners</p>
+                                        <div className='banner212'>
+                                            {bannerData.map(banner => (
+                                                <div className='banner2'>
+                                                    <div className='banner10'>
+                                                        <img src={banner.image} alt={banner.name} />
+                                                    </div>
+                                                    <div className='banner253'>
+                                                        <IoIosCloseCircle size={25} color='red' onClick={() => deleteDriver(banner._id)} />
+                                                    </div>
+                                                    <h6>{banner.name}</h6>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                            )}
 
                         <div className='banner3'>
                             <p>Upload New Banners</p>

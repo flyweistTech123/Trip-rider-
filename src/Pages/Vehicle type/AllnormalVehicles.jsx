@@ -20,6 +20,8 @@ import { MdEdit } from "react-icons/md";
 const AllnormalVehicles = () => {
     const navigate = useNavigate();
     const [vehicleData, setVehicleData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchVehicleData();
@@ -32,21 +34,31 @@ const AllnormalVehicles = () => {
             })
             .catch(error => {
                 console.error('Error fetching Vehicle data:', error);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
 
     const deleteVehicle = (vehicleId) => {
         axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/vehicle/${vehicleId}`)
             .then(response => {
-                // console.log('Rider deleted successfully');
                 toast.success("Vehicle deleted successfully");
                 fetchVehicleData();
             })
             .catch(error => {
                 console.error('Error deleting Vehicle:', error);
                 toast.error("Error deleting Vehicle");
-            });
+            })
     };
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredVehiclesData = vehicleData.filter(vehicle =>
+        vehicle?.name && vehicle?.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
 
     return (
@@ -64,7 +76,11 @@ const AllnormalVehicles = () => {
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search vehicler' />
+                                <input type="search" name="" id=""
+                                    placeholder='Search Vehicle'
+                                    onChange={handleSearch}
+                                    value={searchQuery}
+                                />
                             </div>
                         </div>
                     </div>
@@ -81,42 +97,72 @@ const AllnormalVehicles = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {vehicleData.map((Vehicle, index) => (
-                                    <tr key={Vehicle.id}>
-                                        <td>{index + 1}</td>
-                                        {/* <td>{Vehicle.SRno}</td> */}
-                                        <td>{Vehicle.name}</td>
-                                        <td className='vehicle12'><img src={Vehicle.image} alt="" /></td>
-                                        <td className='vehicle12'>{Vehicle.type}</td>
-                                        <td className='vehicle3'>
-                                            <div className='vehicle'><p>Active</p></div>
-                                        </td>
-                                        <td>
-                                            <div className='service11'>
-                                                <div className='rider10' onClick={() => deleteVehicle(Vehicle._id)}>
-                                                    <RiDeleteBinLine color='#667085' size={20} />
-                                                    <p>Delete</p>
-                                                </div>
-                                                <div className='rider10'>
-                                                    <Link to={`/updatenormalvehicles/${Vehicle._id}`} className='sidebar-link' >
-                                                        <MdEdit color='#667085' size={20} />
-                                                        <p>Edit</p>
-                                                    </Link>
-                                                </div>
-                                            </div>
-
-                                        </td>
-                                        {/* <td>
-                                            <div className='vehicle1'>
-                                                <select name="" id="">
-                                                    <option value="">Action</option>
-                                                    <option value="">Edit</option>
-                                                    <option value="">Inactive</option>
-                                                </select>
-                                            </div>
-                                        </td> */}
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Vehicles...</td>
                                     </tr>
-                                ))}
+                                ) :
+                                    searchQuery && filteredVehiclesData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Vehicle not found</td>
+                                        </tr>
+                                    ) : (
+                                        searchQuery
+                                            ?
+                                            filteredVehiclesData.map((Vehicle, index) => (
+                                                <tr key={Vehicle.id}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{Vehicle.name}</td>
+                                                    <td className='vehicle12'><img src={Vehicle.image} alt="" /></td>
+                                                    <td className='vehicle12'>{Vehicle.type}</td>
+                                                    <td className='vehicle3'>
+                                                        <div className='vehicle'><p>Active</p></div>
+                                                    </td>
+                                                    <td>
+                                                        <div className='service11'>
+                                                            <div className='rider10' onClick={() => deleteVehicle(Vehicle._id)}>
+                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                <p>Delete</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/updatenormalvehicles/${Vehicle._id}`} className='sidebar-link' >
+                                                                    <MdEdit color='#667085' size={20} />
+                                                                    <p>Edit</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                            ))
+                                            :
+                                            vehicleData.map((Vehicle, index) => (
+                                                <tr key={Vehicle.id}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{Vehicle.name}</td>
+                                                    <td className='vehicle12'><img src={Vehicle.image} alt="" /></td>
+                                                    <td className='vehicle12'>{Vehicle.type}</td>
+                                                    <td className='vehicle3'>
+                                                        <div className='vehicle'><p>Active</p></div>
+                                                    </td>
+                                                    <td>
+                                                        <div className='service11'>
+                                                            <div className='rider10' onClick={() => deleteVehicle(Vehicle._id)}>
+                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                <p>Delete</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/updatenormalvehicles/${Vehicle._id}`} className='sidebar-link' >
+                                                                    <MdEdit color='#667085' size={20} />
+                                                                    <p>Edit</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                            ))
+                                    )}
                             </tbody>
                         </table>
                     </div>

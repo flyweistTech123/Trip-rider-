@@ -75,7 +75,8 @@ import AddTaxpricing from './Pages/Pricing/Taxes/AddTaxpricing.jsx';
 import UpdateTaxpricing from './Pages/Pricing/Taxes/UpdateTaxpricing.jsx';
 import AllBasepricing from './Pages/Pricing/base pricing/AllBasepricing.jsx';
 import UpdateSuperCarPricing from './Pages/Pricing/Super Car Pricing/UpdateSuperCarPricing.jsx';
-import ChatComponent from './Pages/Live Chart/message.jsx';
+import BookingDetails from './Pages/All Bookings/BookingDetails.jsx';
+import LiveChartWithDriver from './Pages/Live Chart/LiveChartWithDriver.jsx';
 
 
 
@@ -158,7 +159,8 @@ function App() {
           <Route path="/cancellled_booking" element={<AdminRouteProtect> <AllCancledBooking /> </AdminRouteProtect>} />
           <Route path="/scheduled_booking" element={<AdminRouteProtect> <AllScheduledBooking /> </AdminRouteProtect>} />
           <Route path="/updatesupercarpricing/:id" element={<AdminRouteProtect> <UpdateSuperCarPricing /> </AdminRouteProtect>} />
-          <Route path="/ChatComponent" element={<AdminRouteProtect> <ChatComponent /> </AdminRouteProtect>} />
+          <Route path="/bookingdetails/:id" element={<AdminRouteProtect> <BookingDetails /> </AdminRouteProtect>} />
+          <Route path="/liveChartWithDriver" element={<AdminRouteProtect> <LiveChartWithDriver /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>

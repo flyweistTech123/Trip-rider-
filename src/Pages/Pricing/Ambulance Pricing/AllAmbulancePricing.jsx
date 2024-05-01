@@ -21,6 +21,9 @@ import { useNavigate } from 'react-router-dom';
 const AllAmbulancePricing = () => {
     const navigate = useNavigate()
     const [ambulancepriceeData, setambulancepriceData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
         fetchAmbulancepriceData();
@@ -33,8 +36,20 @@ const AllAmbulancePricing = () => {
             })
             .catch(error => {
                 console.error('Error fetching Ambulance Price data:', error);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
+
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredPriceData = ambulancepriceeData.filter(price =>
+        price?.name && price?.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     const deleteAmbulance = (ambulancepriceId) => {
         axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/ambulanceVehicle/${ambulancepriceId}`)
@@ -69,7 +84,8 @@ const AllAmbulancePricing = () => {
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search Pricing' />
+                                <input type="search" name="" id="" placeholder='Search Vehicle' value={searchQuery}
+                                    onChange={handleSearch} />
                             </div>
                         </div>
                     </div>
@@ -91,34 +107,76 @@ const AllAmbulancePricing = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {ambulancepriceeData?.map(ambulanceprice => (
-                                    <tr key={ambulanceprice?.id}>
-                                        <td>{ambulanceprice?.name}</td>
-                                        <td className='vehicle12'><img src={ambulanceprice?.image} alt="" /></td>
-                                        <td style={{ color: '#F52D56' }}>₹ {ambulanceprice?.perKm}</td>
-                                        <td>₹ {ambulanceprice?.basePrice}</td>
-                                        <td>{ambulanceprice?.taxRate}</td>
-                                        <td>{ambulanceprice?.gstRate}</td>
-                                        <td>{ambulanceprice?.serviceCharge}</td>
-                                        <td>{ambulanceprice?.nightCharges}</td>
-                                        <td>{ambulanceprice?.waitingCharge}</td>
-                                        <td>{ambulanceprice?.trafficCharge}</td>
-                                        <td>
-                                            <div className='service11'>
-                                                <div className='rider10' onClick={() => deleteAmbulance(ambulanceprice._id)}>
-                                                    <RiDeleteBinLine color='#667085' size={20} />
-                                                    <p>Delete</p>
-                                                </div>
-                                                <div className='rider10'>
-                                                    <Link to={`/updateambulancepricing/${ambulanceprice._id}`} className='sidebar-link' >
-                                                        <MdEdit color='#667085' size={20} />
-                                                        <p>Edit</p>
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                        </td>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="11" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Ambulance pricing...</td>
                                     </tr>
-                                ))}
+                                ) :
+                                    searchQuery && filteredPriceData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="11" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Price not found</td>
+                                        </tr>
+                                    ) : (
+                                        searchQuery
+                                            ?
+                                            filteredPriceData?.map(ambulanceprice => (
+                                                <tr key={ambulanceprice?.id}>
+                                                    <td>{ambulanceprice?.name}</td>
+                                                    <td className='vehicle12'><img src={ambulanceprice?.image} alt="" /></td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {ambulanceprice?.perKm}</td>
+                                                    <td>₹ {ambulanceprice?.basePrice}</td>
+                                                    <td>{ambulanceprice?.taxRate}</td>
+                                                    <td>{ambulanceprice?.gstRate}</td>
+                                                    <td>{ambulanceprice?.serviceCharge}</td>
+                                                    <td>{ambulanceprice?.nightCharges}</td>
+                                                    <td>{ambulanceprice?.waitingCharge}</td>
+                                                    <td>{ambulanceprice?.trafficCharge}</td>
+                                                    <td>
+                                                        <div className='service11'>
+                                                            <div className='rider10' onClick={() => deleteAmbulance(ambulanceprice._id)}>
+                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                <p>Delete</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/updateambulancepricing/${ambulanceprice._id}`} className='sidebar-link' >
+                                                                    <MdEdit color='#667085' size={20} />
+                                                                    <p>Edit</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                            :
+                                            ambulancepriceeData?.map(ambulanceprice => (
+                                                <tr key={ambulanceprice?.id}>
+                                                    <td>{ambulanceprice?.name}</td>
+                                                    <td className='vehicle12'><img src={ambulanceprice?.image} alt="" /></td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {ambulanceprice?.perKm}</td>
+                                                    <td>₹ {ambulanceprice?.basePrice}</td>
+                                                    <td>{ambulanceprice?.taxRate}</td>
+                                                    <td>{ambulanceprice?.gstRate}</td>
+                                                    <td>{ambulanceprice?.serviceCharge}</td>
+                                                    <td>{ambulanceprice?.nightCharges}</td>
+                                                    <td>{ambulanceprice?.waitingCharge}</td>
+                                                    <td>{ambulanceprice?.trafficCharge}</td>
+                                                    <td>
+                                                        <div className='service11'>
+                                                            <div className='rider10' onClick={() => deleteAmbulance(ambulanceprice._id)}>
+                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                <p>Delete</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/updateambulancepricing/${ambulanceprice._id}`} className='sidebar-link' >
+                                                                    <MdEdit color='#667085' size={20} />
+                                                                    <p>Edit</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                    )}
                             </tbody>
                         </table>
                     </div>

@@ -26,12 +26,6 @@ const Vehicletype = () => {
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>Normal Vehicle</h5>
-                                <div className='rider5'>
-                                    <div className='rider6'>
-                                        <IoSearch />
-                                    </div>
-                                    <input type="search" name="" id="" placeholder='Search Vehicle' />
-                                </div>
                             </div>
                         </div>
                     </Link>
@@ -39,12 +33,6 @@ const Vehicletype = () => {
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>Super Car Vehicle</h5>
-                                <div className='rider5'>
-                                    <div className='rider6'>
-                                        <IoSearch />
-                                    </div>
-                                    <input type="search" name="" id="" placeholder='Search Vehicle' />
-                                </div>
                             </div>
                         </div>
                     </Link>

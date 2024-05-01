@@ -21,6 +21,8 @@ import { useNavigate } from 'react-router-dom';
 const AllHourlyPricing = () => {
     const navigate = useNavigate()
     const [hourlypriceData, setHourlypriceData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchHourlypriceData();
@@ -33,8 +35,20 @@ const AllHourlyPricing = () => {
             })
             .catch(error => {
                 console.error('Error fetching Hourly Pricing data:', error);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
+
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredPriceData = hourlypriceData.filter(price =>
+        price?.vehicle?.name && price?.vehicle?.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     const deleteDriver = (hourlypriceId) => {
         axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/removeHourlyPricing/${hourlypriceId}`)
@@ -62,12 +76,13 @@ const AllHourlyPricing = () => {
                         </div>
 
                         <div className='rider4'>
-                            <button onClick={()=>navigate('/addhourlypricing')}>Add Pricing</button>
+                            <button onClick={() => navigate('/addhourlypricing')}>Add Pricing</button>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search Pricing' />
+                                <input type="search" name="" id="" placeholder='Search Vehicle' value={searchQuery}
+                                    onChange={handleSearch} />
                             </div>
                         </div>
                     </div>
@@ -87,30 +102,68 @@ const AllHourlyPricing = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {hourlypriceData.map(hourlyprice => (
-                                    <tr key={hourlyprice.id}>
-                                        <td>{hourlyprice?.vehicle?.name}</td>
-                                        <td>{hourlyprice?.city?.city}</td>
-                                        <td>{hourlyprice.km} Km</td>
-                                        <td>{hourlyprice.hours}</td>
-                                        <td  style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerMin}</td>
-                                        <td  style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerkm}</td>
-                                        <td  style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerMinGreater}</td>
-                                        <td  style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerKmGreater}</td>
-                                        <td className='rider9'>
-                                            <div className='rider10' onClick={() => deleteDriver(hourlyprice._id)}>
-                                                <RiDeleteBinLine color='#667085' size={20} />
-                                                <p>Delete</p>
-                                            </div>
-                                            <div className='rider10'>
-                                                <Link to={`/updatehourlypricing/${hourlyprice._id}`} className='sidebar-link' >
-                                                    <MdEdit color='#667085' size={20} />
-                                                    <p>Edit</p>
-                                                </Link>
-                                            </div>
-                                        </td>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="9" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Hourly pricing...</td>
                                     </tr>
-                                ))}
+                                ) :
+                                    searchQuery && filteredPriceData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="9" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Price not found</td>
+                                        </tr>
+                                    ) : (
+                                        searchQuery
+                                            ?
+                                            filteredPriceData.map(hourlyprice => (
+                                                <tr key={hourlyprice.id}>
+                                                    <td>{hourlyprice?.vehicle?.name}</td>
+                                                    <td>{hourlyprice?.city?.city}</td>
+                                                    <td>{hourlyprice.km} Km</td>
+                                                    <td>{hourlyprice.hours}</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerMin}</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerkm}</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerMinGreater}</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerKmGreater}</td>
+                                                    <td className='rider9'>
+                                                        <div className='rider10' onClick={() => deleteDriver(hourlyprice._id)}>
+                                                            <RiDeleteBinLine color='#667085' size={20} />
+                                                            <p>Delete</p>
+                                                        </div>
+                                                        <div className='rider10'>
+                                                            <Link to={`/updatehourlypricing/${hourlyprice._id}`} className='sidebar-link' >
+                                                                <MdEdit color='#667085' size={20} />
+                                                                <p>Edit</p>
+                                                            </Link>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                            :
+                                            hourlypriceData.map(hourlyprice => (
+                                                <tr key={hourlyprice.id}>
+                                                    <td>{hourlyprice?.vehicle?.name}</td>
+                                                    <td>{hourlyprice?.city?.city}</td>
+                                                    <td>{hourlyprice.km} Km</td>
+                                                    <td>{hourlyprice.hours}</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerMin}</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerkm}</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerMinGreater}</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerKmGreater}</td>
+                                                    <td className='rider9'>
+                                                        <div className='rider10' onClick={() => deleteDriver(hourlyprice._id)}>
+                                                            <RiDeleteBinLine color='#667085' size={20} />
+                                                            <p>Delete</p>
+                                                        </div>
+                                                        <div className='rider10'>
+                                                            <Link to={`/updatehourlypricing/${hourlyprice._id}`} className='sidebar-link' >
+                                                                <MdEdit color='#667085' size={20} />
+                                                                <p>Edit</p>
+                                                            </Link>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                    )}
                             </tbody>
                         </table>
                     </div>

@@ -3,7 +3,7 @@
   height: 100vh;
 }
 
-.sidebar {
+.sidebar55 {
   width: 256px;
   flex: 0 0 auto;
 }
@@ -17,23 +17,18 @@
 .child-component {
   flex: 1;
   padding: 20px;
+  overflow: scroll;
 }
 
 .upperbar {
   padding: 10px;
 }
 
-.sidebar-hidden .content {
+.sidebar55-hidden .content {
   flex: 1 1 100%; 
 
 }
 
 
-@media screen and (max-width: 580px) {
-  .sidebar {
-    width: 60px;
-    flex: 0 0 auto;
-  }
-  
-}
+
 

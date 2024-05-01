@@ -134,12 +134,12 @@ const Vendors = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading vendors...</td>
+                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading vendors...</td>
                                     </tr>
                                 ) :
                                     searchQuery && filteredVendorData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Vendor not found</td>
+                                            <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Vendor not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery

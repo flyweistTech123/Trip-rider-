@@ -22,6 +22,9 @@ import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
 const Alldailypricing = () => {
     const navigate = useNavigate()
     const [dailypriceData, setDailypriceData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
         fetchDailypriceData();
@@ -34,11 +37,23 @@ const Alldailypricing = () => {
             })
             .catch(error => {
                 console.error('Error fetching Daily Price data:', error);
+            })
+            .finally(() => {
+                setLoading(false);
             });
+
     };
 
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredPriceData = dailypriceData.filter(price =>
+        price?.vehicle?.name && price?.vehicle?.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     const deletePrice = (dailypriceId) => {
-        axios.delete(`${BaseUrl}api/v1/Pricing/${dailypriceId}`,getAuthHeaders() )
+        axios.delete(`${BaseUrl}api/v1/Pricing/${dailypriceId}`, getAuthHeaders())
             .then(response => {
                 fetchDailypriceData();
                 toast.success("Daily Price deleted successfully");
@@ -63,12 +78,13 @@ const Alldailypricing = () => {
                         </div>
 
                         <div className='rider4'>
-                            <button onClick={()=>navigate('/adddailypricing')}>Add Pricing</button>
+                            <button onClick={() => navigate('/adddailypricing')}>Add Pricing</button>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search Pricing' />
+                                <input type="search" name="" id="" placeholder='Search Vehicle' value={searchQuery}
+                                    onChange={handleSearch} />
                             </div>
                         </div>
                     </div>
@@ -81,33 +97,68 @@ const Alldailypricing = () => {
                                     <th>To</th>
                                     <th>From</th>
                                     <th>Price/Km</th>
-                                    {/* <th>Price</th> */}
                                     <th>Action Buttons</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {dailypriceData.map(dailyprice => (
-                                    <tr key={dailyprice.id}>
-                                        <td>{dailyprice?.vehicle?.name}</td>
-                                        <td>{dailyprice?.city?.city}</td>
-                                        <td>{dailyprice.toKm} Km</td>
-                                        <td>{dailyprice.fromKm} Km</td>
-                                        <td style={{ color: '#F52D56' }}>₹ {dailyprice.pricePerKm}/Km</td>
-                                        {/* <td style={{ color: '#F52D56' }}>₹ {dailyprice.price}</td> */}
-                                        <td className='rider9'>
-                                            <div className='rider10' onClick={() => deletePrice(dailyprice._id)}>
-                                                <RiDeleteBinLine color='#667085' size={20} />
-                                                <p>Delete</p>
-                                            </div>
-                                            <div className='rider10'>
-                                                <Link to={`/updatedailypricing/${dailyprice._id}`} className='sidebar-link' >
-                                                    <MdEdit color='#667085' size={20} />
-                                                    <p>Edit</p>
-                                                </Link>
-                                            </div>
-                                        </td>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Daily Pricing...</td>
                                     </tr>
-                                ))}
+                                ) :
+                                    searchQuery && filteredPriceData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Price not found</td>
+                                        </tr>
+                                    ) : (
+                                        searchQuery
+                                            ?
+                                            filteredPriceData.map(dailyprice => (
+                                                <tr key={dailyprice.id}>
+                                                    <td>{dailyprice?.vehicle?.name}</td>
+                                                    <td>{dailyprice?.city?.city}</td>
+                                                    <td>{dailyprice.toKm} Km</td>
+                                                    <td>{dailyprice.fromKm} Km</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {dailyprice.pricePerKm}/Km</td>
+                                                    {/* <td style={{ color: '#F52D56' }}>₹ {dailyprice.price}</td> */}
+                                                    <td className='rider9'>
+                                                        <div className='rider10' onClick={() => deletePrice(dailyprice._id)}>
+                                                            <RiDeleteBinLine color='#667085' size={20} />
+                                                            <p>Delete</p>
+                                                        </div>
+                                                        <div className='rider10'>
+                                                            <Link to={`/updatedailypricing/${dailyprice._id}`} className='sidebar-link' >
+                                                                <MdEdit color='#667085' size={20} />
+                                                                <p>Edit</p>
+                                                            </Link>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                            :
+                                            dailypriceData.map(dailyprice => (
+                                                <tr key={dailyprice.id}>
+                                                    <td>{dailyprice?.vehicle?.name}</td>
+                                                    <td>{dailyprice?.city?.city}</td>
+                                                    <td>{dailyprice.toKm} Km</td>
+                                                    <td>{dailyprice.fromKm} Km</td>
+                                                    <td style={{ color: '#F52D56' }}>₹ {dailyprice.pricePerKm}/Km</td>
+                                                    {/* <td style={{ color: '#F52D56' }}>₹ {dailyprice.price}</td> */}
+                                                    <td className='rider9'>
+                                                        <div className='rider10' onClick={() => deletePrice(dailyprice._id)}>
+                                                            <RiDeleteBinLine color='#667085' size={20} />
+                                                            <p>Delete</p>
+                                                        </div>
+                                                        <div className='rider10'>
+                                                            <Link to={`/updatedailypricing/${dailyprice._id}`} className='sidebar-link' >
+                                                                <MdEdit color='#667085' size={20} />
+                                                                <p>Edit</p>
+                                                            </Link>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                    )}
                             </tbody>
                         </table>
                     </div>

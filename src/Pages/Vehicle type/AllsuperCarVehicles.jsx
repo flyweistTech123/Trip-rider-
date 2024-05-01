@@ -22,18 +22,25 @@ import { MdEdit } from "react-icons/md";
 const AllsuperCarVehicles = () => {
     const navigate = useNavigate();
     const [supercarData, setSuperCarData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
+
+
 
     useEffect(() => {
         fetchSuperCarData();
     }, []);
 
     const fetchSuperCarData = () => {
-        axios.get(`${BaseUrl}api/v1/SuperCar`,  getAuthHeaders())
+        axios.get(`${BaseUrl}api/v1/SuperCar`, getAuthHeaders())
             .then(response => {
                 setSuperCarData(response.data.data);
             })
             .catch(error => {
                 console.error('Error fetching Super Car data:', error);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
 
@@ -48,6 +55,15 @@ const AllsuperCarVehicles = () => {
                 toast.error("Error deleting Super Car");
             });
     };
+
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredVehiclesData = supercarData.filter(vehicle =>
+        vehicle?.name && vehicle?.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
 
     return (
@@ -65,7 +81,11 @@ const AllsuperCarVehicles = () => {
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search vehicler' />
+                                <input type="search" name="" id=""
+                                    placeholder='Search Vehicle'
+                                    onChange={handleSearch}
+                                    value={searchQuery}
+                                />
                             </div>
                         </div>
                     </div>
@@ -80,60 +100,59 @@ const AllsuperCarVehicles = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {/* {supercarData.map((supercar, index) => (
-                                    <React.Fragment key={supercar._id}>
-                                        {supercar.superCarPricing.map((pricing, pricingIndex) => (
-                                            <tr key={pricing._id}>
-                                                <td>{index + 1}</td>
-                                                <td>{pricing.name}</td>
-                                                <td className='vehicle12'>
-                                                    <img src={pricing.image[0].img} alt="" />
-                                                </td>
-                                                <td  style={{ color: '#F52D56' }}>₹ {pricing.price}</td>
-                                                <td className='vehicle3'>
-                                                    {pricing.isActive ? (
-                                                        <div className='vehicle'><p>Active</p></div>
-                                                    ) : (
-                                                        <div className='promo'><p>Not Active</p></div>
-                                                    )}
-                                                </td>
-                                                <td>
-                                                    <div className='service11'>
-                                                        <div className='rider10' onClick={() => deleteSuperCar(pricing._id)}>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Super cars...</td>
+                                    </tr>
+                                ) :
+                                    searchQuery && filteredVehiclesData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Super cars not found</td>
+                                        </tr>
+                                    ) : (
+                                        searchQuery
+                                            ?
+                                            filteredVehiclesData.map((supercar, index) => (
+                                                <tr key={supercar.id}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{supercar?.name}</td>
+                                                    <td><img src={supercar?.image} style={{ width: '50px' }} /></td>
+                                                    <td className='rider9'>
+                                                        <div className='rider10' onClick={() => deleteSuperCar(supercar._id)}>
                                                             <RiDeleteBinLine color='#667085' size={20} />
                                                             <p>Delete</p>
                                                         </div>
                                                         <div className='rider10'>
-                                                            <Link to={`/updatesupercarvehicles/${pricing._id}`} className='sidebar-link' >
+                                                            <Link to={`/updatesupercarvehicles/${supercar._id}`} className='sidebar-link' >
                                                                 <MdEdit color='#667085' size={20} />
                                                                 <p>Edit</p>
                                                             </Link>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </React.Fragment>
-                                ))} */}
-                                {supercarData.map((supercar, index)  => (
-                                    <tr key={supercar.id}>
-                                        <td>{index + 1}</td>
-                                        <td>{supercar?.name}</td>
-                                        <td><img src={supercar?.image} style={{ width: '50px' }} /></td>
-                                        <td className='rider9'>
-                                            <div className='rider10' onClick={() => deleteSuperCar(supercar._id)}>
-                                                <RiDeleteBinLine color='#667085' size={20} />
-                                                <p>Delete</p>
-                                            </div>
-                                            <div className='rider10'>
-                                                <Link to={`/updatesupercarvehicles/${supercar._id}`} className='sidebar-link' >
-                                                    <MdEdit color='#667085' size={20} />
-                                                    <p>Edit</p>
-                                                </Link>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
+                                                    </td>
+                                                </tr>
+                                            ))
+                                            :
+
+                                            supercarData.map((supercar, index) => (
+                                                <tr key={supercar.id}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{supercar?.name}</td>
+                                                    <td><img src={supercar?.image} style={{ width: '50px' }} /></td>
+                                                    <td className='rider9'>
+                                                        <div className='rider10' onClick={() => deleteSuperCar(supercar._id)}>
+                                                            <RiDeleteBinLine color='#667085' size={20} />
+                                                            <p>Delete</p>
+                                                        </div>
+                                                        <div className='rider10'>
+                                                            <Link to={`/updatesupercarvehicles/${supercar._id}`} className='sidebar-link' >
+                                                                <MdEdit color='#667085' size={20} />
+                                                                <p>Edit</p>
+                                                            </Link>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                    )}
                             </tbody>
 
                         </table>

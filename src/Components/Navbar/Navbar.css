@@ -161,8 +161,8 @@
 
 
 .navbar11 button{
-  width: 127px;
-  height: 31px;
+  width: auto;
+  height: auto;
   border: none;
   outline: none;
   border-radius: 5px;
@@ -173,4 +173,5 @@
   line-height: 21px;
   color: #FFFFFF;
   cursor: pointer;
+  padding: 5px 15px 5px 15px;
 }

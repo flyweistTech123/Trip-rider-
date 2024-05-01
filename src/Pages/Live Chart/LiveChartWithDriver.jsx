@@ -3,28 +3,31 @@ import 'react-toastify/dist/ReactToastify.css';
 import './LiveChart.css'
 import HOC from '../../Components/HOC/HOC'
 import { collection, query, orderBy, getDocs, limit, addDoc } from 'firebase/firestore';
-import { db } from "../../Components/Firebase/Firebase";
-import { useNavigate } from 'react-router-dom';
+import { db, auth } from "../../Components/Firebase/Firebase";
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 
-import img2 from '../../Images/user.webp'
+// import plus from '../../Images/Vector.png'
 import send from '../../Images/send.png'
+import img2 from '../../Images/user.webp'
+
 
 import { IoIosArrowDown } from "react-icons/io";
 
 
-const LiveChart = () => {
+
+const LiveChartWithDriver = () => {
     const navigate = useNavigate();
     const [messages, setMessages] = useState([]);
-    const [users, setUsers] = useState([]);
-    const [selectedUser, setSelectedUser] = useState(null);
+    const [drivers, setDrivers] = useState([]);
+    const [selecteddriver, setSelectedDriver] = useState(null);
     const [newMessage, setNewMessage] = useState('');
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
-    const [totalNewMessages, setTotalNewMessages] = useState(0); // State to track total new messages
+    const [totalNewMessages, setTotalNewMessages] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
 
@@ -33,11 +36,11 @@ const LiveChart = () => {
 
 
     useEffect(() => {
-        if (selectedUser) {
+        if (selecteddriver) {
             fetchMessages();
         }
         scrollToBottom();
-    }, [selectedUser, messages]);
+    }, [selecteddriver, messages]);
 
     const scrollToBottom = () => {
         if (messageContainerRef.current) {
@@ -46,7 +49,7 @@ const LiveChart = () => {
     };
 
     useEffect(() => {
-        fetchuserData();
+        fetchDriverData();
         fetchAdminData();
     }, []);
 
@@ -71,8 +74,8 @@ const LiveChart = () => {
     const fetchMessages = async () => {
         console.log('boss')
         try {
-            if (!selectedUser || !selectedUser._id) return;
-            const messagesRef = collection(db, 'chatwithadmin', selectedUser._id, 'messages');
+            if (!selecteddriver || !selecteddriver._id) return;
+            const messagesRef = collection(db, 'chatwithadmin', selecteddriver._id, 'messages');
             const q = query(messagesRef, orderBy('timestamp', 'asc'));
             const querySnapshot = await getDocs(q);
 
@@ -87,20 +90,20 @@ const LiveChart = () => {
         }
     };
 
-    const fetchuserData = async () => {
+    const fetchDriverData = async () => {
         try {
             const response = await axios.get(`${BaseUrl}api/v1/admin/all/user`, getAuthHeaders());
             const usersData = response.data.category;
-            const usersWithLastMessage = await Promise.all(usersData.map(async user => {
-                const messagesRef = collection(db, 'chatwithadmin', user._id, 'messages');
+            const usersWithLastMessage = await Promise.all(usersData.map(async driver => {
+                const messagesRef = collection(db, 'chatwithadmin', driver._id, 'messages');
                 const q = query(messagesRef, orderBy('timestamp', 'desc'), limit(1));
                 const querySnapshot = await getDocs(q);
                 const lastMessageDoc = querySnapshot.docs[0];
                 const lastMessage = lastMessageDoc ? lastMessageDoc.data().message : ''; // Get last message or empty string if no message
-                return { ...user, lastMessage };
+                return { ...driver, lastMessage };
             }));
 
-            setUsers(usersWithLastMessage);
+            setDrivers(usersWithLastMessage);
         } catch (error) {
             console.error('Error fetching rider data:', error);
         }
@@ -114,34 +117,32 @@ const LiveChart = () => {
         setSearchQuery(event.target.value);
     };
 
-    const filteredUserData = users.filter(user =>
-        user.name && user.name.toLowerCase().includes(searchQuery.toLowerCase())
+    const filteredDriverData = drivers.filter(driver =>
+        driver.name && driver.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const handleUserClick = (user) => {
-        setSelectedUser(user);
+    const handleUserClick = (driver) => {
+        setSelectedDriver(driver);
     };
 
 
     const handleSendMessage = async () => {
-        if (!selectedUser || !newMessage.trim()) return;
+        if (!selecteddriver || !newMessage.trim()) return;
 
         try {
             // Add the new message to Firebase
-            const messagesRef = collection(db, 'chatwithadmin', selectedUser._id, 'messages');
+            const messagesRef = collection(db, 'chatwithadmin', selecteddriver._id, 'messages');
             const newMessageDoc = {
                 message: newMessage,
                 type: 'admin',
                 image: image,
-                name: name, // You can replace 'Admin' with the actual admin name
+                name: name,
                 timestamp: new Date()
             };
             await addDoc(messagesRef, newMessageDoc);
 
-            // Update local state with the new message
             setMessages(prevMessages => [newMessageDoc, ...prevMessages]);
 
-            // Clear the input field after sending the message
             setNewMessage('');
         } catch (error) {
             console.error('Error sending message:', error);
@@ -159,10 +160,10 @@ const LiveChart = () => {
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>Live Chat User</h6>
+                            <h6>Live Chat With Driver</h6>
                         </div>
                         <div className='rider4'>
-                            <button onClick={() => navigate('/liveChartWithDriver')}>Chat with driver</button>
+                            <button onClick={() => navigate('/livechart')}>Chat with user</button>
                         </div>
                     </div>
 
@@ -174,6 +175,10 @@ const LiveChart = () => {
                                     <IoIosArrowDown color='#000000' size={20} />
                                     <p>{totalNewMessages}</p>
                                 </div>
+
+                                {/* <div className='livechart4'>
+                                    <img src={plus} alt="" />
+                                </div> */}
                             </div>
 
                             <div className='livechart6'>
@@ -181,7 +186,7 @@ const LiveChart = () => {
                             </div>
 
                             <div className='livechart5'>
-                                <input type="search" placeholder='Search user'
+                                <input type="search" placeholder='Search driver'
                                     onChange={handleSearch}
                                     value={searchQuery}
                                 />
@@ -191,25 +196,25 @@ const LiveChart = () => {
                             <div className='livechart6' >
                                 {loading ? (
                                     <tr>
-                                        <td style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading users...</td>
+                                        <td style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading drivers...</td>
                                     </tr>
                                 ) :
-                                    searchQuery && filteredUserData.length === 0 ? (
+                                    searchQuery && filteredDriverData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>User not found</td>
+                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Driver not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery
                                             ?
-                                            filteredUserData.map(user => (
-                                                <div className='livechart7' key={user.id} onClick={() => handleUserClick(user)}>
+                                            filteredDriverData.map(driver => (
+                                                <div className='livechart7' key={driver.id} onClick={() => handleUserClick(driver)}>
                                                     <div className='livechart8'>
                                                         <div className='livechart852'>
-                                                            <img src={user?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
+                                                            <img src={driver?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
                                                         </div>
                                                         <div className='livechart9'>
-                                                            <h6>{user.name}</h6>
-                                                            <p>{user.lastMessage}<span>🔥</span></p>
+                                                            <h6>{driver.name}</h6>
+                                                            <p>{driver.lastMessage}<span>🔥</span></p>
                                                         </div>
                                                     </div>
                                                     <div className='livechart10'>
@@ -217,16 +222,16 @@ const LiveChart = () => {
                                                     </div>
                                                 </div>
                                             ))
-                                            : users.map(user => (
-                                                <div className='livechart7' key={user?.id} onClick={() => handleUserClick(user)}>
+                                            : drivers.map(driver => (
+                                                <div className='livechart7' key={driver?.id} onClick={() => handleUserClick(driver)}>
                                                     <div className='livechart8'>
                                                         <div className='livechart852'>
-                                                            <img src={user?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
+                                                            <img src={driver?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
                                                         </div>
                                                         <div className='livechart9'>
-                                                            <h6>{user?.name || "User"}</h6>
-                                                            <p>{user?.lastMessage}</p>
-                                                            {console.log(user?.name)}
+                                                            <h6>{driver?.name || "User"}</h6>
+                                                            <p>{driver?.lastMessage}</p>
+                                                            {console.log(driver?.name)}
                                                         </div>
                                                     </div>
                                                     <div className='livechart10'>
@@ -240,19 +245,19 @@ const LiveChart = () => {
                         </div>
 
                         <div className='livechart11'>
-                            {messages.length === 0 || !selectedUser ? (
+                            {messages.length === 0 || !selecteddriver ? (
                                 <div className='no-messages'>
-                                    <h6> Please select a user to view messages.</h6>
+                                    <h6> Please select a driver to view messages.</h6>
                                 </div>
                             ) : (
                                 <div className='livechart12'>
-                                    {selectedUser && (
+                                    {selecteddriver && (
                                         <div className='livechart13'>
                                             <div className='livechart14'>
-                                                <img src={selectedUser?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
+                                                <img src={selecteddriver?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
                                             </div>
                                             <div className='livechart15'>
-                                                <h6>{selectedUser.name}</h6>
+                                                <h6>{selecteddriver.name}</h6>
                                             </div>
                                         </div>
                                     )}
@@ -261,8 +266,8 @@ const LiveChart = () => {
 
                                     <div className='livechart18' ref={messageContainerRef}>
                                         {messages.map(message => (
-                                            <div className={`${message.type === 'user' ? 'livechart19' : 'livechart24'}`} key={message.id}>
-                                                {message.type === 'user' ? (
+                                            <div className={`${message.type === 'driver' ? 'livechart19' : 'livechart24'}`} key={message.id}>
+                                                {message.type === 'driver' ? (
                                                     <div className='livechart20'>
                                                         <img src={message.image} alt="" />
                                                     </div>
@@ -270,7 +275,7 @@ const LiveChart = () => {
                                                     ""
                                                 )}
                                                 <div className='livechart21'>
-                                                    <div className={`${message.type === 'user' ? 'livechart22' : 'livechart23'}`}><p>{message.message}</p></div>
+                                                    <div className={`${message.type === 'driver' ? 'livechart22' : 'livechart23'}`}><p>{message.message}</p></div>
                                                 </div>
                                                 {message.type === 'admin' ? (
                                                     <div className='livechart20'>
@@ -305,4 +310,4 @@ const LiveChart = () => {
     )
 }
 
-export default HOC(LiveChart)
+export default HOC(LiveChartWithDriver)

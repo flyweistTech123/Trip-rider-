@@ -6,7 +6,6 @@ import { Link } from "react-router-dom"; // Import Link for routing
 
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
-import { IoSearch } from "react-icons/io5";
 
 
 import img from '../../Images/img6.png'
@@ -22,6 +21,9 @@ const Dashboard = () => {
   const [totalEarnings, setTotalEarnings] = useState(0);
   const [totalcancel, setcancel] = useState(0);
 
+
+  const [loading, setLoading] = useState(true);
+
   const [bookingtransaction, setBookingTransaction] = useState([])
 
 
@@ -32,7 +34,7 @@ const Dashboard = () => {
       })
       .catch(error => {
         console.error('Error fetching Transaction data:', error);
-      });
+      })
   };
 
   useEffect(() => {
@@ -43,8 +45,8 @@ const Dashboard = () => {
   const fetchData = async () => {
     try {
       const [ridreResponse, driversResponse, vendorsResponse, cancelRides, booking] = await Promise.all([
-        axios.get(`${BaseUrl}api/v1/admin/all/user` , getAuthHeaders()),
-        axios.get(`${BaseUrl}api/v1/admin/all/driver` , getAuthHeaders()),
+        axios.get(`${BaseUrl}api/v1/admin/all/user`, getAuthHeaders()),
+        axios.get(`${BaseUrl}api/v1/admin/all/driver`, getAuthHeaders()),
         axios.get(`${BaseUrl}api/v1/admin/all/vendor`, getAuthHeaders()),
         axios.get(`${BaseUrl}api/v1/getBooking?status=cancel`, getAuthHeaders()),
         axios.get(`${BaseUrl}api/v1/getBooking`, getAuthHeaders()),
@@ -58,6 +60,9 @@ const Dashboard = () => {
       setTotalbookings(booking.data.data.length);
     } catch (error) {
       console.error('Error fetching data:', error);
+    }
+    finally {
+      setLoading(false);
     }
   };
 
@@ -91,15 +96,6 @@ const Dashboard = () => {
             <div className='rider3'>
               <h6>Dashboard</h6>
             </div>
-
-            {/* <div className='rider4'>
-              <div className='rider5'>
-                <div className='rider6'>
-                  <IoSearch />
-                </div>
-                <input type="search" name="" id="" placeholder='Search Driver' />
-              </div>
-            </div> */}
           </div>
 
           <div className='dashboard'>
@@ -108,14 +104,22 @@ const Dashboard = () => {
                 <div className='dashboard1'>
                   <img src={img2} alt="" />
                   <p>Total Vendors</p>
-                  <h6>{totalVendors}</h6>
+                  {loading ?
+                    <p>Loading...</p>
+                    :
+                    <h6>{totalVendors}</h6>
+                  }
                 </div>
               </Link>
               <Link to={'/riders'} className='sidebar-link'>
                 <div className='dashboard1'>
                   <img src={img} alt="" />
                   <p>Total User</p>
-                  <h6>{totalRiders}</h6>
+                  {loading ?
+                    <p>Loading...</p>
+                    :
+                    <h6>{totalRiders}</h6>
+                  }
                 </div>
               </Link>
 
@@ -123,7 +127,11 @@ const Dashboard = () => {
                 <div className='dashboard1'>
                   <img src={img1} alt="" />
                   <p>Total Drivers</p>
-                  <h6>{totalDrivers}</h6>
+                  {loading ?
+                    <p>Loading...</p>
+                    :
+                    <h6>{totalDrivers}</h6>
+                  }
                 </div>
               </Link>
 
@@ -131,25 +139,37 @@ const Dashboard = () => {
                 <div className='dashboard1'>
                   <img src={img3} alt="" />
                   <p>Total Earnings/Invoices</p>
-                  <h6>{totalDrivers}</h6>
+                  {loading ?
+                    <p>Loading...</p>
+                    :
+                    <h6>{totalDrivers}</h6>
+                  }
                 </div>
               </Link>
               <Link to={'/cancellled_booking'} className='sidebar-link'>
                 <div className='dashboard1'>
                   <img src={img1} alt="" />
                   <p>Total Cancel Rides</p>
-                  <h6>{totalcancel}</h6>
+                  {loading ?
+                    <p>Loading...</p>
+                    :
+                    <h6>{totalcancel}</h6>
+                  }
                 </div>
               </Link>
               <Link to={'/allbookings'} className='sidebar-link'>
                 <div className='dashboard1'>
                   <img src={img1} alt="" />
                   <p>Total Booking</p>
-                  <h6>{totalbookings}</h6>
+                  {loading ?
+                    <p>Loading...</p>
+                    :
+                    <h6>{totalbookings}</h6>
+                  }
                 </div>
               </Link>
             </div>
-        
+
 
             <div className='dashboard4'>
               <h6>Latest Transactions</h6>

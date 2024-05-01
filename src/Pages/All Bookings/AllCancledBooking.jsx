@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './AllBookings.css'
 import { Link } from 'react-router-dom';
@@ -16,6 +15,8 @@ import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 const AllCancledBooking = () => {
     const [bookingData, setBookingData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchCanceledBookings();
@@ -28,12 +29,21 @@ const AllCancledBooking = () => {
             })
             .catch(error => {
                 console.error('Error fetching canceled bookings:', error);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
 
 
 
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
 
+    const filteredBookingData = bookingData.filter(booking =>
+        booking?.userId?.name && booking?.userId?.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
 
     return (
@@ -42,7 +52,7 @@ const AllCancledBooking = () => {
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>All Cancelled Rides</h6>
+                            <h6>All canceled Rides</h6>
                         </div>
 
                         <div className='rider4'>
@@ -50,7 +60,11 @@ const AllCancledBooking = () => {
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search' />
+                                <input type="search" name="" id=""
+                                    placeholder='Search booking'
+                                    onChange={handleSearch}
+                                    value={searchQuery}
+                                />
                             </div>
                         </div>
                     </div>
@@ -70,26 +84,60 @@ const AllCancledBooking = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {bookingData.map(booking => (
-                                    <tr key={booking.id}>
-                                        <td className='rider8'>{booking.Id}</td>
-                                        <td>{booking?.date}</td>
-                                        <td>{booking?.userId?.name}</td>
-                                        <td>{booking?.current?.address}</td>
-                                        <td>{booking?.time}</td>
-                                        <td>{booking?.distance} Km</td>
-                                        <td>₹ {booking?.totalPrice}</td>
-                                        <td>{booking?.car?.name}</td>
-                                        <td style={{
-                                            color: booking?.status === 'cancel' ? '#F52D56' :
-                                                booking?.status === 'pending' ? '#FBAC2C' :
-                                                    booking?.status === 'complete' ? '#609527' : 'black',
-                                            fontWeight: '600'
-                                        }}>
-                                            {booking?.status}
-                                        </td>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="8" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading canceled rides...</td>
                                     </tr>
-                                ))}
+                                ) :
+                                    searchQuery && filteredBookingData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="8" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Ride not found</td>
+                                        </tr>
+                                    ) : (
+                                        searchQuery
+                                            ?
+                                            filteredBookingData.map(booking => (
+                                                <tr key={booking.id}>
+                                                    <td className='rider8'>{booking.Id}</td>
+                                                    <td>{booking?.date}</td>
+                                                    <td>{booking?.userId?.name}</td>
+                                                    <td>{booking?.current?.address}</td>
+                                                    <td>{booking?.time}</td>
+                                                    <td>{booking?.distance} Km</td>
+                                                    <td>₹ {booking?.totalPrice}</td>
+                                                    <td>{booking?.car?.name}</td>
+                                                    <td style={{
+                                                        color: booking?.status === 'cancel' ? '#F52D56' :
+                                                            booking?.status === 'pending' ? '#FBAC2C' :
+                                                                booking?.status === 'complete' ? '#609527' : 'black',
+                                                        fontWeight: '600'
+                                                    }}>
+                                                        {booking?.status}
+                                                    </td>
+                                                </tr>
+                                            ))
+                                            :
+                                            bookingData.map(booking => (
+                                                <tr key={booking.id}>
+                                                    <td className='rider8'>{booking.Id}</td>
+                                                    <td>{booking?.date}</td>
+                                                    <td>{booking?.userId?.name}</td>
+                                                    <td>{booking?.current?.address}</td>
+                                                    <td>{booking?.time}</td>
+                                                    <td>{booking?.distance} Km</td>
+                                                    <td>₹ {booking?.totalPrice}</td>
+                                                    <td>{booking?.car?.name}</td>
+                                                    <td style={{
+                                                        color: booking?.status === 'cancel' ? '#F52D56' :
+                                                            booking?.status === 'pending' ? '#FBAC2C' :
+                                                                booking?.status === 'complete' ? '#609527' : 'black',
+                                                        fontWeight: '600'
+                                                    }}>
+                                                        {booking?.status}
+                                                    </td>
+                                                </tr>
+                                            ))
+                                    )}
                             </tbody>
                         </table>
                     </div>

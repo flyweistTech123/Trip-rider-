@@ -1,36 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import './Navbar.css'
-import { BiSearch } from 'react-icons/bi';
+import { toast } from 'react-toastify';
+
+
+
 import { AiOutlineSetting } from "react-icons/ai";
-import { MdHistory } from "react-icons/md";
-import { FiFilter } from "react-icons/fi";
 import { useNavigate } from 'react-router-dom';
-import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
-import axios from 'axios';
-
-
-const Navbar = () => {
-    const [name, setName] = useState('');
-    const [role, setRole] = useState('');
-    const [image, setImage] = useState('')
+import img2 from '../../Images/user.webp'
 
 
-    useEffect(() => {
-        const fetchAdminData = async () => {
-            try {
-                const response = await axios.get(`${BaseUrl}api/v1/admin/me`, getAuthHeaders())
-                const { name, role,profilePicture } = response.data.data;
-                setName(name);
-                setRole(role);
-                setImage(profilePicture)
-            } catch (error) {
-                console.error('Error fetching Admin data:', error);
-            }
-        };
+const Navbar = (admindata) => {
 
-        fetchAdminData();
-    }, []);
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        toast.success("Logout successfully");
+        navigate('/')
+    }
 
     const navigate = useNavigate()
     return (
@@ -38,23 +24,27 @@ const Navbar = () => {
             <div className='navbar'>
                 <div className='navbar10'>
                     <div className='navbar1' onClick={() => navigate('/adminprofile')}>
-                        <img src={image} alt="" />
+                        <img src={admindata?.admindata?.profilePicture || img2} alt="No image"  />
                         <div className='navbar2'>
-                            <h6>Mr {name}</h6>
-                            <span>{role}</span>
+                            <h6>Mr {admindata?.admindata?.name}</h6>
+                            <span>{admindata?.admindata?.role}</span>
+                        </div>
+                        <div className='navbar11'>
+                            <button onClick={handleLogout}>Logout</button>
                         </div>
                     </div>
 
                     <div className='navbar3'>
-                        <div className='navbar4'>
+                        {/* <div className='navbar4'>
                             <div className='navbar5'>
                                 <BiSearch className="search-icon" />
                             </div>
                             <input type="text" placeholder="Search in admin Panel" className="search-input" />
-                        </div>
+                        </div> */}
+
 
                         <div className='navbar11'>
-                            <button onClick={()=>navigate('/sos')}>SOS Request</button>
+                            <button onClick={() => navigate('/sos')}>SOS Request</button>
                         </div>
 
                         <div className='navbar6'>

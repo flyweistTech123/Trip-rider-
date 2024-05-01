@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
-import './SettleBooking.css'
+import './AllBookings.css'
 import HOC from '../../Components/HOC/HOC'
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import MapComponentone from '../../Components/Map/Mapone'
 
-const SettleBookingDetails = () => {
+const BookingDetails = () => {
 
     const navigate = useNavigate();
     const { id } = useParams();
     const [bookingdata, setBookingData] = useState(null);
 
 
-
     const fetchBookingData = async () => {
         try {
-            const response = await axios.get(`${BaseUrl}api/v1/getSettleBookingById/${id}`, getAuthHeaders())
+            const response = await axios.get(`${BaseUrl}api/v1/user/get/booking/by/${id}`, getAuthHeaders())
             setBookingData(response.data.data);
         } catch (error) {
             console.error('Error fetching Booking data:', error);
@@ -67,11 +66,11 @@ const SettleBookingDetails = () => {
                             <div className='settledrivercantainer'>
                                 <div className='settledriver1'>
                                     <h6>Map View</h6>
-                                    <button onClick={() => navigate('/settlebooking')}>Back</button>
+                                    <button onClick={() => navigate('/allbookings')}>Back</button>
                                 </div>
 
                                 <div className='settledriver2'>
-                                    <MapComponentone pickupLatitude={bookingdata.current.latitude} pickupLongitude={bookingdata.current.longitude} dropLatitude={bookingdata.drop.latitude} dropLongitude={bookingdata.drop.longitude} />
+                                    <MapComponentone pickupLatitude={bookingdata.current.latitude} pickupLongitude={bookingdata.current.longitude} dropLatitude={bookingdata.drop.latitude}  dropLongitude={bookingdata.drop.longitude}  />
                                 </div>
 
                                 <div className='settledriver3'>
@@ -100,13 +99,13 @@ const SettleBookingDetails = () => {
                                         <div className='settledriver5'>
                                             <label htmlFor="">Type of Cab</label>
                                             <div className='settledriver6'>
-                                                <p>Mini</p>
+                                                <p>{bookingdata.type}</p>
                                             </div>
                                         </div>
                                         <div className='settledriver5'>
                                             <label htmlFor="">Time</label>
                                             <div className='settledriver6'>
-                                                <p>{bookingdata.dropTime}</p>
+                                                <p>{bookingdata.time}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -118,19 +117,19 @@ const SettleBookingDetails = () => {
                                         <div className='settledriver5'>
                                             <label htmlFor="">Name</label>
                                             <div className='settledriver66'>
-                                                <p>{bookingdata.user?.name}</p>
+                                                <p>{bookingdata.userId?.name}</p>
                                             </div>
                                         </div>
                                         <div className='settledriver5'>
                                             <label htmlFor="">Email</label>
                                             <div className='settledriver66'>
-                                                <p>{bookingdata.user?.email}</p>
+                                                <p>{bookingdata.userId?.email}</p>
                                             </div>
                                         </div>
                                         <div className='settledriver5'>
                                             <label htmlFor="">Mobile Number</label>
                                             <div className='settledriver66'>
-                                                <p>{bookingdata.user?.mobileNumber}</p>
+                                                <p>{bookingdata.userId?.mobileNumber}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -163,6 +162,7 @@ const SettleBookingDetails = () => {
 
                                 <div className='settledriver3'>
                                     <label htmlFor="">Bill Details</label>
+
                                     <div className='settledriver7'>
                                         <table>
                                             <thead>
@@ -298,7 +298,11 @@ const SettleBookingDetails = () => {
                                             </tbody>
                                         </table>
                                     </div>
+
+
+
                                 </div>
+
                             </div>
                         </>
                     )}
@@ -308,4 +312,4 @@ const SettleBookingDetails = () => {
     )
 }
 
-export default HOC(SettleBookingDetails);
+export default HOC(BookingDetails);

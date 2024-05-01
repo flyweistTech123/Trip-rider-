@@ -89,12 +89,12 @@ const AllBookings = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading users...</td>
+                                        <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading bookings...</td>
                                     </tr>
                                 ) :
                                     searchQuery && filteredBookingData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>User not found</td>
+                                            <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Booking not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery
@@ -141,7 +141,7 @@ const AllBookings = () => {
                                                     <td>
                                                         <div className='rider9'>
                                                             <div className='rider10'>
-                                                                <Link to={`/riders_details/${booking._id}`} className='sidebar-link' >
+                                                                <Link to={`/bookingdetails/${booking._id}`} className='sidebar-link' >
                                                                     <IoEyeOutline color='#667085' size={20} />
                                                                     <p>View</p>
                                                                 </Link>

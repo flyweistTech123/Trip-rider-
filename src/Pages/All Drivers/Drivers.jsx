@@ -140,12 +140,12 @@ const Drivers = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading drivers...</td>
+                                        <td colSpan="8" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading drivers...</td>
                                     </tr>
                                 ) :
                                     searchQuery && filteredDriverData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Driver not found</td>
+                                            <td colSpan="8" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Driver not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery

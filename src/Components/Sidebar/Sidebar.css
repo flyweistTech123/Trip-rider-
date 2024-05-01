@@ -5,11 +5,11 @@
 
 .sidebar1{
     width: 256px;
+    /* height: 100%; */
     background-color: #F52D56;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     padding-bottom: 50px;
 }
 

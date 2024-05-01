@@ -105,6 +105,7 @@
     align-items: center;
     justify-content: start;
     padding-left: 20px;
+    overflow-wrap: anywhere;
 }
 
 
@@ -128,6 +129,7 @@
     align-items: center;
     justify-content: start;
     padding-left: 20px;
+    overflow-wrap: anywhere;
 }
 
 
@@ -171,6 +173,11 @@
     text-align: center;
     border-bottom: 1px solid #C4C4C4;
     padding:10px;
+}
+
+.settledriver7 table td{
+    border-bottom: 1px solid #C4C4C4;
+
 }
 
 .settledriver7 table td:nth-child(1){

@@ -48,39 +48,26 @@
 .sos5{
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     margin-top: 30px;
 }
 
 
-.sos5 button:nth-child(1){
-    width: 366px;
-    height: 71px;
+.sos5 button{
+    width: auto;
+    height: auto;
     background-color: #FF0034;
     border: none;
     outline: none;
     border-radius: 10px;
     font-family: "Poppins", sans-serif;
     font-weight: 600;
-    font-size: 20.53px;
+    font-size: 15.53px;
     color: #FFFFFF;
     line-height: 35.93px;
+    padding: 10px 15px 10px 15px;
 }
 
-
-.sos5 button:nth-child(2){
-    width: 366px;
-    height: 71px;
-    background-color: #FF0034;
-    border: none;
-    outline: none;
-    border-radius: 10px;
-    font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    font-size: 20.53px;
-    color: #FFFFFF;
-    line-height: 35.93px;
-}
 
 
 .sos5 button:hover{
