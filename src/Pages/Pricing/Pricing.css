@@ -394,49 +394,21 @@
 
 /* taxes */
 
-.taxes {
-  width: 95%;
-  margin: auto;
-  margin-top: 30px;
-}
-
-.taxes1 {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
-.taxes2 {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.taxes2 label {
-  font-family: "Mulish", sans-serif;
-  font-weight: 500;
-  font-size: 19.59px;
-  color: #000000;
-  line-height: 24.58px;
-  margin: 0;
-}
-
-.taxes3 {
-  width: 480px;
+.taxprice{
+  min-width: 480px;
   height: 53px;
   border-radius: 6.81px;
   border: 1.36px solid #b7b7b7;
+  outline: none;
+  padding-left: 20px;
+  padding-right: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-left: 10px;
 }
 
-.taxes3 input {
-  border: none;
-  outline: none;
-  padding-left: 20px;
+
+.taxprice h6{
   font-family: "Mulish", sans-serif;
   font-weight: 500;
   font-size: 19.59px;
@@ -445,74 +417,40 @@
   margin: 0;
 }
 
-.taxes3 input::placeholder {
+
+.taxprice span{
   font-family: "Mulish", sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  color: #7d7d7d;
-  line-height: 20.08px;
+  font-weight: 600;
+  font-size: 14.59px;
+  color: #000000;
+  line-height: 24.58px;
   margin: 0;
 }
 
-.taxes4 {
-  border-left: 1px solid #393939;
-  padding-right: 10px;
-  padding-left: 10px;
-  height: 60%;
+.taxprice1{
+  width: 95%;
+  margin: auto;
+  height: 100px;
+  border-radius: 6.81px;
+  border: 1.36px solid #b7b7b7;
+  outline: none;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.taxprice1 h6{
   font-family: "Mulish", sans-serif;
-  font-weight: 800;
-  font-size: 18px;
-  color: #393939;
-  line-height: 22.59px;
+  font-weight: 600;
+  font-size: 14.59px;
+  color: #000000;
+  line-height: 24.58px;
   margin: 0;
 }
 
-.taxes5 {
-  text-align: end;
-  padding-bottom: 10px;
-}
 
-.taxes5 button:nth-child(1) {
-  width: 126.87px;
-  height: 39.14px;
-  border: 1px solid #c3052c;
-  outline: none;
-  border-radius: 6.75px;
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
-  font-size: 16.2px;
-  color: #7d7d7d;
-  line-height: 20.08px;
-  margin: 0;
-  color: #c3052c;
-  background-color: #f9f9f9;
-  cursor: pointer;
-}
-
-.taxes5 button:nth-child(2) {
-  width: 126.87px;
-  height: 39.14px;
-  border: none;
-  outline: none;
-  border-radius: 6.75px;
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
-  font-size: 16.2px;
-  color: #ffffff;
-  line-height: 20.08px;
-  margin: 0;
-  background-color: #f52d56;
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-.taxes5 button:nth-child(2):hover {
-  background-color: #c3052c;
-}
-
-
-
-
+/* ambulance */
 .ambulance1{
   margin-top: 20px;
 }

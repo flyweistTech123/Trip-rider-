@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Modal from "react-bootstrap/Modal";
 import './Drivers.css'
 import HOC from '../../Components/HOC/HOC'
 import { useParams } from 'react-router-dom';
@@ -11,7 +12,9 @@ import img2 from '../../Images/user.webp'
 import { MdOutlineBlock } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
+import { MdEdit } from "react-icons/md";
 
+import { Button, Form } from "react-bootstrap";
 
 
 import { useNavigate } from 'react-router-dom';
@@ -32,24 +35,27 @@ const Driver_Details = () => {
 
 
     const { id } = useParams();
+    const [modalShow, setModalShow] = React.useState(false);
     const [DriverData, setDriverData] = useState(null);
-    const [isBlocked, setIsBlocked] = useState(false); // Initialize isBlocked state to false
+    const [isBlocked, setIsBlocked] = useState(false);
+    const [kycstatus1, setKYCstatus1] = useState(" ");
     const navigate = useNavigate()
 
-    useEffect(() => {
-        const fetchDriverData = async () => {
-            try {
-                const response = await axios.get(`${BaseUrl}api/v1/getUserById/${id}`, getAuthHeaders()); // Use the ID from the URL
-                const driverDataFromApi = response.data.data;
-                setDriverData(driverDataFromApi);
-                setIsBlocked(driverDataFromApi.isBlock);
-            } catch (error) {
-                console.error('Error fetching driver data:', error);
-            }
-        };
 
-        fetchDriverData();
-    }, [id]);
+
+    const fetchDriverData = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}api/v1/getUserById/${id}`, getAuthHeaders()); // Use the ID from the URL
+            const driverDataFromApi = response.data.data;
+            const driverStatus = response.data.data.status;
+            setKYCstatus1(driverStatus)
+            setDriverData(driverDataFromApi);
+            setIsBlocked(driverDataFromApi.isBlock);
+        } catch (error) {
+            console.error('Error fetching driver data:', error);
+        }
+    };
+
 
     const handleDeleteDriver = async () => {
         try {
@@ -86,8 +92,151 @@ const Driver_Details = () => {
         }
     };
 
+
+
+    useEffect(() => {
+        fetchDriverData();
+    }, [id]);
+
+    // Define the color based on DriverData.status
+    let textColor = '';
+
+    switch (kycstatus1) {
+        case 'reject':
+            textColor = '#F52D56'; // Red color for 'reject'
+            break;
+        case 'pending':
+            textColor = '#FBAC2C'; // Orange color for 'pending'
+            break;
+        case 'approved':
+            textColor = '#609527'; // Green color for 'approved' and 'hold'
+            break;
+        case 'hold':
+            textColor = '#357ABD'; // Green color for 'approved' and 'hold'
+            break;
+        default:
+            textColor = '#000'; // Default color (black) for unknown status
+    }
+
+    // KYC modal 
+
+    function KycStatusModal(props) {
+        const [kycstatus, setKYCstatus] = useState(" ");
+        const [kycremarkstatus, setKYCRemarkstatus] = useState(" ");
+
+        const fetchDriverData = async () => {
+            try {
+                const response = await axios.get(`${BaseUrl}api/v1/getUserById/${id}`, getAuthHeaders()); // Use the ID from the URL
+                const driverStatus = response.data.data.status;
+                const driverRemark = response.data.data.kycRemark;
+                setKYCstatus(driverStatus)
+                setKYCRemarkstatus(driverRemark)
+            } catch (error) {
+                console.error('Error fetching driver data:', error);
+            }
+        };
+
+
+        const ChangeStatus = async (e) => {
+            e.preventDefault();
+            try {
+                // Construct the request payload with status and kycRemark
+                const payload = {
+                    status: kycstatus,
+                    kycRemark: kycremarkstatus,
+                };
+
+                // Make the Axios PUT request with the correct parameters
+                await axios.put(
+                    `${BaseUrl}api/v1/admin/Kyc/driver/${id}`, // URL for the PUT request
+                    payload, // Request payload containing status and kycRemark
+                    getAuthHeaders() // Authentication headers (token)
+                );
+
+                // After successful request, fetch updated driver data and close the modal
+                fetchDriverData();
+                setModalShow(false);
+                toast.success("KYC Status Updated successfully");
+            } catch (error) {
+                // Handle errors if request fails
+                toast.error("Error updating KYC Status");
+            }
+        };
+
+
+
+        useEffect(() => {
+            fetchDriverData()
+        }, [props])
+
+        return (
+            <Modal
+                {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton className='adminprofileupdate'>
+                    <Modal.Title id="contained-modal-title-vcenter">Update KYC Status</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={ChangeStatus}>
+                        <Form.Group className="mb-3">
+                            <div style={{ display: "flex", gap: "20px" }}>
+                                <Form.Check
+                                    type="radio"
+                                    label="PENDING"
+                                    name="status"
+                                    checked={kycstatus === "pending"}
+                                    onChange={() => setKYCstatus("pending")}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    label="APPROVED"
+                                    name="status"
+                                    checked={kycstatus === "approved"}
+                                    onChange={() => setKYCstatus("approved")}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    label="REJECT"
+                                    name="status"
+                                    checked={kycstatus === "reject"}
+                                    onChange={() => setKYCstatus("reject")}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    label="HOLD"
+                                    name="status"
+                                    checked={kycstatus === "hold"}
+                                    onChange={() => setKYCstatus("hold")}
+                                />
+                            </div>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Remark</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                rows={3}
+                                value={kycremarkstatus}
+                                onChange={(e) => setKYCRemarkstatus(e.target.value)}
+                            />
+                        </Form.Group>
+                        <Modal.Footer>
+                            <Button className='sos6' type="submit">Update</Button>
+                        </Modal.Footer>
+                    </Form>
+                </Modal.Body>
+            </Modal>
+        );
+    }
+
     return (
         <>
+            <KycStatusModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            />
             <div className='rider'>
                 <div className='rider1'>
                     <div className='rider2'>
@@ -101,12 +250,14 @@ const Driver_Details = () => {
                                 <div className='rider_details1'>
                                     <div className='rider_details2'>
                                         <div className='rider_details3'>
-                                            <img src={DriverData.profilePicture || img2} alt="No image"/>
+                                            <img src={DriverData.profilePicture || img2} alt="No image" />
                                             <div className='rider_details4'>
                                                 <h6>{DriverData.name}<div className='rider_details5'>
                                                     <p>{DriverData.role}</p>
                                                 </div></h6>
-                                                {/* <p>Completed  Profile</p> */}
+                                                <div>
+                                                    <p style={{ color: textColor }}>{DriverData.status}  Profile</p>
+                                                </div>
                                             </div>
                                             <div className='rider_details6'>
                                                 <div className='rider_details7' onClick={handleDeleteDriver}>
@@ -116,6 +267,10 @@ const Driver_Details = () => {
                                                 <div className='rider_details7' onClick={() => { isBlocked ? unblockDriver() : blockDriver() }}>
                                                     <MdOutlineBlock color={isBlocked ? "red" : "#667085"} size={20} />
                                                     <p style={{ color: isBlocked ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                </div>
+                                                <div className='rider_details7' onClick={() => setModalShow(true)}>
+                                                    <MdEdit color="#667085" size={20} />
+                                                    <p style={{ color: '#667085' }}>Update KYC Status</p>
                                                 </div>
                                             </div>
                                         </div>

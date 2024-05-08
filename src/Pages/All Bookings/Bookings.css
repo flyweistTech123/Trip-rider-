@@ -1,0 +1,33 @@
+.booking{
+    width: 312px;
+    height: 44px;
+    border: 1px solid #FFFFFF;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 90px;
+}
+
+.booking p{
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #FFFFFF;
+    line-height:24px;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+
+.booking1{
+    width: 30px;
+    height: 30px;
+    background-color: #C3052C;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-right: 10px;
+}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import './Sidebar.css'
 import { Link } from 'react-router-dom';
 
@@ -31,13 +31,14 @@ import img20 from '../../Images/img49.png'
 
 
 
-const Sidebar = (admindata) => {
+const Sidebar = ({ admindata }) => {
 
     const sidebarItems = [
         { icon: img1, text: 'Dashboard', link: '/dashboard' },
-        { icon: img2, text: 'All Users', link: '/riders' },
+        { icon: img2, text: 'All Users', link: '/users' },
         { icon: img3, text: 'All Drivers', link: '/drivers' },
         { icon: img20, text: 'All Drivers Earnings', link: '/earnings' },
+        { icon: img20, text: 'All Earnings', link: '/allearning' },
         { icon: img4, text: 'All Vendors', link: '/vendors' },
         { icon: img5, text: 'Privileges', link: '/privileges' },
         { icon: img6, text: 'Push Notification', link: '/notification' },
@@ -52,8 +53,8 @@ const Sidebar = (admindata) => {
         { icon: img15, text: 'Live Chat', link: '/livechart' },
         { icon: img16, text: 'Location', link: '/alllocation' },
         { icon: img17, text: 'Pricing', link: '/pricing' },
-        { icon: img14, text: 'Subscription Booking ', link: '/settlebooking' },
-        { icon: img14, text: 'Admin', link: '/alladmin' },
+        { icon: img14, text: 'Subscription Booking', link: '/settlebooking' },
+        // { icon: img14, text: 'Admin', link: '/alladmin' },
         { icon: img14, text: 'Vehicle Types', link: '/vehicletype' },
         { icon: img14, text: 'Geofencing', link: '/geofencing_view' },
         { icon: img18, text: 'Terms and conditions', link: '/termsandconditions' },
@@ -62,27 +63,13 @@ const Sidebar = (admindata) => {
 
 
 
-    // Function to filter sidebar items based on user permissions
-    const filterSidebarItems = () => {
-        // Use optional chaining (?.) to safely access nested properties
-        const { role, permissions } = admindata?.admindata || {};
-
-        console.log("role", role);
-        console.log("permissions", permissions);
-
-        // If role is not defined or permissions are not available, return an empty array
-        if (!role || !permissions) {
-            return [];
-        }
-
-        // If user is a super admin, display all sidebar items
-        if (role === 'superAdmin') {
-            return sidebarItems;
-        }
-
-        // Filter sidebar items based on user permissions
-        return sidebarItems.filter(item => permissions.includes(item.text));
-    };
+    // Include 'Dashboard' item in the sidebarItems array
+    const filteredSidebarItems = [
+        { icon: img1, text: 'Dashboard', link: '/dashboard' }, // Always include Dashboard
+        ...(admindata && admindata.role === 'superAdmin'
+            ? sidebarItems // Show all items for superAdmin
+            : sidebarItems.filter(item => admindata && admindata.permissions.includes(item.text)))
+    ];
 
     return (
         <>
@@ -93,7 +80,7 @@ const Sidebar = (admindata) => {
                     </div>
 
                     <div className='sidebar3'>
-                        {filterSidebarItems().map((item, index) => (
+                        {filteredSidebarItems.map((item, index) => (
                             <Link to={item.link} key={index} className='sidebar-link'>
                                 <div className='sidebar4'>
                                     <div className='sidebar5'><img src={item.icon} alt="" /></div>
@@ -108,4 +95,4 @@ const Sidebar = (admindata) => {
     )
 }
 
-export default Sidebar
+export default React.memo(Sidebar);

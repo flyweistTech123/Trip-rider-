@@ -10,13 +10,19 @@ import { useNavigate } from 'react-router-dom';
 import img2 from '../../Images/user.webp'
 
 
-const Navbar = (admindata) => {
+const Navbar = ({ admindata, onLogout, clearToken }) => {
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
+        // Clear token from localStorage
+        clearToken();
+        // Clear adminData from localStorage (triggered by onLogout prop)
+        onLogout();
+        // Show logout success toast
         toast.success("Logout successfully");
-        navigate('/')
-    }
+        // Redirect to home page
+        navigate('/login ');
+    };
+
 
     const navigate = useNavigate()
     return (
@@ -24,10 +30,10 @@ const Navbar = (admindata) => {
             <div className='navbar'>
                 <div className='navbar10'>
                     <div className='navbar1' onClick={() => navigate('/adminprofile')}>
-                        <img src={admindata?.admindata?.profilePicture || img2} alt="No image"  />
+                        <img src={admindata?.profilePicture || img2} alt="No image"  />
                         <div className='navbar2'>
-                            <h6>Mr {admindata?.admindata?.name}</h6>
-                            <span>{admindata?.admindata?.role}</span>
+                            <h6>Mr {admindata?.name}</h6>
+                            <span>{admindata?.role}</span>
                         </div>
                         <div className='navbar11'>
                             <button onClick={handleLogout}>Logout</button>

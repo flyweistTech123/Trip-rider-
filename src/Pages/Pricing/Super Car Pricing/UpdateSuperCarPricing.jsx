@@ -3,11 +3,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import HOC from '../../../Components/HOC/HOC'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import img3 from '../../../Images/img43.png';
-
-
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+
+import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
+
+
+
+
+import img3 from '../../../Images/img43.png';
+
 
 
 // import img from '../../Images/img5.png'
@@ -23,13 +28,14 @@ const UpdateSuperCarPricing = () => {
     const [kmPrice, setKmPrice] = useState('')
     const [hrPrice, setHrPrice] = useState('');
     const [hrLimit, setHrLimit] = useState('');
-
+    const [pricePerKmGreater, setPricePerKmGreater] = useState('');
+    const [pricePerMinGreater, SetPricePerMinGreater] = useState('');
 
     useEffect(() => {
         const fetchSuperCarDetails = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/SuperCarPricing/${id}`);
-                const { name, image, price, kmLimit, kmPrice, hrPrice, hrLimit } = response.data.data;
+                const response = await axios.get(`${BaseUrl}api/v1/SuperCarPricing/${id}`, getAuthHeaders());
+                const { name, image, price, kmLimit, kmPrice, hrPrice, hrLimit, pricePerKmGreater, pricePerMinGreater } = response.data.data;
                 setName(name);
                 setImage(image[0].img);
                 setPrice(price);
@@ -37,6 +43,8 @@ const UpdateSuperCarPricing = () => {
                 setKmPrice(kmPrice);
                 setHrPrice(hrPrice);
                 setHrLimit(hrLimit);
+                setPricePerKmGreater(pricePerKmGreater);
+                SetPricePerMinGreater(pricePerMinGreater);
             } catch (error) {
                 console.error('Error fetching Super car Pricing details:', error);
             }
@@ -52,11 +60,12 @@ const UpdateSuperCarPricing = () => {
         formData.append('kmPrice', kmPrice);
         formData.append('hrPrice', hrPrice);
         formData.append('hrLimit', hrLimit);
-
+        formData.append('pricePerKmGreater', pricePerKmGreater);
+        formData.append('pricePerMinGreater', pricePerMinGreater);
 
 
         try {
-            const response = await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/SuperCarPricing/${id}`, formData);
+            const response = await axios.put(`${BaseUrl}api/v1/SuperCarPricing/${id}`, formData, getAuthHeaders());
             toast.success("Super Car Pricing Updated successfully");
             navigate('/allsupercarpricing');
         } catch (error) {
@@ -92,12 +101,6 @@ const UpdateSuperCarPricing = () => {
                         </div>
 
                         <div className='rider4'>
-                            {/* <div className='rider5'>
-                                <div className='rider6'>
-                                    <IoSearch />
-                                </div>
-                                <input type="search" name="" id="" placeholder='Search User' />
-                            </div> */}
                         </div>
                     </div>
 
@@ -131,6 +134,16 @@ const UpdateSuperCarPricing = () => {
                             <div className='dailyprice4'>
                                 <label htmlFor="">Hours Price</label>
                                 <input type="number" placeholder='Enter Hours Price' value={hrPrice} onChange={(e) => setHrPrice(e.target.value)} />
+                            </div>
+                        </div>
+                        <div className='dailyprice3'>
+                            <div className='dailyprice4'>
+                                <label htmlFor="">Price/KmGreater</label>
+                                <input type="number" placeholder='Enter Price/KmGreater' value={pricePerKmGreater} onChange={(e) => setPricePerKmGreater(e.target.value)} />
+                            </div>
+                            <div className='dailyprice4'>
+                                <label htmlFor="">Price/MinGreater</label>
+                                <input type="number" placeholder='Enter Price/MinGreater' value={pricePerMinGreater} onChange={(e) => SetPricePerMinGreater(e.target.value)} />
                             </div>
                         </div>
                         <div className='dailyprice3'>

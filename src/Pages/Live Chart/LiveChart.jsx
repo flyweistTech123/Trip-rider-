@@ -28,8 +28,8 @@ const LiveChart = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
 
-
     const messageContainerRef = useRef(null);
+
 
 
     useEffect(() => {
@@ -54,6 +54,13 @@ const LiveChart = () => {
     useEffect(() => {
         const totalNewMsg = messages.filter(msg => !msg.read).length;
         setTotalNewMessages(totalNewMsg);
+        const sortedUsers = [...users].sort((a, b) => {
+            if (!a.lastMessageTime) return 1; // Put users with no messages at the bottom
+            if (!b.lastMessageTime) return -1;
+            return b.lastMessageTime - a.lastMessageTime; // Sort by descending order of message time
+        });
+
+        setUsers(sortedUsers);
     }, [messages]);
 
     const fetchAdminData = async () => {
@@ -91,18 +98,21 @@ const LiveChart = () => {
         try {
             const response = await axios.get(`${BaseUrl}api/v1/admin/all/user`, getAuthHeaders());
             const usersData = response.data.category;
-            const usersWithLastMessage = await Promise.all(usersData.map(async user => {
+
+            const updatedUsers = await Promise.all(usersData.map(async user => {
                 const messagesRef = collection(db, 'chatwithadmin', user._id, 'messages');
                 const q = query(messagesRef, orderBy('timestamp', 'desc'), limit(1));
                 const querySnapshot = await getDocs(q);
                 const lastMessageDoc = querySnapshot.docs[0];
-                const lastMessage = lastMessageDoc ? lastMessageDoc.data().message : ''; // Get last message or empty string if no message
-                return { ...user, lastMessage };
+                const lastMessage = lastMessageDoc ? lastMessageDoc.data().message : '';
+                const lastMessageTime = lastMessageDoc ? lastMessageDoc.data().timestamp : null;
+
+                return { ...user, lastMessage, lastMessageTime };
             }));
 
-            setUsers(usersWithLastMessage);
+            setUsers(updatedUsers);
         } catch (error) {
-            console.error('Error fetching rider data:', error);
+            console.error('Error fetching user data:', error);
         }
         finally {
             setLoading(false);
@@ -147,6 +157,41 @@ const LiveChart = () => {
             console.error('Error sending message:', error);
         }
     };
+
+    const formatTimestamp = (timestamp) => {
+        if (!timestamp) return ''; // Handle case where timestamp is null or undefined
+
+        // Convert Firestore Timestamp to Date object
+        const date = timestamp.toDate();
+
+        // Get current date
+        const currentDate = new Date();
+
+        // Calculate time difference in milliseconds
+        const timeDifference = currentDate - date;
+        const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+
+        if (timeDifference < oneDayInMilliseconds) {
+            // If message was sent today or yesterday, show time
+            return formatTime(date);
+        } else {
+            // Otherwise, show date
+            return formatDate(date);
+        }
+    };
+
+    const formatTime = (date) => {
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    };
+
+    const formatDate = (date) => {
+        // Format date as DD/MM/YYYY (adjust based on your locale)
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
 
 
 
@@ -202,23 +247,7 @@ const LiveChart = () => {
                                         searchQuery
                                             ?
                                             filteredUserData.map(user => (
-                                                <div className='livechart7' key={user.id} onClick={() => handleUserClick(user)}>
-                                                    <div className='livechart8'>
-                                                        <div className='livechart852'>
-                                                            <img src={user?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
-                                                        </div>
-                                                        <div className='livechart9'>
-                                                            <h6>{user.name}</h6>
-                                                            <p>{user.lastMessage}<span>🔥</span></p>
-                                                        </div>
-                                                    </div>
-                                                    <div className='livechart10'>
-                                                        <p>12m</p>
-                                                    </div>
-                                                </div>
-                                            ))
-                                            : users.map(user => (
-                                                <div className='livechart7' key={user?.id} onClick={() => handleUserClick(user)}>
+                                                <div className='livechart7' key={user._id} onClick={() => handleUserClick(user)}>
                                                     <div className='livechart8'>
                                                         <div className='livechart852'>
                                                             <img src={user?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
@@ -226,11 +255,26 @@ const LiveChart = () => {
                                                         <div className='livechart9'>
                                                             <h6>{user?.name || "User"}</h6>
                                                             <p>{user?.lastMessage}</p>
-                                                            {console.log(user?.name)}
                                                         </div>
                                                     </div>
                                                     <div className='livechart10'>
-                                                        <p>12m</p>
+                                                        <p>{formatTimestamp(user?.lastMessageTime)}</p>
+                                                    </div>
+                                                </div>
+                                            ))
+                                            : users.map(user => (
+                                                <div className='livechart7' key={user._id} onClick={() => handleUserClick(user)}>
+                                                    <div className='livechart8'>
+                                                        <div className='livechart852'>
+                                                            <img src={user?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
+                                                        </div>
+                                                        <div className='livechart9'>
+                                                            <h6>{user?.name || "User"}</h6>
+                                                            <p>{user?.lastMessage}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='livechart10'>
+                                                        <p>{formatTimestamp(user?.lastMessageTime)}</p>
                                                     </div>
                                                 </div>
                                             ))
@@ -264,7 +308,7 @@ const LiveChart = () => {
                                             <div className={`${message.type === 'user' ? 'livechart19' : 'livechart24'}`} key={message.id}>
                                                 {message.type === 'user' ? (
                                                     <div className='livechart20'>
-                                                        <img src={message.image} alt="" />
+                                                        {/* <img src={message.image} alt="" /> */}
                                                     </div>
                                                 ) : (
                                                     ""
@@ -274,7 +318,7 @@ const LiveChart = () => {
                                                 </div>
                                                 {message.type === 'admin' ? (
                                                     <div className='livechart20'>
-                                                        <img src={message.image} alt="" />
+                                                        {/* <img src={message.image} alt="" /> */}
                                                     </div>
                                                 ) : (
                                                     ""

@@ -220,3 +220,65 @@
     padding-top: 15px;
     width: 30%;
 }
+
+
+
+
+/* CancelBookingModal */
+
+
+.CancelBookingModal1{
+    text-align: center;
+}
+
+
+.CancelBookingModal1 h6{
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #000000;
+    line-height: 24px;
+    margin: 0;
+}
+
+
+.CancelBookingModal2{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.CancelBookingModal2 button:nth-child(1){
+    width: 100px;
+    height: 31px;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    background-color: #c3052c;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: #ffffff;
+    line-height: 21px;
+    margin: 0;
+    cursor: pointer;
+}
+
+
+.CancelBookingModal2 button:nth-child(2){
+    width: 100px;
+    height: 31px;
+    border: 1px solid #c3052c;
+    outline: none;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: #c3052c;
+    line-height: 21px;
+    margin: 0;
+    cursor: pointer;
+}

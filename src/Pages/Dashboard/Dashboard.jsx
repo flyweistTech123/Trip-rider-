@@ -26,6 +26,20 @@ const Dashboard = () => {
 
   const [bookingtransaction, setBookingTransaction] = useState([])
 
+  const cachedAdminData = localStorage.getItem('adminData');
+  const adminData = JSON.parse(cachedAdminData);
+  const role = localStorage.getItem('role');
+
+  let permissionsArray =[];
+
+  if (adminData && adminData.permissions) {
+    permissionsArray = adminData.permissions;
+  } else {
+    console.log('Permissions array not found in adminData.');
+  }
+
+
+
 
   const fetchTransactionData = () => {
     axios.get(`${BaseUrl}api/v1/getAllBookingTransaction`, getAuthHeaders())
@@ -44,12 +58,13 @@ const Dashboard = () => {
 
   const fetchData = async () => {
     try {
-      const [ridreResponse, driversResponse, vendorsResponse, cancelRides, booking] = await Promise.all([
+      const [ridreResponse, driversResponse, vendorsResponse, cancelRides, booking, earning] = await Promise.all([
         axios.get(`${BaseUrl}api/v1/admin/all/user`, getAuthHeaders()),
         axios.get(`${BaseUrl}api/v1/admin/all/driver`, getAuthHeaders()),
         axios.get(`${BaseUrl}api/v1/admin/all/vendor`, getAuthHeaders()),
         axios.get(`${BaseUrl}api/v1/getBooking?status=cancel`, getAuthHeaders()),
         axios.get(`${BaseUrl}api/v1/getBooking`, getAuthHeaders()),
+        axios.get(`${BaseUrl}api/v1/admin/me`, getAuthHeaders())
       ]);
 
       setTotalRiders(ridreResponse.data.category.length);
@@ -58,6 +73,7 @@ const Dashboard = () => {
       setTotalVendors(vendorsResponse.data.category.length);
       setcancel(cancelRides.data.data.length);
       setTotalbookings(booking.data.data.length);
+      setTotalEarnings(earning.data.data.wallet);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -88,6 +104,8 @@ const Dashboard = () => {
     return `${formattedTime} `;
   };
 
+
+
   return (
     <>
       <div className='rider'>
@@ -99,117 +117,213 @@ const Dashboard = () => {
           </div>
 
           <div className='dashboard'>
-            <div className='dashboard2'>
-              <Link to={'/vendors'} className='sidebar-link' >
-                <div className='dashboard1'>
-                  <img src={img2} alt="" />
-                  <p>Total Vendors</p>
-                  {loading ?
-                    <p>Loading...</p>
-                    :
-                    <h6>{totalVendors}</h6>
-                  }
-                </div>
-              </Link>
-              <Link to={'/riders'} className='sidebar-link'>
-                <div className='dashboard1'>
-                  <img src={img} alt="" />
-                  <p>Total User</p>
-                  {loading ?
-                    <p>Loading...</p>
-                    :
-                    <h6>{totalRiders}</h6>
-                  }
-                </div>
-              </Link>
+            {role === "superAdmin" ? (
+              <div>
+                <div className='dashboard2'>
+                  <Link to={'/vendors'} className='sidebar-link'>
+                    <div className='dashboard1'>
+                      <img src={img2} alt="" />
+                      <p>Total Vendors</p>
+                      {loading ? <p>Loading...</p> : <h6>{totalVendors}</h6>}
+                    </div>
+                  </Link>
 
-              <Link to={'/drivers'} className='sidebar-link'>
-                <div className='dashboard1'>
-                  <img src={img1} alt="" />
-                  <p>Total Drivers</p>
-                  {loading ?
-                    <p>Loading...</p>
-                    :
-                    <h6>{totalDrivers}</h6>
-                  }
-                </div>
-              </Link>
+                  <Link to={'/users'} className='sidebar-link'>
+                    <div className='dashboard1'>
+                      <img src={img} alt="" />
+                      <p>Total Users</p>
+                      {loading ? <p>Loading...</p> : <h6>{totalRiders}</h6>}
+                    </div>
+                  </Link>
 
-              <Link to={'/earnings'} className='sidebar-link'>
-                <div className='dashboard1'>
-                  <img src={img3} alt="" />
-                  <p>Total Earnings/Invoices</p>
-                  {loading ?
-                    <p>Loading...</p>
-                    :
-                    <h6>{totalDrivers}</h6>
-                  }
-                </div>
-              </Link>
-              <Link to={'/cancellled_booking'} className='sidebar-link'>
-                <div className='dashboard1'>
-                  <img src={img1} alt="" />
-                  <p>Total Cancel Rides</p>
-                  {loading ?
-                    <p>Loading...</p>
-                    :
-                    <h6>{totalcancel}</h6>
-                  }
-                </div>
-              </Link>
-              <Link to={'/allbookings'} className='sidebar-link'>
-                <div className='dashboard1'>
-                  <img src={img1} alt="" />
-                  <p>Total Booking</p>
-                  {loading ?
-                    <p>Loading...</p>
-                    :
-                    <h6>{totalbookings}</h6>
-                  }
-                </div>
-              </Link>
-            </div>
+                  <Link to={'/drivers'} className='sidebar-link'>
+                    <div className='dashboard1'>
+                      <img src={img1} alt="" />
+                      <p>Total Drivers</p>
+                      {loading ? <p>Loading...</p> : <h6>{totalDrivers}</h6>}
+                    </div>
+                  </Link>
 
+                  <Link to={'/allearning'} className='sidebar-link'>
+                    <div className='dashboard1'>
+                      <img src={img3} alt="" />
+                      <p>Total Earnings</p>
+                      {loading ? <p>Loading...</p> : <h6>{totalEarnings}</h6>}
+                    </div>
+                  </Link>
 
-            <div className='dashboard4'>
-              <h6>Latest Transactions</h6>
-              <div className='dashboard3'>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Transaction No.</th>
-                      <th>Transfer From</th>
-                      <th>From Account</th>
-                      <th>Payment Method</th>
-                      <th>Date</th>
-                      <th>Time</th>
-                      <th>Partner’s Earning</th>
-                      <th>Admin’s Earning</th>
-                      <th>My Earning</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {bookingtransaction.map(transaction => (
-                      <tr key={transaction.id}>
-                        <td>{transaction.id}</td>
-                        <td>{transaction?.user?.name}</td>
-                        <td>{transaction.driverId.name}</td>
-                        <td>{transaction.paymentMode}</td>
-                        <td>{formatDate(transaction.updatedAt)}</td>
-                        <td>{formatTime(transaction.updatedAt)}</td>
-                        <td>{transaction.driverAmount}</td>
-                        <td>{transaction.adminAmount}</td>
-                        <td> <div className='dashboard5'>+{transaction.amount}</div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                  <Link to={'/cancelled_booking'} className='sidebar-link'>
+                    <div className='dashboard1'>
+                      <img src={img1} alt="" />
+                      <p>Total Cancelled Rides</p>
+                      {loading ? <p>Loading...</p> : <h6>{totalcancel}</h6>}
+                    </div>
+                  </Link>
+
+                  <Link to={'/allbookings'} className='sidebar-link'>
+                    <div className='dashboard1'>
+                      <img src={img1} alt="" />
+                      <p>Total Bookings</p>
+                      {loading ? <p>Loading...</p> : <h6>{totalbookings}</h6>}
+                    </div>
+                  </Link>
+                </div>
+                <div className='dashboard4'>
+                  <h6>Latest Transactions</h6>
+                  <div className='dashboard3'>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Transaction No.</th>
+                          <th>Transfer From</th>
+                          <th>From Account</th>
+                          <th>Payment Method</th>
+                          <th>Date</th>
+                          <th>Time</th>
+                          <th>Partner’s Earning</th>
+                          <th>Admin’s Earning</th>
+                          <th>My Earning</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {bookingtransaction.map(transaction => (
+                          <tr key={transaction.id}>
+                            <td>{transaction.id}</td>
+                            <td>{transaction?.user?.name}</td>
+                            <td>{transaction.driverId.name}</td>
+                            <td>{transaction.paymentMode}</td>
+                            <td>{formatDate(transaction.updatedAt)}</td>
+                            <td>{formatTime(transaction.updatedAt)}</td>
+                            <td>{transaction.driverAmount}</td>
+                            <td>{transaction.adminAmount}</td>
+                            <td> <div className='dashboard5'>+{transaction.amount}</div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-            </div>
+
+            ) : (
+              <div>
+                {permissionsArray.map(permission => (
+                  <React.Fragment key={permission}>
+                    <div className='dashboard2'>
+                      {permission === "All Vendors" && (
+                        <Link to="/vendors" className="sidebar-link">
+                          <div className="dashboard1">
+                            <img src={img2} alt="" />
+                            <p>Total Vendors</p>
+                            {loading ? <p>Loading...</p> : <h6>{totalVendors}</h6>}
+                          </div>
+                        </Link>
+                      )}
+
+                      {permission === "All Users" && (
+                        <Link to="/users" className="sidebar-link">
+                          <div className="dashboard1">
+                            <img src={img} alt="" />
+                            <p>Total Users</p>
+                            {loading ? <p>Loading...</p> : <h6>{totalRiders}</h6>}
+                          </div>
+                        </Link>
+                      )}
+
+                      {permission === "All Drivers" && (
+                        <Link to="/drivers" className="sidebar-link">
+                          <div className="dashboard1">
+                            <img src={img1} alt="" />
+                            <p>Total Drivers</p>
+                            {loading ? <p>Loading...</p> : <h6>{totalDrivers}</h6>}
+                          </div>
+                        </Link>
+                      )}
+
+                      {permission === "All Earnings" && (
+                        <Link to="/allearning" className="sidebar-link">
+                          <div className="dashboard1">
+                            <img src={img3} alt="" />
+                            <p>Total Earnings</p>
+                            {loading ? <p>Loading...</p> : <h6>{totalEarnings}</h6>}
+                          </div>
+                        </Link>
+                      )}
+
+                      {permission === "Subscription Booking" && (
+                        <Link to="/cancelled_booking" className="sidebar-link">
+                          <div className="dashboard1">
+                            <img src={img1} alt="" />
+                            <p>Total Cancelled Rides</p>
+                            {loading ? <p>Loading...</p> : <h6>{totalcancel}</h6>}
+                          </div>
+                        </Link>
+                      )}
+
+                      {permission === "All Bookings" && (
+                        <Link to="/allbookings" className="sidebar-link">
+                          <div className="dashboard1">
+                            <img src={img1} alt="" />
+                            <p>Total Bookings</p>
+                            {loading ? <p>Loading...</p> : <h6>{totalbookings}</h6>}
+                          </div>
+                        </Link>
+                      )}
+
+
+
+                    </div>
+                    {permission === "All Earnings" && (
+                      <div className='dashboard4'>
+                        <h6>Latest Transactions</h6>
+                        <div className='dashboard3'>
+                          <table>
+                            <thead>
+                              <tr>
+                                <th>Transaction No.</th>
+                                <th>Transfer From</th>
+                                <th>From Account</th>
+                                <th>Payment Method</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Partner’s Earning</th>
+                                <th>Admin’s Earning</th>
+                                <th>My Earning</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {bookingtransaction.map(transaction => (
+                                <tr key={transaction.id}>
+                                  <td>{transaction.id}</td>
+                                  <td>{transaction?.user?.name}</td>
+                                  <td>{transaction.driverId.name}</td>
+                                  <td>{transaction.paymentMode}</td>
+                                  <td>{formatDate(transaction.updatedAt)}</td>
+                                  <td>{formatTime(transaction.updatedAt)}</td>
+                                  <td>{transaction.driverAmount}</td>
+                                  <td>{transaction.adminAmount}</td>
+                                  <td> <div className='dashboard5'>+{transaction.amount}</div>
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+
+            )}
+
+
+
+
           </div>
         </div>
-      </div>
+      </div >
     </>
   )
 }

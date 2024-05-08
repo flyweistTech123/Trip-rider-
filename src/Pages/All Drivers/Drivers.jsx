@@ -153,17 +153,19 @@ const Drivers = () => {
                                             filteredDriverData?.map(driver => (
                                                 <tr key={driver.id}>
                                                     <td>
-                                                        <img src={driver?.profilePicture || img2} alt="No image" style={{ width: '60px', height:"60px",  borderRadius: "100%" }} />
+                                                        <img src={driver?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
                                                     </td>
                                                     <td>{driver?.name}</td>
                                                     <td>{driver?.email}</td>
                                                     <td>{driver?.mobileNumber}</td>
                                                     <td>{driver?.totalBooking}</td>
                                                     <td style={{
-                                                        color: driver?.status === 'cancel' ? '#F52D56' :
-                                                            driver?.status === 'pending' ? '#FBAC2C' :
-                                                                driver?.status === 'complete' ? '#609527' : 'black',
-                                                        fontWeight: '600'
+                                                        color:
+                                                            driver?.status === 'reject' ? '#F52D56' :
+                                                                driver?.status === 'pending' ? '#FBAC2C' :
+                                                                    driver?.status === 'hold' ? '#357ABD' :
+                                                                        driver?.status === 'approved' ? '#609527' :
+                                                                            '#000'
                                                     }}>
                                                         {driver?.status}
                                                     </td>
@@ -192,17 +194,19 @@ const Drivers = () => {
                                             driverData?.map(driver => (
                                                 <tr key={driver.id}>
                                                     <td>
-                                                        <img src={driver?.profilePicture || img2} alt="No image" style={{ width: '60px', height:"60px",  borderRadius: "100%" }} />
+                                                        <img src={driver?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
                                                     </td>
                                                     <td>{driver?.name}</td>
                                                     <td>{driver?.email}</td>
                                                     <td>{driver?.mobileNumber}</td>
                                                     <td>{driver?.totalBooking}</td>
                                                     <td style={{
-                                                        color: driver?.status === 'cancel' ? '#F52D56' :
-                                                            driver?.status === 'pending' ? '#FBAC2C' :
-                                                                driver?.status === 'complete' ? '#609527' : 'black',
-                                                        fontWeight: '600'
+                                                        color:
+                                                            driver?.status === 'reject' ? '#F52D56' :
+                                                                driver?.status === 'pending' ? '#FBAC2C' :
+                                                                    driver?.status === 'hold' ? '#357ABD' :
+                                                                        driver?.status === 'approved' ? '#609527' :
+                                                                            '#000'
                                                     }}>
                                                         {driver?.status}
                                                     </td>

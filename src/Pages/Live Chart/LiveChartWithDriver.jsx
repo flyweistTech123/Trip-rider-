@@ -54,9 +54,22 @@ const LiveChartWithDriver = () => {
     }, []);
 
 
+    // useEffect(() => {
+    //     const totalNewMsg = messages.filter(msg => !msg.read).length;
+    //     setTotalNewMessages(totalNewMsg);
+    // }, [messages]);
+
+
     useEffect(() => {
         const totalNewMsg = messages.filter(msg => !msg.read).length;
         setTotalNewMessages(totalNewMsg);
+        const sortedDrivers = [...drivers].sort((a, b) => {
+            if (!a.lastMessageTime) return 1; // Put users with no messages at the bottom
+            if (!b.lastMessageTime) return -1;
+            return b.lastMessageTime - a.lastMessageTime; // Sort by descending order of message time
+        });
+
+        setDrivers(sortedDrivers);
     }, [messages]);
 
     const fetchAdminData = async () => {
@@ -99,8 +112,9 @@ const LiveChartWithDriver = () => {
                 const q = query(messagesRef, orderBy('timestamp', 'desc'), limit(1));
                 const querySnapshot = await getDocs(q);
                 const lastMessageDoc = querySnapshot.docs[0];
-                const lastMessage = lastMessageDoc ? lastMessageDoc.data().message : ''; // Get last message or empty string if no message
-                return { ...driver, lastMessage };
+                const lastMessage = lastMessageDoc ? lastMessageDoc.data().message : '';
+                const lastMessageTime = lastMessageDoc ? lastMessageDoc.data().timestamp : null;
+                return { ...driver, lastMessage, lastMessageTime };
             }));
 
             setDrivers(usersWithLastMessage);
@@ -150,7 +164,39 @@ const LiveChartWithDriver = () => {
     };
 
 
+    const formatTimestamp = (timestamp) => {
+        if (!timestamp) return ''; // Handle case where timestamp is null or undefined
 
+        // Convert Firestore Timestamp to Date object
+        const date = timestamp.toDate();
+
+        // Get current date
+        const currentDate = new Date();
+
+        // Calculate time difference in milliseconds
+        const timeDifference = currentDate - date;
+        const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+
+        if (timeDifference < oneDayInMilliseconds) {
+            // If message was sent today or yesterday, show time
+            return formatTime(date);
+        } else {
+            // Otherwise, show date
+            return formatDate(date);
+        }
+    };
+
+    const formatTime = (date) => {
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    };
+
+    const formatDate = (date) => {
+        // Format date as DD/MM/YYYY (adjust based on your locale)
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
 
 
 
@@ -213,12 +259,12 @@ const LiveChartWithDriver = () => {
                                                             <img src={driver?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
                                                         </div>
                                                         <div className='livechart9'>
-                                                            <h6>{driver.name}</h6>
-                                                            <p>{driver.lastMessage}<span>🔥</span></p>
+                                                            <h6>{driver?.name || "User"}</h6>
+                                                            <p>{driver?.lastMessage}</p>
                                                         </div>
                                                     </div>
                                                     <div className='livechart10'>
-                                                        <p>12m</p>
+                                                        <p>{formatTimestamp(driver?.lastMessageTime)}</p>
                                                     </div>
                                                 </div>
                                             ))
@@ -231,11 +277,10 @@ const LiveChartWithDriver = () => {
                                                         <div className='livechart9'>
                                                             <h6>{driver?.name || "User"}</h6>
                                                             <p>{driver?.lastMessage}</p>
-                                                            {console.log(driver?.name)}
                                                         </div>
                                                     </div>
                                                     <div className='livechart10'>
-                                                        <p>12m</p>
+                                                        <p>{formatTimestamp(driver?.lastMessageTime)}</p>
                                                     </div>
                                                 </div>
                                             ))
@@ -269,7 +314,7 @@ const LiveChartWithDriver = () => {
                                             <div className={`${message.type === 'driver' ? 'livechart19' : 'livechart24'}`} key={message.id}>
                                                 {message.type === 'driver' ? (
                                                     <div className='livechart20'>
-                                                        <img src={message.image} alt="" />
+                                                        {/* <img src={message.image} alt="" /> */}
                                                     </div>
                                                 ) : (
                                                     ""
@@ -279,7 +324,7 @@ const LiveChartWithDriver = () => {
                                                 </div>
                                                 {message.type === 'admin' ? (
                                                     <div className='livechart20'>
-                                                        <img src={message.image} alt="" />
+                                                        {/* <img src={message.image} alt="" /> */}
                                                     </div>
                                                 ) : (
                                                     ""

@@ -43,3 +43,20 @@ MOM of Trip Rider:
 -The live chart and Faizan said they finished their work. We should meet up to finish my part.
 - There is a spelling mistake in the base pricing section.
 - In the tax pricing section, change 'other charge' to 'GST'.
+
+
+07/05/24
+MOM Of trip Rider
+
+-> Display Total Earnings on Dashboard
+-> Create a New Page for Admin and Driver Earnings.
+-> Restrict Dashboard Access for Admins.
+-> Implement Notifications for SOS Updates.
+-> Admin should be able to download booking details in PDF format.
+-> Allow Admins to Change Driver Status
+-> Allow Super admin to Change admin Status
+->  Cancel Button Works for Subscription Bookings
+
+
+
+

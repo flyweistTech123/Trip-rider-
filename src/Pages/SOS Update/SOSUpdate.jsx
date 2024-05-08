@@ -18,6 +18,7 @@ import img2 from '../../Images/user.webp'
 const SOSUpdate = () => {
     const [sosdata, setSosData] = useState([]);
     const [modalShow, setModalShow] = React.useState(false);
+    const [modalShow1, setModalShow1] = React.useState(false);
     const [sosId, setSOSId] = useState('')
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
@@ -130,6 +131,28 @@ const SOSUpdate = () => {
         );
     }
 
+    function SosModal(props) {
+
+
+        return (
+            <Modal
+                {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton className='adminprofileupdate'>
+                    <Modal.Title id="contained-modal-title-vcenter">SOS Update</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div>
+
+                    </div>
+                </Modal.Body>
+            </Modal>
+        );
+    }
+
 
 
 
@@ -138,6 +161,10 @@ const SOSUpdate = () => {
             <SosStatusModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
+            />
+            <SosModal
+                show={modalShow1}
+                onHide={() => setModalShow1(false)}
             />
             <div className='rider'>
                 <div className='rider1'>

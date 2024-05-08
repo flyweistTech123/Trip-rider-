@@ -74,11 +74,11 @@ const AllAdmin = () => {
                                     <th>SR.No.</th>
                                     <th>Profile Image</th>
                                     <th>Name</th>
-                                    <th>Company Key</th>
                                     <th>Email</th>
                                     <th>Phone No.</th>
                                     <th>Role</th>
                                     <th>Status</th>
+                                    <th>Permissions</th>
                                     <th>Action Buttons</th>
                                 </tr>
                             </thead>
@@ -102,11 +102,17 @@ const AllAdmin = () => {
                                                         <img src={admin?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
                                                     </td>
                                                     <td>{admin.name}</td>
-                                                    <td>--</td>
                                                     <td>{admin.email}</td>
                                                     <td>{admin.mobileNumber}</td>
                                                     <td>{admin.role}</td>
                                                     <td>{admin.status}</td>
+                                                    <td>
+                                                        <ul>
+                                                            {admin.permissions.map((permission, permIndex) => (
+                                                                <li key={permIndex}>{permission}</li>
+                                                            ))}
+                                                        </ul>
+                                                    </td>
                                                     <td>
                                                         <div className='service11'>
                                                             <div className='rider10'>
@@ -122,30 +128,40 @@ const AllAdmin = () => {
                                             ))
                                             :
                                             adminData.map((admin, index) => (
-                                                <tr key={admin.id}>
+                                                <tr key={admin._id}>
                                                     <td>{index + 1}</td>
                                                     <td>
-                                                        <img src={admin?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
+                                                        <img
+                                                            src={admin?.profilePicture || img2}
+                                                            alt="No image"
+                                                            style={{ width: '60px', height: '60px', borderRadius: '100%' }}
+                                                        />
                                                     </td>
                                                     <td>{admin.name}</td>
-                                                    <td>--</td>
                                                     <td>{admin.email}</td>
                                                     <td>{admin.mobileNumber}</td>
                                                     <td>{admin.role}</td>
                                                     <td>{admin.status}</td>
                                                     <td>
+                                                        <ul>
+                                                            {admin.permissions.map((permission, permIndex) => (
+                                                                <li key={permIndex}>{permission}</li>
+                                                            ))}
+                                                        </ul>
+                                                    </td>
+                                                    <td>
                                                         <div className='service11'>
                                                             <div className='rider10'>
-                                                                <Link to={`/adminprofile`} className='sidebar-link' >
+                                                                <Link to={`/admindetails/${admin._id}`} className='sidebar-link'>
                                                                     <MdEdit color='#667085' size={20} />
                                                                     <p>Edit</p>
                                                                 </Link>
                                                             </div>
                                                         </div>
-
                                                     </td>
                                                 </tr>
                                             ))
+                                            
                                     )}
                             </tbody>
                         </table>

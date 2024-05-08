@@ -60,7 +60,7 @@ import SOSUpdate from './Pages/SOS Update/SOSUpdate';
 import SOSLocation from './Pages/SOS Update/SOSLocation';
 import Setting from './Pages/Setting/Setting';
 import AdminProfile from './Pages/Admin/AdminProfile';
-import AllAdmin from './Pages/Admin/AllAdmin';
+// import AllAdmin from './Pages/Admin/AllAdmin';
 import SettleBooking from './Pages/Subscription booking/SettleBooking.jsx';
 import SettleBookingDetails from './Pages/Subscription booking/SettleBookingDetails.jsx';
 import Notification from './Pages/Notification/Notification.jsx';
@@ -77,6 +77,8 @@ import AllBasepricing from './Pages/Pricing/base pricing/AllBasepricing.jsx';
 import UpdateSuperCarPricing from './Pages/Pricing/Super Car Pricing/UpdateSuperCarPricing.jsx';
 import BookingDetails from './Pages/All Bookings/BookingDetails.jsx';
 import LiveChartWithDriver from './Pages/Live Chart/LiveChartWithDriver.jsx';
+import AdminDetails from './Pages/Admin/AdminDetails.jsx';
+import AdminEarning from './Pages/AdminEarning/AdminEarning.jsx';
 
 
 
@@ -88,7 +90,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Register />} />
           <Route path="/dashboard" element={<AdminRouteProtect> <Dashboard /> </AdminRouteProtect>} />
-          <Route path="/riders" element={<AdminRouteProtect> <Riders /> </AdminRouteProtect>} />
+          <Route path="/users" element={<AdminRouteProtect> <Riders /> </AdminRouteProtect>} />
           <Route path="/drivers" element={<AdminRouteProtect> <Drivers /> </AdminRouteProtect>} />
           <Route path="/vendors" element={<AdminRouteProtect> <Vendors /> </AdminRouteProtect>} />
           <Route path="/riders_details/:id" element={<AdminRouteProtect> <Riders_details /> </AdminRouteProtect>} />
@@ -149,7 +151,7 @@ function App() {
           <Route path="/soslocation/:id" element={<AdminRouteProtect> <SOSLocation /> </AdminRouteProtect>} />
           <Route path="/setting" element={<AdminRouteProtect> <Setting /> </AdminRouteProtect>} />
           <Route path="/adminprofile" element={<AdminRouteProtect> <AdminProfile /> </AdminRouteProtect>} />
-          <Route path="/alladmin" element={<AdminRouteProtect> <AllAdmin /> </AdminRouteProtect>} />
+          {/* <Route path="/alladmin" element={<AdminRouteProtect> <AllAdmin /> </AdminRouteProtect>} /> */}
           <Route path="/settlebooking" element={<AdminRouteProtect> <SettleBooking /> </AdminRouteProtect>} />
           <Route path="/settlebookingdetails/:id" element={<AdminRouteProtect> <SettleBookingDetails /> </AdminRouteProtect>} />
           <Route path="/notification" element={<AdminRouteProtect> <Notification /> </AdminRouteProtect>} />
@@ -161,6 +163,8 @@ function App() {
           <Route path="/updatesupercarpricing/:id" element={<AdminRouteProtect> <UpdateSuperCarPricing /> </AdminRouteProtect>} />
           <Route path="/bookingdetails/:id" element={<AdminRouteProtect> <BookingDetails /> </AdminRouteProtect>} />
           <Route path="/liveChartWithDriver" element={<AdminRouteProtect> <LiveChartWithDriver /> </AdminRouteProtect>} />
+          <Route path="/admindetails/:id" element={<AdminRouteProtect> <AdminDetails /> </AdminRouteProtect>} />
+          <Route path="/allearning" element={<AdminRouteProtect> <AdminEarning /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>

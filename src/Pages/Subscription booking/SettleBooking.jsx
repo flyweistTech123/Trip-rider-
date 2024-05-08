@@ -19,6 +19,7 @@ import img2 from '../../Images/user.webp'
 const SettleBooking = () => {
     const [settledata, setSettleData] = useState([]);
     const [modalShow, setModalShow] = React.useState(false);
+    const [modalShow1, setModalShow1] = React.useState(false);
     const [bookingId, setBookingId] = useState('')
     const [assignedDrivers, setAssignedDrivers] = useState({});
     const [searchQuery, setSearchQuery] = useState('');
@@ -149,6 +150,47 @@ const SettleBooking = () => {
     }
 
 
+    function CancelBookingModal(props) {
+
+        const CancelBooking = async (e) => {
+            e.preventDefault();
+            try {
+                await axios.put(
+                    `${BaseUrl}api/v1/cancelSettleBooking/${bookingId}`,getAuthHeaders() 
+                );
+                props.onHide();
+                fetchSettleData();
+                toast.success("The Booking Canceled successfully");
+            } catch (error) {
+                toast.error("Error to cancel the Booking");
+            }
+        };
+        return (
+            <Modal
+                {...props}
+                size="sl"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton className='adminprofileupdate'>
+                    <Modal.Title id="contained-modal-title-vcenter">Cancel Booking</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className='CancelBookingModal1'>
+                        <h6>Are you sure you want to cancel this booking?</h6>
+
+                        <div className='CancelBookingModal2'>
+                            <button onClick={CancelBooking}>Yes</button>
+                            <button onClick={()=>setModalShow1(false)}>NO</button>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
+        );
+    }
+
+
+
 
 
     return (
@@ -156,6 +198,10 @@ const SettleBooking = () => {
             <AssignDriverModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
+            />
+            <CancelBookingModal
+                show={modalShow1}
+                onHide={() => setModalShow1(false)}
             />
             <div className='rider'>
                 <div className='rider1'>
@@ -231,8 +277,11 @@ const SettleBooking = () => {
                                                                 <FaCheck color='#000000' size={20} />
                                                                 <p>Aprove</p>
                                                             </div>
-                                                            <div className='rider10'>
-                                                                <RxCross2 color='#000000' size={20} />
+                                                            <div className='rider10' >
+                                                                <RxCross2 color='#000000' size={20} onClick={() => {
+                                                                    setBookingId(settle?._id);
+                                                                    setModalShow1(true);
+                                                                }} />
                                                                 <p>Cancel</p>
                                                             </div>
                                                             <div className='rider10'>
@@ -249,7 +298,7 @@ const SettleBooking = () => {
                                             : settledata.map(settle => (
                                                 <tr key={settle.id}>
                                                     <td>
-                                                        <img src={settle?.user?.profilePicture || img2} alt="No image" style={{ width: '60px', height:"60px", borderRadius: "100%" }} />
+                                                        <img src={settle?.user?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
                                                     </td>
                                                     <td>{settle?.user?.name}</td>
                                                     <td>{settle?.bookingId}</td>
@@ -275,7 +324,10 @@ const SettleBooking = () => {
                                                                 <p>Aprove</p>
                                                             </div>
                                                             <div className='rider10'>
-                                                                <RxCross2 color='#000000' size={20} />
+                                                                <RxCross2 color='#000000' size={20} onClick={() => {
+                                                                    setBookingId(settle?._id);
+                                                                    setModalShow1(true);
+                                                                }}/>
                                                                 <p>Cancel</p>
                                                             </div>
                                                             <div className='rider10'>

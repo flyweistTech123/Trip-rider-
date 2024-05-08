@@ -44,9 +44,12 @@ const AllBookings = () => {
         setSearchQuery(event.target.value);
     };
 
-    const filteredBookingData = bookingData.filter(booking =>
-        booking?.userId?.name && booking?.userId?.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredBookingData = bookingData.filter(booking => {
+        const userNameMatches = booking?.userId?.name && booking?.userId?.name.toLowerCase().includes(searchQuery.toLowerCase());
+        const driverNameMatches = booking?.driver?.name && booking?.driver?.name.toLowerCase().includes(searchQuery.toLowerCase());
+
+        return userNameMatches || driverNameMatches;
+    });
 
     return (
         <>
@@ -76,7 +79,8 @@ const AllBookings = () => {
                                 <tr>
                                     <th>Booking ID</th>
                                     <th>Date</th>
-                                    <th>Booking by</th>
+                                    <th>Booking by user</th>
+                                    <th>Booking by Driver</th>
                                     <th>Location</th>
                                     <th>Timing</th>
                                     <th>Distance</th>
@@ -104,7 +108,10 @@ const AllBookings = () => {
                                                     <td className='rider8'>{booking.bookingId}</td>
                                                     <td>{booking?.date}</td>
                                                     <td>{booking?.userId?.name}</td>
-                                                    <td>{booking?.current?.address}</td>
+                                                    <td>{booking?.driver?.name}</td>
+                                                    <div style={{ width: '20px' }}>
+                                                        {booking?.current?.address}
+                                                    </div>
                                                     <td>{booking?.time}</td>
                                                     <td>{booking?.distance} Km</td>
                                                     <td>₹ {booking?.totalPrice}</td>
@@ -117,6 +124,16 @@ const AllBookings = () => {
                                                     }}>
                                                         {booking?.status}
                                                     </td>
+                                                    <td>
+                                                        <div className='rider9'>
+                                                            <div className='rider10'>
+                                                                <Link to={`/bookingdetails/${booking._id}`} className='sidebar-link' >
+                                                                    <IoEyeOutline color='#667085' size={20} />
+                                                                    <p>View</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             ))
                                             :
@@ -125,7 +142,12 @@ const AllBookings = () => {
                                                     <td>{booking.bookingId}</td>
                                                     <td>{booking?.date}</td>
                                                     <td>{booking?.userId?.name}</td>
-                                                    <td>{booking?.current?.address}</td>
+                                                    <td>{booking?.driver?.name}</td>
+                                                    <td>
+                                                        <div className='allbookinglocation1'>
+                                                            {booking?.current?.address}
+                                                        </div>
+                                                    </td>
                                                     <td>{booking?.time}</td>
                                                     <td>{booking?.distance} Km</td>
                                                     <td>₹ {booking?.totalPrice}</td>

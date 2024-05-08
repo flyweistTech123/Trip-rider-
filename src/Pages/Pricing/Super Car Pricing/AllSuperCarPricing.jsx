@@ -98,6 +98,8 @@ const AllSuperCarPricing = () => {
                                     <th>kmPrice</th>
                                     <th>Hourly Limit</th>
                                     <th>Hourly Price</th>
+                                    <th>Price/KmGreater</th>
+                                    <th>Price/MinGreater</th>
                                     <th>Price</th>
                                     <th>Action Buttons</th>
                                 </tr>
@@ -127,6 +129,8 @@ const AllSuperCarPricing = () => {
                                                     <td>{supercarprice.kmPrice}</td>
                                                     <td>{supercarprice.hrLimit}</td>
                                                     <td>{supercarprice.hrPrice}</td>
+                                                    <td>{supercarprice.pricePerKmGreater}</td>
+                                                    <td>{supercarprice.pricePerMinGreater}</td>
                                                     <td style={{ color: '#F52D56' }}>₹ {supercarprice.price}</td>
                                                     <td>
                                                         <div className='service11'>
@@ -157,6 +161,8 @@ const AllSuperCarPricing = () => {
                                                     <td>{supercarprice.kmPrice}</td>
                                                     <td>{supercarprice.hrLimit}</td>
                                                     <td>{supercarprice.hrPrice}</td>
+                                                    <td>{supercarprice.pricePerKmGreater}</td>
+                                                    <td>{supercarprice.pricePerMinGreater}</td>
                                                     <td style={{ color: '#F52D56' }}>₹ {supercarprice.price}</td>
                                                     <td>
                                                         <div className='service11'>

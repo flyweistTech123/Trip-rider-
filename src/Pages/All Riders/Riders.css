@@ -216,9 +216,9 @@
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   font-size: 14px;
-  color: #2dc27d;
   line-height: 21px;
   margin: 0;
+  margin-top: 5px;
 }
 
 .rider_details5 {
@@ -414,6 +414,46 @@
   margin: 0;
 }
 
+.permission-count {
+  margin-right: 8px; /* Add margin to the right of the count */
+  font-weight: bold; /* Make the count text bold */
+  color: #667085; /* Set the color of the count text */
+}
+
+.no-permissions-message {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #000000;
+  line-height: 19.5px;
+  letter-spacing: 0.2px;
+  margin: 0;
+}
+/* CSS Styles for Permission List Items */
+.permission-item {
+  display: flex; 
+  align-items: center; 
+  gap: 20px;
+  margin-bottom: 8px; 
+}
+
+/* CSS Styles for Delete Icon */
+.delete-icon {
+  cursor: pointer; 
+  margin-left: 8px; 
+}
+
+.rider_details14 ul li {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #000000;
+  line-height: 19.5px;
+  letter-spacing: 0.2px;
+  margin: 0;
+  margin-top: 10px;
+}
+
 .input11 {
   width: 100%;
   padding-right: 20px;
@@ -437,6 +477,15 @@
   color: #000000;
   line-height: 20.4px;
   margin: 0;
+}
+
+.rider_details14 select{
+  width: 100%;
+  min-height: 36px;
+  height: auto;
+  border: 1px solid #dadada;
+  border-radius: 5px;
+  outline: none;
 }
 
 .rider_details15 {
