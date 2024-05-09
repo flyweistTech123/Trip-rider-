@@ -431,7 +431,7 @@ const AdminDetails = () => {
                                                 </div>
                                             </div>
                                             <div className='rider_details14'>
-                                                <label htmlFor="">Address</label>
+                                                <label htmlFor="">Permissions</label>
                                                 <select value={newPermission} onChange={(e) => setNewPermission(e.target.value)}>
                                                     <option value="">Select Permission</option>
                                                     {permissionsList.map((perm) => (
