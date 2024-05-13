@@ -243,6 +243,9 @@ const Driver_Details = () => {
                         <div className='rider3'>
                             <h6>Driver Details</h6>
                         </div>
+                        <div className='rider4'>
+                            <button onClick={() => navigate('/drivers')}>Back</button>
+                        </div>
                     </div>
                     {DriverData && (
                         <>
@@ -287,7 +290,7 @@ const Driver_Details = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className='rider_details99'>
+                                            <div className='rider_details99' onClick={()=>navigate(`/driver_bookings/${id}`)}>
                                                 <p>Total  Trips</p>
                                                 <p>{DriverData?.totalBooking}</p>
                                             </div>
@@ -685,7 +688,7 @@ const Driver_Details = () => {
                                     </div>
 
                                     <div className='rider_details19'>
-                                        <button onClick={() => navigate('/drivers')}>Close</button>
+                                        {/* <button onClick={() => navigate('/drivers')}>Close</button> */}
                                     </div>
                                 </div>
                             </div>

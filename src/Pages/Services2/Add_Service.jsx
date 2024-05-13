@@ -61,6 +61,10 @@ const Add_Service = () => {
                         <div className='rider3'>
                             <h6>Add Service</h6>
                         </div>
+                        <div className='rider4'>
+                            <button onClick={() => navigate('/services')}>Back</button>
+                            <button type='button' onClick={handlePostRequest}>Add Service</button>
+                        </div>
                     </div>
 
                     <div className='service'>
@@ -120,8 +124,8 @@ const Add_Service = () => {
                             </div>
                         </div>
                         <div className='service3'>
-                            <button onClick={() => navigate('/services')}>Cancel</button>
-                            <button type='button' onClick={handlePostRequest}>Add Service</button>
+                            {/* <button onClick={() => navigate('/services')}>Cancel</button>
+                            <button type='button' onClick={handlePostRequest}>Add Service</button> */}
                         </div>
 
                     </div>

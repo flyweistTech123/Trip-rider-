@@ -43,7 +43,7 @@ const UpdateTaxpricing = () => {
                 const { basePrice,
                     serviceCharge,
                     nightCharges,
-                    nightChargesTax, 
+                    nightChargesTax,
                     waitingCharge,
                     ParkingRate,
                     kmRate,
@@ -96,7 +96,7 @@ const UpdateTaxpricing = () => {
             plateFormChargesGst: plateFormChargesGst,
             otherCharge: otherCharge,
             surgeCharges: surgeCharges,
-            surgeChargesTax:surgeChargesTax,
+            surgeChargesTax: surgeChargesTax,
             tollCharge: tollCharge,
             ridetimeCharges: ridetimeCharges,
             cancellationCharges: cancellationCharges,
@@ -124,12 +124,7 @@ const UpdateTaxpricing = () => {
                         </div>
 
                         <div className='rider4'>
-                            {/* <div className='rider5'>
-                                <div className='rider6'>
-                                    <IoSearch />
-                                </div>
-                                <input type="search" name="" id="" placeholder='Search User' />
-                            </div> */}
+                            <button onClick={() => navigate('/taxpricing')}>Back</button>
                         </div>
                     </div>
 
@@ -182,7 +177,7 @@ const UpdateTaxpricing = () => {
                             </div>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Surge Charges Tax</label>
-                                <input type="number" placeholder='Enter surge Charges tax' value={surgeChargesTax} onChange={(e) =>setSurgeChargesTax(e.target.value)} />
+                                <input type="number" placeholder='Enter surge Charges tax' value={surgeChargesTax} onChange={(e) => setSurgeChargesTax(e.target.value)} />
                             </div>
                         </div>
                         <div className='dailyprice3'>

@@ -80,7 +80,10 @@ const Vendors_Details = () => {
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>Driver Details</h6>
+                            <h6>Vendor Details</h6>
+                        </div>
+                        <div className='rider4'>
+                            <button onClick={() => navigate('/vendors')}>Back</button>
                         </div>
                     </div>
                     {vendorData && (
@@ -92,9 +95,9 @@ const Vendors_Details = () => {
                                             <img src={img} alt="" />
                                             <div className='rider_details4'>
                                                 <h6>{vendorData.name}<div className='rider_details5'>
-                                                    <p>Host</p>
+                                                    <p>{vendorData.role}</p>
                                                 </div></h6>
-                                                <p>Completed  Profile</p>
+                                                {/* <p>Completed  Profile</p> */}
                                             </div>
                                             <div className='rider_details6'>
                                                 <div className='rider_details7' onClick={handleDeleteVendor}>
@@ -114,15 +117,15 @@ const Vendors_Details = () => {
                                                 <div className='rider_details10'>
                                                     <img src={img1} alt="" />
                                                     <p>{vendorData.wallet}</p>
-                                                    <div className='rider_details11'>
+                                                    {/* <div className='rider_details11'>
                                                         <p>Expires</p>
                                                         <p>09/21</p>
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                             </div>
-                                            <div className='rider_details99'>
+                                            <div className='rider_details99' onClick={()=>navigate(`/vendor_bookings/${id}`)}>
                                                 <p>Total  Trips</p>
-                                                <p>36</p>
+                                                <p>{vendorData?.totalBooking}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -191,10 +194,7 @@ const Vendors_Details = () => {
 
                                     </div> */}
 
-                                    <div className='rider_details19'>
-                                        {/* <button>Cancel</button> */}
-                                        <button onClick={() => navigate('/vendors')}>Close</button>
-                                    </div>
+                                
                                 </div>
                             </div>
                         </>

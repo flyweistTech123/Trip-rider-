@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './Riders.css'
+import './Users.css'
 import HOC from '../../Components/HOC/HOC'
 import { Link } from 'react-router-dom';
 
@@ -18,7 +18,7 @@ import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 import img2 from '../../Images/user.webp'
 
 
-const Riders = () => {
+const Users = () => {
 
     const [riderData, setRiderData] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -202,7 +202,7 @@ const Riders = () => {
                                                                 <p style={{ color: rider.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
                                                             </div>
                                                             <div className='rider10'>
-                                                                <Link to={`/riders_details/${rider._id}`} className='sidebar-link' >
+                                                                <Link to={`/user_details/${rider._id}`} className='sidebar-link' >
                                                                     <IoEyeOutline color='#667085' size={20} />
                                                                     <p>View</p>
                                                                 </Link>
@@ -222,4 +222,4 @@ const Riders = () => {
     )
 }
 
-export default HOC(Riders)
+export default HOC(Users)

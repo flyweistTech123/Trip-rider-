@@ -341,6 +341,10 @@ const AdminDetails = () => {
                         <div className='rider3'>
                             <h6>Admin's Details</h6>
                         </div>
+                        <div className='rider4'>
+                            <button onClick={() => navigate('/privileges')}>Back</button>
+                            <button onClick={handlePermissionAdd}>Save Changes</button>
+                        </div>
                     </div>
                     {adminData && (
                         <>
@@ -472,8 +476,8 @@ const AdminDetails = () => {
                                     </div>
 
                                     <div className='promo1'>
-                                        <button onClick={() => navigate('/privileges')}>Close</button>
-                                        <button onClick={handlePermissionAdd}>Save Changes</button>
+                                        {/* <button onClick={() => navigate('/privileges')}>Close</button>
+                                        <button onClick={handlePermissionAdd}>Save Changes</button> */}
                                     </div>
                                 </div>
                             </div>

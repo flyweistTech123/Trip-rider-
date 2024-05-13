@@ -108,7 +108,7 @@ const Privileges = () => {
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>All Admin</h6>
+                            <h6>All Admins</h6>
                         </div>
 
                         <div className='rider4'>

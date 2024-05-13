@@ -34,7 +34,7 @@ import img20 from '../../Images/img49.png'
 const Sidebar = ({ admindata }) => {
 
     const sidebarItems = [
-        { icon: img1, text: 'Dashboard', link: '/dashboard' },
+        // { icon: img1, text: 'Dashboard', link: '/dashboard' },
         { icon: img2, text: 'All Users', link: '/users' },
         { icon: img3, text: 'All Drivers', link: '/drivers' },
         { icon: img20, text: 'All Drivers Earnings', link: '/earnings' },

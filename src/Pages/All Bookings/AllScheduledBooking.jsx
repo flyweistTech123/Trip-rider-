@@ -3,6 +3,8 @@ import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import './AllBookings.css'
 import HOC from '../../Components/HOC/HOC'
+import { useNavigate } from 'react-router-dom';
+
 
 import { IoSearch } from "react-icons/io5";
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
@@ -44,6 +46,9 @@ const AllScheduledBooking = () => {
         booking?.userId?.name && booking?.userId?.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+    const navigate = useNavigate();
+
+
 
 
     return (
@@ -56,6 +61,7 @@ const AllScheduledBooking = () => {
                         </div>
 
                         <div className='rider4'>
+                            <button onClick={() => navigate('/settlebooking')}>Back</button>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
@@ -98,7 +104,7 @@ const AllScheduledBooking = () => {
                                             ?
                                             filteredBookingData.map(booking => (
                                                 <tr key={booking.id}>
-                                                    <td className='rider8'>{booking.Id}</td>
+                                                    <td>{booking.bookingId}</td>
                                                     <td>{booking?.date}</td>
                                                     <td>{booking?.userId?.name}</td>
                                                     <td>{booking?.current?.address}</td>
@@ -119,7 +125,7 @@ const AllScheduledBooking = () => {
                                             :
                                             bookingData.map(booking => (
                                                 <tr key={booking.id}>
-                                                    <td className='rider8'>{booking.Id}</td>
+                                                    <td>{booking.bookingId}</td>
                                                     <td>{booking?.date}</td>
                                                     <td>{booking?.userId?.name}</td>
                                                     <td>{booking?.current?.address}</td>

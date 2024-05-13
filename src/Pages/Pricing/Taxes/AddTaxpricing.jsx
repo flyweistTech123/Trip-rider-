@@ -123,7 +123,7 @@ const AddTaxpricing = () => {
                                 </div>
                                 <div className='dailyprice3'>
                                     <div className='dailyprice4'>
-                                        <label htmlFor="">Surge Charges  (Morning (8am to 10am),evening (5pm to 7pm) )</label>
+                                        <label htmlFor="">Surge Charges</label>
                                         {/* <input type="number" placeholder='Enter surge Charges' value={taxprice.surgeCharges} /> */}
                                         <div className='taxprice'>
                                             <h6>{taxprice.surgeCharges}</h6>

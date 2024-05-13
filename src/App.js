@@ -1,11 +1,11 @@
 import Drivers from './Pages/All Drivers/Drivers';
-import Riders from './Pages/All Riders/Riders';
+import Users from './Pages/All Users/Users';
 import Vendors from './Pages/All Vendors/Vendors';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import Login from './Pages/Login/Login';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminRouteProtect from '../src/Pages/Login/AdminRouteprotected';
-import Riders_details from './Pages/All Riders/Riders_details';
+import Users_details from './Pages/All Users/Users_details.jsx';
 import Driver_Details from './Pages/All Drivers/Driver_Details';
 import Vendors_Details from './Pages/All Vendors/Vendors_Details';
 import CarDetails from './Pages/Services/CarDetails';
@@ -79,6 +79,9 @@ import BookingDetails from './Pages/All Bookings/BookingDetails.jsx';
 import LiveChartWithDriver from './Pages/Live Chart/LiveChartWithDriver.jsx';
 import AdminDetails from './Pages/Admin/AdminDetails.jsx';
 import AdminEarning from './Pages/AdminEarning/AdminEarning.jsx';
+import User_Bookings from './Pages/All Users/User_Bookings.jsx';
+import Driver_Bookings from './Pages/All Drivers/Driver_Bookings.jsx';
+import Vendor_bookings from './Pages/All Vendors/Vendor_bookings.jsx';
 
 
 
@@ -90,10 +93,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Register />} />
           <Route path="/dashboard" element={<AdminRouteProtect> <Dashboard /> </AdminRouteProtect>} />
-          <Route path="/users" element={<AdminRouteProtect> <Riders /> </AdminRouteProtect>} />
+          <Route path="/users" element={<AdminRouteProtect> <Users /> </AdminRouteProtect>} />
           <Route path="/drivers" element={<AdminRouteProtect> <Drivers /> </AdminRouteProtect>} />
           <Route path="/vendors" element={<AdminRouteProtect> <Vendors /> </AdminRouteProtect>} />
-          <Route path="/riders_details/:id" element={<AdminRouteProtect> <Riders_details /> </AdminRouteProtect>} />
+          <Route path="/user_details/:id" element={<AdminRouteProtect> <Users_details /> </AdminRouteProtect>} />
           <Route path="/driver_details/:id" element={<AdminRouteProtect> <Driver_Details /> </AdminRouteProtect>} />
           <Route path="/vendors_details/:id" element={<AdminRouteProtect> <Vendors_Details /> </AdminRouteProtect>} />
           <Route path="/services" element={<AdminRouteProtect> <Services2 /> </AdminRouteProtect>} />
@@ -165,6 +168,9 @@ function App() {
           <Route path="/liveChartWithDriver" element={<AdminRouteProtect> <LiveChartWithDriver /> </AdminRouteProtect>} />
           <Route path="/admindetails/:id" element={<AdminRouteProtect> <AdminDetails /> </AdminRouteProtect>} />
           <Route path="/allearning" element={<AdminRouteProtect> <AdminEarning /> </AdminRouteProtect>} />
+          <Route path="/user_bookings/:id" element={<AdminRouteProtect> <User_Bookings /> </AdminRouteProtect>} />
+          <Route path="/driver_bookings/:id" element={<AdminRouteProtect> <Driver_Bookings /> </AdminRouteProtect>} />
+          <Route path="/vendor_bookings/:id" element={<AdminRouteProtect> <Vendor_bookings /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>

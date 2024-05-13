@@ -91,7 +91,7 @@ const SettleBookingDetails = () => {
                                 <div className='settledriver1'>
                                     <h6>Map View</h6>
                                     <button onClick={printForm}>Print</button>
-                                    <button onClick={() => navigate('/allbookings')}>Back</button>
+                                    <button onClick={() => navigate('/settlebooking')}>Back</button>
                                 </div>
                                 <div className='settledriver2'>
                                     <MapComponentone pickupLatitude={bookingdata.current.latitude} pickupLongitude={bookingdata.current.longitude} dropLatitude={bookingdata.drop.latitude} dropLongitude={bookingdata.drop.longitude} />

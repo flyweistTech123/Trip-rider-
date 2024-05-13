@@ -128,6 +128,7 @@ const Vendors = () => {
                                     <th>Phone No.</th>
                                     <th>Total Earnings</th>
                                     <th>Total Vehicles</th>
+                                    <th>Total Trips</th>
                                     <th>Action Buttons</th>
                                 </tr>
                             </thead>
@@ -154,6 +155,7 @@ const Vendors = () => {
                                                     <td>{vendor.mobileNumber}</td>
                                                     <td style={{ color: '#F52D56' }}>₹ {vendor.wallet}</td>
                                                     <td>{vendor.noOfVehicle}</td>
+                                                    <td>{vendor.totalBooking}</td>
                                                     <td>
                                                         <div className='rider9'>
                                                             <div className='rider10' onClick={() => deleteVendor(vendor._id)}>
@@ -184,6 +186,7 @@ const Vendors = () => {
                                                     <td>{vendor.mobileNumber}</td>
                                                     <td style={{ color: '#F52D56' }}>₹ {vendor.wallet}</td>
                                                     <td>{vendor.noOfVehicle}</td>
+                                                    <td>{vendor.totalBooking}</td>
                                                     <td>
                                                         <div className='rider9'>
                                                             <div className='rider10' onClick={() => deleteVendor(vendor._id)}>

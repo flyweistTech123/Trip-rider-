@@ -7,6 +7,7 @@ import HOC from '../../Components/HOC/HOC';
 import { useNavigate, useParams } from 'react-router-dom';
 import img3 from '../../Images/img43.png';
 import axios from 'axios';
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 const Update_Service = () => {
     const navigate = useNavigate();
@@ -23,7 +24,7 @@ const Update_Service = () => {
         // Fetch service details by ID and populate the form
         const fetchServiceDetails = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/serviceCategory/${id}`);
+                const response = await axios.get(`${BaseUrl}api/v1/serviceCategory/${id}`, getAuthHeaders());
                 const { category, type, description, banner, image } = response.data.data; // Assuming API response has these fields
                 setCategory(category);
                 setType(type);
@@ -46,7 +47,7 @@ const Update_Service = () => {
         formData.append('description', description);
 
         try {
-            const response = await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/serviceCategory/${id}`, formData);
+            const response = await axios.put(`${BaseUrl}api/v1/serviceCategory/${id}`, getAuthHeaders(), formData);
             toast.success("Service Updated successfully");
             navigate('/services')
         } catch (error) {
@@ -70,6 +71,10 @@ const Update_Service = () => {
                     <div className='rider2'>
                         <div className='rider3'>
                             <h6>Update Service</h6>
+                        </div>
+                        <div className='rider4'>
+                            <button onClick={() => navigate('/services')}>Back</button>
+                            <button type='button' onClick={handlePostRequest}>Update Service</button>
                         </div>
                     </div>
 
@@ -129,8 +134,8 @@ const Update_Service = () => {
                             </div>
                         </div>
                         <div className='service3'>
-                            <button onClick={() => navigate('/services')}>Cancel</button>
-                            <button type='button' onClick={handlePostRequest}>Update Service</button>
+                            {/* <button onClick={() => navigate('/services')}>Cancel</button>
+                            <button type='button' onClick={handlePostRequest}>Update Service</button> */}
                         </div>
 
                     </div>

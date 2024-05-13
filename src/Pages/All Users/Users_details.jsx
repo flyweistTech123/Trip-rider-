@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './Riders.css'
+import './Users.css'
 import HOC from '../../Components/HOC/HOC'
-import { useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import img2 from '../../Images/user.webp'
 import img1 from '../../Images/img28.png'
 import { MdOutlineBlock } from "react-icons/md";
@@ -13,11 +13,10 @@ import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 
-import { useNavigate } from 'react-router-dom';
 
 
 
-const Riders_details = () => {
+const Users_details = () => {
     const formatDate = (dateString) => {
         const date = new Date(dateString);
 
@@ -90,6 +89,9 @@ const Riders_details = () => {
                         <div className='rider3'>
                             <h6>User’s Details</h6>
                         </div>
+                        <div className='rider4'>
+                            <button onClick={() => navigate('/users')}>Back</button>
+                        </div>
                     </div>
                     {RiderData && (
                         <>
@@ -122,13 +124,9 @@ const Riders_details = () => {
                                                 <div className='rider_details10'>
                                                     <img src={img1} alt="" />
                                                     <p>{RiderData.wallet}</p>
-                                                    {/* <div className='rider_details11'>
-                                                        <p>Expires</p>
-                                                        <p>09/21</p>
-                                                    </div> */}
                                                 </div>
                                             </div>
-                                            <div className='rider_details99'>
+                                            <div className='rider_details99' onClick={()=>navigate(`/user_bookings/${id}`)}>
                                                 <p>Total  Trips</p>
                                                 <p>{RiderData.totalBooking}</p>
                                             </div>
@@ -170,9 +168,9 @@ const Riders_details = () => {
                                         </div>
                                     </div>
 
-                                    <div className='rider_details19'>
+                                    {/* <div className='rider_details19'>
                                         <button onClick={() => navigate('/riders')}>Close</button>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </>
@@ -186,4 +184,4 @@ const Riders_details = () => {
     )
 }
 
-export default HOC(Riders_details)
+export default HOC(Users_details)

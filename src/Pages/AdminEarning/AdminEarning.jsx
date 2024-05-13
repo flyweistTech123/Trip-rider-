@@ -61,6 +61,13 @@ const AdminEarning = () => {
                         </div>
 
                         <div className='rider4'>
+                            <div className='adminearning'>
+                                <select name="" id="">
+                                    <option value="">superCar</option>
+                                    <option value="">vehicleAmbulance</option>
+                                    <option value="">vehicle</option>
+                                </select>
+                            </div>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
@@ -79,8 +86,9 @@ const AdminEarning = () => {
                                 <tr>
                                     <th>Transaction ID</th>
                                     <th>Booking ID</th>
-                                    <th>User Name</th>
-                                    <th>Driver Name</th>
+                                    <th>User</th>
+                                    <th>Driver</th>
+                                    <th>Service Type</th>
                                     <th>Amount</th>
                                     <th>Driver Amount</th>
                                     <th>Admin Amount</th>
@@ -122,6 +130,7 @@ const AdminEarning = () => {
                                                     <td>{transaction?.bookingId?.bookingId}</td>
                                                     <td>{transaction?.user?.name}</td>
                                                     <td>{transaction?.driverId?.name}</td>
+                                                    <td>{transaction?.bookingId?.serviceType}</td>
                                                     <td>₹{transaction?.amount}</td>
                                                     <td>₹{transaction?.driverAmount}</td>
                                                     <td>₹{transaction?.adminAmount}</td>
