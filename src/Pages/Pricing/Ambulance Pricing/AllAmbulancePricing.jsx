@@ -11,6 +11,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { MdEdit } from "react-icons/md";
 
 import { useNavigate } from 'react-router-dom';
+import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
 
 
 
@@ -30,7 +31,7 @@ const AllAmbulancePricing = () => {
     }, []);
 
     const fetchAmbulancepriceData = () => {
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/ambulanceVehicle')
+        axios.get(`${BaseUrl}api/v1/ambulanceVehicle`, getAuthHeaders())
             .then(response => {
                 setambulancepriceData(response.data.data);
             })
@@ -52,7 +53,7 @@ const AllAmbulancePricing = () => {
     );
 
     const deleteAmbulance = (ambulancepriceId) => {
-        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/ambulanceVehicle/${ambulancepriceId}`)
+        axios.delete(`${BaseUrl}api/v1/ambulanceVehicle/${ambulancepriceId}`, getAuthHeaders())
             .then(response => {
                 setambulancepriceData();
                 toast.success("Ambulance Price deleted successfully");
@@ -79,6 +80,7 @@ const AllAmbulancePricing = () => {
                         </div>
 
                         <div className='rider4'>
+                            <button onClick={() => navigate('/pricing')}>Back</button>
                             <button onClick={() => navigate('/addambulancepricing')}>Add Pricing</button>
                             <div className='rider5'>
                                 <div className='rider6'>
@@ -95,7 +97,7 @@ const AllAmbulancePricing = () => {
                                 <tr>
                                     <th>Ambulance Type</th>
                                     <th>Image</th>
-                                    <th>Price/Km</th>
+                                    <th>(₹)Price/Km</th>
                                     <th>Base Price</th>
                                     <th>Tax Rate</th>
                                     <th>GST Rate</th>
@@ -123,7 +125,7 @@ const AllAmbulancePricing = () => {
                                                 <tr key={ambulanceprice?.id}>
                                                     <td>{ambulanceprice?.name}</td>
                                                     <td className='vehicle12'><img src={ambulanceprice?.image} alt="" /></td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {ambulanceprice?.perKm}</td>
+                                                    <td style={{ color: '#F52D56' }}>{ambulanceprice?.perKm}</td>
                                                     <td>₹ {ambulanceprice?.basePrice}</td>
                                                     <td>{ambulanceprice?.taxRate}</td>
                                                     <td>{ambulanceprice?.gstRate}</td>
@@ -152,7 +154,7 @@ const AllAmbulancePricing = () => {
                                                 <tr key={ambulanceprice?.id}>
                                                     <td>{ambulanceprice?.name}</td>
                                                     <td className='vehicle12'><img src={ambulanceprice?.image} alt="" /></td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {ambulanceprice?.perKm}</td>
+                                                    <td style={{ color: '#F52D56' }}>{ambulanceprice?.perKm}</td>
                                                     <td>₹ {ambulanceprice?.basePrice}</td>
                                                     <td>{ambulanceprice?.taxRate}</td>
                                                     <td>{ambulanceprice?.gstRate}</td>

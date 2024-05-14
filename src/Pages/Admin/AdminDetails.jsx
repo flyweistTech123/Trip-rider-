@@ -22,7 +22,6 @@ const AdminDetails = () => {
 
 
     const permissionsList = [
-        'Dashboard',
         'All Users',
         'All Drivers',
         'All Earnings',
@@ -32,8 +31,7 @@ const AdminDetails = () => {
         'Push Notification',
         'Wallet Management',
         'Payout Management',
-        'All Bookings',
-        'All Referrals',
+        'Bookings',
         'Services',
         'SOS Updates',
         'Update Banner',

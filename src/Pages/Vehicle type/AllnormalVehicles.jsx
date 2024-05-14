@@ -71,6 +71,7 @@ const AllnormalVehicles = () => {
                         </div>
 
                         <div className='rider4'>
+                            <button onClick={() => navigate('/vehicletype')}>Back</button>
                             <button onClick={() => navigate('/addnormalvehicles')}>Add Vehicle</button>
                             <div className='rider5'>
                                 <div className='rider6'>

@@ -78,6 +78,7 @@ const AllSuperCarPricing = () => {
                         </div>
 
                         <div className='rider4'>
+                            <button onClick={() => navigate('/pricing')}>Back</button>
                             <button onClick={() => navigate('/addsupercarpricing')}>Add Pricing</button>
                             <div className='rider5'>
                                 <div className='rider6'>
@@ -100,7 +101,7 @@ const AllSuperCarPricing = () => {
                                     <th>Hourly Price</th>
                                     <th>Price/KmGreater</th>
                                     <th>Price/MinGreater</th>
-                                    <th>Price</th>
+                                    <th>(₹)Price</th>
                                     <th>Action Buttons</th>
                                 </tr>
                             </thead>
@@ -131,7 +132,7 @@ const AllSuperCarPricing = () => {
                                                     <td>{supercarprice.hrPrice}</td>
                                                     <td>{supercarprice.pricePerKmGreater}</td>
                                                     <td>{supercarprice.pricePerMinGreater}</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {supercarprice.price}</td>
+                                                    <td style={{ color: '#F52D56' }}>{supercarprice.price}</td>
                                                     <td>
                                                         <div className='service11'>
                                                             <div className='rider10' onClick={() => deleteSuperCarPricing(supercarprice._id)}>
@@ -163,7 +164,7 @@ const AllSuperCarPricing = () => {
                                                     <td>{supercarprice.hrPrice}</td>
                                                     <td>{supercarprice.pricePerKmGreater}</td>
                                                     <td>{supercarprice.pricePerMinGreater}</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {supercarprice.price}</td>
+                                                    <td style={{ color: '#F52D56' }}>{supercarprice.price}</td>
                                                     <td>
                                                         <div className='service11'>
                                                             <div className='rider10' onClick={() => deleteSuperCarPricing(supercarprice._id)}>

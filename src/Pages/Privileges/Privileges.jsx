@@ -201,58 +201,62 @@ const Privileges = () => {
                                                     </td>
                                                 </tr>
                                             ))
-                                            :
-                                            adminData.map((admin, index) => (
-                                                <tr key={admin._id}>
-                                                    <td>{index + 1}</td>
-                                                    <td>
-                                                        <img
-                                                            src={admin?.profilePicture || img2}
-                                                            alt="No image"
-                                                            style={{ width: '60px', height: '60px', borderRadius: '100%' }}
-                                                        />
-                                                    </td>
-                                                    <td>{admin.name}</td>
-                                                    <td>{admin.email}</td>
-                                                    <td>{admin.mobileNumber}</td>
-                                                    <td>{admin.role}</td>
-                                                    <td style={{
-                                                        color:
-                                                            admin?.status === 'reject' ? '#F52D56' :
-                                                                admin?.status === 'pending' ? '#FBAC2C' :
-                                                                    admin?.status === 'hold' ? '#357ABD' :
-                                                                        admin?.status === 'approved' ? '#609527' :
-                                                                            '#000'
-                                                    }}>
-                                                        {admin?.status}
-                                                    </td>
-                                                    <td>
-                                                        <ul>
-                                                            {admin.permissions.map((permission, permIndex) => (
-                                                                <li key={permIndex}>{permission}</li>
-                                                            ))}
-                                                        </ul>
-                                                    </td>
-                                                    <td>
-                                                        <div className='rider9'>
-                                                            <div className='rider10' onClick={() => deleteAdmin(admin._id)}>
-                                                                <RiDeleteBinLine color='#667085' size={20} />
-                                                                <p>Delete</p>
-                                                            </div>
-                                                            <div className='rider10' onClick={() => { admin.isBlock ? unblockAdmin(admin._id) : blockAdmin(admin._id) }}>
-                                                                <MdOutlineBlock color={admin.isBlock ? "red" : "#667085"} size={20} />
-                                                                <p style={{ color: admin.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
-                                                            </div>
-                                                            <div className='rider10'>
-                                                                <Link to={`/admindetails/${admin._id}`} className='sidebar-link' >
-                                                                    <IoEyeOutline color='#667085' size={20} />
-                                                                    <p>View/Edit</p>
-                                                                </Link>
-                                                            </div>
-                                                        </div>
-                                                    </td>
+                                            : adminData.length === 0 ? ( // Check if filtered data is empty
+                                                <tr>
+                                                    <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>No Admin Data found.</td>
                                                 </tr>
-                                            ))
+                                            ) :
+                                                adminData.map((admin, index) => (
+                                                    <tr key={admin._id}>
+                                                        <td>{index + 1}</td>
+                                                        <td>
+                                                            <img
+                                                                src={admin?.profilePicture || img2}
+                                                                alt="No image"
+                                                                style={{ width: '60px', height: '60px', borderRadius: '100%' }}
+                                                            />
+                                                        </td>
+                                                        <td>{admin.name}</td>
+                                                        <td>{admin.email}</td>
+                                                        <td>{admin.mobileNumber}</td>
+                                                        <td>{admin.role}</td>
+                                                        <td style={{
+                                                            color:
+                                                                admin?.status === 'reject' ? '#F52D56' :
+                                                                    admin?.status === 'pending' ? '#FBAC2C' :
+                                                                        admin?.status === 'hold' ? '#357ABD' :
+                                                                            admin?.status === 'approved' ? '#609527' :
+                                                                                '#000'
+                                                        }}>
+                                                            {admin?.status}
+                                                        </td>
+                                                        <td>
+                                                            <ul>
+                                                                {admin.permissions.map((permission, permIndex) => (
+                                                                    <li key={permIndex}>{permission}</li>
+                                                                ))}
+                                                            </ul>
+                                                        </td>
+                                                        <td>
+                                                            <div className='rider9'>
+                                                                <div className='rider10' onClick={() => deleteAdmin(admin._id)}>
+                                                                    <RiDeleteBinLine color='#667085' size={20} />
+                                                                    <p>Delete</p>
+                                                                </div>
+                                                                <div className='rider10' onClick={() => { admin.isBlock ? unblockAdmin(admin._id) : blockAdmin(admin._id) }}>
+                                                                    <MdOutlineBlock color={admin.isBlock ? "red" : "#667085"} size={20} />
+                                                                    <p style={{ color: admin.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                                </div>
+                                                                <div className='rider10'>
+                                                                    <Link to={`/admindetails/${admin._id}`} className='sidebar-link' >
+                                                                        <IoEyeOutline color='#667085' size={20} />
+                                                                        <p>View/Edit</p>
+                                                                    </Link>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                ))
 
                                     )}
                             </tbody>

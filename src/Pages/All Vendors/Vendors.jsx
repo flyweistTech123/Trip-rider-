@@ -126,7 +126,7 @@ const Vendors = () => {
                                     <th>Vendor Name</th>
                                     <th>Email</th>
                                     <th>Phone No.</th>
-                                    <th>Total Earnings</th>
+                                    <th>(₹)Total Earnings</th>
                                     <th>Total Vehicles</th>
                                     <th>Total Trips</th>
                                     <th>Action Buttons</th>
@@ -153,7 +153,7 @@ const Vendors = () => {
                                                     <td>{vendor?.name}</td>
                                                     <td>{vendor.email}</td>
                                                     <td>{vendor.mobileNumber}</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {vendor.wallet}</td>
+                                                    <td style={{ color: '#F52D56' }}>{vendor.wallet}</td>
                                                     <td>{vendor.noOfVehicle}</td>
                                                     <td>{vendor.totalBooking}</td>
                                                     <td>
@@ -184,7 +184,7 @@ const Vendors = () => {
                                                     <td>{vendor?.name}</td>
                                                     <td>{vendor.email}</td>
                                                     <td>{vendor.mobileNumber}</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {vendor.wallet}</td>
+                                                    <td style={{ color: '#F52D56' }}>{vendor.wallet}</td>
                                                     <td>{vendor.noOfVehicle}</td>
                                                     <td>{vendor.totalBooking}</td>
                                                     <td>

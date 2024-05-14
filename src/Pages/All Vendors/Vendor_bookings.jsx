@@ -102,9 +102,9 @@ const Vendor_bookings = () => {
                                 <tr>
                                     <th>Booking ID</th>
                                     <th>Date</th>
-                                    {/* <th>User</th> */}
+                                    <th>User</th>
                                     <th>Driver</th>
-                                    <th>Vendor</th>
+                                    {/* <th>Vendor</th> */}
                                     <th>Timing</th>
                                     <th>Distance</th>
                                     <th>(₹)Total Bill</th>
@@ -130,9 +130,9 @@ const Vendor_bookings = () => {
                                                 <tr key={booking.id}>
                                                     <td>{booking.bookingId}</td>
                                                     <td>{booking?.date}</td>
-                                                    {/* <td>{booking?.userId?.name}</td> */}
+                                                    <td>{booking?.userId?.name}</td>
                                                     <td>{booking?.driver?.name}</td>
-                                                    <td>{booking?.vendorId?.name}</td>
+                                                    {/* <td>{booking?.vendorId?.name}</td> */}
                                                     <td>{booking?.time}</td>
                                                     <td>{booking?.distance} Km</td>
                                                     <td> {booking?.totalPrice}</td>
@@ -176,9 +176,9 @@ const Vendor_bookings = () => {
                                                     <tr key={booking.id}>
                                                         <td>{booking.bookingId}</td>
                                                         <td>{booking?.date}</td>
-                                                        {/* <td>{booking?.userId?.name}</td> */}
+                                                        <td>{booking?.userId?.name}</td>
                                                         <td>{booking?.driver?.name}</td>
-                                                        <td>{booking?.vendorId?.name}</td>
+                                                        {/* <td>{booking?.vendorId?.name}</td> */}
                                                         <td>{booking?.time}</td>
                                                         <td>{booking?.distance} Km</td>
                                                         <td>{booking?.totalPrice}</td>

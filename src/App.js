@@ -8,7 +8,6 @@ import AdminRouteProtect from '../src/Pages/Login/AdminRouteprotected';
 import Users_details from './Pages/All Users/Users_details.jsx';
 import Driver_Details from './Pages/All Drivers/Driver_Details';
 import Vendors_Details from './Pages/All Vendors/Vendors_Details';
-import CarDetails from './Pages/Services/CarDetails';
 import UpdateBanners from './Pages/Update Banners/UpdateBanners';
 import Pricing from './Pages/Pricing/Pricing';
 import AddDailyPricing from './Pages/Pricing/DailyPricing/AddDailyPricing';
@@ -16,9 +15,9 @@ import UpdateDailypricing from './Pages/Pricing/DailyPricing/UpdateDailypricing'
 import Alldailypricing from './Pages/Pricing/DailyPricing/AllDailyPricing';
 import Addoutstationpricing from './Pages/Pricing/outstation pricing/Addoutstationpricing';
 // import Taxes from './Pages/Pricing/Taxes/Taxes';
-import Services2 from './Pages/Services2/Services2';
-import Add_Service from './Pages/Services2/Add_Service';
-import Update_Service from './Pages/Services2/Update_Service';
+import Services from './Pages/Services/Services';
+import Add_Service from './Pages/Services/Add_Service';
+import Update_Service from './Pages/Services/Update_Service';
 import Wallet_Management from './Pages/Wallet Management/Wallet_Management';
 import Payout_Management from './Pages/Payout Management/Payout_Management';
 import All_Referrals from './Pages/All Referrals/All_Referrals';
@@ -82,6 +81,7 @@ import AdminEarning from './Pages/AdminEarning/AdminEarning.jsx';
 import User_Bookings from './Pages/All Users/User_Bookings.jsx';
 import Driver_Bookings from './Pages/All Drivers/Driver_Bookings.jsx';
 import Vendor_bookings from './Pages/All Vendors/Vendor_bookings.jsx';
+import Bookings from './Pages/All Bookings/Bookings.jsx';
 
 
 
@@ -99,8 +99,7 @@ function App() {
           <Route path="/user_details/:id" element={<AdminRouteProtect> <Users_details /> </AdminRouteProtect>} />
           <Route path="/driver_details/:id" element={<AdminRouteProtect> <Driver_Details /> </AdminRouteProtect>} />
           <Route path="/vendors_details/:id" element={<AdminRouteProtect> <Vendors_Details /> </AdminRouteProtect>} />
-          <Route path="/services" element={<AdminRouteProtect> <Services2 /> </AdminRouteProtect>} />
-          <Route path="/cardetails" element={<AdminRouteProtect> <CarDetails /> </AdminRouteProtect>} />
+          <Route path="/services" element={<AdminRouteProtect> <Services /> </AdminRouteProtect>} />
           <Route path="/updatebanners" element={<AdminRouteProtect> <UpdateBanners /> </AdminRouteProtect>} />
           <Route path="/pricing" element={<AdminRouteProtect> <Pricing /> </AdminRouteProtect>} />
           <Route path="/alldailypricing" element={<AdminRouteProtect> <Alldailypricing /> </AdminRouteProtect>} />
@@ -171,6 +170,7 @@ function App() {
           <Route path="/user_bookings/:id" element={<AdminRouteProtect> <User_Bookings /> </AdminRouteProtect>} />
           <Route path="/driver_bookings/:id" element={<AdminRouteProtect> <Driver_Bookings /> </AdminRouteProtect>} />
           <Route path="/vendor_bookings/:id" element={<AdminRouteProtect> <Vendor_bookings /> </AdminRouteProtect>} />
+          <Route path="/bookings" element={<AdminRouteProtect> <Bookings /> </AdminRouteProtect>} />
         </Routes>
       </Router>
     </>

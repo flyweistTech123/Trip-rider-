@@ -58,5 +58,17 @@ MOM Of trip Rider
 ->  Cancel Button Works for Subscription Bookings
 
 
+13/05/24
+MOM Of trip Rider
+
+->Export All Booking Details.
+->Add Back Button to All Pages.
+->Display Vendor Name and Hide Location in Booking Page.
+->Show Super Car Name in All Bookings.
+->Display Service Type in Transactions Page.
+->Add Filter Option for Service Type in Transactions Page.
+->Show Total Trips for Individual Users, Drivers, and Vendors.
+
+
 
 

@@ -103,11 +103,11 @@ const Driver_Bookings = () => {
                                     <th>Booking ID</th>
                                     <th>Date</th>
                                     {/* <th>User</th> */}
-                                    <th>Driver</th>
+                                    <th>User</th>
                                     <th>Vendor</th>
                                     <th>Timing</th>
                                     <th>Distance</th>
-                                    <th>Total Bill</th>
+                                    <th>(₹)Total Bill</th>
                                     <th>Vehicle Name</th>
                                     <th>Status</th>
                                     <th>Action Buttons</th>
@@ -130,12 +130,12 @@ const Driver_Bookings = () => {
                                                 <tr key={booking.id}>
                                                     <td>{booking.bookingId}</td>
                                                     <td>{booking?.date}</td>
-                                                    {/* <td>{booking?.userId?.name}</td> */}
-                                                    <td>{booking?.driver?.name}</td>
+                                                    <td>{booking?.userId?.name}</td>
+                                                    {/* <td>{booking?.driver?.name}</td> */}
                                                     <td>{booking?.vendorId?.name}</td>
                                                     <td>{booking?.time}</td>
                                                     <td>{booking?.distance} Km</td>
-                                                    <td>₹ {booking?.totalPrice}</td>
+                                                    <td>{booking?.totalPrice}</td>
                                                     <td>
                                                         {booking?.serviceType === 'superCar' ? (
                                                             booking?.superCar?.name
@@ -176,12 +176,12 @@ const Driver_Bookings = () => {
                                                     <tr key={booking.id}>
                                                         <td>{booking.bookingId}</td>
                                                         <td>{booking?.date}</td>
-                                                        {/* <td>{booking?.userId?.name}</td> */}
-                                                        <td>{booking?.driver?.name}</td>
+                                                        <td>{booking?.userId?.name}</td>
+                                                        {/* <td>{booking?.driver?.name}</td> */}
                                                         <td>{booking?.vendorId?.name}</td>
                                                         <td>{booking?.time}</td>
                                                         <td>{booking?.distance} Km</td>
-                                                        <td>₹ {booking?.totalPrice}</td>
+                                                        <td>{booking?.totalPrice}</td>
                                                         <td>
                                                             {booking?.serviceType === 'superCar' ? (
                                                                 booking?.superCar?.name

@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './Services2.css';
+import './Services.css';
 import HOC from '../../Components/HOC/HOC';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import img3 from '../../Images/img43.png';
 import axios from 'axios';
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
-const Add_Service = () => {
+const Update_Service = () => {
     const navigate = useNavigate();
+    const { id } = useParams();
 
     // State
     const [category, setCategory] = useState('');
@@ -18,13 +20,23 @@ const Add_Service = () => {
     const [image, setImage] = useState('');
     const [bannerimage, setBannerImage] = useState('');
 
-    const triggerFileInput = () => {
-        document.getElementById('fileInput').click();
-    };
-    const triggerFileInput1 = () => {
-        document.getElementById('fileInput1').click();
-    };
-
+    useEffect(() => {
+        // Fetch service details by ID and populate the form
+        const fetchServiceDetails = async () => {
+            try {
+                const response = await axios.get(`${BaseUrl}api/v1/serviceCategory/${id}`, getAuthHeaders());
+                const { category, type, description, banner, image } = response.data.data; // Assuming API response has these fields
+                setCategory(category);
+                setType(type);
+                setDescription(description);
+                setBannerImage(banner)
+                setImage(image)
+            } catch (error) {
+                console.error('Error fetching service details:', error);
+            }
+        };
+        fetchServiceDetails();
+    }, [id]);
 
     const handlePostRequest = async () => {
         const formData = new FormData();
@@ -35,23 +47,22 @@ const Add_Service = () => {
         formData.append('description', description);
 
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/serviceCategory', formData);
-            console.log('Response:', response.data);
-            toast.success("Service Added successfully");
-
-            // Reset state variables to clear input fields
-            setCategory('');
-            setType('');
-            setDescription('');
-            setImage(null);
-            setBannerImage(null);
+            const response = await axios.put(`${BaseUrl}api/v1/serviceCategory/${id}`, getAuthHeaders(), formData);
+            toast.success("Service Updated successfully");
             navigate('/services')
         } catch (error) {
-            console.error('Error Adding Service:', error);
-            toast.error("Error Adding Service");
+            console.error('Error updating service:', error);
+            toast.error("Error updating service");
         }
-    }
+    };
 
+    const triggerFileInput = () => {
+        document.getElementById('fileInput').click();
+    };
+
+    const triggerFileInput1 = () => {
+        document.getElementById('fileInput1').click();
+    };
 
     return (
         <>
@@ -59,11 +70,11 @@ const Add_Service = () => {
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>Add Service</h6>
+                            <h6>Update Service</h6>
                         </div>
                         <div className='rider4'>
                             <button onClick={() => navigate('/services')}>Back</button>
-                            <button type='button' onClick={handlePostRequest}>Add Service</button>
+                            <button type='button' onClick={handlePostRequest}>Update Service</button>
                         </div>
                     </div>
 
@@ -77,10 +88,9 @@ const Add_Service = () => {
                             <div className='service1'>
                                 <label htmlFor="">Type</label>
                                 <select onChange={(e) => setType(e.target.value)}>
-                                    <option value="">Select Type</option>
-                                    <option name="Hourly" value="Hourly">Hourly</option>
-                                    <option name="Monthly" value="Monthly" >Monthly</option>
-                                    <option name="superCar" value="superCar" >superCar</option>
+                                    <option value="hour" selected={type === "hour"}>Hourly</option>
+                                    <option value="month" selected={type === "month"}>Monthly</option>
+                                    <option value="superCar" selected={type === "superCar"}>superCar</option>
                                 </select>
                             </div>
                         </div>
@@ -97,7 +107,7 @@ const Add_Service = () => {
                                 <div className='service7' onClick={triggerFileInput}>
                                     <div className='vehicle14'>
                                         {image ? (
-                                            <img src={URL.createObjectURL(image)} alt="" />
+                                            <img src={image instanceof File ? URL.createObjectURL(image) : image} alt="" />
                                         ) : (
                                             <img src={img3} alt="" />
                                         )}
@@ -108,11 +118,11 @@ const Add_Service = () => {
                                 </div>
                             </div>
                             <div className='service4'>
-                                <label htmlFor="">Upload Banner Image</label>
+                                <label htmlFor="">Upload Service Image</label>
                                 <div className='service7' onClick={triggerFileInput1}>
                                     <div className='vehicle14'>
                                         {bannerimage ? (
-                                            <img src={URL.createObjectURL(bannerimage)} alt="" />
+                                            <img src={bannerimage instanceof File ? URL.createObjectURL(bannerimage) : bannerimage} alt="" />
                                         ) : (
                                             <img src={img3} alt="" />
                                         )}
@@ -125,7 +135,7 @@ const Add_Service = () => {
                         </div>
                         <div className='service3'>
                             {/* <button onClick={() => navigate('/services')}>Cancel</button>
-                            <button type='button' onClick={handlePostRequest}>Add Service</button> */}
+                            <button type='button' onClick={handlePostRequest}>Update Service</button> */}
                         </div>
 
                     </div>
@@ -135,5 +145,4 @@ const Add_Service = () => {
     )
 }
 
-
-export default HOC(Add_Service);
+export default HOC(Update_Service);

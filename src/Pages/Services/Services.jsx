@@ -1,25 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Services.css'
+import { Link } from 'react-router-dom';
 import HOC from '../../Components/HOC/HOC'
 
 import { IoSearch } from "react-icons/io5";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { MdEdit } from "react-icons/md";
+
+import { useNavigate } from 'react-router-dom';
 
 
-import img from '../../Images/img29.png'
-import img1 from '../../Images/img30.png'
-import img2 from '../../Images/img31.png'
-import img3 from '../../Images/img32.png'
-import img4 from '../../Images/img33.png'
-import img5 from '../../Images/img34.png'
-import img6 from '../../Images/img35.png'
-import img7 from '../../Images/img36.png'
-import img8 from '../../Images/img37.png'
-import img9 from '../../Images/img38.png'
-import { Link } from 'react-router-dom';
+import img from '../../Images/imgvehicle.jpg'
 
 
-const Services = () => {
+const Services2 = () => {
+    const [riderData, setRiderData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        fetchRiderData();
+    }, []);
+
+    const fetchRiderData = () => {
+        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/serviceCategory')
+            .then(response => {
+                setRiderData(response.data.data);
+            })
+            .catch(error => {
+                console.error('Error fetching rider data:', error);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredserviceData = riderData.filter(service =>
+        service.type && service.type.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const deleteRider = (riderId) => {
+        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/serviceCategory/${riderId}`)
+            .then(response => {
+                toast.success("Service deleted successfully");
+                fetchRiderData();
+            })
+            .catch(error => {
+                console.error('Error deleting Service:', error);
+                toast.error("Error deleting Service");
+            });
+    };
 
     return (
         <>
@@ -31,100 +69,101 @@ const Services = () => {
                         </div>
 
                         <div className='rider4'>
-                            <div className='services'>
-                                <p>Disable</p>
-                                <label className="services1">
-                                    <input type="checkbox" />
-                                    <div class="services2"></div>
-                                </label>
-
-                            </div>
-
-
+                            <button onClick={() => navigate('/add_service')}>Add Services</button>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search Driver' />
+                                <input type="search" name="" id="" placeholder='Search type' onChange={handleSearch} />
                             </div>
                         </div>
                     </div>
-
-                    <div className='services3'>
-                        <div className='services4'>
-                            <p>Individual</p>
-                            <p>Shuttle</p>
-                        </div>
-
-                        <div className='services5'>
-                            <Link to={'/cardetails'} className='sidebar-link'>
-                                <div className='services6'>
-                                    <div className='services7'>
-                                        <img src={img} alt="" />
-                                    </div>
-                                    <h6>Daily</h6>
-                                </div>
-                            </Link>
-                            <div className='services6'>
-                                <div className='services7'>
-                                    <img src={img1} alt="" />
-                                </div>
-                                <h6>Bike</h6>
-                            </div>
-                            <div className='services6'>
-                                <div className='services7'>
-                                    <img src={img2} alt="" />
-                                </div>
-                                <h6>Hourly</h6>
-                            </div>
-                            <div className='services6'>
-                                <div className='services7'>
-                                    <img src={img3} alt="" />
-                                </div>
-                                <h6>Airport</h6>
-                            </div>
-                        </div>
-                        <div className='services5'>
-                            <div className='services6'>
-                                <div className='services7'>
-                                    <img src={img4} alt="" />
-                                </div>
-                                <h6>Out Station</h6>
-                            </div>
-                            <div className='services6'>
-                                <div className='services7'>
-                                    <img src={img5} alt="" />
-                                </div>
-                                <h6>Supercar</h6>
-                            </div>
-                            <div className='services6'>
-                                <div className='services7'>
-                                    <img src={img6} alt="" />
-                                </div>
-                                <h6>Ambulance</h6>
-                            </div>
-                            <div className='services6'>
-                                <div className='services7'>
-                                    <img src={img7} alt="" />
-                                </div>
-                                <h6>Delivery</h6>
-                            </div>
-                        </div>
-                        <div className='services5'>
-                            <div className='services6'>
-                                <div className='services7'>
-                                    <img src={img8} alt="" />
-                                </div>
-                                <h6>Rickshaw</h6>
-                            </div>
-                            <div className='services6'>
-                                <div className='services7'>
-                                    <img src={img9} alt="" />
-                                </div>
-                                <h6>Insurance</h6>
-                            </div>
-
-                        </div>
+                    <div className='rider7'>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Banner</th>
+                                    <th>Image</th>
+                                    <th>Category</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                    <th>Action Buttons</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Services...</td>
+                                    </tr>
+                                ) :
+                                    searchQuery && filteredserviceData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Service not found</td>
+                                        </tr>
+                                    ) : (
+                                        searchQuery
+                                            ?
+                                            filteredserviceData.map(rider => (
+                                                <tr key={rider.id}>
+                                                    <td className='service9'><img src={rider.banner} /></td>
+                                                    <td className='service10'>
+                                                        <img src={rider?.image || img} alt="No image" />
+                                                    </td>
+                                                    <td>{rider.category}</td>
+                                                    <td>{rider.type}</td>
+                                                    <td>
+                                                        <div className='service12'>
+                                                            {rider.description}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div className='service11'>
+                                                            <div className='rider10' onClick={() => deleteRider(rider._id)}>
+                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                <p>Delete</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/Update_Service/${rider._id}`} className='sidebar-link' >
+                                                                    <MdEdit color='#667085' size={20} />
+                                                                    <p>Edit</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                            : riderData.map(rider => (
+                                                <tr key={rider.id}>
+                                                    <td className='service9'><img src={rider.banner} /></td>
+                                                    <td className='service10'>
+                                                        <img src={rider?.image || img} alt="No image" />
+                                                    </td>
+                                                    <td>{rider.category}</td>
+                                                    <td>{rider.type}</td>
+                                                    <td>
+                                                        <div className='service12'>
+                                                            {rider.description}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div className='service11'>
+                                                            <div className='rider10' onClick={() => deleteRider(rider._id)}>
+                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                <p>Delete</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/Update_Service/${rider._id}`} className='sidebar-link' >
+                                                                    <MdEdit color='#667085' size={20} />
+                                                                    <p>Edit</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                    )}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -132,4 +171,4 @@ const Services = () => {
     )
 }
 
-export default HOC(Services)
+export default HOC(Services2)

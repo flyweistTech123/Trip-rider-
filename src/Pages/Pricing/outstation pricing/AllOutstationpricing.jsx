@@ -11,6 +11,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { MdEdit } from "react-icons/md";
 
 import { useNavigate } from 'react-router-dom';
+import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
 
 
 
@@ -30,7 +31,7 @@ const AllOutstationpricing = () => {
     }, []);
 
     const fetchOutstationpriceData = () => {
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/OutStationPricing/get')
+        axios.get(`${BaseUrl}api/v1/OutStationPricing/get`, getAuthHeaders())
             .then(response => {
                 setOutstationpriceData(response.data.data);
             })
@@ -53,7 +54,7 @@ const AllOutstationpricing = () => {
 
 
     const deletePrice = (outstationpriceId) => {
-        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/OutStationPricing/delete/${outstationpriceId}`)
+        axios.delete(`${BaseUrl}api/v1/OutStationPricing/delete/${outstationpriceId}`, getAuthHeaders())
             .then(response => {
                 fetchOutstationpriceData();
                 toast.success("Outstation Price deleted successfully");
@@ -78,6 +79,7 @@ const AllOutstationpricing = () => {
                         </div>
 
                         <div className='rider4'>
+                            <button onClick={() => navigate('/pricing')}>Back</button>
                             <button onClick={() => navigate('/addoutstationpricing')}>Add Pricing</button>
                             <div className='rider5'>
                                 <div className='rider6'>
@@ -95,10 +97,10 @@ const AllOutstationpricing = () => {
                                     <th>Vehicle Name</th>
                                     <th>City</th>
                                     <th>km Limit</th>
-                                    <th>km Price</th>
+                                    <th>(₹)km Price</th>
                                     <th>Hours Limit</th>
-                                    <th>Hours Price</th>
-                                    <th>Price</th>
+                                    <th>(₹)Hours Price</th>
+                                    <th>(₹)Price</th>
                                     <th>Type</th>
                                     <th>Action Buttons</th>
                                 </tr>
@@ -121,10 +123,10 @@ const AllOutstationpricing = () => {
                                                     <td>{outstationprice?.vehicle?.name}</td>
                                                     <td>{outstationprice?.city?.city}</td>
                                                     <td>{outstationprice.kmLimit} Km</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {outstationprice.kmPrice}</td>
+                                                    <td style={{ color: '#F52D56' }}>{outstationprice.kmPrice}</td>
                                                     <td>{outstationprice.hrLimit} hr</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {outstationprice.hrPrice}</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {outstationprice.price}</td>
+                                                    <td style={{ color: '#F52D56' }}>{outstationprice.hrPrice}</td>
+                                                    <td style={{ color: '#F52D56' }}>{outstationprice.price}</td>
                                                     <td>{outstationprice.type}</td>
                                                     <td className='rider9'>
                                                         <div className='rider10' onClick={() => deletePrice(outstationprice._id)}>
@@ -145,10 +147,10 @@ const AllOutstationpricing = () => {
                                                     <td>{outstationprice?.vehicle?.name}</td>
                                                     <td>{outstationprice?.city?.city}</td>
                                                     <td>{outstationprice.kmLimit} Km</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {outstationprice.kmPrice}</td>
+                                                    <td style={{ color: '#F52D56' }}>{outstationprice.kmPrice}</td>
                                                     <td>{outstationprice.hrLimit} hr</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {outstationprice.hrPrice}</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {outstationprice.price}</td>
+                                                    <td style={{ color: '#F52D56' }}>{outstationprice.hrPrice}</td>
+                                                    <td style={{ color: '#F52D56' }}>{outstationprice.price}</td>
                                                     <td>{outstationprice.type}</td>
                                                     <td className='rider9'>
                                                         <div className='rider10' onClick={() => deletePrice(outstationprice._id)}>

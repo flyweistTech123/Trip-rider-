@@ -49,10 +49,11 @@ const AddTaxpricing = () => {
                             </div>
 
                             <div className='rider4'>
+                                <button onClick={() => navigate('/pricing')}>Back</button>
                                 <button onClick={() => navigate(`/updatetaxpricing/${taxprice._id}`)}>Update Pricing</button>
                             </div>
                         </div>
-                        <div style={{ marginBottom: "50px", marginTop:"32px" }}>
+                        <div style={{ marginBottom: "50px", marginTop: "32px" }}>
                             <div className='taxprice1'>
                                 <h6>Ride Fee = Fees + (Night charges)+(Surge charges)+(Service charges)+(Railway pick up charges)+(Toll charges)+(Airport pick up charges) <br />+(Cancellation charges)+(Insurance premium)+(Waiting charges)</h6>
                             </div>

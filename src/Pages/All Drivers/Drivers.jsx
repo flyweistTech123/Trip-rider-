@@ -133,7 +133,7 @@ const Drivers = () => {
                                     <th>Phone No.</th>
                                     <th>Total Trips</th>
                                     <th>Status</th>
-                                    <th>Total Earnings</th>
+                                    <th>(₹)Total Earnings</th>
                                     <th>Action Buttons</th>
                                 </tr>
                             </thead>
@@ -169,7 +169,7 @@ const Drivers = () => {
                                                     }}>
                                                         {driver?.status}
                                                     </td>
-                                                    <td>₹ {driver?.wallet}</td>
+                                                    <td>{driver?.wallet}</td>
                                                     <td>
                                                         <div className='rider9'>
                                                             <div className='rider10' onClick={() => deleteDriver(driver._id)}>
@@ -210,7 +210,7 @@ const Drivers = () => {
                                                     }}>
                                                         {driver?.status}
                                                     </td>
-                                                    <td>₹ {driver?.wallet}</td>
+                                                    <td>{driver?.wallet}</td>
                                                     <td>
                                                         <div className='rider9'>
                                                             <div className='rider10' onClick={() => deleteDriver(driver._id)}>

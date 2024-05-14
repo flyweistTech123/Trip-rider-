@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './AllBookings.css'
-import { Link } from 'react-router-dom';
+import { Link , useNavigate} from 'react-router-dom';
 import HOC from '../../Components/HOC/HOC'
 
 import { IoSearch } from "react-icons/io5";
@@ -52,6 +52,9 @@ const AllBookings = () => {
         return userNameMatches || driverNameMatches || VendorNameMatches;
     });
 
+    const navigate = useNavigate();
+
+
     return (
         <>
             <div className='rider'>
@@ -62,6 +65,7 @@ const AllBookings = () => {
                         </div>
 
                         <div className='rider4'>
+                            <button onClick={() => navigate('/bookings')}>Back</button>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
@@ -85,7 +89,7 @@ const AllBookings = () => {
                                     <th>Vendor</th>
                                     <th>Timing</th>
                                     <th>Distance</th>
-                                    <th>Total Bill</th>
+                                    <th>(₹)Total Bill</th>
                                     <th>Vehicle Name</th>
                                     <th>Status</th>
                                     <th>Action Buttons</th>
@@ -113,7 +117,7 @@ const AllBookings = () => {
                                                     <td>{booking?.vendorId?.name}</td>
                                                     <td>{booking?.time}</td>
                                                     <td>{booking?.distance} Km</td>
-                                                    <td>₹ {booking?.totalPrice}</td>
+                                                    <td>{booking?.totalPrice}</td>
                                                     <td>{booking?.car?.name}</td>
                                                     <td style={{
                                                         color: booking?.status === 'cancel' ? '#F52D56' :
@@ -135,48 +139,52 @@ const AllBookings = () => {
                                                     </td>
                                                 </tr>
                                             ))
-                                            :
-                                            bookingData.map(booking => (
-                                                <tr key={booking.id}>
-                                                    <td>{booking.bookingId}</td>
-                                                    <td>{booking?.date}</td>
-                                                    <td>{booking?.userId?.name}</td>
-                                                    <td>{booking?.driver?.name}</td>
-                                                    <td>{booking?.vendorId?.name}</td>
-                                                    <td>{booking?.time}</td>
-                                                    <td>{booking?.distance} Km</td>
-                                                    <td>₹ {booking?.totalPrice}</td>
-                                                    <td>
-                                                        {booking?.serviceType === 'superCar' ? (
-                                                            booking?.superCar?.name
-
-                                                        ) : booking?.serviceType === 'ambulance' ? (
-                                                            booking?.vehicleAmbulance?.name
-                                                        ) : (
-                                                            booking?.car?.name
-                                                        )
-                                                        }
-                                                    </td>
-                                                    <td style={{
-                                                        color: booking?.status === 'cancel' ? '#F52D56' :
-                                                            booking?.status === 'pending' ? '#FBAC2C' :
-                                                                booking?.status === 'complete' ? '#609527' : 'black',
-                                                        fontWeight: '600'
-                                                    }}>
-                                                        {booking?.status}
-                                                    </td>
-                                                    <td>
-                                                        <div className='rider9'>
-                                                            <div className='rider10'>
-                                                                <Link to={`/bookingdetails/${booking._id}`} className='sidebar-link' >
-                                                                    <IoEyeOutline color='#667085' size={20} />
-                                                                    <p>View</p>
-                                                                </Link>
-                                                            </div>
-                                                        </div>
-                                                    </td>
+                                            : bookingData.length === 0 ? ( // Check if filtered data is empty
+                                                <tr>
+                                                    <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>No bookings found.</td>
                                                 </tr>
-                                            ))
+                                            ) :
+                                                bookingData.map(booking => (
+                                                    <tr key={booking.id}>
+                                                        <td>{booking.bookingId}</td>
+                                                        <td>{booking?.date}</td>
+                                                        <td>{booking?.userId?.name}</td>
+                                                        <td>{booking?.driver?.name}</td>
+                                                        <td>{booking?.vendorId?.name}</td>
+                                                        <td>{booking?.time}</td>
+                                                        <td>{booking?.distance} Km</td>
+                                                        <td>{booking?.totalPrice}</td>
+                                                        <td>
+                                                            {booking?.serviceType === 'superCar' ? (
+                                                                booking?.superCar?.name
+
+                                                            ) : booking?.serviceType === 'ambulance' ? (
+                                                                booking?.vehicleAmbulance?.name
+                                                            ) : (
+                                                                booking?.car?.name
+                                                            )
+                                                            }
+                                                        </td>
+                                                        <td style={{
+                                                            color: booking?.status === 'cancel' ? '#F52D56' :
+                                                                booking?.status === 'pending' ? '#FBAC2C' :
+                                                                    booking?.status === 'complete' ? '#609527' : 'black',
+                                                            fontWeight: '600'
+                                                        }}>
+                                                            {booking?.status}
+                                                        </td>
+                                                        <td>
+                                                            <div className='rider9'>
+                                                                <div className='rider10'>
+                                                                    <Link to={`/bookingdetails/${booking._id}`} className='sidebar-link' >
+                                                                        <IoEyeOutline color='#667085' size={20} />
+                                                                        <p>View</p>
+                                                                    </Link>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                ))
 
                                     )}
                             </tbody>

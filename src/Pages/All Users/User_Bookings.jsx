@@ -107,7 +107,7 @@ const User_Bookings = () => {
                                     <th>Vendor</th>
                                     <th>Timing</th>
                                     <th>Distance</th>
-                                    <th>Total Bill</th>
+                                    <th>(₹)Total Bill</th>
                                     <th>Vehicle Name</th>
                                     <th>Status</th>
                                     <th>Action Buttons</th>
@@ -135,7 +135,7 @@ const User_Bookings = () => {
                                                     <td>{booking?.vendorId?.name}</td>
                                                     <td>{booking?.time}</td>
                                                     <td>{booking?.distance} Km</td>
-                                                    <td>₹ {booking?.totalPrice}</td>
+                                                    <td>{booking?.totalPrice}</td>
                                                     <td>
                                                         {booking?.serviceType === 'superCar' ? (
                                                             booking?.superCar?.name
@@ -181,7 +181,7 @@ const User_Bookings = () => {
                                                         <td>{booking?.vendorId?.name}</td>
                                                         <td>{booking?.time}</td>
                                                         <td>{booking?.distance} Km</td>
-                                                        <td>₹ {booking?.totalPrice}</td>
+                                                        <td>{booking?.totalPrice}</td>
                                                         <td>
                                                             {booking?.serviceType === 'superCar' ? (
                                                                 booking?.superCar?.name

@@ -78,6 +78,7 @@ const Alldailypricing = () => {
                         </div>
 
                         <div className='rider4'>
+                            <button onClick={() => navigate('/pricing')}>Back</button>
                             <button onClick={() => navigate('/adddailypricing')}>Add Pricing</button>
                             <div className='rider5'>
                                 <div className='rider6'>
@@ -96,7 +97,7 @@ const Alldailypricing = () => {
                                     <th>City</th>
                                     <th>To</th>
                                     <th>From</th>
-                                    <th>Price/Km</th>
+                                    <th>(₹)Price/Km</th>
                                     <th>Action Buttons</th>
                                 </tr>
                             </thead>
@@ -119,7 +120,7 @@ const Alldailypricing = () => {
                                                     <td>{dailyprice?.city?.city}</td>
                                                     <td>{dailyprice.toKm} Km</td>
                                                     <td>{dailyprice.fromKm} Km</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {dailyprice.pricePerKm}/Km</td>
+                                                    <td style={{ color: '#F52D56' }}>{dailyprice.pricePerKm}/Km</td>
                                                     {/* <td style={{ color: '#F52D56' }}>₹ {dailyprice.price}</td> */}
                                                     <td className='rider9'>
                                                         <div className='rider10' onClick={() => deletePrice(dailyprice._id)}>
@@ -142,7 +143,7 @@ const Alldailypricing = () => {
                                                     <td>{dailyprice?.city?.city}</td>
                                                     <td>{dailyprice.toKm} Km</td>
                                                     <td>{dailyprice.fromKm} Km</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {dailyprice.pricePerKm}/Km</td>
+                                                    <td style={{ color: '#F52D56' }}>{dailyprice.pricePerKm}/Km</td>
                                                     {/* <td style={{ color: '#F52D56' }}>₹ {dailyprice.price}</td> */}
                                                     <td className='rider9'>
                                                         <div className='rider10' onClick={() => deletePrice(dailyprice._id)}>

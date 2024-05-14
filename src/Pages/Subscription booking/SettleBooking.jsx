@@ -231,7 +231,7 @@ const SettleBooking = () => {
                                     <th>Route To</th>
                                     <th>Status</th>
                                     <th>Kilometers</th>
-                                    <th>Pricing</th>
+                                    <th>(₹)Pricing</th>
                                     <th>Action Buttons</th>
                                 </tr>
                             </thead>
@@ -267,7 +267,7 @@ const SettleBooking = () => {
                                                         {settle?.status}
                                                     </td>
                                                     <td>{settle.km} KM</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {settle.pricing}</td>
+                                                    <td style={{ color: '#F52D56' }}>{settle.pricing}</td>
                                                     <td>
                                                         <div className='rider9'>
                                                             <div className='rider10' onClick={() => {
@@ -313,7 +313,7 @@ const SettleBooking = () => {
                                                         {settle?.status}
                                                     </td>
                                                     <td>{settle.km} KM</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {settle.pricing}</td>
+                                                    <td style={{ color: '#F52D56' }}>{settle.pricing}</td>
                                                     <td>
                                                         <div className='rider9'>
                                                             <div className='rider10' onClick={() => {
@@ -346,23 +346,6 @@ const SettleBooking = () => {
                             </tbody>
                         </table>
                     </div>
-                </div>
-
-                <div className='pricing1'>
-                    <Link to={'/scheduled_booking'} className='sidebar-link'>
-                        <div className='pricing2'>
-                            <div className='pricing3'>
-                                <h5>Scheduled Rides</h5>
-                            </div>
-                        </div>
-                    </Link>
-                    <Link to={'/cancellled_booking'} className='sidebar-link'>
-                        <div className='pricing2'>
-                            <div className='pricing3'>
-                                <h5>Cancelled Rides</h5>
-                            </div>
-                        </div>
-                    </Link>
                 </div>
 
             </div>

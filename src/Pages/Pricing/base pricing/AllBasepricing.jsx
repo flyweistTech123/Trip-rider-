@@ -12,6 +12,7 @@ import { MdEdit } from "react-icons/md";
 
 import { useNavigate } from 'react-router-dom';
 
+import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
 
 
 
@@ -30,7 +31,7 @@ const AllBasepricing = () => {
     }, []);
 
     const fetchBasepriceData = () => {
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/BasePricing/get')
+        axios.get(`${BaseUrl}api/v1/BasePricing/get`, getAuthHeaders())
             .then(response => {
                 setBasepriceData(response.data.data);
             })
@@ -52,7 +53,7 @@ const AllBasepricing = () => {
     );
 
     const deletePrice = (basepriceId) => {
-        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/BasePricing/delete/${basepriceId}`)
+        axios.delete(`${BaseUrl}api/v1/BasePricing/delete/${basepriceId}`, getAuthHeaders())
             .then(response => {
                 setBasepriceData();
                 toast.success("Base Pricing deleted successfully");
@@ -77,6 +78,7 @@ const AllBasepricing = () => {
                         </div>
 
                         <div className='rider4'>
+                            <button onClick={() => navigate('/pricing')}>Back</button>
                             <button onClick={() => navigate('/addbasepricing')}>Add Pricing</button>
                             <div className='rider5'>
                                 <div className='rider6'>
@@ -93,8 +95,8 @@ const AllBasepricing = () => {
                                 <tr>
                                     <th>Vehicle</th>
                                     <th>City</th>
-                                    <th>Price/Min</th>
-                                    <th>Price</th>
+                                    <th>(₹)Price/Min</th>
+                                    <th>(₹)Price</th>
                                     <th>Action Buttons</th>
                                 </tr>
                             </thead>
@@ -115,8 +117,8 @@ const AllBasepricing = () => {
                                                 <tr key={baseprice.id}>
                                                     <td>{baseprice?.vehicle?.name}</td>
                                                     <td>{baseprice?.city?.city}</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {baseprice.pricePerMin}/Min</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {baseprice.price}</td>
+                                                    <td style={{ color: '#F52D56' }}>{baseprice.pricePerMin}/Min</td>
+                                                    <td style={{ color: '#F52D56' }}>{baseprice.price}</td>
                                                     <td className='rider9'>
                                                         <div className='rider10' onClick={() => deletePrice(baseprice._id)}>
                                                             <RiDeleteBinLine color='#667085' size={20} />
@@ -136,8 +138,8 @@ const AllBasepricing = () => {
                                                 <tr key={baseprice.id}>
                                                     <td>{baseprice?.vehicle?.name}</td>
                                                     <td>{baseprice?.city?.city}</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {baseprice.pricePerMin}/Min</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {baseprice.price}</td>
+                                                    <td style={{ color: '#F52D56' }}>{baseprice.pricePerMin}/Min</td>
+                                                    <td style={{ color: '#F52D56' }}>{baseprice.price}</td>
                                                     <td className='rider9'>
                                                         <div className='rider10' onClick={() => deletePrice(baseprice._id)}>
                                                             <RiDeleteBinLine color='#667085' size={20} />

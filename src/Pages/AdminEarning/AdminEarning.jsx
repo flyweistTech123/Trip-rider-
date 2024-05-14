@@ -19,14 +19,22 @@ import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 const AdminEarning = () => {
     const [transactionData, setTransactionData] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedServiceType, setSelectedServiceType] = useState('');
     const [loading, setLoading] = useState(true);
-
     useEffect(() => {
         fetchTransactionData();
-    }, []);
+    }, [selectedServiceType]);
+
+
 
     const fetchTransactionData = () => {
-        axios.get(`${BaseUrl}api/v1/getAllBookingTransaction`, getAuthHeaders())
+        let apiUrl = `${BaseUrl}api/v1/getAllBookingTransaction`;
+
+        if (selectedServiceType) {
+            apiUrl += `?type=${selectedServiceType}`;
+        }
+
+        axios.get(apiUrl, getAuthHeaders())
             .then(response => {
                 setTransactionData(response.data.data);
             })
@@ -40,8 +48,14 @@ const AdminEarning = () => {
 
 
 
+
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
+    };
+
+
+    const handleServiceTypeChange = (event) => {
+        setSelectedServiceType(event.target.value);
     };
 
     const filteredBookingData = transactionData.filter(transaction => {
@@ -62,10 +76,11 @@ const AdminEarning = () => {
 
                         <div className='rider4'>
                             <div className='adminearning'>
-                                <select name="" id="">
-                                    <option value="">superCar</option>
-                                    <option value="">vehicleAmbulance</option>
-                                    <option value="">vehicle</option>
+                                <select value={selectedServiceType} onChange={handleServiceTypeChange}>
+                                    <option value="">All Services</option>
+                                    <option value="superCar">superCar</option>
+                                    <option value="vehicleAmbulance">vehicleAmbulance</option>
+                                    <option value="vehicle">vehicle</option>
                                 </select>
                             </div>
                             <div className='rider5'>
@@ -89,9 +104,9 @@ const AdminEarning = () => {
                                     <th>User</th>
                                     <th>Driver</th>
                                     <th>Service Type</th>
-                                    <th>Amount</th>
-                                    <th>Driver Amount</th>
-                                    <th>Admin Amount</th>
+                                    <th>(₹)Amount</th>
+                                    <th>(₹)Driver Amount</th>
+                                    <th>(₹)Admin Amount</th>
                                     <th>paymentMode</th>
                                     <th>Transaction Status</th>
                                     {/* <th>Action Buttons</th> */}
@@ -116,9 +131,10 @@ const AdminEarning = () => {
                                                     <td>{transaction?.bookingId?.bookingId}</td>
                                                     <td>{transaction?.user?.name}</td>
                                                     <td>{transaction?.driverId?.name}</td>
-                                                    <td>₹{transaction?.amount}</td>
-                                                    <td>₹{transaction?.driverAmount}</td>
-                                                    <td>₹{transaction?.adminAmount}</td>
+                                                    <td>{transaction?.bookingId?.serviceType}</td>
+                                                    <td>{transaction?.amount}</td>
+                                                    <td>{transaction?.driverAmount}</td>
+                                                    <td>{transaction?.adminAmount}</td>
                                                     <td>{transaction?.paymentMode}</td>
                                                     <td>{transaction?.transactionStatus}</td>
                                                 </tr>
@@ -131,9 +147,9 @@ const AdminEarning = () => {
                                                     <td>{transaction?.user?.name}</td>
                                                     <td>{transaction?.driverId?.name}</td>
                                                     <td>{transaction?.bookingId?.serviceType}</td>
-                                                    <td>₹{transaction?.amount}</td>
-                                                    <td>₹{transaction?.driverAmount}</td>
-                                                    <td>₹{transaction?.adminAmount}</td>
+                                                    <td>{transaction?.amount}</td>
+                                                    <td>{transaction?.driverAmount}</td>
+                                                    <td>{transaction?.adminAmount}</td>
                                                     <td>{transaction?.paymentMode}</td>
                                                     <td>{transaction?.transactionStatus}</td>
                                                 </tr>

@@ -59,7 +59,7 @@ const AllCancledBooking = () => {
                         </div>
 
                         <div className='rider4'>
-                            <button onClick={() => navigate('/settlebooking')}>Back</button>
+                            <button onClick={() => navigate('/bookings')}>Back</button>
                             <div className='rider5'>
                                 <div className='rider6'>
                                     <IoSearch />
@@ -82,7 +82,7 @@ const AllCancledBooking = () => {
                                     <th>Location</th>
                                     <th>Timing</th>
                                     <th>Distance</th>
-                                    <th>Total Bill</th>
+                                    <th>(₹)Total Bill</th>
                                     <th>Vehicle Name</th>
                                     <th>Status</th>
                                 </tr>
@@ -108,7 +108,7 @@ const AllCancledBooking = () => {
                                                     <td>{booking?.current?.address}</td>
                                                     <td>{booking?.time}</td>
                                                     <td>{booking?.distance} Km</td>
-                                                    <td>₹ {booking?.totalPrice}</td>
+                                                    <td>{booking?.totalPrice}</td>
                                                     <td>{booking?.car?.name}</td>
                                                     <td style={{
                                                         color: booking?.status === 'cancel' ? '#F52D56' :
@@ -129,7 +129,7 @@ const AllCancledBooking = () => {
                                                     <td>{booking?.current?.address}</td>
                                                     <td>{booking?.time}</td>
                                                     <td>{booking?.distance} Km</td>
-                                                    <td>₹ {booking?.totalPrice}</td>
+                                                    <td>{booking?.totalPrice}</td>
                                                     <td>{booking?.car?.name}</td>
                                                     <td style={{
                                                         color: booking?.status === 'cancel' ? '#F52D56' :

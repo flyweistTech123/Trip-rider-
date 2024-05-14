@@ -11,6 +11,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { MdEdit } from "react-icons/md";
 
 import { useNavigate } from 'react-router-dom';
+import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
 
 
 
@@ -29,7 +30,7 @@ const AllHourlyPricing = () => {
     }, []);
 
     const fetchHourlypriceData = () => {
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/getHourlyPricing')
+        axios.get(`${BaseUrl}api/v1/getHourlyPricing`, getAuthHeaders())
             .then(response => {
                 setHourlypriceData(response.data.data);
             })
@@ -51,7 +52,7 @@ const AllHourlyPricing = () => {
     );
 
     const deleteDriver = (hourlypriceId) => {
-        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/removeHourlyPricing/${hourlypriceId}`)
+        axios.delete(`${BaseUrl}api/v1/removeHourlyPricing/${hourlypriceId}`, getAuthHeaders())
             .then(response => {
                 fetchHourlypriceData();
                 toast.success("Hourly Pricing deleted successfully");
@@ -76,6 +77,7 @@ const AllHourlyPricing = () => {
                         </div>
 
                         <div className='rider4'>
+                            <button onClick={() => navigate('/pricing')}>Back</button>
                             <button onClick={() => navigate('/addhourlypricing')}>Add Pricing</button>
                             <div className='rider5'>
                                 <div className='rider6'>
@@ -94,10 +96,10 @@ const AllHourlyPricing = () => {
                                     <th>City</th>
                                     <th>Distance</th>
                                     <th>Hours</th>
-                                    <th>price/Min</th>
-                                    <th>price/Km</th>
-                                    <th>price/MinGreater</th>
-                                    <th>price/KmGreater</th>
+                                    <th>(₹)price/Min</th>
+                                    <th>(₹)price/Km</th>
+                                    <th>(₹)price/MinGreater</th>
+                                    <th>(₹)price/KmGreater</th>
                                     <th>Action Buttons</th>
                                 </tr>
                             </thead>
@@ -120,10 +122,10 @@ const AllHourlyPricing = () => {
                                                     <td>{hourlyprice?.city?.city}</td>
                                                     <td>{hourlyprice.km} Km</td>
                                                     <td>{hourlyprice.hours}</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerMin}</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerkm}</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerMinGreater}</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerKmGreater}</td>
+                                                    <td style={{ color: '#F52D56' }}>{hourlyprice.pricePerMin}</td>
+                                                    <td style={{ color: '#F52D56' }}>{hourlyprice.pricePerkm}</td>
+                                                    <td style={{ color: '#F52D56' }}>{hourlyprice.pricePerMinGreater}</td>
+                                                    <td style={{ color: '#F52D56' }}>{hourlyprice.pricePerKmGreater}</td>
                                                     <td className='rider9'>
                                                         <div className='rider10' onClick={() => deleteDriver(hourlyprice._id)}>
                                                             <RiDeleteBinLine color='#667085' size={20} />
@@ -145,10 +147,10 @@ const AllHourlyPricing = () => {
                                                     <td>{hourlyprice?.city?.city}</td>
                                                     <td>{hourlyprice.km} Km</td>
                                                     <td>{hourlyprice.hours}</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerMin}</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerkm}</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerMinGreater}</td>
-                                                    <td style={{ color: '#F52D56' }}>₹ {hourlyprice.pricePerKmGreater}</td>
+                                                    <td style={{ color: '#F52D56' }}>{hourlyprice.pricePerMin}</td>
+                                                    <td style={{ color: '#F52D56' }}>{hourlyprice.pricePerkm}</td>
+                                                    <td style={{ color: '#F52D56' }}>{hourlyprice.pricePerMinGreater}</td>
+                                                    <td style={{ color: '#F52D56' }}>{hourlyprice.pricePerKmGreater}</td>
                                                     <td className='rider9'>
                                                         <div className='rider10' onClick={() => deleteDriver(hourlyprice._id)}>
                                                             <RiDeleteBinLine color='#667085' size={20} />

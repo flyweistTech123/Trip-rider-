@@ -3,6 +3,7 @@ import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import './Earnings.css'
 import HOC from '../../Components/HOC/HOC'
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 import { IoSearch } from "react-icons/io5";
@@ -13,7 +14,7 @@ const Earnings = () => {
 
     const fetchEarningData = async () => {
         try {
-            const response = await axios.get('https://rajiv-cab-mu.vercel.app/api/v1/admin/all/driver');
+            const response = await axios.get(`${BaseUrl}api/v1/admin/all/driver`, getAuthHeaders());
             setEarningData(response?.data?.category);
         } catch (error) {
             console.error('Error fetching Earning data:', error);
@@ -52,9 +53,9 @@ const Earnings = () => {
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Mobile Number</th>
-                                    <th>Wallet</th>
-                                    <th>Cash In Hand</th>
-                                    <th>Admin Cash</th>
+                                    <th>(₹)Wallet</th>
+                                    <th>(₹)Cash In Hand</th>
+                                    <th>(₹)Admin Cash</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -66,9 +67,9 @@ const Earnings = () => {
                                         </td>
                                         <td>{earn.email}</td>
                                         <td>{earn.mobileNumber}</td>
-                                        <td>₹ {earn.wallet}</td>
-                                        <td>₹ {earn.cashInHand}</td>
-                                        <td>₹ {earn.adminCash}</td>
+                                        <td>{earn.wallet}</td>
+                                        <td>{earn.cashInHand}</td>
+                                        <td>{earn.adminCash}</td>
                                     </tr>
                                 ))}
                             </tbody>
