@@ -238,3 +238,14 @@
   color: #a0a0a0;
   line-height: 40px;
 }
+
+
+
+.login50{
+  font-family: "Outfit", sans-serif;
+  font-weight: 400;
+  font-size: 16.09px;
+  color: red;
+  line-height: 20.28px;
+  cursor: pointer;
+}

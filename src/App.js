@@ -82,6 +82,10 @@ import User_Bookings from './Pages/All Users/User_Bookings.jsx';
 import Driver_Bookings from './Pages/All Drivers/Driver_Bookings.jsx';
 import Vendor_bookings from './Pages/All Vendors/Vendor_bookings.jsx';
 import Bookings from './Pages/All Bookings/Bookings.jsx';
+import AllState from './Pages/Location/AllState.jsx';
+import AllCity from './Pages/Location/AllCity.jsx';
+import AddCity from './Pages/Location/AddCity.jsx';
+import UpdateCity from './Pages/Location/UpdateCity.jsx';
 
 
 
@@ -90,8 +94,8 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Register />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<Login />} />
           <Route path="/dashboard" element={<AdminRouteProtect> <Dashboard /> </AdminRouteProtect>} />
           <Route path="/users" element={<AdminRouteProtect> <Users /> </AdminRouteProtect>} />
           <Route path="/drivers" element={<AdminRouteProtect> <Drivers /> </AdminRouteProtect>} />
@@ -136,6 +140,10 @@ function App() {
           <Route path="/addsupercarvehicles" element={<AdminRouteProtect> <AddsuperCarVehicles /> </AdminRouteProtect>} />
           <Route path="/updatesupercarvehicles/:id" element={<AdminRouteProtect> <UpdatesuperCarVehicles /> </AdminRouteProtect>} />
           <Route path="/alllocation" element={<AdminRouteProtect> <AllLocation /> </AdminRouteProtect>} />
+          <Route path="/allstate" element={<AdminRouteProtect> <AllState /> </AdminRouteProtect>} />
+          <Route path="/allcity" element={<AdminRouteProtect> <AllCity /> </AdminRouteProtect>} />
+          <Route path="/addcity" element={<AdminRouteProtect> <AddCity /> </AdminRouteProtect>} />
+          <Route path="/updatecity/:id" element={<AdminRouteProtect> <UpdateCity /> </AdminRouteProtect>} />
           <Route path="/allpromocode" element={<AdminRouteProtect> <AllPromoCode /> </AdminRouteProtect>} />
           <Route path="/addpromocode" element={<AdminRouteProtect> <AddPromoCode /> </AdminRouteProtect>} />
           <Route path="/updatepromocode/:id" element={<AdminRouteProtect> <UpdatePromoCode /> </AdminRouteProtect>} />

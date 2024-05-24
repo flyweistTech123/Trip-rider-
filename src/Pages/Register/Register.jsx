@@ -5,27 +5,43 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import img from '../../Images/img.png';
 import { BaseUrl } from '../../Components/BaseUrl/BaseUrl';
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
+
 
 const Register = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState('admin'); // Default role is set to 'admin'
+    const [role, setRole] = useState('admin');
+    const [showPassword, setShowPassword] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+
     useEffect(() => {
-        localStorage.removeItem('token');
+        localStorage.clear();
     }, []);
 
     const handleRegister = async () => {
         try {
+            if (!email) {
+                setEmailError(true);
+                toast.error('Please input your email!');
+                return;
+            }
+
+            if (!password) {
+                toast.error('Password is required.');
+                return;
+            }
+
             if (role !== 'admin' && role !== 'superAdmin') {
                 toast.error('Invalid role selected. Please select a valid role.');
                 return;
             }
 
             const response = await axios.post(`${BaseUrl}api/v1/admin/register`, {
-                email: email,
-                password: password,
-                role: role
+                email,
+                password,
+                role
             });
 
             const { token, newUser } = response.data.data;
@@ -34,11 +50,11 @@ const Register = () => {
             toast.success("Registration successful");
             navigate('/dashboard');
         } catch (error) {
-            if (error.response && error.response.data && error.response.data.error) {
-                toast.error(`Error: ${error.response.data.error}`);
+            console.error('Error:', error.message);
+            if (error.response && error.response.data && error.response.data.message === 'admin already exists') {
+                toast.error('Admin already exists. Please use a different email.');
             } else {
-                console.error('Error:', error.message);
-                toast.error(`Error: ${error.message}`);
+                toast.error('Something went wrong. Please try again.');
             }
         }
     };
@@ -64,11 +80,39 @@ const Register = () => {
                     </div>
                     <div className='login20'>
                         <label htmlFor="">Email</label>
-                        <input type="email" name="" id="" placeholder='ex. email@domain.com' value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <input
+                            type="email"
+                            name=""
+                            id=""
+                            placeholder='ex. email@domain.com'
+                            value={email}
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+                                setEmailError(false);
+                            }}
+                            required
+                        />
+                        {emailError && <span className='login50'>Please input your email!</span>}
                     </div>
                     <div className='login20'>
                         <label htmlFor="">Password*</label>
-                        <input type="password" name="" id="" placeholder='Enter password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <div style={{ position: 'relative' }}>
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                name=""
+                                id=""
+                                placeholder='Enter password'
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                            <span
+                                onClick={() => setShowPassword(!showPassword)}
+                                style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}
+                            >
+                                {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                            </span>
+                        </div>
                     </div>
                     <div className='login20'>
                         <label htmlFor="">Role</label>
@@ -83,7 +127,7 @@ const Register = () => {
                     </div>
                     <div className='login6'>
                         <span>Already have an account?</span>
-                        <span onClick={() => navigate('/login')}>Login Here</span>
+                        <span onClick={() => navigate('/')}>Login Here</span>
                     </div>
                 </div>
             </div>

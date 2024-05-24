@@ -39,7 +39,7 @@ const HOC = (WrappedComponent) => {
                 // Fetch adminData from API if not found in localStorage
                 fetchAdminData();
             }
-        }, []); 
+        }, []);
 
         const handleLogout = () => {
             setAdminData(null);
@@ -50,6 +50,10 @@ const HOC = (WrappedComponent) => {
             localStorage.removeItem('token');
         };
 
+        const userRole = () => {
+            localStorage.removeItem('role');
+        };
+
         return (
             <div className={`container1 ${show ? '' : 'sidebar-hidden'}`}>
                 {show && (
@@ -58,8 +62,8 @@ const HOC = (WrappedComponent) => {
                     </div>
                 )}
                 <div className="content">
-                    <Navbar show={show} toggleSidebar={toggleSidebar} admindata={adminData}  onLogout={handleLogout}
-                        clearToken={clearToken}/>
+                    <Navbar show={show} toggleSidebar={toggleSidebar} admindata={adminData} onLogout={handleLogout}
+                        clearToken={clearToken} userRole={userRole} />
                     <div className="child-component">
                         <WrappedComponent />
                     </div>

@@ -9,10 +9,14 @@ import { useParams } from 'react-router-dom';
 import img from '../../Images/imgno.jpg'
 import img1 from '../../Images/img28.png'
 import img2 from '../../Images/user.webp'
+
+
+
 import { MdOutlineBlock } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 import { MdEdit } from "react-icons/md";
+import { FaFilePdf } from "react-icons/fa6";
 
 import { Button, Form } from "react-bootstrap";
 
@@ -36,6 +40,7 @@ const Driver_Details = () => {
 
     const { id } = useParams();
     const [modalShow, setModalShow] = React.useState(false);
+    const [modalShow1, setModalShow1] = React.useState(false);
     const [DriverData, setDriverData] = useState(null);
     const [isBlocked, setIsBlocked] = useState(false);
     const [kycstatus1, setKYCstatus1] = useState(" ");
@@ -55,6 +60,53 @@ const Driver_Details = () => {
             console.error('Error fetching driver data:', error);
         }
     };
+
+
+    // const isImage = (url) => {
+    //     return /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(url);
+    // };
+
+    // const isPDF = (url) => {
+    //     return /\.pdf$/i.test(url);
+    // };
+
+
+
+    // const DocumentDisplay = ({ url, label }) => {
+    //     if (isImage(url)) {
+    //         return (
+    //             <div className='rider_details21'>
+    //                 <img
+    //                     src={url || img}
+    //                     alt={url ? `${label} Image` : "No Image"}
+    //                 />
+    //                 <h6>{label}</h6>
+    //             </div>
+    //         );
+    //     } else if (isPDF(url)) {
+    //         return (
+    //             <div className='rider_details21'>
+    //                 <a href={url} target="_blank" rel="noopener noreferrer">
+    //                     <img
+    //                         src={<FaFilePdf />} // You can use a generic PDF icon
+    //                         alt={`${label} PDF`}
+    //                     />
+    //                 </a>
+    //                 <h6>{label}</h6>
+    //             </div>
+    //         );
+    //     } else {
+    //         return (
+    //             <div className='rider_details21'>
+    //                 <img
+    //                     src={img} // Default image or placeholder
+    //                     alt="No Image"
+    //                 />
+    //                 <h6>{label}</h6>
+    //             </div>
+    //         );
+    //     }
+    // };
 
 
     const handleDeleteDriver = async () => {
@@ -231,11 +283,42 @@ const Driver_Details = () => {
         );
     }
 
+
+
+    // KYC modal 
+
+    function ImageViewer(props) {
+
+        return (
+            <Modal
+                {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton className='adminprofileupdate'>
+                    <Modal.Title id="contained-modal-title-vcenter">Update KYC Status</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="modal-overlay">
+                        <div className="modal-content">
+                            <img src={props.imageUrl} alt="Full Image" />
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
+        );
+    }
+
     return (
         <>
             <KycStatusModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
+            />
+            <ImageViewer
+                show={modalShow1}
+                onHide={() => setModalShow1(false)}
             />
             <div className='rider'>
                 <div className='rider1'>
@@ -290,7 +373,7 @@ const Driver_Details = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className='rider_details99' onClick={()=>navigate(`/driver_bookings/${id}`)}>
+                                            <div className='rider_details99' onClick={() => navigate(`/driver_bookings/${id}`)}>
                                                 <p>Total  Trips</p>
                                                 <p>{DriverData?.totalBooking}</p>
                                             </div>
@@ -607,82 +690,75 @@ const Driver_Details = () => {
                                         </div>
 
                                         <div className='rider_details20'>
-                                            <div className='rider_details21'>
+                                            <div className='rider_details21' onClick={() => setModalShow1(true)}>
                                                 <img
                                                     src={DriverData?.driverDocument?.interior || img}
                                                     alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
                                                 />
                                                 <h6>Interior</h6>
                                             </div>
-                                            <div className='rider_details21'>
+                                            <div className='rider_details21' onClick={() => setModalShow1(true)}>
                                                 <img
-                                                    src={DriverData?.driverDocument?.interior || img}
-                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                    src={DriverData?.driverDocument?.exterior || img}
+                                                    alt={DriverData?.driverDocument?.exterior ? "Driver Interior Image" : "No Image"}
                                                 />
                                                 <h6>Exterior</h6>
                                             </div>
                                             <div className='rider_details21'>
                                                 <img
-                                                    src={DriverData?.driverDocument?.interior || img}
-                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                    src={DriverData?.driverDocument?.rc || img}
+                                                    alt={DriverData?.driverDocument?.rc ? "Driver Interior Image" : "No Image"}
                                                 />
                                                 <h6>Rc</h6>
                                             </div>
                                             <div className='rider_details21'>
                                                 <img
-                                                    src={DriverData?.driverDocument?.interior || img}
-                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                    src={DriverData?.driverDocument?.fitness || img}
+                                                    alt={DriverData?.driverDocument?.fitness ? "Driver Interior Image" : "No Image"}
                                                 />
                                                 <h6>Fitness</h6>
                                             </div>
                                             <div className='rider_details21'>
                                                 <img
-                                                    src={DriverData?.driverDocument?.interior || img}
-                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                    src={DriverData?.driverDocument?.permit || img}
+                                                    alt={DriverData?.driverDocument?.permit ? "Driver Interior Image" : "No Image"}
                                                 />
                                                 <h6>Permit</h6>
                                             </div>
                                             <div className='rider_details21'>
                                                 <img
-                                                    src={DriverData?.driverDocument?.interior || img}
-                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                    src={DriverData?.driverDocument?.insurance || img}
+                                                    alt={DriverData?.driverDocument?.insurance ? "Driver Interior Image" : "No Image"}
                                                 />
                                                 <h6>Insurance</h6>
                                             </div>
                                             <div className='rider_details21'>
                                                 <img
-                                                    src={DriverData?.driverDocument?.interior || img}
-                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                    src={DriverData?.driverDocument?.drivinglicense || img}
+                                                    alt={DriverData?.driverDocument?.drivinglicense ? "Driver Interior Image" : "No Image"}
                                                 />
                                                 <h6>Driving license</h6>
                                             </div>
                                             <div className='rider_details21'>
                                                 <img
-                                                    src={DriverData?.driverDocument?.interior || img}
-                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                    src={DriverData?.driverDocument?.aadharCard || img}
+                                                    alt={DriverData?.driverDocument?.aadharCard ? "Driver Interior Image" : "No Image"}
                                                 />
                                                 <h6>Aadhar Card</h6>
                                             </div>
                                             <div className='rider_details21'>
                                                 <img
-                                                    src={DriverData?.driverDocument?.interior || img}
-                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                    src={DriverData?.driverDocument?.cancelCheck || img}
+                                                    alt={DriverData?.driverDocument?.cancelCheck ? "Driver Interior Image" : "No Image"}
                                                 />
                                                 <h6>Cancel Check</h6>
                                             </div>
                                             <div className='rider_details21'>
                                                 <img
-                                                    src={DriverData?.driverDocument?.interior || img}
-                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
+                                                    src={DriverData?.driverDocument?.bankStatement || img}
+                                                    alt={DriverData?.driverDocument?.bankStatement ? "Driver Interior Image" : "No Image"}
                                                 />
                                                 <h6>Bank Statement</h6>
-                                            </div>
-                                            <div className='rider_details21'>
-                                                <img
-                                                    src={DriverData?.driverDocument?.interior || img}
-                                                    alt={DriverData?.driverDocument?.interior ? "Driver Interior Image" : "No Image"}
-                                                />
-                                                <h6>Aadhar Card</h6>
                                             </div>
                                         </div>
                                     </div>

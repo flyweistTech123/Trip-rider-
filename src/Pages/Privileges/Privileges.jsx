@@ -51,11 +51,12 @@ const Privileges = () => {
         admin.name && admin.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-
     const deleteAdmin = (adminId) => {
-        axios.delete(`${BaseUrl}api/v1/admin/delete/driver/${adminId}`, getAuthHeaders())
+        axios.delete(`${BaseUrl}api/v1/admin/delete/driver/${adminId}`, {
+            headers: getAuthHeaders()  
+        })
             .then(response => {
-                adminData();
+                fetchAdminData();  
                 toast.success("Admin deleted successfully");
             })
             .catch(error => {
@@ -63,12 +64,11 @@ const Privileges = () => {
                 toast.error("Error deleting Admin");
             });
     };
-
     const blockAdmin = (adminId) => {
         axios.put(`${BaseUrl}api/v1/admin/block/driver/${adminId}`, getAuthHeaders())
             .then(response => {
                 toast.success('Admin is blocked successfully');
-                adminData(prevAdminData => {
+                setAdminData(prevAdminData => {
                     return prevAdminData.map(admin => {
                         if (admin._id === adminId) {
                             return { ...admin, isBlock: true };
@@ -87,7 +87,7 @@ const Privileges = () => {
             .then(response => {
                 // console.log('Driver is unblocked successfully');
                 toast.success('Admin is unblocked successfully');
-                adminData(prevAdminData => {
+                setAdminData(prevAdminData => {
                     return prevAdminData.map(admin => {
                         if (admin._id === adminId) {
                             return { ...admin, isBlock: false };

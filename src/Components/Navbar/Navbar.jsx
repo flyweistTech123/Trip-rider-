@@ -10,27 +10,29 @@ import { useNavigate } from 'react-router-dom';
 import img2 from '../../Images/user.webp'
 
 
-const Navbar = ({ admindata, onLogout, clearToken }) => {
+const Navbar = ({ admindata, onLogout, clearToken, userRole }) => {
+    
+    const navigate = useNavigate()
 
     const handleLogout = () => {
         // Clear token from localStorage
         clearToken();
+        userRole();
         // Clear adminData from localStorage (triggered by onLogout prop)
         onLogout();
         // Show logout success toast
+        navigate('/register');
         toast.success("Logout successfully");
         // Redirect to home page
-        navigate('/login ');
     };
 
 
-    const navigate = useNavigate()
     return (
         <>
             <div className='navbar'>
                 <div className='navbar10'>
                     <div className='navbar1' onClick={() => navigate('/adminprofile')}>
-                        <img src={admindata?.profilePicture || img2} alt="No image"  />
+                        <img src={admindata?.profilePicture || img2} alt="No image" />
                         <div className='navbar2'>
                             <h6>Mr {admindata?.name}</h6>
                             <span>{admindata?.role}</span>

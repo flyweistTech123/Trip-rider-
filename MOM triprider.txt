@@ -61,13 +61,28 @@ MOM Of trip Rider
 13/05/24
 MOM Of trip Rider
 
-->Export All Booking Details.
-->Add Back Button to All Pages.
-->Display Vendor Name and Hide Location in Booking Page.
-->Show Super Car Name in All Bookings.
-->Display Service Type in Transactions Page.
-->Add Filter Option for Service Type in Transactions Page.
-->Show Total Trips for Individual Users, Drivers, and Vendors.
+->Export All Booking Details.-Pending
+->Add Back Button to All Pages.-Done
+->Display Vendor Name and Hide Location in Booking Page.-Done
+->Show Super Car Name in All Bookings.-Done
+->Display Service Type in Transactions Page.-Done
+->Add Filter Option for Service Type in Transactions Page.-Done
+->Show Total Trips for Individual Users, Drivers, and Vendors.-Done
+
+
+21/05/24
+MOM Of trip Rider
+
+->The the add and update the location.
+->view and download the documents.
+->The notification comes when message send.
+->The superAdmin should edit the user, driver and vendor profile.
+->The new details show on top.
+->In register time the error message show.
+->add all filed meddortor.
+->Driver details not show to admins.
+->add the subpermission feature.
+->vendor kcy also be updated from admin panel.
 
 
 
