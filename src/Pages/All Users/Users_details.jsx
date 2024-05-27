@@ -10,40 +10,104 @@ import img1 from '../../Images/img28.png'
 import { MdOutlineBlock } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
-
+import Modal from "react-bootstrap/Modal";
+import { Button, Form } from "react-bootstrap";
 
 
 
 
 
 const Users_details = () => {
+
+    const { id } = useParams();
+    const navigate = useNavigate()
+    const [RiderData, setRiderData] = useState(null);
+    const [isBlocked, setIsBlocked] = useState(false);
+    const [modalShow, setModalShow] = React.useState(false);
+
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [number, setNumber] = useState('');
+    const [gender, setGender] = useState('');
+    const [profileimg, setProfileImg] = useState('');
+    const [birthday, setBirthday] = useState('')
+    const [role, setRole] = useState('')
+    const [wallet, setWallet] = useState('')
+    const [totaltrip, setTotalTrip] = useState('')
+    const [isEditingName, setIsEditingName] = useState(false);
+
+
+
+
+
     const formatDate = (dateString) => {
         const date = new Date(dateString);
 
-        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        const formattedDate = `${date.getDate().toString().padStart(2, '0')} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+        // Ensure day and month are two digits
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
 
-        return `${formattedDate} `;
+        const formattedDate = `${year}-${month}-${day}`;
+
+        return formattedDate;
     };
-    const { id } = useParams();
-    const [RiderData, setRiderData] = useState(null);
-    const [isBlocked, setIsBlocked] = useState(false);
-    const navigate = useNavigate()
 
-    useEffect(() => {
-        const fetchRiderData = async () => {
-            try {
-                const response = await axios.get(`${BaseUrl}api/v1/getUserById/${id}`, getAuthHeaders());
-                const riderDataFromApi = response.data.data;
-                setRiderData(riderDataFromApi);
-                setIsBlocked(riderDataFromApi.isBlock);
-            } catch (error) {
-                console.error('Error fetching rider data:', error);
-            }
-        };
 
-        fetchRiderData();
-    }, [id]);
+
+    const fetchUserDetails = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}api/v1/getUserById/${id}`, getAuthHeaders())
+            const { name, email, gender, birthday, mobileNumber, profilePicture, role, wallet, totalBooking } = response.data.data;
+            setName(name);
+            setEmail(email);
+            setNumber(mobileNumber);
+            setGender(gender);
+            setProfileImg(profilePicture);
+            setRole(role);
+            setWallet(wallet)
+            setTotalTrip(totalBooking)
+            const formattedBirthday = formatDate(birthday);
+            setBirthday(formattedBirthday);
+        } catch (error) {
+            console.error('Error fetching User details:', error);
+        }
+    };
+
+
+    const handlePutRequest = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('mobileNumber', number);
+        formData.append('gender', gender);
+        formData.append('profilePicture', profileimg);
+        formData.append('birthday', birthday);
+
+        try {
+            const response = await axios.put(`${BaseUrl}api/v1/updateDriverVendorProfile/detail/${id}`, formData, getAuthHeaders());
+            toast.success("User Details Updated successfully");
+            setModalShow(false);
+            fetchUserDetails();
+        } catch (error) {
+            console.log('Error to updating User Details:', error)
+            toast.error("Error to updating User Details")
+        }
+    }
+
+
+
+
+
+    // const formatDate = (dateString) => {
+    //     const date = new Date(dateString);
+
+    //     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    //     const formattedDate = `${date.getDate().toString().padStart(2, '0')} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+
+    //     return `${formattedDate} `;
+    // };
 
     const handleDeleteRider = async () => {
         try {
@@ -81,6 +145,20 @@ const Users_details = () => {
         }
     };
 
+
+    const handleImageChange = (e) => {
+        setProfileImg(e.target.files[0]);
+    };
+
+    const triggerFileInput = () => {
+        document.getElementById('fileInput').click();
+    };
+
+
+    useEffect(() => {
+        fetchUserDetails();
+    }, [id]);
+
     return (
         <>
             <div className='rider'>
@@ -91,93 +169,92 @@ const Users_details = () => {
                         </div>
                         <div className='rider4'>
                             <button onClick={() => navigate('/users')}>Back</button>
+                            <button onClick={handlePutRequest}>Update Profile</button>
                         </div>
                     </div>
-                    {RiderData && (
-                        <>
-                            <div className='rider_details'>
-                                <div className='rider_details1'>
-                                    <div className='rider_details2'>
-                                        <div className='rider_details3'>
-                                            <img src={RiderData.profilePicture || img2} alt="No image" />
-                                            <div className='rider_details4'>
-                                                <h6>{RiderData.name}<div className='rider_details5'>
-                                                    <p>{RiderData.role}</p>
-                                                </div></h6>
-                                                {/* <p>Completed  Profile</p> */}
-                                            </div>
-                                            <div className='rider_details6'>
-                                                <div className='rider_details7' onClick={handleDeleteRider}>
-                                                    <RiDeleteBinLine color='#667085' size={20} />
-                                                    <p>Delete</p>
+                    <>
+                        <div className='rider_details'>
+                            <div className='rider_details1'>
+                                <div className='rider_details2'>
+                                    <div className='rider_details3'>
+                                        <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleImageChange} />
+                                        <img src={profileimg instanceof File ? URL.createObjectURL(profileimg) : profileimg || img2} alt="No image" onClick={triggerFileInput} style={{ cursor: 'pointer' }} />
+                                        <div className='rider_details4'>
+                                            <h6>
+                                                {isEditingName ? (
+                                                    <input
+                                                        type="text"
+                                                        value={name}
+                                                        onChange={(e) => setName(e.target.value)}
+                                                        onBlur={() => setIsEditingName(false)}
+                                                        autoFocus
+                                                        style={{ width: '100%' }}
+                                                    />
+                                                ) : (
+                                                    <span onClick={() => setIsEditingName(true)}>{name}</span>
+                                                )}
+                                                <div className='rider_details5'>
+                                                    <p>{role}</p>
                                                 </div>
-                                                <div className='rider_details7' onClick={() => { isBlocked ? unblockRider() : blockRider() }}>
-                                                    <MdOutlineBlock color={isBlocked ? "red" : "#667085"} size={20} />
-                                                    <p style={{ color: isBlocked ? 'red' : '#667085' }}>Block/Unblock</p>
-                                                </div>
-                                            </div>
+                                            </h6>
                                         </div>
-
-                                        <div className='rider_details8'>
-                                            <div className='rider_details9'>
-                                                <p>Wallet Balance</p>
-                                                <div className='rider_details10'>
-                                                    <img src={img1} alt="" />
-                                                    <p>{RiderData.wallet}</p>
-                                                </div>
+                                        <div className='rider_details6'>
+                                            <div className='rider_details7' onClick={handleDeleteRider}>
+                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                <p>Delete</p>
                                             </div>
-                                            <div className='rider_details99' onClick={()=>navigate(`/user_bookings/${id}`)}>
-                                                <p>Total  Trips</p>
-                                                <p>{RiderData.totalBooking}</p>
+                                            <div className='rider_details7' onClick={() => { isBlocked ? unblockRider() : blockRider() }}>
+                                                <MdOutlineBlock color={isBlocked ? "red" : "#667085"} size={20} />
+                                                <p style={{ color: isBlocked ? 'red' : '#667085' }}>Block/Unblock</p>
                                             </div>
                                         </div>
                                     </div>
 
-
-                                    <div className='rider_details12'>
-                                        <div className='rider_details12111'>
-                                            <h6>User's personal information</h6>
-                                            <div className='rider_details12112'></div>
+                                    <div className='rider_details8'>
+                                        <div className='rider_details9'>
+                                            <p>Wallet Balance</p>
+                                            <div className='rider_details10'>
+                                                <img src={img1} alt="" />
+                                                <p>{wallet}</p>
+                                            </div>
                                         </div>
-                                        <div className='rider_details13'>
-                                            <div className='rider_details14'>
-                                                <label htmlFor="">Email</label>
-                                                <div className='input11'>
-                                                    <p>{RiderData.email}</p>
-                                                </div>
-                                            </div>
-                                            <div className='rider_details14'>
-                                                <label htmlFor="">Phone Number</label>
-                                                <div className='input11'>
-                                                    <p>{RiderData.mobileNumber}</p>
-                                                </div>
-                                            </div>
-                                            <div className='rider_details14'>
-                                                <label htmlFor="">Gender</label>
-                                                <div className='input11'>
-                                                    <p>{RiderData.gender}</p>
-                                                </div>
-                                            </div>
-                                            <div className='rider_details14'>
-                                                <label htmlFor="">DOB</label>
-                                                <div className='input11'>
-                                                    <p>{formatDate(RiderData.birthday)}</p>
-                                                </div>
-                                            </div>
-
+                                        <div className='rider_details99' onClick={() => navigate(`/user_bookings/${id}`)}>
+                                            <p>Total Trips</p>
+                                            <p>{totaltrip}</p>
                                         </div>
                                     </div>
+                                </div>
 
-                                    {/* <div className='rider_details19'>
-                                        <button onClick={() => navigate('/riders')}>Close</button>
-                                    </div> */}
+                                <div className='rider_details12'>
+                                    <div className='rider_details12111'>
+                                        <h6>User's personal information</h6>
+                                        <div className='rider_details12112'></div>
+                                    </div>
+                                    <div className='rider_details13'>
+                                        <div className='rider_details14'>
+                                            <label htmlFor="">Email</label>
+                                            <input type="email" placeholder='Enter email' value={email} onChange={(e) => setEmail(e.target.value)} />
+                                        </div>
+                                        <div className='rider_details14'>
+                                            <label htmlFor="">Phone Number</label>
+                                            <input type="number" placeholder='Enter number' value={number} onChange={(e) => setNumber(e.target.value)} />
+                                        </div>
+                                        <div className='rider_details14'>
+                                            <label htmlFor="">Gender</label>
+                                            <div className='rider_radiogender'>
+                                                <input type="radio" value="male" checked={gender === 'male'} onChange={(e) => setGender(e.target.value)} /> Male
+                                                <input type="radio" value="female" checked={gender === 'female'} onChange={(e) => setGender(e.target.value)} /> Female
+                                            </div>
+                                        </div>
+                                        <div className='rider_details14'>
+                                            <label htmlFor="">DOB</label>
+                                            <input type="date"  value={formatDate(birthday)} onChange={(e) => setBirthday(e.target.value)} />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </>
-                    )}
-
-
-
+                        </div>
+                    </>
                 </div>
             </div>
         </>

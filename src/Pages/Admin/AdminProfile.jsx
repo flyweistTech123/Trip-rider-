@@ -22,48 +22,35 @@ const AdminProfile = () => {
 
     const navigate = useNavigate()
 
+    const fetchAdminData = async () => {
+        try {
+            // const token = localStorage.getItem("token"); 
+            const response = await axios.get(`${BaseUrl}api/v1/admin/me`, getAuthHeaders())
+            const AdminDataFromApi = response.data.data;
+            setAdminData(AdminDataFromApi);
+        } catch (error) {
+            console.error('Error fetching Admin data:', error);
+        }
+    };
 
 
-    useEffect(() => {
-        const fetchAdminData = async () => {
-            try {
-                // const token = localStorage.getItem("token"); 
-                const response = await axios.get(`${BaseUrl}api/v1/admin/me`, getAuthHeaders())
-                const AdminDataFromApi = response.data.data;
-                setAdminData(AdminDataFromApi);
-            } catch (error) {
-                console.error('Error fetching Admin data:', error);
-            }
-        };
-
-        fetchAdminData();
-    }, []);
 
 
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
 
-        const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate().toString().padStart(2, '0')}`;
+        // Ensure day and month are two digits
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
 
-        return `${formattedDate}`;
+        const formattedDate = `${day}-${month}-${year}`;
+
+        return formattedDate;
     };
 
 
-
-
-    const formatTime = (dateString) => {
-        const date = new Date(dateString);
-
-
-        let hours = date.getHours();
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12 || 12; // Convert to 12-hour format
-        const formattedTime = `${hours.toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}${ampm}`;
-
-        // Combine date and time
-        return `${formattedTime}`;
-    };
 
 
 
@@ -127,6 +114,7 @@ const AdminProfile = () => {
                 toast.success("Admin Profile Updated successfully");
                 setModalShow(false);
                 fetchadminDetails();
+                fetchAdminData();
             } catch (error) {
                 console.log('Error to updating Admin Profile:', error)
                 toast.error("Error to updating Admin Profile")
@@ -235,6 +223,10 @@ const AdminProfile = () => {
     }
 
 
+    useEffect(() => {
+        fetchAdminData();
+    }, []);
+
     return (
         <>
             <UpdateProfileModal
@@ -257,7 +249,7 @@ const AdminProfile = () => {
                                 <div className='rider_details1'>
                                     <div className='rider_details2'>
                                         <div className='rider_details3'>
-                                            <img src={adminData?.profilePicture || img2} alt="No image"  />
+                                            <img src={adminData?.profilePicture || img2} alt="No image" />
                                             <div className='rider_details4'>
                                                 <h6>{adminData.name}<div className='rider_details5'>
                                                     <p>{adminData.role}</p>

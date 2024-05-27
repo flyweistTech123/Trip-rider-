@@ -52,7 +52,6 @@ const UpdateDailypricing = () => {
 
         try {
             const response = await axios.put(`${BaseUrl}api/v1/Pricing/${id}`, data, getAuthHeaders());
-            console.log('Response:', response.data);
             toast.success("Daily Pricing Updated successfully");
             navigate('/alldailypricing');
         } catch (error) {

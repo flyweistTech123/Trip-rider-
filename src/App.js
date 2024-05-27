@@ -92,95 +92,95 @@ import UpdateCity from './Pages/Location/UpdateCity.jsx';
 function App() {
   return (
     <>
-      <Router>
-        <Routes>
-          <Route path="/register" element={<Register />} />
-          <Route path="/" element={<Login />} />
-          <Route path="/dashboard" element={<AdminRouteProtect> <Dashboard /> </AdminRouteProtect>} />
-          <Route path="/users" element={<AdminRouteProtect> <Users /> </AdminRouteProtect>} />
-          <Route path="/drivers" element={<AdminRouteProtect> <Drivers /> </AdminRouteProtect>} />
-          <Route path="/vendors" element={<AdminRouteProtect> <Vendors /> </AdminRouteProtect>} />
-          <Route path="/user_details/:id" element={<AdminRouteProtect> <Users_details /> </AdminRouteProtect>} />
-          <Route path="/driver_details/:id" element={<AdminRouteProtect> <Driver_Details /> </AdminRouteProtect>} />
-          <Route path="/vendors_details/:id" element={<AdminRouteProtect> <Vendors_Details /> </AdminRouteProtect>} />
-          <Route path="/services" element={<AdminRouteProtect> <Services /> </AdminRouteProtect>} />
-          <Route path="/updatebanners" element={<AdminRouteProtect> <UpdateBanners /> </AdminRouteProtect>} />
-          <Route path="/pricing" element={<AdminRouteProtect> <Pricing /> </AdminRouteProtect>} />
-          <Route path="/alldailypricing" element={<AdminRouteProtect> <Alldailypricing /> </AdminRouteProtect>} />
-          <Route path="/updatedailypricing/:id" element={<AdminRouteProtect> <UpdateDailypricing /> </AdminRouteProtect>} />
-          <Route path="/adddailypricing" element={<AdminRouteProtect> <AddDailyPricing /> </AdminRouteProtect>} />
-          <Route path="/allhourlypricing" element={<AdminRouteProtect> <AllHourlyPricing /> </AdminRouteProtect>} />
-          <Route path="/updatehourlypricing/:id" element={<AdminRouteProtect> <UpdateHourlyPricing /> </AdminRouteProtect>} />
-          <Route path="/addhourlypricing" element={<AdminRouteProtect> <AddHourlyPricing /> </AdminRouteProtect>} />
-          <Route path="/allbasepricing" element={<AdminRouteProtect> <AllBasepricing /> </AdminRouteProtect>} />
-          <Route path="/addbasepricing" element={<AdminRouteProtect> <AddBasepricing /> </AdminRouteProtect>} />
-          <Route path="/updatebasepricing/:id" element={<AdminRouteProtect> <UpdateBasepricing /> </AdminRouteProtect>} />
-          <Route path="/alloutstationpricing" element={<AdminRouteProtect> <AllOutstationpricing /> </AdminRouteProtect>} />
-          <Route path="/addoutstationpricing" element={<AdminRouteProtect> <Addoutstationpricing /> </AdminRouteProtect>} />
-          <Route path="/updateoutstationpricing/:id" element={<AdminRouteProtect> <Updateoutstationpricing /> </AdminRouteProtect>} />
-          <Route path="/allambulancepricing" element={<AdminRouteProtect> <AllAmbulancePricing /> </AdminRouteProtect>} />
-          <Route path="/addambulancepricing" element={<AdminRouteProtect> <AddAmbulancePricing /> </AdminRouteProtect>} />
-          <Route path="/updateambulancepricing/:id" element={<AdminRouteProtect> <UpdateAmbulancePricing /> </AdminRouteProtect>} />
-          <Route path="/allsupercarpricing" element={<AdminRouteProtect> <AllSuperCarPricing /> </AdminRouteProtect>} />
-          <Route path="/addsupercarpricing" element={<AdminRouteProtect> <AddSuperCarPricing /> </AdminRouteProtect>} />
-          {/* <Route path="/taxes" element={<AdminRouteProtect> <Taxes /> </AdminRouteProtect>} /> */}
-          {/* <Route path="/alltaxpricing" element={<AdminRouteProtect> <AllTaxpricing /> </AdminRouteProtect>} /> */}
-          <Route path="/taxpricing" element={<AdminRouteProtect> <AddTaxpricing /> </AdminRouteProtect>} />
-          <Route path="/updatetaxpricing/:id" element={<AdminRouteProtect> <UpdateTaxpricing /> </AdminRouteProtect>} />
-          <Route path="/add_service" element={<AdminRouteProtect> <Add_Service /> </AdminRouteProtect>} />
-          <Route path="/Update_Service/:id" element={<AdminRouteProtect> <Update_Service /> </AdminRouteProtect>} />
-          <Route path="/wallet_management" element={<AdminRouteProtect> <Wallet_Management /> </AdminRouteProtect>} />
-          <Route path="/payout_management" element={<AdminRouteProtect> <Payout_Management /> </AdminRouteProtect>} />
-          <Route path="/all_referrals" element={<AdminRouteProtect> <All_Referrals /> </AdminRouteProtect>} />
-          <Route path="/vehicletype" element={<AdminRouteProtect> <Vehicletype /> </AdminRouteProtect>} />
-          <Route path="/allnormalvehicles" element={<AdminRouteProtect> <AllnormalVehicles /> </AdminRouteProtect>} />
-          <Route path="/addnormalvehicles" element={<AdminRouteProtect> <AddnormalVehicles /> </AdminRouteProtect>} />
-          <Route path="/updatenormalvehicles/:id" element={<AdminRouteProtect> <UpdatenormalVehicles /> </AdminRouteProtect>} />
-          <Route path="/allsuperCarvehicles" element={<AdminRouteProtect> <AllsuperCarVehicles /> </AdminRouteProtect>} />
-          <Route path="/addsupercarvehicles" element={<AdminRouteProtect> <AddsuperCarVehicles /> </AdminRouteProtect>} />
-          <Route path="/updatesupercarvehicles/:id" element={<AdminRouteProtect> <UpdatesuperCarVehicles /> </AdminRouteProtect>} />
-          <Route path="/alllocation" element={<AdminRouteProtect> <AllLocation /> </AdminRouteProtect>} />
-          <Route path="/allstate" element={<AdminRouteProtect> <AllState /> </AdminRouteProtect>} />
-          <Route path="/allcity" element={<AdminRouteProtect> <AllCity /> </AdminRouteProtect>} />
-          <Route path="/addcity" element={<AdminRouteProtect> <AddCity /> </AdminRouteProtect>} />
-          <Route path="/updatecity/:id" element={<AdminRouteProtect> <UpdateCity /> </AdminRouteProtect>} />
-          <Route path="/allpromocode" element={<AdminRouteProtect> <AllPromoCode /> </AdminRouteProtect>} />
-          <Route path="/addpromocode" element={<AdminRouteProtect> <AddPromoCode /> </AdminRouteProtect>} />
-          <Route path="/updatepromocode/:id" element={<AdminRouteProtect> <UpdatePromoCode /> </AdminRouteProtect>} />
-          <Route path="/termsandconditions" element={<AdminRouteProtect> <Termsandconditions /> </AdminRouteProtect>} />
-          <Route path="/addtermsandconditions" element={<AdminRouteProtect> <AddTermsandconditions /> </AdminRouteProtect>} />
-          <Route path="/updatetermsandconditions/:id" element={<AdminRouteProtect> <UpdateTermsandconditions /> </AdminRouteProtect>} />
-          <Route path="/privacypolicy" element={<AdminRouteProtect> <Privacypolicy /> </AdminRouteProtect>} />
-          <Route path="/addprivacypolicy" element={<AdminRouteProtect> <AddPrivacypolicy /> </AdminRouteProtect>} />
-          <Route path="/updateprivacypolicy/:id" element={<AdminRouteProtect> <UpdatePrivacypolicy /> </AdminRouteProtect>} />
-          <Route path="/privileges" element={<AdminRouteProtect> <Privileges /> </AdminRouteProtect>} />
-          <Route path="/earnings" element={<AdminRouteProtect> <Earnings /> </AdminRouteProtect>} />
-          <Route path="/refundtransaction" element={<AdminRouteProtect> <RefundTransaction /> </AdminRouteProtect>} />
-          <Route path="/pay_user/:id" element={<AdminRouteProtect> <Pay_User /> </AdminRouteProtect>} />
-          <Route path="/sos" element={<AdminRouteProtect> <SOSUpdate /> </AdminRouteProtect>} />
-          <Route path="/soslocation/:id" element={<AdminRouteProtect> <SOSLocation /> </AdminRouteProtect>} />
-          <Route path="/setting" element={<AdminRouteProtect> <Setting /> </AdminRouteProtect>} />
-          <Route path="/adminprofile" element={<AdminRouteProtect> <AdminProfile /> </AdminRouteProtect>} />
-          {/* <Route path="/alladmin" element={<AdminRouteProtect> <AllAdmin /> </AdminRouteProtect>} /> */}
-          <Route path="/settlebooking" element={<AdminRouteProtect> <SettleBooking /> </AdminRouteProtect>} />
-          <Route path="/settlebookingdetails/:id" element={<AdminRouteProtect> <SettleBookingDetails /> </AdminRouteProtect>} />
-          <Route path="/notification" element={<AdminRouteProtect> <Notification /> </AdminRouteProtect>} />
-          <Route path="/allbookings" element={<AdminRouteProtect> <AllBookings /> </AdminRouteProtect>} />
-          <Route path="/livechart" element={<AdminRouteProtect> <LiveChart /> </AdminRouteProtect>} />
-          <Route path="/geofencing_view" element={<AdminRouteProtect> <Geofencing /> </AdminRouteProtect>} />
-          <Route path="/cancellled_booking" element={<AdminRouteProtect> <AllCancledBooking /> </AdminRouteProtect>} />
-          <Route path="/scheduled_booking" element={<AdminRouteProtect> <AllScheduledBooking /> </AdminRouteProtect>} />
-          <Route path="/updatesupercarpricing/:id" element={<AdminRouteProtect> <UpdateSuperCarPricing /> </AdminRouteProtect>} />
-          <Route path="/bookingdetails/:id" element={<AdminRouteProtect> <BookingDetails /> </AdminRouteProtect>} />
-          <Route path="/liveChartWithDriver" element={<AdminRouteProtect> <LiveChartWithDriver /> </AdminRouteProtect>} />
-          <Route path="/admindetails/:id" element={<AdminRouteProtect> <AdminDetails /> </AdminRouteProtect>} />
-          <Route path="/allearning" element={<AdminRouteProtect> <AdminEarning /> </AdminRouteProtect>} />
-          <Route path="/user_bookings/:id" element={<AdminRouteProtect> <User_Bookings /> </AdminRouteProtect>} />
-          <Route path="/driver_bookings/:id" element={<AdminRouteProtect> <Driver_Bookings /> </AdminRouteProtect>} />
-          <Route path="/vendor_bookings/:id" element={<AdminRouteProtect> <Vendor_bookings /> </AdminRouteProtect>} />
-          <Route path="/bookings" element={<AdminRouteProtect> <Bookings /> </AdminRouteProtect>} />
-        </Routes>
-      </Router>
+        <Router>
+          <Routes>
+            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/dashboard" element={<AdminRouteProtect> <Dashboard /> </AdminRouteProtect>} />
+            <Route path="/users" element={<AdminRouteProtect> <Users /> </AdminRouteProtect>} />
+            <Route path="/drivers" element={<AdminRouteProtect> <Drivers /> </AdminRouteProtect>} />
+            <Route path="/vendors" element={<AdminRouteProtect> <Vendors /> </AdminRouteProtect>} />
+            <Route path="/user_details/:id" element={<AdminRouteProtect> <Users_details /> </AdminRouteProtect>} />
+            <Route path="/driver_details/:id" element={<AdminRouteProtect> <Driver_Details /> </AdminRouteProtect>} />
+            <Route path="/vendors_details/:id" element={<AdminRouteProtect> <Vendors_Details /> </AdminRouteProtect>} />
+            <Route path="/services" element={<AdminRouteProtect> <Services /> </AdminRouteProtect>} />
+            <Route path="/updatebanners" element={<AdminRouteProtect> <UpdateBanners /> </AdminRouteProtect>} />
+            <Route path="/pricing" element={<AdminRouteProtect> <Pricing /> </AdminRouteProtect>} />
+            <Route path="/alldailypricing" element={<AdminRouteProtect> <Alldailypricing /> </AdminRouteProtect>} />
+            <Route path="/updatedailypricing/:id" element={<AdminRouteProtect> <UpdateDailypricing /> </AdminRouteProtect>} />
+            <Route path="/adddailypricing" element={<AdminRouteProtect> <AddDailyPricing /> </AdminRouteProtect>} />
+            <Route path="/allhourlypricing" element={<AdminRouteProtect> <AllHourlyPricing /> </AdminRouteProtect>} />
+            <Route path="/updatehourlypricing/:id" element={<AdminRouteProtect> <UpdateHourlyPricing /> </AdminRouteProtect>} />
+            <Route path="/addhourlypricing" element={<AdminRouteProtect> <AddHourlyPricing /> </AdminRouteProtect>} />
+            <Route path="/allbasepricing" element={<AdminRouteProtect> <AllBasepricing /> </AdminRouteProtect>} />
+            <Route path="/addbasepricing" element={<AdminRouteProtect> <AddBasepricing /> </AdminRouteProtect>} />
+            <Route path="/updatebasepricing/:id" element={<AdminRouteProtect> <UpdateBasepricing /> </AdminRouteProtect>} />
+            <Route path="/alloutstationpricing" element={<AdminRouteProtect> <AllOutstationpricing /> </AdminRouteProtect>} />
+            <Route path="/addoutstationpricing" element={<AdminRouteProtect> <Addoutstationpricing /> </AdminRouteProtect>} />
+            <Route path="/updateoutstationpricing/:id" element={<AdminRouteProtect> <Updateoutstationpricing /> </AdminRouteProtect>} />
+            <Route path="/allambulancepricing" element={<AdminRouteProtect> <AllAmbulancePricing /> </AdminRouteProtect>} />
+            <Route path="/addambulancepricing" element={<AdminRouteProtect> <AddAmbulancePricing /> </AdminRouteProtect>} />
+            <Route path="/updateambulancepricing/:id" element={<AdminRouteProtect> <UpdateAmbulancePricing /> </AdminRouteProtect>} />
+            <Route path="/allsupercarpricing" element={<AdminRouteProtect> <AllSuperCarPricing /> </AdminRouteProtect>} />
+            <Route path="/addsupercarpricing" element={<AdminRouteProtect> <AddSuperCarPricing /> </AdminRouteProtect>} />
+            {/* <Route path="/taxes" element={<AdminRouteProtect> <Taxes /> </AdminRouteProtect>} /> */}
+            {/* <Route path="/alltaxpricing" element={<AdminRouteProtect> <AllTaxpricing /> </AdminRouteProtect>} /> */}
+            <Route path="/taxpricing" element={<AdminRouteProtect> <AddTaxpricing /> </AdminRouteProtect>} />
+            <Route path="/updatetaxpricing/:id" element={<AdminRouteProtect> <UpdateTaxpricing /> </AdminRouteProtect>} />
+            <Route path="/add_service" element={<AdminRouteProtect> <Add_Service /> </AdminRouteProtect>} />
+            <Route path="/Update_Service/:id" element={<AdminRouteProtect> <Update_Service /> </AdminRouteProtect>} />
+            <Route path="/wallet_management" element={<AdminRouteProtect> <Wallet_Management /> </AdminRouteProtect>} />
+            <Route path="/payout_management" element={<AdminRouteProtect> <Payout_Management /> </AdminRouteProtect>} />
+            <Route path="/all_referrals" element={<AdminRouteProtect> <All_Referrals /> </AdminRouteProtect>} />
+            <Route path="/vehicletype" element={<AdminRouteProtect> <Vehicletype /> </AdminRouteProtect>} />
+            <Route path="/allnormalvehicles" element={<AdminRouteProtect> <AllnormalVehicles /> </AdminRouteProtect>} />
+            <Route path="/addnormalvehicles" element={<AdminRouteProtect> <AddnormalVehicles /> </AdminRouteProtect>} />
+            <Route path="/updatenormalvehicles/:id" element={<AdminRouteProtect> <UpdatenormalVehicles /> </AdminRouteProtect>} />
+            <Route path="/allsuperCarvehicles" element={<AdminRouteProtect> <AllsuperCarVehicles /> </AdminRouteProtect>} />
+            <Route path="/addsupercarvehicles" element={<AdminRouteProtect> <AddsuperCarVehicles /> </AdminRouteProtect>} />
+            <Route path="/updatesupercarvehicles/:id" element={<AdminRouteProtect> <UpdatesuperCarVehicles /> </AdminRouteProtect>} />
+            <Route path="/alllocation" element={<AdminRouteProtect> <AllLocation /> </AdminRouteProtect>} />
+            <Route path="/allstate" element={<AdminRouteProtect> <AllState /> </AdminRouteProtect>} />
+            <Route path="/allcity" element={<AdminRouteProtect> <AllCity /> </AdminRouteProtect>} />
+            <Route path="/addcity" element={<AdminRouteProtect> <AddCity /> </AdminRouteProtect>} />
+            <Route path="/updatecity/:id" element={<AdminRouteProtect> <UpdateCity /> </AdminRouteProtect>} />
+            <Route path="/allpromocode" element={<AdminRouteProtect> <AllPromoCode /> </AdminRouteProtect>} />
+            <Route path="/addpromocode" element={<AdminRouteProtect> <AddPromoCode /> </AdminRouteProtect>} />
+            <Route path="/updatepromocode/:id" element={<AdminRouteProtect> <UpdatePromoCode /> </AdminRouteProtect>} />
+            <Route path="/termsandconditions" element={<AdminRouteProtect> <Termsandconditions /> </AdminRouteProtect>} />
+            <Route path="/addtermsandconditions" element={<AdminRouteProtect> <AddTermsandconditions /> </AdminRouteProtect>} />
+            <Route path="/updatetermsandconditions/:id" element={<AdminRouteProtect> <UpdateTermsandconditions /> </AdminRouteProtect>} />
+            <Route path="/privacypolicy" element={<AdminRouteProtect> <Privacypolicy /> </AdminRouteProtect>} />
+            <Route path="/addprivacypolicy" element={<AdminRouteProtect> <AddPrivacypolicy /> </AdminRouteProtect>} />
+            <Route path="/updateprivacypolicy/:id" element={<AdminRouteProtect> <UpdatePrivacypolicy /> </AdminRouteProtect>} />
+            <Route path="/privileges" element={<AdminRouteProtect> <Privileges /> </AdminRouteProtect>} />
+            <Route path="/earnings" element={<AdminRouteProtect> <Earnings /> </AdminRouteProtect>} />
+            <Route path="/refundtransaction" element={<AdminRouteProtect> <RefundTransaction /> </AdminRouteProtect>} />
+            <Route path="/pay_user/:id" element={<AdminRouteProtect> <Pay_User /> </AdminRouteProtect>} />
+            <Route path="/sos" element={<AdminRouteProtect> <SOSUpdate /> </AdminRouteProtect>} />
+            <Route path="/soslocation/:id" element={<AdminRouteProtect> <SOSLocation /> </AdminRouteProtect>} />
+            <Route path="/setting" element={<AdminRouteProtect> <Setting /> </AdminRouteProtect>} />
+            <Route path="/adminprofile" element={<AdminRouteProtect> <AdminProfile /> </AdminRouteProtect>} />
+            {/* <Route path="/alladmin" element={<AdminRouteProtect> <AllAdmin /> </AdminRouteProtect>} /> */}
+            <Route path="/settlebooking" element={<AdminRouteProtect> <SettleBooking /> </AdminRouteProtect>} />
+            <Route path="/settlebookingdetails/:id" element={<AdminRouteProtect> <SettleBookingDetails /> </AdminRouteProtect>} />
+            <Route path="/notification" element={<AdminRouteProtect> <Notification /> </AdminRouteProtect>} />
+            <Route path="/allbookings" element={<AdminRouteProtect> <AllBookings /> </AdminRouteProtect>} />
+            <Route path="/livechart" element={<AdminRouteProtect> <LiveChart /> </AdminRouteProtect>} />
+            <Route path="/geofencing_view" element={<AdminRouteProtect> <Geofencing /> </AdminRouteProtect>} />
+            <Route path="/cancellled_booking" element={<AdminRouteProtect> <AllCancledBooking /> </AdminRouteProtect>} />
+            <Route path="/scheduled_booking" element={<AdminRouteProtect> <AllScheduledBooking /> </AdminRouteProtect>} />
+            <Route path="/updatesupercarpricing/:id" element={<AdminRouteProtect> <UpdateSuperCarPricing /> </AdminRouteProtect>} />
+            <Route path="/bookingdetails/:id" element={<AdminRouteProtect> <BookingDetails /> </AdminRouteProtect>} />
+            <Route path="/liveChartWithDriver" element={<AdminRouteProtect> <LiveChartWithDriver /> </AdminRouteProtect>} />
+            <Route path="/admindetails/:id" element={<AdminRouteProtect> <AdminDetails /> </AdminRouteProtect>} />
+            <Route path="/allearning" element={<AdminRouteProtect> <AdminEarning /> </AdminRouteProtect>} />
+            <Route path="/user_bookings/:id" element={<AdminRouteProtect> <User_Bookings /> </AdminRouteProtect>} />
+            <Route path="/driver_bookings/:id" element={<AdminRouteProtect> <Driver_Bookings /> </AdminRouteProtect>} />
+            <Route path="/vendor_bookings/:id" element={<AdminRouteProtect> <Vendor_bookings /> </AdminRouteProtect>} />
+            <Route path="/bookings" element={<AdminRouteProtect> <Bookings /> </AdminRouteProtect>} />
+          </Routes>
+        </Router>
     </>
   );
 }

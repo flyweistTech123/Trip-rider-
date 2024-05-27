@@ -152,39 +152,7 @@ const Users = () => {
                                             filteredRiderData.map(rider => (
                                                 <tr key={rider.id}>
                                                     <td>
-                                                        <img src={rider?.profilePicture || img2} alt="No image" style={{ width: '60px', height:"60px",  borderRadius: "100%" }} />
-                                                    </td>
-                                                    <td>{rider?.name}</td>
-                                                    <td>{rider.email}</td>
-                                                    <td>{rider.mobileNumber}</td>
-                                                    <td style={{ color: '#F52D56' }}>{rider.wallet}</td>
-                                                    <td>{rider.totalBooking}</td>
-                                                    <td>
-                                                        <div className='rider9'>
-                                                            <div className='rider10' onClick={() => deleteRider(rider._id)}>
-                                                                <RiDeleteBinLine color='#667085' size={20} />
-                                                                <p>Delete</p>
-                                                            </div>
-                                                            <div className='rider10' onClick={() => { rider.isBlock ? unblockRider(rider._id) : blockRider(rider._id) }}>
-                                                                <MdOutlineBlock color={rider.isBlock ? "red" : "#667085"} size={20} />
-                                                                <p style={{ color: rider.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
-                                                            </div>
-                                                            <div className='rider10'>
-                                                                <Link to={`/riders_details/${rider._id}`} className='sidebar-link' >
-                                                                    <IoEyeOutline color='#667085' size={20} />
-                                                                    <p>View</p>
-                                                                </Link>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))
-
-                                            :
-                                            riderData.map(rider => (
-                                                <tr key={rider.id}>
-                                                    <td>
-                                                        <img src={rider?.profilePicture || img2} alt="No image" style={{ width: '60px', height:"60px", borderRadius: "100%" }} />
+                                                        <img src={rider?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
                                                     </td>
                                                     <td>{rider?.name}</td>
                                                     <td>{rider.email}</td>
@@ -212,7 +180,39 @@ const Users = () => {
                                                 </tr>
                                             ))
 
-                                        )}
+                                            :
+                                            riderData.map(rider => (
+                                                <tr key={rider.id}>
+                                                    <td>
+                                                        <img src={rider?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
+                                                    </td>
+                                                    <td>{rider?.name}</td>
+                                                    <td>{rider.email}</td>
+                                                    <td>{rider.mobileNumber}</td>
+                                                    <td style={{ color: '#F52D56' }}>{rider.wallet}</td>
+                                                    <td>{rider.totalBooking}</td>
+                                                    <td>
+                                                        <div className='rider9'>
+                                                            <div className='rider10' onClick={() => deleteRider(rider._id)}>
+                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                <p>Delete</p>
+                                                            </div>
+                                                            <div className='rider10' onClick={() => { rider.isBlock ? unblockRider(rider._id) : blockRider(rider._id) }}>
+                                                                <MdOutlineBlock color={rider.isBlock ? "red" : "#667085"} size={20} />
+                                                                <p style={{ color: rider.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/user_details/${rider._id}`} className='sidebar-link' >
+                                                                    <IoEyeOutline color='#667085' size={20} />
+                                                                    <p>View</p>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+
+                                    )}
                             </tbody>
                         </table>
                     </div>

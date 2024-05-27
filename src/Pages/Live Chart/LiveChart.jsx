@@ -7,6 +7,8 @@ import { db } from "../../Components/Firebase/Firebase";
 import { useNavigate } from 'react-router-dom';
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -76,7 +78,6 @@ const LiveChart = () => {
     };
 
     const fetchMessages = async () => {
-        console.log('boss')
         try {
             if (!selectedUser || !selectedUser._id) return;
             const messagesRef = collection(db, 'chatwithadmin', selectedUser._id, 'messages');
@@ -87,12 +88,18 @@ const LiveChart = () => {
             querySnapshot.forEach(doc => {
                 allMessages.push({ id: doc.id, ...doc.data() });
             });
+
+            if (allMessages.length > messages.length) {
+                toast.success("New message");
+            }
+
             setMessages(allMessages);
-            console.log("hello", allMessages);
+            console.log("Messages fetched: ", allMessages);
         } catch (error) {
             console.error('Error fetching messages:', error);
         }
     };
+
 
     const fetchuserData = async () => {
         try {
