@@ -15,15 +15,7 @@ const Navbar = ({ admindata, onLogout, clearToken, userRole }) => {
     const navigate = useNavigate()
 
     const handleLogout = () => {
-        // Clear token from localStorage
-        clearToken();
-        userRole();
-        // Clear adminData from localStorage (triggered by onLogout prop)
-        onLogout();
-        // Show logout success toast
-        navigate('/register');
-        toast.success("Logout successfully");
-        // Redirect to home page
+        localStorage.clear();
     };
 
 

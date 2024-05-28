@@ -209,9 +209,9 @@ const Dashboard = () => {
             ) : (
               <div>
                 {permissionsArray.map(permission => (
-                  <React.Fragment key={permission}>
+                  <React.Fragment key={permission.name}>
                     <div className='dashboard2'>
-                      {permission === "All Vendors" && (
+                      {permission.name === "All Vendors" && (
                         <Link to="/vendors" className="sidebar-link">
                           <div className="dashboard1">
                             <img src={img2} alt="" />
@@ -221,7 +221,7 @@ const Dashboard = () => {
                         </Link>
                       )}
 
-                      {permission === "All Users" && (
+                      {permission.name === "All Users" && (
                         <Link to="/users" className="sidebar-link">
                           <div className="dashboard1">
                             <img src={img} alt="" />

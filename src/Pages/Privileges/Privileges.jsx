@@ -177,7 +177,7 @@ const Privileges = () => {
                                                     <td>
                                                         <ul>
                                                             {admin.permissions.map((permission, permIndex) => (
-                                                                <li key={permIndex}>{permission}</li>
+                                                                <li key={permIndex}>{permission.name}</li>
                                                             ))}
                                                         </ul>
                                                     </td>
@@ -233,7 +233,7 @@ const Privileges = () => {
                                                         <td>
                                                             <ul>
                                                                 {admin.permissions.map((permission, permIndex) => (
-                                                                    <li key={permIndex}>{permission}</li>
+                                                                    <li key={permIndex}>{permission.name}</li>
                                                                 ))}
                                                             </ul>
                                                         </td>

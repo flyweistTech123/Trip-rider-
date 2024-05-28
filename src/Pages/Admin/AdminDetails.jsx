@@ -20,7 +20,6 @@ import { useNavigate } from 'react-router-dom';
 
 const AdminDetails = () => {
 
-
     const permissionsList = [
         'All Users',
         'All Drivers',
@@ -48,6 +47,80 @@ const AdminDetails = () => {
 
 
 
+    const { id } = useParams();
+    const [modalShow, setModalShow] = React.useState(false);
+    const [adminData, setAdminData] = useState(null);
+    const [isBlocked, setIsBlocked] = useState(false);
+    const [newPermission, setNewPermission] = useState('');
+    const [kycstatus1, setKYCstatus1] = useState(" ");
+    const [permissionsListArray, setPermissionsListArray] = useState([]);
+    const [view, setView] = useState(false);
+    const [delete1, setDelete1] = useState(false);
+    const [edit, setEdit] = useState(false);
+
+
+
+
+
+    const handleSaveChanges = async () => {
+        if (!newPermission) {
+            toast.error('Please select a permission');
+            return;
+        }
+
+        // Check if the permission already exists
+        const existingPermissionIndex = permissionsListArray.findIndex(perm => perm.name === newPermission);
+        if (existingPermissionIndex !== -1) {
+            // Update the existing permission
+            const updatedPermissions = [...permissionsListArray];
+            updatedPermissions[existingPermissionIndex] = {
+                name: newPermission,
+                view: view,
+                delete: delete1,
+                edit: edit
+            };
+            setPermissionsListArray(updatedPermissions);
+        } else {
+            // Add new permission
+            const newPerm = {
+                name: newPermission,
+                view: view,
+                delete: delete1,
+                edit: edit
+            };
+            setPermissionsListArray([...permissionsListArray, newPerm]);
+        }
+
+        // Reset form fields
+        setNewPermission('');
+        setView(false);
+        setDelete1(false);
+        setEdit(false);
+
+        // Send the updated permissions list to the API
+        try {
+            if (permissionsListArray.length === 0) {
+                toast.error('Please add at least one permission');
+                return;
+            }
+
+            await axios.put(
+                `${BaseUrl}api/v1/SuperAdmin/updateAdminProfile/${id}`,
+                { permissions: permissionsListArray },
+                getAuthHeaders()
+            );
+
+            toast.success('Permissions updated successfully');
+            fetchAdminData();
+        } catch (error) {
+            console.error('Error updating permissions:', error);
+            toast.error('Error updating permissions');
+        }
+    };
+
+
+
+
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -57,14 +130,6 @@ const AdminDetails = () => {
 
         return `${formattedDate} `;
     };
-
-
-    const { id } = useParams();
-    const [modalShow, setModalShow] = React.useState(false);
-    const [adminData, setAdminData] = useState(null);
-    const [isBlocked, setIsBlocked] = useState(false);
-    const [newPermission, setNewPermission] = useState('');
-    const [kycstatus1, setKYCstatus1] = useState(" ");
 
 
     const navigate = useNavigate()
@@ -120,65 +185,41 @@ const AdminDetails = () => {
     };
 
 
+
     const handlePermissionAdd = async () => {
         try {
-            if (!newPermission) {
-                return; // Exit early if newPermission is empty
+            if (permissionsListArray.length === 0) {
+                toast.error('Please add at least one permission');
+                return;
             }
 
-            // Check if the new permission already exists in adminData.permissions
-            if (adminData.permissions.includes(newPermission)) {
-                toast.error('Permission already exists');
-                return; // Exit if the permission already exists
-            }
-
-            // Validate newPermission against the permissionsList
-            if (!permissionsList.includes(newPermission)) {
-                toast.error('Invalid permission');
-                return; // Exit if the permission is not valid
-            }
-
-            // Construct the updated permissions array by adding the new permission
-            const updatedPermissions = [...adminData.permissions, newPermission];
-
-            // Make the API request to update the permissions
             await axios.put(
                 `${BaseUrl}api/v1/SuperAdmin/updateAdminProfile/${id}`,
-                { permissions: updatedPermissions },
+                { permissions: permissionsListArray },
                 getAuthHeaders()
             );
 
-            // Clear the newPermission state
-            setNewPermission('');
-
-            // Display success message
-            toast.success('Permission added successfully');
-
-            // Refresh admin data after permission update
+            setPermissionsListArray([]);
+            toast.success('Permissions added successfully');
             fetchAdminData();
         } catch (error) {
-            console.error('Error adding permission:', error);
-            toast.error('Error adding permission');
+            console.error('Error adding permissions:', error);
+            toast.error('Error adding permissions');
         }
     };
 
 
     const handlePermissionDelete = async (permission) => {
         try {
-            // Filter out the permission to be deleted from the permissions array
-            const updatedPermissions = adminData.permissions.filter((perm) => perm !== permission);
+            const updatedPermissions = adminData.permissions.filter((perm) => perm.name !== permission.name);
 
-            // Make the API request to update the permissions
             await axios.put(
                 `${BaseUrl}api/v1/SuperAdmin/updateAdminProfile/${id}`,
                 { permissions: updatedPermissions },
                 getAuthHeaders()
             );
 
-            // Display success message
             toast.success('Permission removed successfully');
-
-            // Update adminData with the updated permissions
             setAdminData({ ...adminData, permissions: updatedPermissions });
         } catch (error) {
             console.error('Error deleting permission:', error);
@@ -341,7 +382,7 @@ const AdminDetails = () => {
                         </div>
                         <div className='rider4'>
                             <button onClick={() => navigate('/privileges')}>Back</button>
-                            <button onClick={handlePermissionAdd}>Save Changes</button>
+                            <button onClick={handleSaveChanges}>Save Changes</button>
                         </div>
                     </div>
                     {adminData && (
@@ -445,11 +486,63 @@ const AdminDetails = () => {
 
                                             </div>
 
+                                            <div className='rider_details14'>
+                                                <label htmlFor="">Sub Permissions</label>
+                                                <div className='adminprofileupdate56'>
+                                                    <div className='adminprofileupdate57'>
+                                                        <input type="checkbox" checked={view} onChange={(e) => setView(!view)} />
+                                                        <label htmlFor="">View</label>
+                                                    </div>
+                                                    <div className='adminprofileupdate57'>
+                                                        <input type="checkbox" checked={delete1} onChange={(e) => setDelete1(!delete1)} />
+                                                        <label htmlFor="">Delete</label>
+                                                    </div>
+                                                    <div className='adminprofileupdate57'>
+                                                        <input type="checkbox" checked={edit} onChange={(e) => setEdit(!edit)} />
+                                                        <label htmlFor="">Edit</label>
+                                                    </div>
+
+                                                    {/* <div className='adminprofileupdate57'>
+                                                        <button type='button' onClick={handleArrayData}>Submit</button>
+                                                    </div> */}
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
 
 
                                     <div className='rider_details14'>
+                                        <div className='rider_details15'>
+                                            <h6>Permissions</h6>
+                                            <table className="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Permission</th>
+                                                        <th scope="col">View</th>
+                                                        <th scope="col">Delete</th>
+                                                        <th scope="col">Edit</th>
+                                                        <th scope="col">Remove</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {adminData.permissions.map((permission) => (
+                                                        <tr key={permission.name}>
+                                                            <td>{permission.name}</td>
+                                                            <td>{permission.view ? 'Yes' : 'No'}</td>
+                                                            <td>{permission.delete ? 'Yes' : 'No'}</td>
+                                                            <td>{permission.edit ? 'Yes' : 'No'}</td>
+                                                            <td>
+                                                                <RiDeleteBinLine className="delete-icon" color='#667085'
+                                                                size={20}  onClick={() => handlePermissionDelete(permission)} />
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    {/* <div className='rider_details14'>
                                         <label htmlFor="">Permissions</label>
                                         <ul className="permission-list">
                                             {adminData.permissions.length > 0 ? (
@@ -471,12 +564,7 @@ const AdminDetails = () => {
                                                 <p className='no-permissions-message'>No permissions!</p>
                                             )}
                                         </ul>
-                                    </div>
-
-                                    <div className='promo1'>
-                                        {/* <button onClick={() => navigate('/privileges')}>Close</button>
-                                        <button onClick={handlePermissionAdd}>Save Changes</button> */}
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </>

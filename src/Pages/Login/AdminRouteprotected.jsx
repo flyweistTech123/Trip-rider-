@@ -6,12 +6,9 @@ const AdminRouteProtect = ({ children }) => {
     const role = localStorage.getItem('role');
     const boss=localStorage.getItem('token')
 
-    // Check if user is logged in and is an admin
     if (!boss) {
-        console.log('clicked')
-        // Redirect to login page if not logged in or not admin
         
-        return navigate('/login');
+        return navigate('/');
     }
 
     // Render children if user is logged in and is an admin

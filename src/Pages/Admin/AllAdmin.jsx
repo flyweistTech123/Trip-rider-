@@ -106,13 +106,13 @@ const AllAdmin = () => {
                                                     <td>{admin.mobileNumber}</td>
                                                     <td>{admin.role}</td>
                                                     <td>{admin.status}</td>
-                                                    <td>
+                                                    {/* <td>
                                                         <ul>
                                                             {admin.permissions.map((permission, permIndex) => (
                                                                 <li key={permIndex}>{permission}</li>
                                                             ))}
                                                         </ul>
-                                                    </td>
+                                                    </td> */}
                                                     <td>
                                                         <div className='service11'>
                                                             <div className='rider10'>
@@ -142,13 +142,13 @@ const AllAdmin = () => {
                                                     <td>{admin.mobileNumber}</td>
                                                     <td>{admin.role}</td>
                                                     <td>{admin.status}</td>
-                                                    <td>
+                                                    {/* <td>
                                                         <ul>
                                                             {admin.permissions.map((permission, permIndex) => (
                                                                 <li key={permIndex}>{permission}</li>
                                                             ))}
                                                         </ul>
-                                                    </td>
+                                                    </td> */}
                                                     <td>
                                                         <div className='service11'>
                                                             <div className='rider10'>

@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import img from '../../Images/imgno.jpg'
 import img1 from '../../Images/img28.png'
 import img2 from '../../Images/user.webp'
+import { Document, Page } from 'react-pdf';
 
 
 
@@ -133,6 +134,7 @@ const Driver_Details = () => {
 
 
 
+
     const formatDate = (dateString) => {
         const date = new Date(dateString);
 
@@ -145,6 +147,10 @@ const Driver_Details = () => {
 
         return formattedDate;
     };
+
+
+
+
     // Function to handle image click
     const handleImageClick = (imageUrl) => {
         setCurrentImageUrl(imageUrl);
@@ -533,7 +539,8 @@ const Driver_Details = () => {
                             <button onClick={handleDownload} style={{ marginBottom: '10px' }}>Download Image</button>
                         </div>
                         <div className="modal-content">
-                            <img src={imageUrl} alt="Full Image" style={{ width: '100%' }} />
+                            {/* <img src={imageUrl} alt="Full Image" style={{ width: '100%' }} /> */}
+                            <iframe src={imageUrl} frameborder="0"></iframe>
                         </div>
                     </div>
                 </Modal.Body>
@@ -854,6 +861,7 @@ const Driver_Details = () => {
                                                     alt={interiorImage !== img ? "Driver Interior Image" : "No Image"}
                                                     onClick={() => handleImageClick(interiorImage)}
                                                 />
+                                                {/* <iframe src={interiorImage} style={{ width: '100%', height: '100%', border: 'none' }} onClick={() => handleImageClick(bankStatementImage)}></iframe> */}
                                                 <h6>Interior</h6>
                                             </div>
                                             <div className='rider4'>
@@ -863,6 +871,7 @@ const Driver_Details = () => {
                                         <div className='rider_details2122'>
                                             <div className='rider_details21' >
                                                 <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleImageChange1} />
+
                                                 <img
                                                     src={exteriorImage instanceof File ? URL.createObjectURL(exteriorImage) : exteriorImage}
                                                     alt={exteriorImage !== img ? "Driver Exterior Image" : "No Image"}
@@ -972,6 +981,10 @@ const Driver_Details = () => {
                                                     src={bankStatementImage instanceof File ? URL.createObjectURL(bankStatementImage) : bankStatementImage}
                                                     alt={bankStatementImage !== img ? "Driver Bank Statement Image" : "No Image"}
                                                 />
+                                                {/* <iframe src={bankStatementImage} style={{ width: '100%', height: '100%', border: 'none' }} onClick={() => handleImageClick(bankStatementImage)}></iframe> */}
+                                                {/* <Document file={bankStatementImage}>
+                                                    <Page pageNumber={1} />
+                                                </Document> */}
                                                 <h6>Bank Statement</h6>
                                             </div>
                                             <div className='rider4'>
@@ -983,6 +996,7 @@ const Driver_Details = () => {
                                 </div>
 
                                 <div className='rider_details19'>
+
                                     {/* <button onClick={() => navigate('/drivers')}>Close</button> */}
                                 </div>
                             </div>
