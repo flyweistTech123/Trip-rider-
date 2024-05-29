@@ -28,21 +28,21 @@ const AddHourlyPricing = () => {
 
 
     const handlePostRequest = async () => {
-        const data={
-            city:city1,
-            vehicle:vehicle,
-            km:distance,
-            hours:hours,
-            pricePerMin:pricePerMin,
-            pricePerkm:pricePerkm,
-            pricePerKmGreater:pricePerKmGreater,
-            pricePerMinGreater:pricePerMinGreater,
+        const data = {
+            city: city1,
+            vehicle: vehicle,
+            km: distance,
+            hours: hours,
+            pricePerMin: pricePerMin,
+            pricePerkm: pricePerkm,
+            pricePerKmGreater: pricePerKmGreater,
+            pricePerMinGreater: pricePerMinGreater,
         }
-        
+
 
         try {
             const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/AddHourlyPricing', data);
-            
+
             toast.success("Hourly Pricing add successfully");
 
             // Reset state variables to clear input fields
@@ -68,7 +68,7 @@ const AddHourlyPricing = () => {
                 const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/vehicle`);
                 setVehicles(response.data.data);
                 console.log(response.data.data, "vechcal print")
-                
+
             } catch (error) {
                 console.error('Error fetching vehicles:', error);
             }
@@ -113,7 +113,7 @@ const AddHourlyPricing = () => {
 
 
                     <div className='dailyprice'>
-                        <div className='dailyprice1'>
+                        <div className='dailyprice3'>
                             <div className='dailyprice2'>
                                 <label htmlFor="">Vehicle</label>
                                 <select onChange={(e) => setVehicle(e.target.value)}>
@@ -123,7 +123,7 @@ const AddHourlyPricing = () => {
                                     ))}
                                 </select>
                             </div>
-                            
+
                             <div className='dailyprice2'>
                                 <label htmlFor="">City</label>
                                 <select onChange={(e) => setCity1(e.target.value)}>
@@ -133,39 +133,31 @@ const AddHourlyPricing = () => {
                                     ))}
                                 </select>
                             </div>
-                        </div>
-
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Distance</label>
-                                <input type="number" placeholder='Enter Distance'  value={distance} onChange={(e) => setDistance(e.target.value)} />
+                                <input type="number" placeholder='Enter Distance' value={distance} onChange={(e) => setDistance(e.target.value)} />
                             </div>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Hours</label>
                                 <input type="number" placeholder='Enter Hours' value={hours} onChange={(e) => setHours(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Price Per Minutes</label>
-                                <input type="number" placeholder='Enter Price'value={pricePerMin} onChange={(e) => setPricePerMin(e.target.value)}  />
+                                <input type="number" placeholder='Enter Price' value={pricePerMin} onChange={(e) => setPricePerMin(e.target.value)} />
                             </div>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Price Per Km</label>
-                                <input type="number" placeholder='Enter  Price'value={pricePerkm} onChange={(e) => setPricePerkm(e.target.value)}  />
+                                <input type="number" placeholder='Enter  Price' value={pricePerkm} onChange={(e) => setPricePerkm(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Price Per Min Greater</label>
-                                <input type="number" placeholder='Enter Price'value={pricePerMinGreater} onChange={(e) => setPricePerMinGreater(e.target.value)}  />
+                                <input type="number" placeholder='Enter Price' value={pricePerMinGreater} onChange={(e) => setPricePerMinGreater(e.target.value)} />
                             </div>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Price Per Km Greater</label>
-                                <input type="number" placeholder='Enter  Price'value={pricePerKmGreater} onChange={(e) => setPricePerKmGreater(e.target.value)}  />
+                                <input type="number" placeholder='Enter  Price' value={pricePerKmGreater} onChange={(e) => setPricePerKmGreater(e.target.value)} />
                             </div>
                         </div>
-
                         <div className='dailyprice5'>
                             <button onClick={() => navigate('/allhourlypricing')}>Cancel</button>
                             <button onClick={handlePostRequest}>Add Price</button>

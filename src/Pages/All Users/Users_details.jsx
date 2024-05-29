@@ -19,13 +19,25 @@ import { Button, Form } from "react-bootstrap";
 
 const Users_details = () => {
 
+    
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+
+        // Ensure day and month are two digits
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+
+        const formattedDate = `${year}-${month}-${day}`;
+
+        return formattedDate;
+    };
+
     const { id } = useParams();
     const navigate = useNavigate()
-    const [RiderData, setRiderData] = useState(null);
     const [isBlocked, setIsBlocked] = useState(false);
     const [modalShow, setModalShow] = React.useState(false);
-
-    const [name, setName] = useState('');
+    const [name, setName] = useState('Default Name');
     const [email, setEmail] = useState('');
     const [number, setNumber] = useState('');
     const [gender, setGender] = useState('');
@@ -40,18 +52,6 @@ const Users_details = () => {
 
 
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-
-        // Ensure day and month are two digits
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
-
-        const formattedDate = `${year}-${month}-${day}`;
-
-        return formattedDate;
-    };
 
 
 
@@ -59,7 +59,9 @@ const Users_details = () => {
         try {
             const response = await axios.get(`${BaseUrl}api/v1/getUserById/${id}`, getAuthHeaders())
             const { name, email, gender, birthday, mobileNumber, profilePicture, role, wallet, totalBooking } = response.data.data;
-            setName(name);
+            if (name) {
+                setName(name);
+            }
             setEmail(email);
             setNumber(mobileNumber);
             setGender(gender);
@@ -97,17 +99,6 @@ const Users_details = () => {
     }
 
 
-
-
-
-    // const formatDate = (dateString) => {
-    //     const date = new Date(dateString);
-
-    //     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    //     const formattedDate = `${date.getDate().toString().padStart(2, '0')} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
-
-    //     return `${formattedDate} `;
-    // };
 
     const handleDeleteRider = async () => {
         try {
@@ -180,18 +171,28 @@ const Users_details = () => {
                                         <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleImageChange} />
                                         <img src={profileimg instanceof File ? URL.createObjectURL(profileimg) : profileimg || img2} alt="No image" onClick={triggerFileInput} style={{ cursor: 'pointer' }} />
                                         <div className='rider_details4'>
-                                            <h6>
-                                                {isEditingName ? (
+                                        <h6 className='rider_details4'>
+                                                {name ? (
+                                                    isEditingName ? (
+                                                        <input
+                                                            type="text"
+                                                            value={name}
+                                                            onChange={(e) => setName(e.target.value)}
+                                                            onBlur={() => setIsEditingName(false)}
+                                                            autoFocus
+                                                            style={{ width: '100%' }}
+                                                        />
+                                                    ) : (
+                                                        <span onClick={() => setIsEditingName(true)}>{name}</span>
+                                                    )
+                                                ) : (
                                                     <input
                                                         type="text"
+                                                        placeholder='Enter name'
                                                         value={name}
                                                         onChange={(e) => setName(e.target.value)}
-                                                        onBlur={() => setIsEditingName(false)}
-                                                        autoFocus
                                                         style={{ width: '100%' }}
                                                     />
-                                                ) : (
-                                                    <span onClick={() => setIsEditingName(true)}>{name}</span>
                                                 )}
                                                 <div className='rider_details5'>
                                                     <p>{role}</p>

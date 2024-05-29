@@ -112,8 +112,6 @@ const AddAmbulancePricing = () => {
                                 <label htmlFor="">Night Charge</label>
                                 <input type="number" placeholder='Enter night charge' value={nightcharge} onChange={(e) => setNightCharge(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Waiting Charge</label>
                                 <input type="number" placeholder='Enter waiting charge' value={waitingCharge} onChange={(e) => setWaitingCharge(e.target.value)} />
@@ -122,8 +120,6 @@ const AddAmbulancePricing = () => {
                                 <label htmlFor="">Traffic Charge</label>
                                 <input type="number" placeholder='Enter traffic charge' value={trafficcharge} onChange={(e) => setTrafficCharge(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Tax</label>
                                 <input type="number" placeholder='Enter Tax' value={taxrate} onChange={(e) => setTaxRate(e.target.value)} />
@@ -132,8 +128,6 @@ const AddAmbulancePricing = () => {
                                 <label htmlFor="">GST</label>
                                 <input type="number" placeholder='Enter GST' value={gstrate} onChange={(e) => setGstRate(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">price/Km</label>
                                 <input type="number" placeholder='Enter price' value={perkm} onChange={(e) => setPerKm(e.target.value)} />
@@ -142,8 +136,6 @@ const AddAmbulancePricing = () => {
                                 <label htmlFor="">Base Price</label>
                                 <input type="number" placeholder='Enter Base price' value={baseprice} onChange={(e) => setBaseprice(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Upload Ambulance Image</label>
                                 <div className='ambulance2' onClick={triggerFileInput1}>
@@ -160,12 +152,7 @@ const AddAmbulancePricing = () => {
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
-
+            
                         <div className='dailyprice5'>
                             <button onClick={() => navigate('/allambulancepricing')}>Cancel</button>
                             <button onClick={handlePostRequest}>Add Price</button>

@@ -71,8 +71,6 @@ const AddTaxpricing = () => {
                                         <label htmlFor="">Night Charges Tax</label>
                                         <input type="number" placeholder='Enter night charge' value={taxprice.nightChargesTax} />
                                     </div>
-                                </div>
-                                <div className='dailyprice3'>
                                     <div className='dailyprice4'>
                                         <label htmlFor="">Service Charge</label>
                                         {/* <input type="number" placeholder='Enter service charge' value={taxprice.serviceCharge} /> */}
@@ -89,8 +87,6 @@ const AddTaxpricing = () => {
                                             <span>(Waiting Charge+fee)</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div className='dailyprice3'>
                                     <div className='dailyprice4'>
                                         <label htmlFor="">Time Rate</label>
                                         {/* <input type="number" placeholder='Enter parking Rate' value={taxprice.timeRate} /> */}
@@ -107,8 +103,6 @@ const AddTaxpricing = () => {
                                             <span>(Discount-Platform charges )</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div className='dailyprice3'>
                                     <div className='dailyprice4'>
                                         <label htmlFor="">Platform Charges</label>
                                         {/* <input type="number" placeholder='Enter time Rate' value={taxprice.plateFormCharges} /> */}
@@ -121,8 +115,6 @@ const AddTaxpricing = () => {
                                         <label htmlFor="">Platform Charges Gst</label>
                                         <input type="number" placeholder='Enter plate Form Charges' value={taxprice.plateFormChargesGst} />
                                     </div>
-                                </div>
-                                <div className='dailyprice3'>
                                     <div className='dailyprice4'>
                                         <label htmlFor="">Surge Charges</label>
                                         {/* <input type="number" placeholder='Enter surge Charges' value={taxprice.surgeCharges} /> */}
@@ -135,8 +127,6 @@ const AddTaxpricing = () => {
                                         <label htmlFor="">Surge Charges Tax</label>
                                         <input type="number" placeholder='Enter toll Charge' value={taxprice.surgeChargesTax} />
                                     </div>
-                                </div>
-                                <div className='dailyprice3'>
                                     <div className='dailyprice4'>
                                         <label htmlFor="">Ride Time Charges</label>
                                         {/* <input type="number" placeholder='Enter ride time Charges' value={taxprice.ridetimeCharges} /> */}
@@ -149,8 +139,6 @@ const AddTaxpricing = () => {
                                         <label htmlFor="">Parking Rate</label>
                                         <input type="number" placeholder='Enter cancellation Charges' value={taxprice.ParkingRate} />
                                     </div>
-                                </div>
-                                <div className='dailyprice3'>
                                     <div className='dailyprice4'>
                                         <label htmlFor="">Toll Charge</label>
                                         {/* <input type="number" placeholder='Enter ride time Charges' value={taxprice.tollCharge} /> */}
@@ -167,8 +155,6 @@ const AddTaxpricing = () => {
                                             <span>(Railway PickUp Charge+fee)</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div className='dailyprice3'>
                                     <div className='dailyprice4'>
                                         <label htmlFor="">Insurance Premium</label>
                                         {/* <input type="number" placeholder='Enter ride time Charges' value={taxprice.otherCharge} /> */}
@@ -185,8 +171,6 @@ const AddTaxpricing = () => {
                                             <span>(Cancellation Charges+fee)</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div className='dailyprice3'>
                                     <div className='dailyprice4'>
                                         <label htmlFor="">GST</label>
                                         {/* <input type="number" placeholder='Enter other Charge' value={taxprice.basePrice} /> */}

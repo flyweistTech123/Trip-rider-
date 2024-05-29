@@ -112,7 +112,7 @@ const UpdateBasepricing = () => {
 
 
                     <div className='dailyprice'>
-                        <div className='dailyprice1'>
+                        <div className='dailyprice3'>
                             <div className='dailyprice2'>
                                 <label htmlFor="">Vehicle</label>
                                 <select value={vehicleName} onChange={(e) => {
@@ -139,8 +139,6 @@ const UpdateBasepricing = () => {
                                     ))}
                                 </select>
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Base Price</label>
                                 <input type="number" placeholder='Enter Base price' value={baseprice} onChange={(e) => setBasePrice(e.target.value)} />
@@ -150,10 +148,6 @@ const UpdateBasepricing = () => {
                                 <input type="number" placeholder='Enter price Per Minutes' value={pricePerMin} onChange={(e) => setPricePerMin(e.target.value)} />
                             </div>
                         </div>
-
-
-
-
                         <div className='dailyprice5'>
                             <button onClick={() => navigate('/allbasepricing')}>Cancel</button>
                             <button onClick={handlePutRequest}>Save Changes</button>

@@ -53,8 +53,9 @@ const LiveChart = () => {
     }, []);
 
 
+
     useEffect(() => {
-        const totalNewMsg = messages.filter(msg => !msg.read).length;
+        const totalNewMsg = messages.filter(msg => !msg.read && msg.type === 'user').length;
         setTotalNewMessages(totalNewMsg);
         const sortedUsers = [...users].sort((a, b) => {
             if (!a.lastMessageTime) return 1; // Put users with no messages at the bottom
@@ -63,7 +64,7 @@ const LiveChart = () => {
         });
 
         setUsers(sortedUsers);
-    }, [messages]);
+    }, [messages])
 
     const fetchAdminData = async () => {
         try {
@@ -77,6 +78,8 @@ const LiveChart = () => {
         }
     };
 
+    
+
     const fetchMessages = async () => {
         try {
             if (!selectedUser || !selectedUser._id) return;
@@ -85,16 +88,24 @@ const LiveChart = () => {
             const querySnapshot = await getDocs(q);
 
             const allMessages = [];
+            
             querySnapshot.forEach(doc => {
                 allMessages.push({ id: doc.id, ...doc.data() });
             });
 
+            // console.log('allMessages', "message ")
+
             if (allMessages.length > messages.length) {
-                toast.success("New message");
+                const newMessages = allMessages.filter(msg => !msg.read && msg.type === 'user');
+                const type = newMessages.type
+                console.log(type, "upadyed")
+                if (newMessages.length > 0) {
+                    toast.success("New message");
+                }
             }
 
             setMessages(allMessages);
-            console.log("Messages fetched: ", allMessages);
+            // console.log("Messages fetched: ", allMessages);
         } catch (error) {
             console.error('Error fetching messages:', error);
         }

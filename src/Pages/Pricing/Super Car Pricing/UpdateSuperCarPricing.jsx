@@ -115,8 +115,6 @@ const UpdateSuperCarPricing = () => {
                                 <label htmlFor="">Price</label>
                                 <input type="number" placeholder='Enter Price' value={price} onChange={(e) => setPrice(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">km Limit</label>
                                 <input type="number" placeholder='Enter Km Limit' value={kmLimit} onChange={(e) => setKmLimit(e.target.value)} />
@@ -125,8 +123,6 @@ const UpdateSuperCarPricing = () => {
                                 <label htmlFor="">km Price</label>
                                 <input type="number" placeholder='Enter Km Price' value={kmPrice} onChange={(e) => setKmPrice(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Hours Limit</label>
                                 <input type="number" placeholder='Enter Hours limit' value={hrLimit} onChange={(e) => setHrLimit(e.target.value)} />
@@ -135,8 +131,6 @@ const UpdateSuperCarPricing = () => {
                                 <label htmlFor="">Hours Price</label>
                                 <input type="number" placeholder='Enter Hours Price' value={hrPrice} onChange={(e) => setHrPrice(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Price/KmGreater</label>
                                 <input type="number" placeholder='Enter Price/KmGreater' value={pricePerKmGreater} onChange={(e) => setPricePerKmGreater(e.target.value)} />
@@ -144,6 +138,21 @@ const UpdateSuperCarPricing = () => {
                             <div className='dailyprice4'>
                                 <label htmlFor="">Price/MinGreater</label>
                                 <input type="number" placeholder='Enter Price/MinGreater' value={pricePerMinGreater} onChange={(e) => SetPricePerMinGreater(e.target.value)} />
+                            </div>
+                            <div className='vehicle13'>
+                                <label htmlFor="">Updated Super Car Image</label>
+                                <div className='service7' onClick={triggerFileInput}>
+                                    <div className='vehicle14'>
+                                        {image ? (
+                                            <img src={image instanceof File ? URL.createObjectURL(image) : image} alt="" />
+                                        ) : (
+                                            <img src={img3} alt="" />
+                                        )}
+                                    </div>
+                                    <p>Drag and drop images here, or click to add image</p>
+                                    <button>Update Image</button>
+                                    <input type="file" id="fileInput" style={{ display: 'none' }} onChange={(e) => setImage(e.target.files[0])} />
+                                </div>
                             </div>
                         </div>
                         <div className='dailyprice3'>
@@ -162,21 +171,7 @@ const UpdateSuperCarPricing = () => {
                             </div> */}
                         </div>
 
-                        <div className='vehicle13'>
-                            <label htmlFor="">Updated Super Car Image</label>
-                            <div className='service7' onClick={triggerFileInput}>
-                                <div className='vehicle14'>
-                                    {image ? (
-                                        <img src={image instanceof File ? URL.createObjectURL(image) : image} alt="" />
-                                    ) : (
-                                        <img src={img3} alt="" />
-                                    )}
-                                </div>
-                                <p>Drag and drop images here, or click to add image</p>
-                                <button>Update Image</button>
-                                <input type="file" id="fileInput" style={{ display: 'none' }} onChange={(e) => setImage(e.target.files[0])} />
-                            </div>
-                        </div>
+
 
 
                         <div className='promo1'>

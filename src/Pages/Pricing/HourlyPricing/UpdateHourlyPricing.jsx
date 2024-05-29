@@ -113,7 +113,7 @@ const UpdateHourlyPricing = () => {
                         </div>
                     </div>
                     <div className='dailyprice'>
-                        <div className='dailyprice1'>
+                        <div className='dailyprice3'>
                             <div className='dailyprice2'>
                                 <label htmlFor="">Vehicle</label>
                                 <select value={vehicleName} onChange={(e) => {
@@ -140,8 +140,6 @@ const UpdateHourlyPricing = () => {
                                     ))}
                                 </select>
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Distance</label>
                                 <input type="number" placeholder='Enter Distance' value={distance} onChange={(e) => setDistance(e.target.value)} />
@@ -150,8 +148,6 @@ const UpdateHourlyPricing = () => {
                                 <label htmlFor="">hours</label>
                                 <input type="number" placeholder='Enter Hours' value={hours} onChange={(e) => setHours(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Price Per Minutes</label>
                                 <input type="number" placeholder='Enter Price' value={pricePerMin} onChange={(e) => setPricePerMin(e.target.value)} />
@@ -160,8 +156,6 @@ const UpdateHourlyPricing = () => {
                                 <label htmlFor="">Price Per Km</label>
                                 <input type="number" placeholder='Enter  Price' value={pricePerkm} onChange={(e) => setPricePerkm(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Price Per Min Greater</label>
                                 <input type="number" placeholder='Enter Price' value={pricePerMinGreater} onChange={(e) => setPricePerMinGreater(e.target.value)} />

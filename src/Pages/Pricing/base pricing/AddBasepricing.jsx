@@ -101,7 +101,7 @@ const AddBasepricing = () => {
 
 
                     <div className='dailyprice'>
-                        <div className='dailyprice1'>
+                        <div className='dailyprice3'>
                             <div className='dailyprice2'>
                                 <label htmlFor="">Vehicle</label>
                                 <select onChange={(e) => setVehicle(e.target.value)}>
@@ -121,8 +121,6 @@ const AddBasepricing = () => {
                                     ))}
                                 </select>
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Base Price</label>
                                 <input type="number" placeholder='Enter Base price' value={baseprice} onChange={(e) => setBasePrice(e.target.value)} />

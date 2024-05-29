@@ -184,20 +184,50 @@ const Drivers = () => {
                                                     <td>{driver?.wallet}</td>
                                                     <td>
                                                         <div className='rider9'>
-                                                            <div className='rider10' onClick={() => deleteDriver(driver._id)}>
-                                                                <RiDeleteBinLine color='#667085' size={20} />
-                                                                <p>Delete</p>
-                                                            </div>
-                                                            <div className='rider10' onClick={() => { driver.isBlock ? unblockDriver(driver._id) : blockDriver(driver._id) }}>
-                                                                <MdOutlineBlock color={driver.isBlock ? "red" : "#667085"} size={20} />
-                                                                <p style={{ color: driver.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
-                                                            </div>
-                                                            <div className='rider10'>
-                                                                <Link to={`/driver_details/${driver._id}`} className='sidebar-link' >
-                                                                    <IoEyeOutline color='#667085' size={20} />
-                                                                    <p>View</p>
-                                                                </Link>
-                                                            </div>
+                                                            {role === 'superAdmin' ? (
+                                                                <>
+                                                                    {/* Render all icons for super admin */}
+                                                                    <div className='rider10' onClick={() => deleteDriver(driver._id)}>
+                                                                        <RiDeleteBinLine color='#667085' size={20} />
+                                                                        <p>Delete</p>
+                                                                    </div>
+                                                                    <div className='rider10' onClick={() => { driver.isBlock ? unblockDriver(driver._id) : blockDriver(driver._id) }}>
+                                                                        <MdOutlineBlock color={driver.isBlock ? "red" : "#667085"} size={20} />
+                                                                        <p style={{ color: driver.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                                    </div>
+                                                                    <div className='rider10'>
+                                                                        <Link to={`/driver_details/${driver._id}`} className='sidebar-link' >
+                                                                            <IoEyeOutline color='#667085' size={20} />
+                                                                            <p>View</p>
+                                                                        </Link>
+                                                                    </div>
+
+                                                                </>
+                                                            ) : (
+                                                                // Render icons based on permissions for non-super admin users
+                                                                <>
+                                                                    {permissionsArray.some(permission => permission.name === 'All Drivers' && permission.delete) && (
+                                                                        <div className='rider10' onClick={() => deleteDriver(driver._id)}>
+                                                                            <RiDeleteBinLine color='#667085' size={20} />
+                                                                            <p>Delete</p>
+                                                                        </div>
+                                                                    )}
+                                                                    {permissionsArray.some(permission => permission.name === 'All Drivers' && permission.block) && (
+                                                                        <div className='rider10' onClick={() => { driver.isBlock ? unblockDriver(driver._id) : blockDriver(driver._id) }}>
+                                                                            <MdOutlineBlock color={driver.isBlock ? "red" : "#667085"} size={20} />
+                                                                            <p style={{ color: driver.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                                        </div>
+                                                                    )}
+                                                                    {permissionsArray.some(permission => permission.name === 'All Drivers' && permission.view) && (
+                                                                        <div className='rider10'>
+                                                                            <Link to={`/driver_details/${driver._id}`} className='sidebar-link' >
+                                                                                <IoEyeOutline color='#667085' size={20} />
+                                                                                <p>View</p>
+                                                                            </Link>
+                                                                        </div>
+                                                                    )}
+                                                                </>
+                                                            )}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -253,7 +283,7 @@ const Drivers = () => {
                                                                             <p>Delete</p>
                                                                         </div>
                                                                     )}
-                                                                    {permissionsArray.some(permission => permission.name === 'All Drivers' && permission.edit) && (
+                                                                    {permissionsArray.some(permission => permission.name === 'All Drivers' && permission.block) && (
                                                                         <div className='rider10' onClick={() => { driver.isBlock ? unblockDriver(driver._id) : blockDriver(driver._id) }}>
                                                                             <MdOutlineBlock color={driver.isBlock ? "red" : "#667085"} size={20} />
                                                                             <p style={{ color: driver.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>

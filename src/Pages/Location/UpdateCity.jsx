@@ -33,13 +33,13 @@ const UpdateCity = () => {
         const fetchCityDetails = async () => {
             try {
                 const response = await axios.get(`${BaseUrl}api/v1/City/${id}`, getAuthHeaders());
-                const { countryCode, city, stateCode, latitude, longitude, limit } = response.data.data;
-                statecode(stateCode);
-                setCity(city);
-                setCountryCode(countryCode);
-                setLatitude(latitude);
-                setLongitude(longitude);
-                setLimit(limit);
+                const datacity = response.data.data;
+                setStateCode(datacity.stateCode);
+                setCity(datacity.city);
+                setCountryCode(datacity.countryCode);
+                setLatitude(datacity.latitude);
+                setLongitude(datacity.longitude);
+                setLimit(datacity.limit);
             } catch (error) {
                 console.error('Error fetching City details:', error);
             }
@@ -79,9 +79,13 @@ const UpdateCity = () => {
             console.error('Error fetching statecodes:', error);
         }
     };
+
+
     useEffect(() => {
         fetchStateCodes();
     }, []);
+
+    // console.log(city,"latitude")
     return (
         <>
             <div className='rider'>

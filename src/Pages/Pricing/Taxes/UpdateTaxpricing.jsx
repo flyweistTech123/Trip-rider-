@@ -139,8 +139,6 @@ const UpdateTaxpricing = () => {
                                 <label htmlFor="">Night Charges Tax</label>
                                 <input type="number" placeholder='Enter night charge tax' value={nightchargestax} onChange={(e) => setnightchargestax(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Service Charge</label>
                                 <input type="number" placeholder='Enter service charge' value={servicecharge} onChange={(e) => setServiceCharge(e.target.value)} />
@@ -149,8 +147,6 @@ const UpdateTaxpricing = () => {
                                 <label htmlFor="">Waiting Charge</label>
                                 <input type="number" placeholder='Enter Waiting Charge' value={waitingCharge} onChange={(e) => setWaitingCharge(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Time Rate</label>
                                 <input type="number" placeholder='Enter time Rate' value={timeRate} onChange={(e) => setTimeRate(e.target.value)} />
@@ -159,8 +155,6 @@ const UpdateTaxpricing = () => {
                                 <label htmlFor="">Km Rate</label>
                                 <input type="number" placeholder='Enter km rate' value={kmRate} onChange={(e) => setKmRate(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Plate Form Charges</label>
                                 <input type="number" placeholder='Enter platfrom charge' value={plateFormCharges} onChange={(e) => setPlateFormCharges(e.target.value)} />
@@ -169,8 +163,6 @@ const UpdateTaxpricing = () => {
                                 <label htmlFor="">Plate Form Charges Gst</label>
                                 <input type="number" placeholder='Enter plate Form Charges gst' value={plateFormChargesGst} onChange={(e) => setPlateFormChargesGst(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Surge Charges</label>
                                 <input type="number" placeholder='Enter surge Charges' value={surgeCharges} onChange={(e) => setSurgeCharges(e.target.value)} />
@@ -179,8 +171,6 @@ const UpdateTaxpricing = () => {
                                 <label htmlFor="">Surge Charges Tax</label>
                                 <input type="number" placeholder='Enter surge Charges tax' value={surgeChargesTax} onChange={(e) => setSurgeChargesTax(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Ride Time Charges</label>
                                 <input type="number" placeholder='Enter ride time Charges' value={ridetimeCharges} onChange={(e) => setRidetimeCharges(e.target.value)} />
@@ -189,8 +179,6 @@ const UpdateTaxpricing = () => {
                                 <label htmlFor="">Parking Rate</label>
                                 <input type="number" placeholder='Enter parking rate' value={parkingRate} onChange={(e) => setParkingRate(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Toll Charge</label>
                                 <input type="number" placeholder='Enter ride time Charges' value={tollCharge} onChange={(e) => setTimeRate(e.target.value)} />
@@ -199,8 +187,6 @@ const UpdateTaxpricing = () => {
                                 <label htmlFor="">Railway PickUp Charge</label>
                                 <input type="number" placeholder='Enter railway pickup charges' value={railwayPickUpCharge} onChange={(e) => setRailwayPickUpCharge(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Insurance Premium</label>
                                 <input type="number" placeholder='Enter insurance premium' value={otherCharge} onChange={(e) => setOtherCharge(e.target.value)} />
@@ -209,8 +195,6 @@ const UpdateTaxpricing = () => {
                                 <label htmlFor="">Cancellation Charges</label>
                                 <input type="number" placeholder='Enter cancellation Charges' value={cancellationCharges} onChange={(e) => setCancellationCharges(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">GST</label>
                                 <input type="number" placeholder='Enter gst Charge' value={baseprice} onChange={(e) => setBasePrice(e.target.value)} />
@@ -220,7 +204,6 @@ const UpdateTaxpricing = () => {
                                 <textarea name="" id="" cols="30" rows="5" value={description} onChange={(e) => setDescription(e.target.value)} ></textarea>
                             </div>
                         </div>
-
                         <div className='dailyprice5'>
                             <button onClick={() => navigate('/taxpricing')}>Cancel</button>
                             <button onClick={handlePutRequest}>Save Changes</button>

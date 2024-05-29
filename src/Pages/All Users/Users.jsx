@@ -174,20 +174,50 @@ const Users = () => {
                                                     <td>{rider.totalBooking}</td>
                                                     <td>
                                                         <div className='rider9'>
-                                                            <div className='rider10' onClick={() => deleteRider(rider._id)}>
-                                                                <RiDeleteBinLine color='#667085' size={20} />
-                                                                <p>Delete</p>
-                                                            </div>
-                                                            <div className='rider10' onClick={() => { rider.isBlock ? unblockRider(rider._id) : blockRider(rider._id) }}>
-                                                                <MdOutlineBlock color={rider.isBlock ? "red" : "#667085"} size={20} />
-                                                                <p style={{ color: rider.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
-                                                            </div>
-                                                            <div className='rider10'>
-                                                                <Link to={`/user_details/${rider._id}`} className='sidebar-link' >
-                                                                    <IoEyeOutline color='#667085' size={20} />
-                                                                    <p>View</p>
-                                                                </Link>
-                                                            </div>
+                                                            {/* Check if the user is a super admin */}
+                                                            {role === 'superAdmin' ? (
+                                                                <>
+                                                                    {/* Render all icons for super admin */}
+                                                                    <div className='rider10' onClick={() => deleteRider(rider._id)}>
+                                                                        <RiDeleteBinLine color='#667085' size={20} />
+                                                                        <p>Delete</p>
+                                                                    </div>
+                                                                    <div className='rider10' onClick={() => { rider.isBlock ? unblockRider(rider._id) : blockRider(rider._id) }}>
+                                                                        <MdOutlineBlock color={rider.isBlock ? "red" : "#667085"} size={20} />
+                                                                        <p style={{ color: rider.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                                    </div>
+                                                                    <div className='rider10'>
+                                                                        <Link to={`/user_details/${rider._id}`} className='sidebar-link' >
+                                                                            <IoEyeOutline color='#667085' size={20} />
+                                                                            <p>View</p>
+                                                                        </Link>
+                                                                    </div>
+                                                                </>
+                                                            ) : (
+                                                                // Render icons based on permissions for non-super admin users
+                                                                <>
+                                                                    {permissionsArray.some(permission => permission.name === 'All Users' && permission.delete) && (
+                                                                        <div className='rider10' onClick={() => deleteRider(rider._id)}>
+                                                                            <RiDeleteBinLine color='#667085' size={20} />
+                                                                            <p>Delete</p>
+                                                                        </div>
+                                                                    )}
+                                                                    {permissionsArray.some(permission => permission.name === 'All Users' && permission.edit) && (
+                                                                        <div className='rider10' onClick={() => { rider.isBlock ? unblockRider(rider._id) : blockRider(rider._id) }}>
+                                                                            <MdOutlineBlock color={rider.isBlock ? "red" : "#667085"} size={20} />
+                                                                            <p style={{ color: rider.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                                        </div>
+                                                                    )}
+                                                                    {permissionsArray.some(permission => permission.name === 'All Users' && permission.view) && (
+                                                                        <div className='rider10'>
+                                                                            <Link to={`/user_details/${rider._id}`} className='sidebar-link' >
+                                                                                <IoEyeOutline color='#667085' size={20} />
+                                                                                <p>View</p>
+                                                                            </Link>
+                                                                        </div>
+                                                                    )}
+                                                                </>
+                                                            )}
                                                         </div>
                                                     </td>
                                                 </tr>

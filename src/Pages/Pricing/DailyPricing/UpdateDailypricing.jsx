@@ -107,7 +107,7 @@ const UpdateDailypricing = () => {
                         </div>
                     </div>
                     <div className='dailyprice'>
-                        <div className='dailyprice1'>
+                        <div className='dailyprice3'>
                             <div className='dailyprice2'>
                                 <label htmlFor="">Vehicle</label>
                                 <select value={vehicleName} onChange={(e) => {
@@ -134,8 +134,6 @@ const UpdateDailypricing = () => {
                                     ))}
                                 </select>
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">From</label>
                                 <input type="number" placeholder='Enter pickup location' value={form} onChange={(e) => setForm(e.target.value)} />
@@ -144,8 +142,6 @@ const UpdateDailypricing = () => {
                                 <label htmlFor="">To</label>
                                 <input type="number" placeholder='Enter drop location' value={to} onChange={(e) => setTo(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Price Per Km</label>
                                 <input type="number" placeholder='Enter price Per Km' value={pricePerKm} onChange={(e) => setpricePerKm(e.target.value)} />

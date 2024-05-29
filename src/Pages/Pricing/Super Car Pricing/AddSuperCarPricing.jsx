@@ -119,8 +119,6 @@ const AddSuperCarPricing = () => {
                                 <label htmlFor="">Price</label>
                                 <input type="number" placeholder='Enter Price' value={price} onChange={(e) => setPrice(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">km Limit</label>
                                 <input type="number" placeholder='Enter Km Limit' value={kmLimit} onChange={(e) => setKmLimit(e.target.value)} />
@@ -129,8 +127,6 @@ const AddSuperCarPricing = () => {
                                 <label htmlFor="">km Price</label>
                                 <input type="number" placeholder='Enter Km Price' value={kmPrice} onChange={(e) => setKmPrice(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Hours Limit</label>
                                 <input type="number" placeholder='Enter Hours limit' value={hrLimit} onChange={(e) => setHrLimit(e.target.value)} />
@@ -139,8 +135,6 @@ const AddSuperCarPricing = () => {
                                 <label htmlFor="">Hours Price</label>
                                 <input type="number" placeholder='Enter Hours Price' value={hrPrice} onChange={(e) => setHrPrice(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Price/KmGreater</label>
                                 <input type="number" placeholder='Enter Price/KmGreater' value={pricePerKmGreater} onChange={(e) => setPricePerKmGreater(e.target.value)} />
@@ -149,8 +143,6 @@ const AddSuperCarPricing = () => {
                                 <label htmlFor="">Price/MinGreater</label>
                                 <input type="number" placeholder='Enter Price/MinGreater' value={pricePerMinGreater} onChange={(e) => SetPricePerMinGreater(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice2'>
                                 <label htmlFor="">Super Cars</label>
                                 <select onChange={(e) => setSuperCar(e.target.value)}>
@@ -160,25 +152,23 @@ const AddSuperCarPricing = () => {
                                     ))}
                                 </select>
                             </div>
-                        </div>
-
-
-
-                        <div className='vehicle13'>
-                            <label htmlFor="">Upload Super car Image</label>
-                            <div className='ambulance2' onClick={triggerFileInput1}>
-                                <div className='vehicle14'>
-                                    {image ? (
-                                        <img src={URL.createObjectURL(image)} alt="" />
-                                    ) : (
-                                        <img src={img3} alt="" />
-                                    )}
+                            <div className='vehicle13'>
+                                <label htmlFor="">Upload Super car Image</label>
+                                <div className='ambulance2' onClick={triggerFileInput1}>
+                                    <div className='vehicle14'>
+                                        {image ? (
+                                            <img src={URL.createObjectURL(image)} alt="" />
+                                        ) : (
+                                            <img src={img3} alt="" />
+                                        )}
+                                    </div>
+                                    <p>Drag and drop images here, or click to add image</p>
+                                    <button>Add Images</button>
+                                    <input type="file" id="fileInput1" style={{ display: 'none' }} onChange={(e) => setImage(e.target.files[0])} />
                                 </div>
-                                <p>Drag and drop images here, or click to add image</p>
-                                <button>Add Images</button>
-                                <input type="file" id="fileInput1" style={{ display: 'none' }} onChange={(e) => setImage(e.target.files[0])} />
                             </div>
                         </div>
+                
 
                         <div className='dailyprice5'>
                             <button onClick={() => navigate('/allsupercarpricing')}>Cancel</button>

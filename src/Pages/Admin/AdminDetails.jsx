@@ -57,11 +57,82 @@ const AdminDetails = () => {
     const [view, setView] = useState(false);
     const [delete1, setDelete1] = useState(false);
     const [edit, setEdit] = useState(false);
+    const [block, setBlock] = useState(false);
+    const [showDocument, setShowDocument] = useState(false);
     const [permissionsListObject, setPermissionsListObject] = useState({});
+
+    const [name, setName] = useState('Default Name');
+    const [email, setEmail] = useState('');
+    const [number, setNumber] = useState('');
+    const [gender, setGender] = useState('');
+    const [profileimg, setProfileImg] = useState('');
+    const [birthday, setBirthday] = useState('')
+    const [role, setRole] = useState('')
+    const [wallet, setWallet] = useState('')
+    const [status, setStatus] = useState('')
+    const [address, setAddress] = useState('')
+    const [isEditingName, setIsEditingName] = useState(false);
+
+
 
     useEffect(() => {
         fetchAdminData();
+        fetchAdminDetails()
     }, [id]);
+
+
+
+
+    const fetchAdminDetails = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}api/v1/getUserById/${id}`, getAuthHeaders())
+            const { name, email, gender, birthday, mobileNumber, profilePicture, role, wallet, status, address } = response.data.data;
+            if (name) {
+                setName(name);
+            }
+            setEmail(email);
+            setNumber(mobileNumber);
+            setGender(gender);
+            setProfileImg(profilePicture);
+            setRole(role);
+            setWallet(wallet)
+            setBirthday(birthday);
+            setStatus(status);
+            setAddress(address);
+        } catch (error) {
+            console.error('Error fetching User details:', error);
+        }
+    };
+
+
+    const appendIfPresent = (formData, key, value) => {
+        if (value) {
+            formData.append(key, value);
+        }
+    };
+
+
+    const handlePutRequest = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        appendIfPresent(formData, "name", name);
+        appendIfPresent(formData, 'email', email);
+        appendIfPresent(formData, 'mobileNumber', number);
+        appendIfPresent(formData, 'gender', gender);
+        appendIfPresent(formData, 'profilePicture', profileimg);
+        appendIfPresent(formData, 'birthday', birthday);
+        appendIfPresent(formData, 'address', address);
+
+        try {
+            const response = await axios.put(`${BaseUrl}api/v1/updateDriverVendorProfile/detail/${id}`, formData, getAuthHeaders());
+            toast.success("Admin Details Updated successfully");
+            setModalShow(false);
+            fetchAdminDetails();
+        } catch (error) {
+            console.log('Error to updating User Admin:', error)
+            toast.error("Error to updating User Admin")
+        }
+    }
 
 
 
@@ -88,7 +159,9 @@ const AdminDetails = () => {
         updatedPermissions[newPermission] = {
             view: view,
             delete: delete1,
-            edit: edit
+            edit: edit,
+            block: block,
+            show_Document: showDocument
         };
 
         // Set the updated permissions list
@@ -156,10 +229,14 @@ const AdminDetails = () => {
     const formatDate = (dateString) => {
         const date = new Date(dateString);
 
-        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        const formattedDate = `${date.getDate().toString().padStart(2, '0')} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+        // Ensure day and month are two digits
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
 
-        return `${formattedDate} `;
+        const formattedDate = `${year}-${month}-${day}`;
+
+        return formattedDate;
     };
 
 
@@ -215,29 +292,6 @@ const AdminDetails = () => {
         }
     };
 
-
-
-    const handlePermissionAdd = async () => {
-        try {
-            if (permissionsListArray.length === 0) {
-                toast.error('Please add at least one permission');
-                return;
-            }
-
-            await axios.put(
-                `${BaseUrl}api/v1/SuperAdmin/updateAdminProfile/${id}`,
-                { permissions: permissionsListArray },
-                getAuthHeaders()
-            );
-
-            setPermissionsListArray([]);
-            toast.success('Permissions added successfully');
-            fetchAdminData();
-        } catch (error) {
-            console.error('Error adding permissions:', error);
-            toast.error('Error adding permissions');
-        }
-    };
 
 
     let textColor = '';
@@ -374,6 +428,15 @@ const AdminDetails = () => {
 
 
 
+    const handleImageChange = (e) => {
+        setProfileImg(e.target.files[0]);
+    };
+
+    const triggerFileInput = () => {
+        document.getElementById('fileInput').click();
+    };
+
+
     return (
         <>
             <KycStatusModal
@@ -388,171 +451,211 @@ const AdminDetails = () => {
                         </div>
                         <div className='rider4'>
                             <button onClick={() => navigate('/privileges')}>Back</button>
-                            <button onClick={handleSaveChanges}>Save Changes</button>
+                            <button onClick={handleSaveChanges}>Save Permission</button>
+                            <button onClick={handlePutRequest}>Save Changes</button>
                         </div>
                     </div>
-                    {adminData && (
-                        <>
-                            <div className='rider_details'>
-                                <div className='rider_details1'>
-                                    <div className='rider_details2'>
-                                        <div className='rider_details3'>
-                                            <img src={adminData.profilePicture || img2} alt="No image" />
-                                            <div className='rider_details4'>
-                                                <h6>{adminData.name}<div className='rider_details5'>
-                                                    <p>{adminData.role}</p>
-                                                </div></h6>
-                                                <div>
-                                                    <p style={{ color: textColor }}>{adminData.status}  Profile</p>
-                                                </div>
+
+                    <>
+                        <div className='rider_details'>
+                            <div className='rider_details1'>
+                                <div className='rider_details2'>
+                                    <div className='rider_details3'>
+                                        <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleImageChange} />
+                                        <img src={profileimg instanceof File ? URL.createObjectURL(profileimg) : profileimg || img2} alt="No image" onClick={triggerFileInput} style={{ cursor: 'pointer' }} />
+                                        {/* <div className='rider_details4'>
+                                            <h6>{adminData.name}<div className='rider_details5'>
+                                                <p>{adminData.role}</p>
+                                            </div></h6>
+                                            <div>
+                                                <p style={{ color: textColor }}>{adminData.status}  Profile</p>
                                             </div>
-                                            <div className='rider_details6'>
-                                                <div className='rider_details7' onClick={handleDeleteAdmin}>
-                                                    <RiDeleteBinLine color='#667085' size={20} />
-                                                    <p>Delete</p>
+                                        </div> */}
+                                        <div className='rider_details4'>
+                                            <h6 className='rider_details4'>
+                                                {name ? (
+                                                    isEditingName ? (
+                                                        <input
+                                                            type="text"
+                                                            value={name}
+                                                            onChange={(e) => setName(e.target.value)}
+                                                            onBlur={() => setIsEditingName(false)}
+                                                            autoFocus
+                                                            style={{ width: '100%' }}
+                                                        />
+                                                    ) : (
+                                                        <span onClick={() => setIsEditingName(true)}>{name}</span>
+                                                    )
+                                                ) : (
+                                                    <input
+                                                        type="text"
+                                                        placeholder='Enter name'
+                                                        value={name}
+                                                        onChange={(e) => setName(e.target.value)}
+                                                        style={{ width: '100%' }}
+                                                    />
+                                                )}
+                                                <div className='rider_details5'>
+                                                    <p>{role}</p>
                                                 </div>
-                                                <div className='rider_details7' onClick={() => { isBlocked ? unblockAdmin() : blockAdmin() }}>
-                                                    <MdOutlineBlock color={isBlocked ? "red" : "#667085"} size={20} />
-                                                    <p style={{ color: isBlocked ? 'red' : '#667085' }}>Block/Unblock</p>
-                                                </div>
-                                                <div className='rider_details7' onClick={() => setModalShow(true)}>
-                                                    <MdEdit color="#667085" size={20} />
-                                                    <p style={{ color: '#667085' }}>Update KYC Status</p>
-                                                </div>
+                                            </h6>
+                                            <div>
+                                                <p style={{ color: textColor }}>{status}  Profile</p>
                                             </div>
                                         </div>
+                                        <div className='rider_details6'>
+                                            <div className='rider_details7' onClick={handleDeleteAdmin}>
+                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                <p>Delete</p>
+                                            </div>
+                                            <div className='rider_details7' onClick={() => { isBlocked ? unblockAdmin() : blockAdmin() }}>
+                                                <MdOutlineBlock color={isBlocked ? "red" : "#667085"} size={20} />
+                                                <p style={{ color: isBlocked ? 'red' : '#667085' }}>Block/Unblock</p>
+                                            </div>
+                                            <div className='rider_details7' onClick={() => setModalShow(true)}>
+                                                <MdEdit color="#667085" size={20} />
+                                                <p style={{ color: '#667085' }}>Update KYC Status</p>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                        <div className='rider_details8'>
-                                            <div className='rider_details9'>
-                                                <p>Wallet Balance</p>
-                                                <div className='rider_details10'>
-                                                    <img src={img1} alt="" />
-                                                    <p>{adminData.wallet}</p>
-                                                    {/* <div className='rider_details11'>
+                                    <div className='rider_details8'>
+                                        <div className='rider_details9'>
+                                            <p>Wallet Balance</p>
+                                            <div className='rider_details10'>
+                                                <img src={img1} alt="" />
+                                                <p>{wallet}</p>
+                                                {/* <div className='rider_details11'>
                                                         <p>Expires</p>
                                                         <p>09/21</p>
                                                     </div> */}
-                                                </div>
                                             </div>
-                                            <div className='rider_details99'>
-                                                <p>Status</p>
-                                                <p>{adminData.status}</p>
-                                            </div>
+                                        </div>
+                                        <div className='rider_details99'>
+                                            <p>Status</p>
+                                            <p>{wallet}</p>
                                         </div>
                                     </div>
+                                </div>
 
 
-                                    <div className='rider_details12'>
-                                        <div className='rider_details12111'>
-                                            <h6>User's personal information</h6>
-                                            <div className='rider_details12112'></div>
+                                <div className='rider_details12'>
+                                    <div className='rider_details12111'>
+                                        <h6>Admin's personal information</h6>
+                                        <div className='rider_details12112'></div>
+                                    </div>
+                                    <div className='rider_details13'>
+                                        <div className='rider_details14'>
+                                            <label htmlFor="">Email</label>
+                                            <input type="email" placeholder='Enter email' value={email} onChange={(e) => setEmail(e.target.value)} />
                                         </div>
-                                        <div className='rider_details13'>
-                                            <div className='rider_details14'>
-                                                <label htmlFor="">Email</label>
-                                                <div className='input11'>
-                                                    <p>{adminData.email}</p>
-                                                </div>
+                                        <div className='rider_details14'>
+                                            <label htmlFor="">Phone Number</label>
+                                            <input type="number" placeholder='Enter number' value={number} onChange={(e) => setNumber(e.target.value)} />
+                                        </div>
+                                        <div className='rider_details14'>
+                                            <label htmlFor="">Gender</label>
+                                            <div className='rider_radiogender'>
+                                                <input type="radio" value="male" checked={gender === 'male'} onChange={(e) => setGender(e.target.value)} /> Male
+                                                <input type="radio" value="female" checked={gender === 'female'} onChange={(e) => setGender(e.target.value)} /> Female
                                             </div>
-                                            <div className='rider_details14'>
-                                                <label htmlFor="">Phone Number</label>
-                                                <div className='input11'>
-                                                    <p>{adminData.mobileNumber}</p>
-                                                </div>
-                                            </div>
-                                            <div className='rider_details14'>
-                                                <label htmlFor="">Gender</label>
-                                                <div className='input11'>
-                                                    <p>{adminData.gender}</p>
-                                                </div>
-                                            </div>
-                                            <div className='rider_details14'>
-                                                <label htmlFor="">DOB</label>
-                                                <div className='input11'>
-                                                    <p>{formatDate(adminData.birthday)}</p>
-                                                </div>
-                                            </div>
+                                        </div>
+                                        <div className='rider_details14'>
+                                            <label htmlFor="">DOB</label>
+                                            <input type="date" value={formatDate(birthday)} onChange={(e) => setBirthday(e.target.value)} />
+                                        </div>
 
-                                            <div className='rider_details14'>
-                                                <label htmlFor="">Address</label>
-                                                <div className='input11'>
-                                                    <p>{adminData.address}</p>
+                                        <div className='rider_details14'>
+                                            <label htmlFor="">Address</label>
+                                            <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} />
+                                        </div>
+                                        <div className='rider_details14'>
+                                            <label htmlFor="">Permissions</label>
+                                            <select value={newPermission} onChange={(e) => setNewPermission(e.target.value)}>
+                                                <option value="">Select Permission</option>
+                                                {permissionsList.map((perm) => (
+                                                    <option key={perm} value={perm}>
+                                                        {perm}
+                                                    </option>
+                                                ))}
+                                            </select>
+
+                                        </div>
+
+                                        <div className='rider_details14'>
+                                            <label htmlFor="">Sub Permissions</label>
+                                            <div className='adminprofileupdate56'>
+                                                <div className='adminprofileupdate57'>
+                                                    <input type="checkbox" checked={view} onChange={(e) => setView(!view)} />
+                                                    <label htmlFor="">View</label>
                                                 </div>
-                                            </div>
-                                            <div className='rider_details14'>
-                                                <label htmlFor="">Permissions</label>
-                                                <select value={newPermission} onChange={(e) => setNewPermission(e.target.value)}>
-                                                    <option value="">Select Permission</option>
-                                                    {permissionsList.map((perm) => (
-                                                        <option key={perm} value={perm}>
-                                                            {perm}
-                                                        </option>
-                                                    ))}
-                                                </select>
+                                                <div className='adminprofileupdate57'>
+                                                    <input type="checkbox" checked={delete1} onChange={(e) => setDelete1(!delete1)} />
+                                                    <label htmlFor="">Delete</label>
+                                                </div>
+                                                <div className='adminprofileupdate57'>
+                                                    <input type="checkbox" checked={edit} onChange={(e) => setEdit(!edit)} />
+                                                    <label htmlFor="">Edit</label>
+                                                </div>
+                                                <div className='adminprofileupdate57'>
+                                                    <input type="checkbox" checked={block} onChange={(e) => setBlock(!block)} />
+                                                    <label htmlFor="">Block</label>
+                                                </div>
 
-                                            </div>
+                                                <div className='adminprofileupdate57'>
+                                                    <input type="checkbox" checked={showDocument} onChange={(e) => setShowDocument(!showDocument)} />
+                                                    <label htmlFor="">Document</label>
+                                                </div>
 
-                                            <div className='rider_details14'>
-                                                <label htmlFor="">Sub Permissions</label>
-                                                <div className='adminprofileupdate56'>
-                                                    <div className='adminprofileupdate57'>
-                                                        <input type="checkbox" checked={view} onChange={(e) => setView(!view)} />
-                                                        <label htmlFor="">View</label>
-                                                    </div>
-                                                    <div className='adminprofileupdate57'>
-                                                        <input type="checkbox" checked={delete1} onChange={(e) => setDelete1(!delete1)} />
-                                                        <label htmlFor="">Delete</label>
-                                                    </div>
-                                                    <div className='adminprofileupdate57'>
-                                                        <input type="checkbox" checked={edit} onChange={(e) => setEdit(!edit)} />
-                                                        <label htmlFor="">Edit</label>
-                                                    </div>
-
-                                                    {/* <div className='adminprofileupdate57'>
+                                                {/* <div className='adminprofileupdate57'>
                                                         <button type='button' onClick={handleArrayData}>Submit</button>
                                                     </div> */}
-                                                </div>
                                             </div>
-
                                         </div>
-                                    </div>
 
-
-                                    <div className='rider_details14'>
-                                        <div className='rider_details15'>
-                                            <h6>Permissions</h6>
-                                            <table className="table table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Permission</th>
-                                                        <th scope="col">View</th>
-                                                        <th scope="col">Delete</th>
-                                                        <th scope="col">Edit</th>
-                                                        <th scope="col">Remove</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {adminData.permissions.map((permission) => (
-                                                        <tr key={permission.name}>
-                                                            <td>{permission.name}</td>
-                                                            <td>{permission.view ? 'Yes' : 'No'}</td>
-                                                            <td>{permission.delete ? 'Yes' : 'No'}</td>
-                                                            <td>{permission.edit ? 'Yes' : 'No'}</td>
-                                                            <td>
-                                                                <RiDeleteBinLine className="delete-icon" color='#667085'
-                                                                    size={20} onClick={() => handlePermissionDelete(permission)} />
-                                                            </td>
-                                                        </tr>
-                                                    ))}
-                                                </tbody>
-                                            </table>
-                                        </div>
                                     </div>
-                                    
                                 </div>
+
+
+                                <div className='rider_details14'>
+                                    <div className='rider_details15'>
+                                        <h6>Permissions</h6>
+                                        <table className="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Permission</th>
+                                                    <th scope="col">View</th>
+                                                    <th scope="col">Delete</th>
+                                                    <th scope="col">Edit</th>
+                                                    <th scope="col">Block</th>
+                                                    <th scope="col">Show Document</th>
+                                                    <th scope="col">Remove</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {adminData?.permissions?.map((permission) => (
+                                                    <tr key={permission.name}>
+                                                        <td>{permission.name}</td>
+                                                        <td>{permission.view ? 'Yes' : 'No'}</td>
+                                                        <td>{permission.delete ? 'Yes' : 'No'}</td>
+                                                        <td>{permission.edit ? 'Yes' : 'No'}</td>
+                                                        <td>{permission.block ? 'Yes' : 'No'}</td>
+                                                        <td>{permission.show_Document ? 'Yes' : 'No'}</td>
+                                                        <td>
+                                                            <RiDeleteBinLine className="delete-icon" color='#667085'
+                                                                size={20} onClick={() => handlePermissionDelete(permission)} />
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
                             </div>
-                        </>
-                    )}
+                        </div>
+                    </>
+
 
 
 

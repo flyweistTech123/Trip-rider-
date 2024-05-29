@@ -26,18 +26,18 @@ const AddDailyPricing = () => {
 
 
     const handlePostRequest = async () => {
-        const data={
-            city:city,
-            vehicle:vehicle,
-            fromKm:form,
-            toKm:to,
-            pricePerKm:pricePerKm
+        const data = {
+            city: city,
+            vehicle: vehicle,
+            fromKm: form,
+            toKm: to,
+            pricePerKm: pricePerKm
         }
-        
+
 
         try {
             const response = await axios.post(`${BaseUrl}api/v1/Pricing`, data, getAuthHeaders());
-            
+
             toast.success("Daily Pricing add successfully");
 
             // Reset state variables to clear input fields
@@ -59,7 +59,7 @@ const AddDailyPricing = () => {
             try {
                 const response = await axios.get(`${BaseUrl}api/v1/vehicle`, getAuthHeaders());
                 setVehicles(response.data.data);
-                
+
             } catch (error) {
                 console.error('Error fetching vehicles:', error);
             }
@@ -104,7 +104,7 @@ const AddDailyPricing = () => {
 
 
                     <div className='dailyprice'>
-                        <div className='dailyprice1'>
+                        <div className='dailyprice3'>
                             <div className='dailyprice2'>
                                 <label htmlFor="">Vehicle</label>
                                 <select value={vehicle} onChange={(e) => setVehicle(e.target.value)}>
@@ -114,7 +114,6 @@ const AddDailyPricing = () => {
                                     ))}
                                 </select>
                             </div>
-                            
                             <div className='dailyprice2'>
                                 <label htmlFor="">City</label>
                                 <select value={city} onChange={(e) => setCity(e.target.value)}>
@@ -124,25 +123,19 @@ const AddDailyPricing = () => {
                                     ))}
                                 </select>
                             </div>
-                        </div>
-
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">From</label>
-                                <input type="number" placeholder='Enter pickup location'  value={form} onChange={(e) => setForm(e.target.value)} />
+                                <input type="number" placeholder='Enter pickup location' value={form} onChange={(e) => setForm(e.target.value)} />
                             </div>
                             <div className='dailyprice4'>
                                 <label htmlFor="">To</label>
                                 <input type="number" placeholder='Enter drop location' value={to} onChange={(e) => setTo(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Price Per Km</label>
-                                <input type="number" placeholder='Enter price Per Km'value={pricePerKm} onChange={(e) => setpricePerKm(e.target.value)}  />
+                                <input type="number" placeholder='Enter price Per Km' value={pricePerKm} onChange={(e) => setpricePerKm(e.target.value)} />
                             </div>
                         </div>
-
                         <div className='dailyprice5'>
                             <button onClick={() => navigate('/alldailypricing')}>Cancel</button>
                             <button onClick={handlePostRequest}>Add Price</button>

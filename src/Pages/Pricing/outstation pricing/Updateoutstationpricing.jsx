@@ -134,7 +134,7 @@ const Updateoutstationpricing = () => {
                             </div>
 
                         </div>
-                        <div className='dailyprice1'>
+                        <div className='dailyprice3'>
                             <div className='dailyprice2'>
                                 <label htmlFor="">Vehicle</label>
                                 <select value={vehicle} onChange={(e) => {
@@ -162,8 +162,6 @@ const Updateoutstationpricing = () => {
                                     ))}
                                 </select>
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Km Limit</label>
                                 <input type="number" placeholder='Enter Km limit' value={kmlimit} onChange={(e) => setKmLimit(e.target.value)} />
@@ -172,8 +170,6 @@ const Updateoutstationpricing = () => {
                                 <label htmlFor="">Km Price</label>
                                 <input type="number" placeholder='Enter Km Price' value={kmprice} onChange={(e) => setKmPrice(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">Hours Limit</label>
                                 <input type="number" placeholder='Enter hours limit' value={hrlimit} onChange={(e) => setHrLimit(e.target.value)} />
@@ -182,8 +178,6 @@ const Updateoutstationpricing = () => {
                                 <label htmlFor="">Hours Price</label>
                                 <input type="number" placeholder='Enter hours Price' value={hrprice} onChange={(e) => setHrPrice(e.target.value)} />
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
                             <div className='dailyprice4'>
                                 <label htmlFor="">price</label>
                                 <input type="number" placeholder='Enter Outstation price' value={price} onChange={(e) => setPrice(e.target.value)} />
