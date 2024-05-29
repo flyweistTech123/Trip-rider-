@@ -628,7 +628,7 @@ const Driver_Details = () => {
         const handleDownload = () => {
             const link = document.createElement('a');
             link.href = imageUrl;
-            link.download = 'downloaded_image.jpg';
+            link.download = 'downloaded_image.png';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -658,7 +658,7 @@ const Driver_Details = () => {
                                 </Worker>
 
                             ) : (
-                                <img src={imageUrl instanceof File ? URL.createObjectURL(imageUrl) : imageUrl} alt="Full Image" style={{ width: '100%' }} />
+                                <img src={imageUrl instanceof File ? URL.createObjectURL(imageUrl) : imageUrl || img} alt="Full Image" style={{ width: '100%' }} />
                             )}
 
                         </div>
@@ -1005,7 +1005,7 @@ const Driver_Details = () => {
                                                 <div onClick={() => handleImageClick(interiorImage)} className='rider_details213'>
                                                     {isPDF(interiorImage) ? (
                                                         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-                                                            <Viewer fileUrl={interiorImage instanceof File ? URL.createObjectURL(interiorImage) : interiorImage}
+                                                            <Viewer fileUrl={interiorImage instanceof File ? URL.createObjectURL(interiorImage) : interiorImage || img}
                                                             />
                                                         </Worker>
                                                     ) : (
@@ -1031,7 +1031,7 @@ const Driver_Details = () => {
                                                         </Worker>
                                                     ) : (
                                                         <img
-                                                            src={exteriorImage instanceof File ? URL.createObjectURL(exteriorImage) : exteriorImage}
+                                                            src={exteriorImage instanceof File ? URL.createObjectURL(exteriorImage) : exteriorImage || img}
                                                             alt={exteriorImage !== img ? "Driver Exterior Image" : "No Image"}
                                                         />
                                                     )}
@@ -1052,7 +1052,7 @@ const Driver_Details = () => {
                                                         </Worker>
                                                     ) : (
                                                         <img
-                                                            src={rcImage instanceof File ? URL.createObjectURL(rcImage) : rcImage}
+                                                            src={rcImage instanceof File ? URL.createObjectURL(rcImage) : rcImage || img}
                                                             alt={rcImage !== img ? "Driver RC Image" : "No Image"}
                                                         />
                                                     )}
@@ -1073,7 +1073,7 @@ const Driver_Details = () => {
                                                         </Worker>
                                                     ) : (
                                                         <img
-                                                            src={fitnessImage instanceof File ? URL.createObjectURL(fitnessImage) : fitnessImage}
+                                                            src={fitnessImage instanceof File ? URL.createObjectURL(fitnessImage) : fitnessImage || img}
                                                             alt={fitnessImage !== img ? "Driver Fitness Image" : "No Image"}
                                                         />
                                                     )}
@@ -1094,7 +1094,7 @@ const Driver_Details = () => {
                                                         </Worker>
                                                     ) : (
                                                         <img
-                                                            src={permitImage instanceof File ? URL.createObjectURL(permitImage) : permitImage}
+                                                            src={permitImage instanceof File ? URL.createObjectURL(permitImage) : permitImage || img}
                                                             alt={permitImage !== img ? "Driver Permit Image" : "No Image"}
                                                         />
                                                     )}
@@ -1115,7 +1115,7 @@ const Driver_Details = () => {
                                                         </Worker>
                                                     ) : (
                                                         <img
-                                                            src={insuranceImage instanceof File ? URL.createObjectURL(insuranceImage) : insuranceImage}
+                                                            src={insuranceImage instanceof File ? URL.createObjectURL(insuranceImage) : insuranceImage || img}
                                                             alt={insuranceImage !== img ? "Driver Insurance Image" : "No Image"}
                                                         />
                                                     )}
@@ -1136,7 +1136,7 @@ const Driver_Details = () => {
                                                         </Worker>
                                                     ) : (
                                                         <img
-                                                            src={drivingLicenseImage instanceof File ? URL.createObjectURL(drivingLicenseImage) : drivingLicenseImage}
+                                                            src={drivingLicenseImage instanceof File ? URL.createObjectURL(drivingLicenseImage) : drivingLicenseImage || img}
                                                             alt={drivingLicenseImage !== img ? "Driver License Image" : "No Image"}
                                                         />
                                                     )}
@@ -1153,11 +1153,11 @@ const Driver_Details = () => {
                                                 <div onClick={() => handleImageClick(fitnessImage)} className='rider_details213'>
                                                     {isPDF(aadharCardImage) ? (
                                                         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-                                                            <Viewer fileUrl={aadharCardImage instanceof File ? URL.createObjectURL(aadharCardImage) : aadharCardImage} />;
+                                                            <Viewer fileUrl={aadharCardImage instanceof File ? URL.createObjectURL(aadharCardImage) : aadharCardImage || img} />;
                                                         </Worker>
                                                     ) : (
                                                         <img
-                                                            src={aadharCardImage instanceof File ? URL.createObjectURL(aadharCardImage) : aadharCardImage}
+                                                            src={aadharCardImage instanceof File ? URL.createObjectURL(aadharCardImage) : aadharCardImage || img}
                                                             alt={aadharCardImage !== img ? "Driver Aadhar Card Image" : "No Image"}
                                                         />
                                                     )}
@@ -1174,11 +1174,11 @@ const Driver_Details = () => {
                                                 <div onClick={() => handleImageClick(fitnessImage)} className='rider_details213'>
                                                     {isPDF(cancelCheckImage) ? (
                                                         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-                                                            <Viewer fileUrl={cancelCheckImage instanceof File ? URL.createObjectURL(cancelCheckImage) : cancelCheckImage} />;
+                                                            <Viewer fileUrl={cancelCheckImage instanceof File ? URL.createObjectURL(cancelCheckImage) : cancelCheckImage || img} />;
                                                         </Worker>
                                                     ) : (
                                                         <img
-                                                            src={cancelCheckImage instanceof File ? URL.createObjectURL(cancelCheckImage) : cancelCheckImage}
+                                                            src={cancelCheckImage instanceof File ? URL.createObjectURL(cancelCheckImage) : cancelCheckImage || img}
                                                             alt={cancelCheckImage !== img ? "Driver Cancel Check Image" : "No Image"}
                                                         />
                                                     )}
@@ -1195,12 +1195,12 @@ const Driver_Details = () => {
                                                 <div onClick={() => handleImageClick(fitnessImage)} className='rider_details213'>
                                                     {isPDF(bankStatementImage) ? (
                                                         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js" >
-                                                            <Viewer fileUrl={bankStatementImage instanceof File ? URL.createObjectURL(bankStatementImage) : bankStatementImage} />
+                                                            <Viewer fileUrl={bankStatementImage instanceof File ? URL.createObjectURL(bankStatementImage) : bankStatementImage } />
                                                         </Worker>
 
                                                     ) : (
                                                         <img
-                                                            src={bankStatementImage instanceof File ? URL.createObjectURL(bankStatementImage) : bankStatementImage}
+                                                            src={bankStatementImage instanceof File ? URL.createObjectURL(bankStatementImage) : bankStatementImage || img}
                                                             alt={bankStatementImage !== img ? "Driver Bank Statement Image" : "No Image"}
                                                         />
                                                     )}

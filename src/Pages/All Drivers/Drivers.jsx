@@ -228,7 +228,6 @@ const Drivers = () => {
                                                             {role === 'superAdmin' ? (
                                                                 <>
                                                                     {/* Render all icons for super admin */}
-                                                                    +
                                                                     <div className='rider10' onClick={() => deleteDriver(driver._id)}>
                                                                         <RiDeleteBinLine color='#667085' size={20} />
                                                                         <p>Delete</p>
