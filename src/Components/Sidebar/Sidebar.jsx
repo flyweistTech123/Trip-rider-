@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import './Sidebar.css'
 import { Link } from 'react-router-dom';
 
@@ -31,7 +31,7 @@ import img20 from '../../Images/img49.png'
 
 
 
-const Sidebar = ({ admindata }) => {
+const Sidebar = () => {
 
     const sidebarItems = [
         // { icon: img1, text: 'Dashboard', link: '/dashboard' },
@@ -61,15 +61,42 @@ const Sidebar = ({ admindata }) => {
         { icon: img19, text: 'Privacy policy', link: '/privacypolicy' },
     ];
 
+    // const sidebarItems2 = [
+    //     { icon: img2, text: 'All Users', link: '/users', disabled: false },
+    //     { icon: img3, text: 'All Drivers', link: '/drivers', disabled: false },
+    // ];
+    
+    // useEffect(() => {
+    //     Object.keys(items).forEach((key) => {
+    //         sidebarItems2.forEach((item) => {
+    //             if (items[key] === item.text) {
+    //                 item.disabled = true;
+    //             }
+    //         });
+    //     });
+    // }, []);
+    
+    const cachedAdminData = localStorage.getItem('adminData');
+    const adminData = JSON.parse(cachedAdminData);
+    const role = localStorage.getItem('role');
 
+    let permissionsArray = [];
 
-    // Include 'Dashboard' item in the sidebarItems array
+    if (adminData && adminData.permissions) {
+        permissionsArray = adminData.permissions;
+    } else {
+        console.log('Permissions array not found in adminData.');
+    }
+
     const filteredSidebarItems = [
-        { icon: img1, text: 'Dashboard', link: '/dashboard' }, // Always include Dashboard
-        ...(admindata && admindata.role === 'superAdmin'
-            ? sidebarItems // Show all items for superAdmin
-            : sidebarItems.filter(item => admindata && admindata.permissions.includes(item.text)))
+        { icon: img1, text: 'Dashboard', link: '/dashboard' },
+        ...(role === 'superAdmin'
+            ? sidebarItems
+            : sidebarItems.filter(item =>
+                permissionsArray.some(permission => permission.name === item.text)
+            ))
     ];
+
 
     return (
         <>

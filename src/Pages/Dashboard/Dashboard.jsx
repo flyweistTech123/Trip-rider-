@@ -30,7 +30,7 @@ const Dashboard = () => {
   const adminData = JSON.parse(cachedAdminData);
   const role = localStorage.getItem('role');
 
-  let permissionsArray =[];
+  let permissionsArray = [];
 
   if (adminData && adminData.permissions) {
     permissionsArray = adminData.permissions;
@@ -64,7 +64,7 @@ const Dashboard = () => {
         axios.get(`${BaseUrl}api/v1/admin/all/vendor`, getAuthHeaders()),
         axios.get(`${BaseUrl}api/v1/getBooking?status=cancel`, getAuthHeaders()),
         axios.get(`${BaseUrl}api/v1/getBooking`, getAuthHeaders()),
-        axios.get(`${BaseUrl}api/v1/admin/me`, getAuthHeaders())
+        // axios.get(`${BaseUrl}api/v1/admin/me`, getAuthHeaders())
       ]);
 
       setTotalRiders(ridreResponse.data.category.length);
@@ -231,7 +231,7 @@ const Dashboard = () => {
                         </Link>
                       )}
 
-                      {permission === "All Drivers" && (
+                      {permission.name === "All Drivers" && (
                         <Link to="/drivers" className="sidebar-link">
                           <div className="dashboard1">
                             <img src={img1} alt="" />
@@ -241,7 +241,7 @@ const Dashboard = () => {
                         </Link>
                       )}
 
-                      {permission === "All Earnings" && (
+                      {permission.name === "All Earnings" && (
                         <Link to="/allearning" className="sidebar-link">
                           <div className="dashboard1">
                             <img src={img3} alt="" />
@@ -251,7 +251,7 @@ const Dashboard = () => {
                         </Link>
                       )}
 
-                      {permission === "Subscription Booking" && (
+                      {permission.name === "Subscription Booking" && (
                         <Link to="/cancelled_booking" className="sidebar-link">
                           <div className="dashboard1">
                             <img src={img1} alt="" />
@@ -261,7 +261,7 @@ const Dashboard = () => {
                         </Link>
                       )}
 
-                      {permission === "All Bookings" && (
+                      {permission.name === "All Bookings" && (
                         <Link to="/allbookings" className="sidebar-link">
                           <div className="dashboard1">
                             <img src={img1} alt="" />
@@ -272,9 +272,8 @@ const Dashboard = () => {
                       )}
 
 
-
                     </div>
-                    {permission === "All Earnings" && (
+                    {permission.name === "All Earnings" && (
                       <div className='dashboard4'>
                         <h6>Latest Transactions</h6>
                         <div className='dashboard3'>
@@ -317,9 +316,6 @@ const Dashboard = () => {
               </div>
 
             )}
-
-
-
 
           </div>
         </div>

@@ -9,15 +9,13 @@ import { useParams } from 'react-router-dom';
 import img from '../../Images/imgno.jpg'
 import img1 from '../../Images/img28.png'
 import img2 from '../../Images/user.webp'
-import { Document, Page } from 'react-pdf';
-
-
-
+import { Worker } from '@react-pdf-viewer/core';
+import { Viewer } from '@react-pdf-viewer/core';
+import '@react-pdf-viewer/core/lib/styles/index.css';
 import { MdOutlineBlock } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 import { MdEdit } from "react-icons/md";
-import { FaFilePdf } from "react-icons/fa6";
 
 import { Button, Form } from "react-bootstrap";
 
@@ -37,11 +35,8 @@ const Driver_Details = () => {
     const [kycstatus1, setKYCstatus1] = useState(" ");
     const [modalShow2, setModalShow2] = React.useState(false);
     const navigate = useNavigate()
-
-
     const [modalShow1, setModalShow1] = useState(false);
     const [currentImageUrl, setCurrentImageUrl] = useState('');
-
     const [DriverData, setDriverData] = useState(null);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -105,22 +100,82 @@ const Driver_Details = () => {
     const [aadharCardImage, setAadharCardImage] = useState('');
     const [cancelCheckImage, setCancelCheckImage] = useState('');
     const [bankStatementImage, setBankStatementImage] = useState('');
-
-
+    const [driverVehicleCategory, setDriverVehicleCategory] = useState('');
+    const [vehicles, setVehicles] = useState([]);
+    const [vehicleId, setVehicleId] = useState('');
+    const [vehicleName, setVehicleName] = useState('');
     const [isEditingName, setIsEditingName] = useState(false);
 
-
-
-
-
-
-
-
-    const fileInputRef = useRef(null);
-
-    const triggerFileInput = () => {
-        fileInputRef.current.click();
+    const handleImageClick = (imageUrl) => {
+        setCurrentImageUrl(imageUrl);
+        setModalShow1(true);
     };
+
+
+
+
+    const triggerFileInput = (e) => {
+        e.stopPropagation();
+        document.getElementById('fileInput').click();
+    };
+
+
+    const triggerFileInput1 = (e) => {
+        e.stopPropagation();
+        document.getElementById('fileInput1').click();
+    };
+
+    const triggerFileInput2 = (e) => {
+        e.stopPropagation();
+        document.getElementById('fileInput2').click();
+    };
+    const triggerFileInput3 = (e) => {
+        e.stopPropagation();
+        document.getElementById('fileInput3').click();
+    };
+
+    const triggerFileInput4 = (e) => {
+        e.stopPropagation();
+        document.getElementById('fileInput4').click();
+    };
+
+
+    const triggerFileInput5 = (e) => {
+        e.stopPropagation();
+        document.getElementById('fileInput5').click();
+    };
+
+    const triggerFileInput6 = (e) => {
+        e.stopPropagation();
+        document.getElementById('fileInput6').click();
+    };
+
+
+    const triggerFileInput7 = (e) => {
+        e.stopPropagation();
+        document.getElementById('fileInput7').click();
+    };
+
+
+    const triggerFileInput8 = (e) => {
+        e.stopPropagation();
+        document.getElementById('fileInput8').click();
+    };
+
+
+    const triggerFileInput9 = (e) => {
+        e.stopPropagation();
+        document.getElementById('fileInput9').click();
+    };
+    const triggerFileInput10 = (e) => {
+        e.stopPropagation();
+        document.getElementById('fileInput10').click();
+    };
+
+
+
+
+
 
     const handleImageChange = (e) => {
         setProfileImg(e.target.files[0]);
@@ -129,6 +184,67 @@ const Driver_Details = () => {
     const handleImageChange1 = (e) => {
         setInteriorImage(e.target.files[0]);
     };
+
+
+    const handleImageChange2 = (e) => {
+        setExteriorImage(e.target.files[0]);
+    };
+
+    const handleImageChange3 = (e) => {
+        setRcImage(e.target.files[0]);
+    };
+
+    const handleImageChange4 = (e) => {
+        setFitnessImage(e.target.files[0]);
+    };
+
+    const handleImageChange5 = (e) => {
+        setPermitImage(e.target.files[0]);
+    };
+
+
+    const handleImageChange6 = (e) => {
+        setInsuranceImage(e.target.files[0]);
+    };
+
+    const handleImageChange7 = (e) => {
+        setDrivingLicenseImage(e.target.files[0]);
+    };
+
+
+    const handleImageChange8 = (e) => {
+        setAadharCardImage(e.target.files[0]);
+    };
+
+    const handleImageChange9 = (e) => {
+        setCancelCheckImage(e.target.files[0]);
+    };
+
+    const handleImageChange10 = (e) => {
+        setBankStatementImage(e.target.files[0]);
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+    const isPDF = (file) => {
+        if (file instanceof File) {
+            return file.type === 'application/pdf';
+        } else if (typeof file === 'string') {
+            return file.toLowerCase().endsWith('.pdf');
+        }
+        return false;
+    };
+
+
 
 
 
@@ -146,15 +262,6 @@ const Driver_Details = () => {
         const formattedDate = `${year}-${month}-${day}`;
 
         return formattedDate;
-    };
-
-
-
-
-    // Function to handle image click
-    const handleImageClick = (imageUrl) => {
-        setCurrentImageUrl(imageUrl);
-        setModalShow1(true);
     };
 
 
@@ -245,48 +352,51 @@ const Driver_Details = () => {
         userDetailsFormData.append('profilePicture', profileimg);
         userDetailsFormData.append('birthday', birthday);
 
-        const documentDetailsFormData = new FormData();
-        documentDetailsFormData.append('aadhar', adharcard);
-        documentDetailsFormData.append('present_address', firstlineaddress);
-        documentDetailsFormData.append('permanent_address', secondlineaddress);
-        documentDetailsFormData.append('client_id', clientid);
-        documentDetailsFormData.append('dlno', drivinglince);
-        documentDetailsFormData.append('rc_number', rcNumber);
-        documentDetailsFormData.append('registration_date', registrationDate);
-        documentDetailsFormData.append('owner_name', ownerName);
-        documentDetailsFormData.append('vehicle_category', vehicleCategory);
-        documentDetailsFormData.append('vehicle_chasi_number', vehicleChasiNumber);
-        documentDetailsFormData.append('vehicle_engine_number', vehicleEngineNumber);
-        documentDetailsFormData.append('maker_description', makerDescription);
-        documentDetailsFormData.append('maker_model', makerModel);
-        documentDetailsFormData.append('fuel_type', fuelType);
-        documentDetailsFormData.append('color', color);
-        documentDetailsFormData.append('insurance_company', insuranceCompany);
-        documentDetailsFormData.append('insurance_policy_number', insurancePolicyNumber);
-        documentDetailsFormData.append('insurance_upto', insuranceUpto);
-        documentDetailsFormData.append('manufacturing_date', manufacturingDate);
-        documentDetailsFormData.append('registered_at', registeredAt);
-        documentDetailsFormData.append('vehicle_gross_weight', vehicleGrossWeight);
-        documentDetailsFormData.append('no_cylinders', noCylinders);
-        documentDetailsFormData.append('seat_capacity', seatCapacity);
-        documentDetailsFormData.append('vehicle_category_description', vehicleCategoryDescription);
-        documentDetailsFormData.append('pucc_number', puccNumber);
-        documentDetailsFormData.append('pucc_upto', puccUpto);
-        documentDetailsFormData.append('permit_number', permitNumber);
-        documentDetailsFormData.append('permit_issue_date', permitIssueDate);
-        documentDetailsFormData.append('permit_valid_from', permitValidFrom);
-        documentDetailsFormData.append('permit_valid_upto', permitValidUpto);
-        documentDetailsFormData.append('permit_type', permitType);
-        documentDetailsFormData.append('national_permit_number', nationalPermitNumber);
-        documentDetailsFormData.append('national_permit_upto', nationalPermitUpto);
-        documentDetailsFormData.append('national_permit_issued_by', nationalPermitIssuedBy);
-        documentDetailsFormData.append('noc_details', nocDetails);
-        documentDetailsFormData.append('owner_number', ownerNumber);
-        documentDetailsFormData.append('challan_details', challanDetails);
-        documentDetailsFormData.append('financed', financed);
-        documentDetailsFormData.append('financer', financer);
-        documentDetailsFormData.append('norms_type', normsType);
-        documentDetailsFormData.append('fit_up_to', fitUpTo);
+        const documentDetails = {
+            aadhar: adharcard,
+            present_address: firstlineaddress,
+            permanent_address: secondlineaddress,
+            client_id: clientid,
+            dlno: drivinglince,
+            rc_number: rcNumber,
+            registration_date: registrationDate,
+            owner_name: ownerName,
+            vehicle_category: vehicleCategory,
+            vehicle_chasi_number: vehicleChasiNumber,
+            vehicle_engine_number: vehicleEngineNumber,
+            maker_description: makerDescription,
+            maker_model: makerModel,
+            fuel_type: fuelType,
+            color: color,
+            insurance_company: insuranceCompany,
+            insurance_policy_number: insurancePolicyNumber,
+            insurance_upto: insuranceUpto,
+            manufacturing_date: manufacturingDate,
+            registered_at: registeredAt,
+            vehicle_gross_weight: vehicleGrossWeight,
+            no_cylinders: noCylinders,
+            seat_capacity: seatCapacity,
+            vehicle_category_description: vehicleCategoryDescription,
+            pucc_number: puccNumber,
+            pucc_upto: puccUpto,
+            permit_number: permitNumber,
+            permit_issue_date: permitIssueDate,
+            permit_valid_from: permitValidFrom,
+            permit_valid_upto: permitValidUpto,
+            permit_type: permitType,
+            national_permit_number: nationalPermitNumber,
+            national_permit_upto: nationalPermitUpto,
+            national_permit_issued_by: nationalPermitIssuedBy,
+            noc_details: nocDetails,
+            owner_number: ownerNumber,
+            challan_details: challanDetails,
+            financed: financed,
+            financer: financer,
+            norms_type: normsType,
+            fit_up_to: fitUpTo,
+            driverVehicleCategory: vehicleId
+        };
+
         const imageFormData = new FormData();
         imageFormData.append('interior', interiorImage);
         imageFormData.append('exterior', exteriorImage);
@@ -300,12 +410,15 @@ const Driver_Details = () => {
         imageFormData.append('bankStatement', bankStatementImage);
 
 
+
+
+
         try {
             // Update user details
             await axios.put(`${BaseUrl}api/v1/updateDriverVendorProfile/detail/${id}`, userDetailsFormData, getAuthHeaders());
 
             // Update document details
-            await axios.post(`${BaseUrl}api/v1/driver/documentDriverDetailByAdmin/${id}`, documentDetailsFormData, getAuthHeaders());
+            await axios.post(`${BaseUrl}api/v1/driver/documentDriverDetailByAdmin/${id}`, documentDetails, getAuthHeaders());
 
             // Update image details
             await axios.post(`${BaseUrl}api/v1/driver/image/${id}`, imageFormData, getAuthHeaders());
@@ -539,8 +652,15 @@ const Driver_Details = () => {
                             <button onClick={handleDownload} style={{ marginBottom: '10px' }}>Download Image</button>
                         </div>
                         <div className="modal-content">
-                            {/* <img src={imageUrl} alt="Full Image" style={{ width: '100%' }} /> */}
-                            <iframe src={imageUrl} frameborder="0"></iframe>
+                            {isPDF(imageUrl) ? (
+                                <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                                    <Viewer fileUrl={imageUrl instanceof File ? URL.createObjectURL(imageUrl) : imageUrl} />;
+                                </Worker>
+
+                            ) : (
+                                <img src={imageUrl instanceof File ? URL.createObjectURL(imageUrl) : imageUrl} alt="Full Image" style={{ width: '100%' }} />
+                            )}
+
                         </div>
                     </div>
                 </Modal.Body>
@@ -550,7 +670,20 @@ const Driver_Details = () => {
 
 
 
+    useEffect(() => {
+        const fetchVehicles = async () => {
+            try {
+                const response = await axios.get(`${BaseUrl}api/v1/driver/getDriverVehicleCategory`, getAuthHeaders());
+                setVehicles(response.data.data);
+                console.log(response.data.data, "vechcal print")
 
+            } catch (error) {
+                console.error('Error fetching vehicles:', error);
+            }
+        };
+
+        fetchVehicles();
+    }, []);
 
 
 
@@ -582,7 +715,7 @@ const Driver_Details = () => {
                             <div className='rider_details1'>
                                 <div className='rider_details2'>
                                     <div className='rider_details3'>
-                                        <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleImageChange} />
+                                        <input type="file" id='fileInput' style={{ display: 'none' }} onChange={handleImageChange} />
                                         <img src={profileimg instanceof File ? URL.createObjectURL(profileimg) : profileimg || img2} alt="No image" onClick={triggerFileInput} style={{ cursor: 'pointer' }} />
                                         <div className='rider_details4'>
                                             <h6>
@@ -697,6 +830,19 @@ const Driver_Details = () => {
                                         <div className='rider_details12113'></div>
                                     </div>
                                     <div className='rider_details13'>
+                                        <div className='rider_details14'>
+                                            <label htmlFor="">Vehicle</label>
+                                            <select value={vehicleName} onChange={(e) => {
+                                                const selectedVehicle = vehicles.find(vehicle => vehicle.name === e.target.value);
+                                                setVehicleId(selectedVehicle._id);
+                                                setVehicleName(e.target.value);
+                                            }}>
+                                                <option>Select Vehicle</option>
+                                                {vehicles?.map(vehicle => (
+                                                    <option key={vehicle._id} value={vehicle.name}>{vehicle.name}</option>
+                                                ))}
+                                            </select>
+                                        </div>
                                         <div className='rider_details14'>
                                             <label>Rc Number</label>
                                             <input type="text" value={rcNumber} onChange={(e) => setRcNumber(e.target.value)} />
@@ -854,141 +1000,215 @@ const Driver_Details = () => {
 
                                     <div className='rider_details20'>
                                         <div className='rider_details2122'>
-                                            <div className='rider_details21' >
-                                                <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleImageChange1} />
-                                                <img
-                                                    src={interiorImage instanceof File ? URL.createObjectURL(interiorImage) : interiorImage || img}
-                                                    alt={interiorImage !== img ? "Driver Interior Image" : "No Image"}
-                                                    onClick={() => handleImageClick(interiorImage)}
-                                                />
-                                                {/* <iframe src={interiorImage} style={{ width: '100%', height: '100%', border: 'none' }} onClick={() => handleImageClick(bankStatementImage)}></iframe> */}
-                                                <h6>Interior</h6>
+                                            <div className='rider_details21'  >
+                                                <input type="file" id="fileInput1" style={{ display: 'none' }} onChange={handleImageChange1} />
+                                                <div onClick={() => handleImageClick(interiorImage)} className='rider_details213'>
+                                                    {isPDF(interiorImage) ? (
+                                                        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                                                            <Viewer fileUrl={interiorImage instanceof File ? URL.createObjectURL(interiorImage) : interiorImage}
+                                                            />
+                                                        </Worker>
+                                                    ) : (
+                                                        <img
+                                                            src={interiorImage instanceof File ? URL.createObjectURL(interiorImage) : interiorImage || img}
+                                                            alt={interiorImage !== img ? "Driver Interior Image" : "No Image"}
+                                                        />
+                                                    )}
+                                                    <h6>Interior</h6>
+                                                </div>
                                             </div>
                                             <div className='rider4'>
-                                                <button onClick={triggerFileInput}>Update</button>
+                                                <button onClick={triggerFileInput1}>Update</button>
                                             </div>
                                         </div>
                                         <div className='rider_details2122'>
                                             <div className='rider_details21' >
-                                                <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleImageChange1} />
+                                                <input type="file" id="fileInput2" style={{ display: 'none' }} onChange={handleImageChange2} />
+                                                <div onClick={() => handleImageClick(exteriorImage)} className='rider_details213'>
+                                                    {isPDF(exteriorImage) ? (
+                                                        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                                                            <Viewer fileUrl={exteriorImage instanceof File ? URL.createObjectURL(exteriorImage) : exteriorImage} />
+                                                        </Worker>
+                                                    ) : (
+                                                        <img
+                                                            src={exteriorImage instanceof File ? URL.createObjectURL(exteriorImage) : exteriorImage}
+                                                            alt={exteriorImage !== img ? "Driver Exterior Image" : "No Image"}
+                                                        />
+                                                    )}
+                                                    <h6>Exterior</h6>
+                                                </div>
+                                            </div>
+                                            <div className='rider4'>
+                                                <button onClick={triggerFileInput2}>Update</button>
+                                            </div>
+                                        </div>
+                                        <div className='rider_details2122'>
+                                            <div className='rider_details21'>
+                                                <input type="file" id="fileInput3" style={{ display: 'none' }} onChange={handleImageChange3} />
+                                                <div onClick={() => handleImageClick(rcImage)} className='rider_details213'>
+                                                    {isPDF(rcImage) ? (
+                                                        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                                                            <Viewer fileUrl={rcImage instanceof File ? URL.createObjectURL(rcImage) : rcImage} />
+                                                        </Worker>
+                                                    ) : (
+                                                        <img
+                                                            src={rcImage instanceof File ? URL.createObjectURL(rcImage) : rcImage}
+                                                            alt={rcImage !== img ? "Driver RC Image" : "No Image"}
+                                                        />
+                                                    )}
+                                                    <h6>RC</h6>
+                                                </div>
+                                            </div>
+                                            <div className='rider4'>
+                                                <button onClick={triggerFileInput3}>Update</button>
+                                            </div>
+                                        </div>
+                                        <div className='rider_details2122'>
+                                            <div className='rider_details21'>
+                                                <input type="file" id="fileInput4" style={{ display: 'none' }} onChange={handleImageChange4} />
+                                                <div onClick={() => handleImageClick(fitnessImage)} className='rider_details213'>
+                                                    {isPDF(fitnessImage) ? (
+                                                        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                                                            <Viewer fileUrl={fitnessImage instanceof File ? URL.createObjectURL(fitnessImage) : fitnessImage} />
+                                                        </Worker>
+                                                    ) : (
+                                                        <img
+                                                            src={fitnessImage instanceof File ? URL.createObjectURL(fitnessImage) : fitnessImage}
+                                                            alt={fitnessImage !== img ? "Driver Fitness Image" : "No Image"}
+                                                        />
+                                                    )}
+                                                    <h6>Fitness</h6>
+                                                </div>
+                                            </div>
+                                            <div className='rider4'>
+                                                <button onClick={triggerFileInput4}>Update</button>
+                                            </div>
+                                        </div>
+                                        <div className='rider_details2122'>
+                                            <div className='rider_details21'>
+                                                <input type="file" id="fileInput5" style={{ display: 'none' }} onChange={handleImageChange5} />
+                                                <div onClick={() => handleImageClick(fitnessImage)} className='rider_details213'>
+                                                    {isPDF(permitImage) ? (
+                                                        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                                                            <Viewer fileUrl={permitImage instanceof File ? URL.createObjectURL(permitImage) : permitImage} />
+                                                        </Worker>
+                                                    ) : (
+                                                        <img
+                                                            src={permitImage instanceof File ? URL.createObjectURL(permitImage) : permitImage}
+                                                            alt={permitImage !== img ? "Driver Permit Image" : "No Image"}
+                                                        />
+                                                    )}
+                                                    <h6>Permit</h6>
+                                                </div>
+                                            </div>
+                                            <div className='rider4'>
+                                                <button onClick={triggerFileInput5}>Update</button>
+                                            </div>
+                                        </div>
+                                        <div className='rider_details2122'>
+                                            <div className='rider_details21'>
+                                                <input type="file" id="fileInput6" style={{ display: 'none' }} onChange={handleImageChange6} />
+                                                <div onClick={() => handleImageClick(fitnessImage)} className='rider_details213'>
+                                                    {isPDF(insuranceImage) ? (
+                                                        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                                                            <Viewer fileUrl={insuranceImage instanceof File ? URL.createObjectURL(insuranceImage) : insuranceImage} />
+                                                        </Worker>
+                                                    ) : (
+                                                        <img
+                                                            src={insuranceImage instanceof File ? URL.createObjectURL(insuranceImage) : insuranceImage}
+                                                            alt={insuranceImage !== img ? "Driver Insurance Image" : "No Image"}
+                                                        />
+                                                    )}
+                                                    <h6>Insurance</h6>
+                                                </div>
+                                            </div>
+                                            <div className='rider4'>
+                                                <button onClick={triggerFileInput6}>Update</button>
+                                            </div>
+                                        </div>
+                                        <div className='rider_details2122'>
+                                            <div className='rider_details21'>
+                                                <input type="file" id="fileInput7" style={{ display: 'none' }} onChange={handleImageChange7} />
+                                                <div onClick={() => handleImageClick(fitnessImage)} className='rider_details213'>
+                                                    {isPDF(drivingLicenseImage) ? (
+                                                        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                                                            <Viewer fileUrl={drivingLicenseImage instanceof File ? URL.createObjectURL(drivingLicenseImage) : drivingLicenseImage} />;
+                                                        </Worker>
+                                                    ) : (
+                                                        <img
+                                                            src={drivingLicenseImage instanceof File ? URL.createObjectURL(drivingLicenseImage) : drivingLicenseImage}
+                                                            alt={drivingLicenseImage !== img ? "Driver License Image" : "No Image"}
+                                                        />
+                                                    )}
+                                                    <h6>Driving License</h6>
+                                                </div>
+                                            </div>
+                                            <div className='rider4'>
+                                                <button onClick={triggerFileInput7}>Update</button>
+                                            </div>
+                                        </div>
+                                        <div className='rider_details2122'>
+                                            <div className='rider_details21'>
+                                                <input type="file" id="fileInput8" style={{ display: 'none' }} onChange={handleImageChange8} />
+                                                <div onClick={() => handleImageClick(fitnessImage)} className='rider_details213'>
+                                                    {isPDF(aadharCardImage) ? (
+                                                        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                                                            <Viewer fileUrl={aadharCardImage instanceof File ? URL.createObjectURL(aadharCardImage) : aadharCardImage} />;
+                                                        </Worker>
+                                                    ) : (
+                                                        <img
+                                                            src={aadharCardImage instanceof File ? URL.createObjectURL(aadharCardImage) : aadharCardImage}
+                                                            alt={aadharCardImage !== img ? "Driver Aadhar Card Image" : "No Image"}
+                                                        />
+                                                    )}
+                                                    <h6>Aadhar Card</h6>
+                                                </div>
+                                            </div>
+                                            <div className='rider4'>
+                                                <button onClick={triggerFileInput8}>Update</button>
+                                            </div>
+                                        </div>
+                                        <div className='rider_details2122'>
+                                            <div className='rider_details21'>
+                                                <input type="file" id="fileInput9" style={{ display: 'none' }} onChange={handleImageChange9} />
+                                                <div onClick={() => handleImageClick(fitnessImage)} className='rider_details213'>
+                                                    {isPDF(cancelCheckImage) ? (
+                                                        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                                                            <Viewer fileUrl={cancelCheckImage instanceof File ? URL.createObjectURL(cancelCheckImage) : cancelCheckImage} />;
+                                                        </Worker>
+                                                    ) : (
+                                                        <img
+                                                            src={cancelCheckImage instanceof File ? URL.createObjectURL(cancelCheckImage) : cancelCheckImage}
+                                                            alt={cancelCheckImage !== img ? "Driver Cancel Check Image" : "No Image"}
+                                                        />
+                                                    )}
+                                                    <h6>Cancel Check</h6>
+                                                </div>
+                                            </div>
+                                            <div className='rider4'>
+                                                <button onClick={triggerFileInput9}>Update</button>
+                                            </div>
+                                        </div>
+                                        <div className='rider_details2122'>
+                                            <div className='rider_details21'>
+                                                <input type="file" id="fileInput10" style={{ display: 'none' }} onChange={handleImageChange10} />
+                                                <div onClick={() => handleImageClick(fitnessImage)} className='rider_details213'>
+                                                    {isPDF(bankStatementImage) ? (
+                                                        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js" >
+                                                            <Viewer fileUrl={bankStatementImage instanceof File ? URL.createObjectURL(bankStatementImage) : bankStatementImage} />
+                                                        </Worker>
 
-                                                <img
-                                                    src={exteriorImage instanceof File ? URL.createObjectURL(exteriorImage) : exteriorImage}
-                                                    alt={exteriorImage !== img ? "Driver Exterior Image" : "No Image"}
-                                                    onClick={() => handleImageClick(exteriorImage)}
-                                                />
-                                                <h6>Exterior</h6>
+                                                    ) : (
+                                                        <img
+                                                            src={bankStatementImage instanceof File ? URL.createObjectURL(bankStatementImage) : bankStatementImage}
+                                                            alt={bankStatementImage !== img ? "Driver Bank Statement Image" : "No Image"}
+                                                        />
+                                                    )}
+                                                    <h6>Bank Statement</h6>
+                                                </div>
                                             </div>
                                             <div className='rider4'>
-                                                <button onClick={triggerFileInput}>Update</button>
-                                            </div>
-                                        </div>
-                                        <div className='rider_details2122'>
-                                            <div className='rider_details21'>
-                                                <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleImageChange1} />
-                                                <img
-                                                    src={rcImage instanceof File ? URL.createObjectURL(rcImage) : rcImage}
-                                                    alt={rcImage !== img ? "Driver RC Image" : "No Image"}
-                                                />
-                                                <h6>RC</h6>
-                                            </div>
-                                            <div className='rider4'>
-                                                <button onClick={triggerFileInput}>Update</button>
-                                            </div>
-                                        </div>
-                                        <div className='rider_details2122'>
-                                            <div className='rider_details21'>
-                                                <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleImageChange1} />
-                                                <img
-                                                    src={fitnessImage instanceof File ? URL.createObjectURL(fitnessImage) : fitnessImage}
-                                                    alt={fitnessImage !== img ? "Driver Fitness Image" : "No Image"}
-                                                />
-                                                <h6>Fitness</h6>
-                                            </div>
-                                            <div className='rider4'>
-                                                <button onClick={triggerFileInput}>Update</button>
-                                            </div>
-                                        </div>
-                                        <div className='rider_details2122'>
-                                            <div className='rider_details21'>
-                                                <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleImageChange1} />
-                                                <img
-                                                    src={permitImage instanceof File ? URL.createObjectURL(permitImage) : permitImage}
-                                                    alt={permitImage !== img ? "Driver Permit Image" : "No Image"}
-                                                />
-                                                <h6>Permit</h6>
-                                            </div>
-                                            <div className='rider4'>
-                                                <button onClick={triggerFileInput}>Update</button>
-                                            </div>
-                                        </div>
-                                        <div className='rider_details2122'>
-                                            <div className='rider_details21'>
-                                                <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleImageChange1} />
-                                                <img
-                                                    src={insuranceImage instanceof File ? URL.createObjectURL(insuranceImage) : insuranceImage}
-                                                    alt={insuranceImage !== img ? "Driver Insurance Image" : "No Image"}
-                                                />
-                                                <h6>Insurance</h6>
-                                            </div>
-                                            <div className='rider4'>
-                                                <button onClick={triggerFileInput}>Update</button>
-                                            </div>
-                                        </div>
-                                        <div className='rider_details2122'>
-                                            <div className='rider_details21'>
-                                                <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleImageChange1} />
-                                                <img
-                                                    src={drivingLicenseImage instanceof File ? URL.createObjectURL(drivingLicenseImage) : drivingLicenseImage}
-                                                    alt={drivingLicenseImage !== img ? "Driver License Image" : "No Image"}
-                                                />
-                                                <h6>Driving License</h6>
-                                            </div>
-                                            <div className='rider4'>
-                                                <button onClick={triggerFileInput}>Update</button>
-                                            </div>
-                                        </div>
-                                        <div className='rider_details2122'>
-                                            <div className='rider_details21'>
-                                                <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleImageChange1} />
-                                                <img
-                                                    src={aadharCardImage instanceof File ? URL.createObjectURL(aadharCardImage) : aadharCardImage}
-                                                    alt={aadharCardImage !== img ? "Driver Aadhar Card Image" : "No Image"}
-                                                />
-                                                <h6>Aadhar Card</h6>
-                                            </div>
-                                            <div className='rider4'>
-                                                <button onClick={triggerFileInput}>Update</button>
-                                            </div>
-                                        </div>
-                                        <div className='rider_details2122'>
-                                            <div className='rider_details21'>
-                                                <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleImageChange1} />
-                                                <img
-                                                    src={cancelCheckImage instanceof File ? URL.createObjectURL(cancelCheckImage) : cancelCheckImage}
-                                                    alt={cancelCheckImage !== img ? "Driver Cancel Check Image" : "No Image"}
-                                                />
-                                                <h6>Cancel Check</h6>
-                                            </div>
-                                            <div className='rider4'>
-                                                <button onClick={triggerFileInput}>Update</button>
-                                            </div>
-                                        </div>
-                                        <div className='rider_details2122'>
-                                            <div className='rider_details21'>
-                                                <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleImageChange1} />
-                                                <img
-                                                    src={bankStatementImage instanceof File ? URL.createObjectURL(bankStatementImage) : bankStatementImage}
-                                                    alt={bankStatementImage !== img ? "Driver Bank Statement Image" : "No Image"}
-                                                />
-                                                {/* <iframe src={bankStatementImage} style={{ width: '100%', height: '100%', border: 'none' }} onClick={() => handleImageClick(bankStatementImage)}></iframe> */}
-                                                {/* <Document file={bankStatementImage}>
-                                                    <Page pageNumber={1} />
-                                                </Document> */}
-                                                <h6>Bank Statement</h6>
-                                            </div>
-                                            <div className='rider4'>
-                                                <button onClick={triggerFileInput}>Update</button>
+                                                <button onClick={triggerFileInput10}>Update</button>
                                             </div>
                                         </div>
                                     </div>

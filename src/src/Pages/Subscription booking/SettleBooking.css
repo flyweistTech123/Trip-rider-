@@ -1,0 +1,266 @@
+.settledriver {
+  margin-bottom: 40px;
+}
+
+.settledrivercantainer {
+  width: 95%;
+  margin: auto;
+  margin-top: 30px;
+  padding-bottom: 30px;
+}
+
+.settledriver1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.settledriver1 h6 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #000000;
+  line-height: 28px;
+  margin: 0;
+}
+
+.settledriver1 button {
+  width: 127px;
+  height: 31px;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  background-color: #c3052c;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #ffffff;
+  line-height: 21px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.settledriver2 {
+  margin-top: 30px;
+}
+
+.settledriver3 {
+  margin-top: 20px;
+}
+
+.settledriver3 label {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #000000;
+  line-height: 28px;
+  margin: 0;
+}
+
+.settledriver4 {
+  width: 100%;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 15px;
+  padding: 10px;
+}
+
+.settledriver5 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.settledriver5 label {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #000000;
+  line-height: 28px;
+  margin: 0;
+}
+
+.settledriver6 {
+  width: 100%;
+  height: 79px;
+  border: 1px solid #c4c4c4;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding-left: 20px;
+  overflow-wrap: anywhere;
+}
+
+.settledriver6 p {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #000000;
+  line-height: 24px;
+  margin: 0;
+}
+
+.settledriver44 {
+  width: 100%;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 15px;
+  padding: 10px;
+}
+
+.settledriver66 {
+  width: 100%;
+  height: 54px;
+  border: 1px solid #c4c4c4;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding-left: 20px;
+  overflow-wrap: anywhere;
+}
+
+.settledriver66 p {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #000000;
+  line-height: 24px;
+  margin: 0;
+}
+
+.settledriver7 {
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.settledriver7 table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.settledriver7 table tbody tr:last-child td {
+  color: #ff0034;
+  font-weight: 700;
+  padding-bottom: 20px;
+}
+
+.settledriver7 table th {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #000000;
+  line-height: 28px;
+  margin: 0;
+  text-align: center;
+  border-bottom: 1px solid #c4c4c4;
+  padding: 10px;
+}
+
+.settledriver7 table td {
+  border-bottom: 1px solid #c4c4c4;
+}
+
+.settledriver7 table td:nth-child(1) {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #000000;
+  line-height: 28px;
+  margin: 0;
+  text-align: start;
+  padding-left: 30px;
+  border-right: 1px solid #c4c4c4;
+  padding-top: 15px;
+  width: 30%;
+}
+
+.settledriver7 table td:nth-child(2) {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #000000;
+  line-height: 28px;
+  margin: 0;
+  text-align: center;
+  border-right: 1px solid #c4c4c4;
+  padding-top: 15px;
+  width: 30%;
+}
+
+.settledriver7 table td:nth-child(3) {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #000000;
+  line-height: 28px;
+  margin: 0;
+  text-align: center;
+  padding-top: 15px;
+  width: 30%;
+}
+
+/* CancelBookingModal */
+
+.CancelBookingModal1 {
+  text-align: center;
+}
+
+.CancelBookingModal1 h6 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #000000;
+  line-height: 24px;
+  margin: 0;
+}
+
+.CancelBookingModal2 {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.CancelBookingModal2 button:nth-child(1) {
+  width: 100px;
+  height: 31px;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  background-color: #c3052c;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #ffffff;
+  line-height: 21px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.CancelBookingModal2 button:nth-child(2) {
+  width: 100px;
+  height: 31px;
+  border: 1px solid #c3052c;
+  outline: none;
+  border-radius: 8px;
+  background-color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #c3052c;
+  line-height: 21px;
+  margin: 0;
+  cursor: pointer;
+}

@@ -1,0 +1,344 @@
+.livechart{
+    display: flex;
+    width: 95%;
+    margin: auto;
+    margin-top: 30px;
+    gap: 10px;
+}
+
+
+.livechart1{
+    border-right: 1px solid #E2E8F0;
+    width: 37%;
+    padding-right: 10px;
+    height: 700px;
+    overflow: auto;
+}
+
+
+
+.livechart2{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.livechart3{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.livechart3 h5{
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: #000000;
+    line-height:30px;
+    margin: 0;
+}
+
+.livechart3 p{
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    color: #000000;
+    line-height:18px;
+    margin: 0;
+}
+
+.livechart4{
+
+}
+
+
+.livechart5{
+    width: 100%;
+    height: 48px;
+    background-color: #F3F3F3;
+    border-radius: 12px;
+    padding: 10px 20px 10px 20px;
+}
+
+
+.livechart5 input{
+    border: none;
+    outline: none;
+    background-color: #F3F3F3;
+    width: 100%;
+}
+
+.livechart5 input::placeholder{
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height:21px;
+    margin: 0;
+}
+
+.livechart6{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+
+.livechart7{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+.livechart8{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* .livechart852 img{
+    max-width: 50px;
+} */
+
+
+.livechart9{
+
+}
+
+
+.livechart9 h6{
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height:21px;
+    margin: 0;
+    color: #000000;
+}
+
+.livechart9 p{
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    line-height:18px;
+    margin: 0;
+    color: #00000066;
+}
+
+.livechart9 span{
+    color: #FFFFFF;
+}
+
+
+.livechart10 p{
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height:21px;
+    margin: 0;
+    color: #00000066;
+}
+
+
+
+
+.livechart11{
+    width: 58%;
+    height: 720px;
+    overflow-y: scroll;
+    position: relative;
+}
+
+
+
+.livechart13{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 1px solid #00000066;
+    padding-bottom: 20px;
+}
+
+
+.livechart14{
+
+}
+
+/* .livechart14 img{
+    max-width: 50px;
+} */
+
+
+.livechart15{
+    display: flex;
+    flex-direction: column;
+}
+
+.livechart15 h6{
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height:25px;
+    margin: 0;
+    color: #000000;
+}
+
+.livechart16{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.livechart16 p{
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    line-height:18px;
+    margin: 0;
+    color: #00000066;
+}
+
+.livechart17{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #68D391;
+}
+
+
+.livechart18{
+    width: 95%;
+    margin: auto;
+    height: 500px;
+    overflow-y: scroll;
+    margin-top: 30px;
+    /* padding-bottom: 30px; */
+
+    /* border: 1px solid red; */
+}
+
+
+.livechart19{
+    display: flex;
+    gap: 10px;
+    justify-content: start;
+    margin-top: 20px;
+}
+
+.livechart20 img{
+    max-width: 50px;
+}
+
+
+
+.livechart21{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+
+.livechart22{
+    width: auto;
+    height: 37px;
+    background-color: #F1F1F1;
+    border-radius: 12px;
+    padding: 8px 16px 8px 16px;
+}
+
+.livechart22 p{
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height:21px;
+    margin: 0;
+    color: #000000;
+}
+
+.livechart24{
+    display: flex;
+    gap: 10px;
+    justify-content: end;
+}
+
+.livechart23{
+    width: auto;
+    height: 37px;
+    background-color: #F52D56;
+    border-radius: 12px;
+    padding: 8px 16px 8px 16px;
+}
+
+
+.livechart23 p{
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height:21px;
+    margin: 0;
+    color: #FFFFFF;
+}
+
+
+.livechart25{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+
+.livechart26{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.livechart27{
+    cursor: pointer;
+}
+
+
+.livechart28{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    border: 2px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 10px;
+    overflow-wrap: anywhere;
+}
+
+
+.livechart28 input{
+    border: none;
+    outline: none;
+    width: 100%;
+    background-color: transparent;
+}
+
+.livechart28 img{
+    cursor: pointer;
+}
+
+
+
+
+.no-messages{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.no-messages h6{
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    line-height:21px;
+    margin: 0;
+    color: #F52D56;
+}

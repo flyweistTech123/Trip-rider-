@@ -1,0 +1,151 @@
+.setting {
+  width: 100%;
+  height: 996px;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 18px 18px 10px 10px;
+  overflow: auto;
+  border: 1px solid #dedede;
+}
+
+.setting1 {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.setting2 {
+  height: 44.61px;
+  width: 164.71px;
+  border-radius: 18.58px 8.58px 0px 0px;
+  background-color: #f52d56;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.setting2 p {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #ffffff;
+  line-height: 24px;
+  margin: 0;
+}
+
+.setting3 {
+  height: 44.61px;
+  width: 164.71px;
+  border-radius: 18.58px 8.58px 0px 0px;
+  background-color: #f9f9f9;
+  border: 1px solid #c4c4c4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.setting3 p {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #000000;
+  line-height: 24px;
+  margin: 0;
+}
+
+.setting4 {
+  text-align: end;
+  margin-top: 20px;
+  padding-bottom: 30px;
+}
+
+.setting4 button {
+  width: 179px;
+  height: 50px;
+  background-color: #f52d56;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: #ffffff;
+  line-height: 27px;
+}
+
+.setting4 button:hover {
+  background-color: #c3052c;
+}
+
+.setting5 {
+  display: flex;
+  gap: 80px;
+}
+
+.setting6 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.setting6 label {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 21.6px;
+  color: #000000;
+  line-height: 32.4px;
+}
+
+.setting6 button {
+  width: 132px;
+  height: 34px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  color: #000000;
+  line-height: 27px;
+  color: #ffffff;
+  background-color: #f52d56;
+}
+
+.setting6 button:hover {
+  background-color: #c3052c;
+}
+
+.setting7 {
+  width: 135px;
+  height: 135px;
+  border: 2px dotted #000000;
+  border-radius: 13.5px;
+  background-color: #d9d9d9;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.setting7 img {
+  max-width: 100px;
+}
+
+
+
+.setting8{
+
+}
+
+
+
+.setting8 h6{
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #000000;
+  line-height: 24px;
+}

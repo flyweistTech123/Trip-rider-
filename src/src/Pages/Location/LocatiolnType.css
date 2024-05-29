@@ -1,0 +1,165 @@
+
+.loacation {
+    width: 100%;
+    height: 86px;
+    border-radius: 18px;
+    background-color: #f52d56;
+    display: flex;
+    align-items: center;
+    /* margin-top: 20px; */
+    cursor: pointer;
+  }
+
+
+  .loacation h5 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 32px;
+    color: #ffffff;
+    line-height: 48px;
+    margin: 0;
+  }
+
+
+  .Location1{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 10px;
+  }
+
+  .Location2{
+    margin-top: 40px;
+
+  }
+
+
+
+  .Location3 {
+    width: 95%;
+    height: 100%;
+    margin: auto;
+    margin-top: 30px;
+    position: relative;
+  }
+
+  .Location3 h6{
+    font-family: "Mulish", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: #000000;
+    line-height: 25.1px;
+    margin: 0;
+  }
+  
+  .Location4 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 50px;
+  }
+  
+  .Location5 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .Location5 label {
+    font-family: "Mulish", sans-serif;
+    font-weight: 500;
+    font-size: 17.92px;
+    color: #000000;
+    line-height: 22.49px;
+    margin: 0;
+  }
+  
+  .Location5 select {
+    width: 500px;
+    height: 53px;
+    border-radius: 6.81px;
+    border: 1.36px solid #b7b7b7;
+    outline: none;
+    font-family: "Mulish", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #7d7d7d;
+    line-height: 20.08px;
+    margin: 0;
+    padding-left: 10px;
+  }
+
+
+  .Location5 input {
+    width: 500px;
+    height: 53px;
+    border-radius: 6.81px;
+    border: 1.36px solid #b7b7b7;
+    outline: none;
+    font-family: "Mulish", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #000000;
+    line-height: 20.08px;
+    margin: 0;
+    padding-left: 10px;
+  }
+
+
+  .Location5 input::placeholder{
+    font-family: "Mulish", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #000000;
+    line-height: 20.08px;
+    margin: 0;
+  }
+
+
+
+  .Location6 {
+    display: flex;
+    align-items: end;
+    gap: 10px;
+    justify-content: end;
+    margin-top: 100px;
+    padding-bottom: 30px;
+  }
+  
+  .Location6 button:nth-child(1) {
+    width: 126.87px;
+    height: 39.14px;
+    border: 1px solid #c3052c;
+    outline: none;
+    border-radius: 6.75px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 16.2px;
+    color: #7d7d7d;
+    line-height: 20.08px;
+    margin: 0;
+    color: #c3052c;
+    background-color: #f9f9f9;
+    cursor: pointer;
+  }
+  
+  .Location6 button:nth-child(2) {
+    width: 126.87px;
+    height: 39.14px;
+    border: none;
+    outline: none;
+    border-radius: 6.75px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 16.2px;
+    color: #ffffff;
+    line-height: 20.08px;
+    margin: 0;
+    background-color: #f52d56;
+    cursor: pointer;
+  }
+  
+  .Location6 button:nth-child(2):hover {
+    background-color: #c3052c;
+  }
+  

@@ -1,0 +1,98 @@
+.payusercotainer {
+  width: 100%;
+  height: 900px;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 18px 18px 10px 10px;
+  overflow: auto;
+  background-color: #f9f9f9;
+  padding-bottom: 50px;
+}
+
+.payuser {
+}
+
+.payuser1 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 95%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.payuser2 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.payuser2 label {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #000000;
+  line-height: 24px;
+}
+
+.payuser2 input {
+  width: 100%;
+  height: 55px;
+  border: 1px solid #e0e0e0;
+  outline: none;
+  border-radius: 8px;
+  padding-left: 20px;
+}
+
+
+.payuser2 select {
+  width: 100%;
+  height: 55px;
+  border: 1px solid #e0e0e0;
+  outline: none;
+  border-radius: 8px;
+  padding-left: 20px;
+}
+
+
+.payuser3{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.payuser3 button{
+    width: 217px;
+    height: 67px;
+    background-color: #F52D56;
+    border: none;
+    outline: none;
+    border-radius: 14px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    color: #FFFFFF;
+    line-height: 39px;
+}
+
+
+.payuser3 button:hover{
+    background-color: #C3052C;
+}
+
+
+.payuser4 button{
+    width: 57px;
+    height: 27px;
+    background-color: #F52D56;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: #FFFFFF;
+    line-height: 25px;
+}
+
+.payuser4 button:hover{
+    background-color: #C3052C;
+}

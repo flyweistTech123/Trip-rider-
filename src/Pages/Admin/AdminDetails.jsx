@@ -57,10 +57,23 @@ const AdminDetails = () => {
     const [view, setView] = useState(false);
     const [delete1, setDelete1] = useState(false);
     const [edit, setEdit] = useState(false);
+    const [permissionsListObject, setPermissionsListObject] = useState({});
+
+    useEffect(() => {
+        fetchAdminData();
+    }, [id]);
 
 
 
-
+    useEffect(() => {
+        if (adminData && adminData.permissions) {
+            const permissionsObject = adminData.permissions.reduce((obj, item) => {
+                obj[item.name] = { view: item.view, delete: item.delete, edit: item.edit };
+                return obj;
+            }, {});
+            setPermissionsListObject(permissionsObject);
+        }
+    }, [adminData]);
 
     const handleSaveChanges = async () => {
         if (!newPermission) {
@@ -68,45 +81,32 @@ const AdminDetails = () => {
             return;
         }
 
-        // Check if the permission already exists
-        const existingPermissionIndex = permissionsListArray.findIndex(perm => perm.name === newPermission);
-        if (existingPermissionIndex !== -1) {
-            // Update the existing permission
-            const updatedPermissions = [...permissionsListArray];
-            updatedPermissions[existingPermissionIndex] = {
-                name: newPermission,
-                view: view,
-                delete: delete1,
-                edit: edit
-            };
-            setPermissionsListArray(updatedPermissions);
-        } else {
-            // Add new permission
-            const newPerm = {
-                name: newPermission,
-                view: view,
-                delete: delete1,
-                edit: edit
-            };
-            setPermissionsListArray([...permissionsListArray, newPerm]);
-        }
+        // Create a copy of the current permissions list object
+        const updatedPermissions = { ...permissionsListObject };
 
-        // Reset form fields
-        setNewPermission('');
-        setView(false);
-        setDelete1(false);
-        setEdit(false);
+        // Update or add the permission
+        updatedPermissions[newPermission] = {
+            view: view,
+            delete: delete1,
+            edit: edit
+        };
+
+        // Set the updated permissions list
+        setPermissionsListObject(updatedPermissions);
+
+        // Convert the permissions object to an array before sending to the API
+        const permissionsArray = Object.entries(updatedPermissions).map(([name, perms]) => ({ name, ...perms }));
 
         // Send the updated permissions list to the API
         try {
-            if (permissionsListArray.length === 0) {
+            if (permissionsArray.length === 0) {
                 toast.error('Please add at least one permission');
                 return;
             }
 
             await axios.put(
                 `${BaseUrl}api/v1/SuperAdmin/updateAdminProfile/${id}`,
-                { permissions: permissionsListArray },
+                { permissions: permissionsArray },
                 getAuthHeaders()
             );
 
@@ -116,7 +116,38 @@ const AdminDetails = () => {
             console.error('Error updating permissions:', error);
             toast.error('Error updating permissions');
         }
+
+        // Reset form fields
+        setNewPermission('');
+        setView(false);
+        setDelete1(false);
+        setEdit(false);
     };
+
+    const handlePermissionDelete = async (permission) => {
+        try {
+            const updatedPermissions = adminData.permissions.filter((perm) => perm.name !== permission.name);
+
+            await axios.put(
+                `${BaseUrl}api/v1/SuperAdmin/updateAdminProfile/${id}`,
+                { permissions: updatedPermissions },
+                getAuthHeaders()
+            );
+
+            toast.success('Permission removed successfully');
+            setAdminData({ ...adminData, permissions: updatedPermissions });
+            // Sync permissionsListObject with the updated adminData.permissions
+            const updatedPermissionsObject = updatedPermissions.reduce((obj, item) => {
+                obj[item.name] = { view: item.view, delete: item.delete, edit: item.edit };
+                return obj;
+            }, {});
+            setPermissionsListObject(updatedPermissionsObject);
+        } catch (error) {
+            console.error('Error deleting permission:', error);
+            toast.error('Error deleting permission');
+        }
+    };
+
 
 
 
@@ -208,24 +239,6 @@ const AdminDetails = () => {
         }
     };
 
-
-    const handlePermissionDelete = async (permission) => {
-        try {
-            const updatedPermissions = adminData.permissions.filter((perm) => perm.name !== permission.name);
-
-            await axios.put(
-                `${BaseUrl}api/v1/SuperAdmin/updateAdminProfile/${id}`,
-                { permissions: updatedPermissions },
-                getAuthHeaders()
-            );
-
-            toast.success('Permission removed successfully');
-            setAdminData({ ...adminData, permissions: updatedPermissions });
-        } catch (error) {
-            console.error('Error deleting permission:', error);
-            toast.error('Error deleting permission');
-        }
-    };
 
     let textColor = '';
 
@@ -359,13 +372,6 @@ const AdminDetails = () => {
         );
     }
 
-
-
-
-
-    useEffect(() => {
-        fetchAdminData();
-    }, [id]);
 
 
     return (
@@ -534,7 +540,7 @@ const AdminDetails = () => {
                                                             <td>{permission.edit ? 'Yes' : 'No'}</td>
                                                             <td>
                                                                 <RiDeleteBinLine className="delete-icon" color='#667085'
-                                                                size={20}  onClick={() => handlePermissionDelete(permission)} />
+                                                                    size={20} onClick={() => handlePermissionDelete(permission)} />
                                                             </td>
                                                         </tr>
                                                     ))}
@@ -542,29 +548,7 @@ const AdminDetails = () => {
                                             </table>
                                         </div>
                                     </div>
-                                    {/* <div className='rider_details14'>
-                                        <label htmlFor="">Permissions</label>
-                                        <ul className="permission-list">
-                                            {adminData.permissions.length > 0 ? (
-                                                <ul className="permission-list">
-                                                    {adminData.permissions.map((perm, index) => (
-                                                        <li key={index} className="permission-item">
-                                                            <span className="permission-count">{index + 1}</span>
-                                                            <span>{perm}</span>
-                                                            <RiDeleteBinLine
-                                                                className="delete-icon"
-                                                                color='#667085'
-                                                                size={20}
-                                                                onClick={() => handlePermissionDelete(perm)}
-                                                            />
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            ) : (
-                                                <p className='no-permissions-message'>No permissions!</p>
-                                            )}
-                                        </ul>
-                                    </div> */}
+                                    
                                 </div>
                             </div>
                         </>
