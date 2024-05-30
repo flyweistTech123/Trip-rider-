@@ -97,10 +97,9 @@ const LiveChart = () => {
 
             if (allMessages.length > messages.length) {
                 const newMessages = allMessages.filter(msg => !msg.read && msg.type === 'user');
-                const type = newMessages.type
-                console.log(type, "upadyed")
+                console.log(newMessages, "update")
                 if (newMessages.length > 0) {
-                    toast.success("New message");
+                    // toast.success("New message");
                 }
             }
 

@@ -53,10 +53,10 @@ const Privileges = () => {
 
     const deleteAdmin = (adminId) => {
         axios.delete(`${BaseUrl}api/v1/admin/delete/driver/${adminId}`, {
-            headers: getAuthHeaders()  
+            headers: getAuthHeaders()
         })
             .then(response => {
-                fetchAdminData();  
+                fetchAdminData();
                 toast.success("Admin deleted successfully");
             })
             .catch(error => {
@@ -101,6 +101,19 @@ const Privileges = () => {
                 toast.error("Error unblocking Admin");
             });
     };
+
+
+    const cachedAdminData = localStorage.getItem('adminData');
+    const adminData11 = JSON.parse(cachedAdminData);
+    const role = localStorage.getItem('role');
+
+    let permissionsArray = [];
+
+    if (adminData11 && adminData11.permissions) {
+        permissionsArray = adminData11.permissions;
+    } else {
+        console.log('Permissions array not found in adminData.');
+    }
 
     return (
         <>
@@ -239,20 +252,48 @@ const Privileges = () => {
                                                         </td>
                                                         <td>
                                                             <div className='rider9'>
-                                                                <div className='rider10' onClick={() => deleteAdmin(admin._id)}>
-                                                                    <RiDeleteBinLine color='#667085' size={20} />
-                                                                    <p>Delete</p>
-                                                                </div>
-                                                                <div className='rider10' onClick={() => { admin.isBlock ? unblockAdmin(admin._id) : blockAdmin(admin._id) }}>
-                                                                    <MdOutlineBlock color={admin.isBlock ? "red" : "#667085"} size={20} />
-                                                                    <p style={{ color: admin.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
-                                                                </div>
-                                                                <div className='rider10'>
-                                                                    <Link to={`/admindetails/${admin._id}`} className='sidebar-link' >
-                                                                        <IoEyeOutline color='#667085' size={20} />
-                                                                        <p>View/Edit</p>
-                                                                    </Link>
-                                                                </div>
+                                                                {role === 'superAdmin' ? (
+                                                                    <>
+                                                                        <div className='rider10' onClick={() => deleteAdmin(admin._id)}>
+                                                                            <RiDeleteBinLine color='#667085' size={20} />
+                                                                            <p>Delete</p>
+                                                                        </div>
+                                                                        <div className='rider10' onClick={() => { admin.isBlock ? unblockAdmin(admin._id) : blockAdmin(admin._id) }}>
+                                                                            <MdOutlineBlock color={admin.isBlock ? "red" : "#667085"} size={20} />
+                                                                            <p style={{ color: admin.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                                        </div>
+                                                                        <div className='rider10'>
+                                                                            <Link to={`/admindetails/${admin._id}`} className='sidebar-link' >
+                                                                                <IoEyeOutline color='#667085' size={20} />
+                                                                                <p>View/Edit</p>
+                                                                            </Link>
+                                                                        </div>
+                                                                    </>
+                                                                ) : (
+                                                                    <>
+                                                                        {permissionsArray.some(permission => permission.name === 'Privileges' && permission.delete) && (
+                                                                            <div className='rider10' onClick={() => deleteAdmin(admin._id)}>
+                                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                                <p>Delete</p>
+                                                                            </div>
+                                                                        )}
+                                                                        {permissionsArray.some(permission => permission.name === 'Privileges' && permission.block) && (
+                                                                            <div className='rider10' onClick={() => { admin.isBlock ? unblockAdmin(admin._id) : blockAdmin(admin._id) }}>
+                                                                                <MdOutlineBlock color={admin.isBlock ? "red" : "#667085"} size={20} />
+                                                                                <p style={{ color: admin.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                                            </div>
+                                                                        )}
+                                                                        {permissionsArray.some(permission => permission.name === 'Privileges' && permission.view) && (
+                                                                            <div className='rider10'>
+                                                                                <Link to={`/admindetails/${admin._id}`} className='sidebar-link' >
+                                                                                    <IoEyeOutline color='#667085' size={20} />
+                                                                                    <p>View/Edit</p>
+                                                                                </Link>
+                                                                            </div>
+                                                                        )}
+
+                                                                    </>
+                                                                )}
                                                             </div>
                                                         </td>
                                                     </tr>

@@ -202,7 +202,7 @@ const Users = () => {
                                                                             <p>Delete</p>
                                                                         </div>
                                                                     )}
-                                                                    {permissionsArray.some(permission => permission.name === 'All Users' && permission.edit) && (
+                                                                    {permissionsArray.some(permission => permission.name === 'All Users' && permission.block) && (
                                                                         <div className='rider10' onClick={() => { rider.isBlock ? unblockRider(rider._id) : blockRider(rider._id) }}>
                                                                             <MdOutlineBlock color={rider.isBlock ? "red" : "#667085"} size={20} />
                                                                             <p style={{ color: rider.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
@@ -264,7 +264,7 @@ const Users = () => {
                                                                             <p>Delete</p>
                                                                         </div>
                                                                     )}
-                                                                    {permissionsArray.some(permission => permission.name === 'All Users' && permission.edit) && (
+                                                                    {permissionsArray.some(permission => permission.name === 'All Users' && permission.block) && (
                                                                         <div className='rider10' onClick={() => { rider.isBlock ? unblockRider(rider._id) : blockRider(rider._id) }}>
                                                                             <MdOutlineBlock color={rider.isBlock ? "red" : "#667085"} size={20} />
                                                                             <p style={{ color: rider.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>

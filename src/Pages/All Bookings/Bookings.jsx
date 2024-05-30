@@ -37,7 +37,7 @@ const Bookings = () => {
                             </div>
                         </div>
                     </Link>
-                    <Link to={'/cancellled_booking'} className='sidebar-link'>
+                    <Link to={'/cancelled_booking'} className='sidebar-link'>
                         <div className='pricing2'>
                             <div className='pricing3'>
                                 <h5>Cancelled Bookings</h5>

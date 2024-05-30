@@ -33,8 +33,7 @@ const Driver_Details = () => {
     const { id } = useParams();
     const [modalShow, setModalShow] = React.useState(false);
     const [isBlocked, setIsBlocked] = useState(false);
-    const [kycstatus1, setKYCstatus1] = useState(" ");
-    const [modalShow2, setModalShow2] = React.useState(false);
+    // const [kycstatus1, setKYCstatus1] = useState(" ");
     const navigate = useNavigate()
     const [modalShow1, setModalShow1] = useState(false);
     const [currentImageUrl, setCurrentImageUrl] = useState('');
@@ -368,12 +367,19 @@ const Driver_Details = () => {
     };
 
 
+    const appendIfPresent = (formData, key, value) => {
+        if (value) {
+            formData.append(key, value);
+        }
+    };
+
+
     const handlePutRequest = async (e) => {
         e.preventDefault();
         const userDetailsFormData = new FormData();
         userDetailsFormData.append('name', name);
         userDetailsFormData.append('email', email);
-        userDetailsFormData.append('mobileNumber', number);
+        appendIfPresent(userDetailsFormData, 'mobileNumber', number);
         userDetailsFormData.append('altMobileNumber', altnumber);
         userDetailsFormData.append('gender', gender);
         userDetailsFormData.append('profilePicture', profileimg);
@@ -452,7 +458,6 @@ const Driver_Details = () => {
             await axios.post(`${BaseUrl}api/v1/driver/image/${id}`, imageFormData, getAuthHeaders());
 
             toast.success("Driver Details Updated successfully");
-            setModalShow(false);
 
             // Fetch updated details after all APIs are successfully called
             fetchDriverDetails();
@@ -836,18 +841,43 @@ const Driver_Details = () => {
                                             </div>
                                         </div>
                                         <div className='rider_details6'>
-                                            <div className='rider_details7' onClick={handleDeleteDriver}>
-                                                <RiDeleteBinLine color='#667085' size={20} />
-                                                <p>Delete</p>
-                                            </div>
-                                            <div className='rider_details7' onClick={() => { isBlocked ? unblockDriver() : blockDriver() }}>
-                                                <MdOutlineBlock color={isBlocked ? "red" : "#667085"} size={20} />
-                                                <p style={{ color: isBlocked ? 'red' : '#667085' }}>Block/Unblock</p>
-                                            </div>
-                                            <div className='rider_details7' onClick={() => setModalShow(true)}>
-                                                <MdEdit color="#667085" size={20} />
-                                                <p style={{ color: '#667085' }}>Update KYC Status</p>
-                                            </div>
+                                            {role1 === 'superAdmin' ? (
+                                                <>
+                                                    <div className='rider_details7' onClick={handleDeleteDriver}>
+                                                        <RiDeleteBinLine color='#667085' size={20} />
+                                                        <p>Delete</p>
+                                                    </div>
+                                                    <div className='rider_details7' onClick={() => { isBlocked ? unblockDriver() : blockDriver() }}>
+                                                        <MdOutlineBlock color={isBlocked ? "red" : "#667085"} size={20} />
+                                                        <p style={{ color: isBlocked ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                    </div>
+                                                    <div className='rider_details7' onClick={() => setModalShow(true)}>
+                                                        <MdEdit color="#667085" size={20} />
+                                                        <p style={{ color: '#667085' }}>Update KYC Status</p>
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    {permissionsArray.some(permission => permission.name === 'All Drivers' && permission.delete) && (
+                                                        <div className='rider_details7' onClick={handleDeleteDriver}>
+                                                            <RiDeleteBinLine color='#667085' size={20} />
+                                                            <p>Delete</p>
+                                                        </div>
+                                                    )}
+                                                    {permissionsArray.some(permission => permission.name === 'All Drivers' && permission.block) && (
+                                                        <div className='rider_details7' onClick={() => { isBlocked ? unblockDriver() : blockDriver() }}>
+                                                            <MdOutlineBlock color={isBlocked ? "red" : "#667085"} size={20} />
+                                                            <p style={{ color: isBlocked ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                        </div>
+                                                    )}
+                                                    {permissionsArray.some(permission => permission.name === 'All Drivers' && permission.edit) && (
+                                                        <div className='rider_details7' onClick={() => setModalShow(true)}>
+                                                            <MdEdit color="#667085" size={20} />
+                                                            <p style={{ color: '#667085' }}>Update KYC Status</p>
+                                                        </div>
+                                                    )}
+                                                </>
+                                            )}
                                         </div>
                                     </div>
 

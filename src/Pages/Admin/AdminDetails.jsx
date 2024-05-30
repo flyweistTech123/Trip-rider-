@@ -129,8 +129,8 @@ const AdminDetails = () => {
             setModalShow(false);
             fetchAdminDetails();
         } catch (error) {
-            console.log('Error to updating User Admin:', error)
-            toast.error("Error to updating User Admin")
+            console.log('Error to updating Admin Details:', error)
+            toast.error("Error to updating Admin Details")
         }
     }
 
@@ -437,6 +437,20 @@ const AdminDetails = () => {
     };
 
 
+    const cachedAdminData = localStorage.getItem('adminData');
+    const adminData11 = JSON.parse(cachedAdminData);
+    const role1 = localStorage.getItem('role');
+
+    let permissionsArray = [];
+
+    if (adminData11 && adminData11.permissions) {
+        permissionsArray = adminData11.permissions;
+    } else {
+        console.log('Permissions array not found in adminData.');
+    }
+
+
+
     return (
         <>
             <KycStatusModal
@@ -451,8 +465,23 @@ const AdminDetails = () => {
                         </div>
                         <div className='rider4'>
                             <button onClick={() => navigate('/privileges')}>Back</button>
-                            <button onClick={handleSaveChanges}>Save Permission</button>
-                            <button onClick={handlePutRequest}>Save Changes</button>
+                            {role1 === 'superAdmin' ? (
+                                <>
+                                    <button onClick={handleSaveChanges}>Save Permission</button>
+                                    <button onClick={handlePutRequest}>Save Changes</button>
+
+                                </>
+                            ) : (
+                                <>
+                                    {permissionsArray.some(permission => permission.name === 'Privileges' && permission.edit) && (
+                                        <div>
+                                            <button onClick={handleSaveChanges}>Save Permission</button>
+                                            <button onClick={handlePutRequest}>Save Changes</button>
+                                        </div>
+                                    )}
+                                </>
+                            )}
+
                         </div>
                     </div>
 
@@ -504,18 +533,43 @@ const AdminDetails = () => {
                                             </div>
                                         </div>
                                         <div className='rider_details6'>
-                                            <div className='rider_details7' onClick={handleDeleteAdmin}>
-                                                <RiDeleteBinLine color='#667085' size={20} />
-                                                <p>Delete</p>
-                                            </div>
-                                            <div className='rider_details7' onClick={() => { isBlocked ? unblockAdmin() : blockAdmin() }}>
-                                                <MdOutlineBlock color={isBlocked ? "red" : "#667085"} size={20} />
-                                                <p style={{ color: isBlocked ? 'red' : '#667085' }}>Block/Unblock</p>
-                                            </div>
-                                            <div className='rider_details7' onClick={() => setModalShow(true)}>
-                                                <MdEdit color="#667085" size={20} />
-                                                <p style={{ color: '#667085' }}>Update KYC Status</p>
-                                            </div>
+                                            {role1 === 'superAdmin' ? (
+                                                <>
+                                                    <div className='rider_details7' onClick={handleDeleteAdmin}>
+                                                        <RiDeleteBinLine color='#667085' size={20} />
+                                                        <p>Delete</p>
+                                                    </div>
+                                                    <div className='rider_details7' onClick={() => { isBlocked ? unblockAdmin() : blockAdmin() }}>
+                                                        <MdOutlineBlock color={isBlocked ? "red" : "#667085"} size={20} />
+                                                        <p style={{ color: isBlocked ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                    </div>
+                                                    <div className='rider_details7' onClick={() => setModalShow(true)}>
+                                                        <MdEdit color="#667085" size={20} />
+                                                        <p style={{ color: '#667085' }}>Update KYC Status</p>
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    {permissionsArray.some(permission => permission.name === 'Privileges' && permission.delete) && (
+                                                        <div className='rider_details7' onClick={handleDeleteAdmin}>
+                                                            <RiDeleteBinLine color='#667085' size={20} />
+                                                            <p>Delete</p>
+                                                        </div>
+                                                    )}
+                                                    {permissionsArray.some(permission => permission.name === 'Privileges' && permission.block) && (
+                                                        <div className='rider_details7' onClick={() => { isBlocked ? unblockAdmin() : blockAdmin() }}>
+                                                            <MdOutlineBlock color={isBlocked ? "red" : "#667085"} size={20} />
+                                                            <p style={{ color: isBlocked ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                        </div>
+                                                    )}
+                                                    {permissionsArray.some(permission => permission.name === 'Privileges' && permission.edit) && (
+                                                        <div className='rider_details7' onClick={() => setModalShow(true)}>
+                                                            <MdEdit color="#667085" size={20} />
+                                                            <p style={{ color: '#667085' }}>Update KYC Status</p>
+                                                        </div>
+                                                    )}
+                                                </>
+                                            )}
                                         </div>
                                     </div>
 

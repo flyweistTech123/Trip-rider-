@@ -168,7 +168,7 @@ function App() {
             <Route path="/allbookings" element={<AdminRouteProtect> <AllBookings /> </AdminRouteProtect>} />
             <Route path="/livechart" element={<AdminRouteProtect> <LiveChart /> </AdminRouteProtect>} />
             <Route path="/geofencing_view" element={<AdminRouteProtect> <Geofencing /> </AdminRouteProtect>} />
-            <Route path="/cancellled_booking" element={<AdminRouteProtect> <AllCancledBooking /> </AdminRouteProtect>} />
+            <Route path="/cancelled_booking" element={<AdminRouteProtect> <AllCancledBooking /> </AdminRouteProtect>} />
             <Route path="/scheduled_booking" element={<AdminRouteProtect> <AllScheduledBooking /> </AdminRouteProtect>} />
             <Route path="/updatesupercarpricing/:id" element={<AdminRouteProtect> <UpdateSuperCarPricing /> </AdminRouteProtect>} />
             <Route path="/bookingdetails/:id" element={<AdminRouteProtect> <BookingDetails /> </AdminRouteProtect>} />

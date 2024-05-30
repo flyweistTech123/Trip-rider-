@@ -74,12 +74,18 @@ const Vendors_Details = () => {
     };
 
 
+    const appendIfPresent = (formData, key, value) => {
+        if (value) {
+            formData.append(key, value);
+        }
+    };
+
     const handlePutRequest = async (e) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append('name', name);
         formData.append('email', email);
-        formData.append('mobileNumber', number);
+        appendIfPresent(formData,'mobileNumber', number);
         formData.append('gender', gender);
         formData.append('profilePicture', profileimg);
         formData.append('birthday', birthday);
@@ -147,6 +153,20 @@ const Vendors_Details = () => {
     };
 
 
+
+
+    const cachedAdminData = localStorage.getItem('adminData');
+    const adminData = JSON.parse(cachedAdminData);
+    const role1 = localStorage.getItem('role');
+
+    let permissionsArray = [];
+
+    if (adminData && adminData.permissions) {
+        permissionsArray = adminData.permissions;
+    } else {
+        console.log('Permissions array not found in adminData.');
+    }
+
     return (
         <>
             <div className='rider'>
@@ -157,7 +177,18 @@ const Vendors_Details = () => {
                         </div>
                         <div className='rider4'>
                             <button onClick={() => navigate('/vendors')}>Back</button>
-                            <button onClick={handlePutRequest}>Update Profile</button>
+                            {role1 === 'superAdmin' ? (
+                                <>
+                                    <button onClick={handlePutRequest}>Update Profile</button>
+
+                                </>
+                            ) : (
+                                <>
+                                    {permissionsArray.some(permission => permission.name === 'All Vendors' && permission.edit) && (
+                                        <button onClick={handlePutRequest}>Update Profile</button>
+                                    )}
+                                </>
+                            )}
                         </div>
                     </div>
                     <>
@@ -197,14 +228,33 @@ const Vendors_Details = () => {
                                             </h6>
                                         </div>
                                         <div className='rider_details6'>
-                                            <div className='rider_details7' onClick={handleDeleteVendor}>
-                                                <RiDeleteBinLine color='#667085' size={20} />
-                                                <p>Delete</p>
-                                            </div>
-                                            <div className='rider_details7' onClick={() => { isBlocked ? unblockVendor() : blockVendor() }}>
-                                                <MdOutlineBlock color={isBlocked ? "red" : "#667085"} size={20} />
-                                                <p style={{ color: isBlocked ? 'red' : '#667085' }}>Block/Unblock</p>
-                                            </div>
+                                            {role1 === 'superAdmin' ? (
+                                                <>
+                                                    <div className='rider_details7' onClick={handleDeleteVendor}>
+                                                        <RiDeleteBinLine color='#667085' size={20} />
+                                                        <p>Delete</p>
+                                                    </div>
+                                                    <div className='rider_details7' onClick={() => { isBlocked ? unblockVendor() : blockVendor() }}>
+                                                        <MdOutlineBlock color={isBlocked ? "red" : "#667085"} size={20} />
+                                                        <p style={{ color: isBlocked ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    {permissionsArray.some(permission => permission.name === 'All Vendors' && permission.delete) && (
+                                                        <div className='rider_details7' onClick={handleDeleteVendor}>
+                                                            <RiDeleteBinLine color='#667085' size={20} />
+                                                            <p>Delete</p>
+                                                        </div>
+                                                    )}
+                                                    {permissionsArray.some(permission => permission.name === 'All Vendors' && permission.block) && (
+                                                        <div className='rider_details7' onClick={() => { isBlocked ? unblockVendor() : blockVendor() }}>
+                                                            <MdOutlineBlock color={isBlocked ? "red" : "#667085"} size={20} />
+                                                            <p style={{ color: isBlocked ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                        </div>
+                                                    )}
+                                                </>
+                                            )}
                                         </div>
                                     </div>
 
