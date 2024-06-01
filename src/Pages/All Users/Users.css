@@ -3,7 +3,7 @@
 
 .rider1 {
   width: 100%;
-  height: 862px;
+  height: 150vh;
   box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
   border-radius: 18px 18px 10px 10px;
   overflow: auto;
@@ -665,3 +665,15 @@
   width: 20px;
   height: 20px;
 }
+
+
+
+
+
+.rider_details555{
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

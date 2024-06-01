@@ -41,19 +41,19 @@ const Dashboard = () => {
 
 
 
-  const fetchTransactionData = () => {
-    axios.get(`${BaseUrl}api/v1/getAllBookingTransaction`, getAuthHeaders())
-      .then(response => {
-        setBookingTransaction(response.data.data);
-      })
-      .catch(error => {
-        console.error('Error fetching Transaction data:', error);
-      })
-  };
+  // const fetchTransactionData = () => {
+  //   axios.get(`${BaseUrl}api/v1/getAllBookingTransaction`, getAuthHeaders())
+  //     .then(response => {
+  //       setBookingTransaction(response.data.data);
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching Transaction data:', error);
+  //     })
+  // };
 
   useEffect(() => {
     fetchData();
-    fetchTransactionData();
+    // fetchTransactionData();
   }, []);
 
   const fetchData = async () => {

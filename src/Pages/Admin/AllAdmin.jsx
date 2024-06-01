@@ -27,7 +27,7 @@ const AllAdmin = () => {
     const fetchAdminData = () => {
         axios.get(`${BaseUrl}api/v1/admin/getAllAdmin`, getAuthHeaders())
             .then(response => {
-                setAdminData(response.data.data);
+                setAdminData(response.data.data.docs);
             })
             .catch(error => {
                 console.error('Error fetching Admin data:', error);
@@ -39,13 +39,13 @@ const AllAdmin = () => {
 
 
 
-    const handleSearch = (event) => {
-        setSearchQuery(event.target.value);
-    };
+    // const handleSearch = (event) => {
+    //     setSearchQuery(event.target.value);
+    // };
 
-    const filteredAdminData = adminData.filter(admin =>
-        admin.name && admin.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    // const filteredAdminData = adminData?.filter(admin =>
+    //     admin.name && admin.name.toLowerCase().includes(searchQuery.toLowerCase())
+    // );
 
     return (
         <>
@@ -95,7 +95,7 @@ const AllAdmin = () => {
                                     ) : (
                                         searchQuery
                                             ?
-                                            filteredAdminData.map((admin, index) => (
+                                            filteredAdminData?.map((admin, index) => (
                                                 <tr key={admin.id}>
                                                     <td>{index + 1}</td>
                                                     <td>
@@ -127,7 +127,7 @@ const AllAdmin = () => {
                                                 </tr>
                                             ))
                                             :
-                                            adminData.map((admin, index) => (
+                                            adminData?.map((admin, index) => (
                                                 <tr key={admin._id}>
                                                     <td>{index + 1}</td>
                                                     <td>

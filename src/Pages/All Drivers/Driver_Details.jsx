@@ -383,7 +383,7 @@ const Driver_Details = () => {
         userDetailsFormData.append('altMobileNumber', altnumber);
         userDetailsFormData.append('gender', gender);
         userDetailsFormData.append('profilePicture', profileimg);
-        userDetailsFormData.append('birthday', birthday);
+        appendIfPresent(userDetailsFormData,'birthday', birthday);
 
         const documentDetails = {
             aadhar: adharcard,

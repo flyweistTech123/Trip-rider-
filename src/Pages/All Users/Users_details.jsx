@@ -37,7 +37,7 @@ const Users_details = () => {
     const navigate = useNavigate()
     const [isBlocked, setIsBlocked] = useState(false);
     const [modalShow, setModalShow] = React.useState(false);
-    const [name, setName] = useState('Default Name');
+    const [name, setName] = useState('User Name');
     const [email, setEmail] = useState('');
     const [number, setNumber] = useState('');
     const [gender, setGender] = useState('');
@@ -69,8 +69,7 @@ const Users_details = () => {
             setRole(role);
             setWallet(wallet)
             setTotalTrip(totalBooking)
-            const formattedBirthday = formatDate(birthday);
-            setBirthday(formattedBirthday);
+            setBirthday(birthday);
         } catch (error) {
             console.error('Error fetching User details:', error);
         }
@@ -91,7 +90,7 @@ const Users_details = () => {
         appendIfPresent(formData, 'mobileNumber', number);
         formData.append('gender', gender);
         formData.append('profilePicture', profileimg);
-        formData.append('birthday', birthday);
+        appendIfPresent(formData,'birthday', birthday);
 
         try {
             const response = await axios.put(`${BaseUrl}api/v1/updateDriverVendorProfile/detail/${id}`, formData, getAuthHeaders());
@@ -109,11 +108,11 @@ const Users_details = () => {
     const handleDeleteRider = async () => {
         try {
             await axios.delete(`${BaseUrl}api/v1/admin/delete/driver/${id}`, getAuthHeaders());
-            toast.success("Rider deleted successfully");
-            navigate('/riders');
+            toast.success("User deleted successfully");
+            navigate('/users');
         } catch (error) {
-            console.error('Error deleting Rider:', error);
-            toast.error("Error deleting Rider");
+            console.error('Error deleting User:', error);
+            toast.error("Failed to delete user. Please try again later.");
         }
     };
 
@@ -123,10 +122,10 @@ const Users_details = () => {
         try {
             await axios.put(`${BaseUrl}api/v1/admin/block/driver/${id}`, getAuthHeaders());
             setIsBlocked(true); // Update isBlocked state
-            toast.success("Rider is blocked successfully");
+            toast.success("User is blocked successfully");
         } catch (error) {
-            console.error('Error blocking Rider:', error);
-            toast.error("Error blocking Rider");
+            console.error('Error blocking User:', error);
+            toast.error("Failed to block user. Please try again later.");
         }
     };
 
@@ -135,10 +134,10 @@ const Users_details = () => {
         try {
             await axios.put(`${BaseUrl}api/v1/admin/unblock/driver/${id}`, getAuthHeaders());
             setIsBlocked(false); // Update isBlocked state
-            toast.success("Rider is unblocked successfully'");
+            toast.success("User is unblocked successfully'");
         } catch (error) {
-            console.error('Error Unblocking Rider:', error);
-            toast.error("Error unblocking Rider");
+            console.error('Error Unblocking User:', error);
+            toast.error("Failed to unblock user. Please try again later.");   
         }
     };
 
