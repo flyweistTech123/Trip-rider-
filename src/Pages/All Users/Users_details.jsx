@@ -22,8 +22,6 @@ const Users_details = () => {
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-
-        // Ensure day and month are two digits
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
@@ -99,7 +97,7 @@ const Users_details = () => {
             fetchUserDetails();
         } catch (error) {
             console.log('Error to updating User Details:', error)
-            toast.error("Error to updating User Details")
+            toast.error("Failed to update user details. Please try again later.")
         }
     }
 

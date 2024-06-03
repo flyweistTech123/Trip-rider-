@@ -369,10 +369,15 @@
   border-top: 1px solid #e0e0e0;
 }
 
+.rider_details1211212112 {
+  width: 65%;
+  border-top: 1px solid #e0e0e0;
+}
+
 .rider_details12114 {
   display: flex;
   align-items: center;
-  gap: 1px;
+  gap: 5px;
 }
 .rider_details12114 h6 {
   font-family: "Poppins", sans-serif;
@@ -385,7 +390,7 @@
   width: 18%;
 }
 .rider_details12113 {
-  width: 98%;
+  width: 80%;
   border-top: 1px solid #e0e0e0;
 }
 
@@ -415,9 +420,9 @@
 }
 
 .permission-count {
-  margin-right: 8px; /* Add margin to the right of the count */
+  margin-right: 8px;
   font-weight: bold; /* Make the count text bold */
-  color: #667085; /* Set the color of the count text */
+  color: #667085; 
 }
 
 .no-permissions-message {

@@ -309,6 +309,7 @@ const Driver_Details = () => {
             setTotalTrip(data.totalBooking)
             setStatus(data.status)
             setDocumentId(data.driverDocument._id)
+            setVehicleName(data.driverVehicleCategory.name);
             setAdharcard(data.driverDocument.aadhar)
             setFirstLineAddress(data.driverDocument.present_address)
             setSecondLineAddress(data.driverDocument.permanent_address)
@@ -374,8 +375,9 @@ const Driver_Details = () => {
     };
 
 
-    const handlePutRequest = async (e) => {
+    const updateUserDetails = async (e) => {
         e.preventDefault();
+
         const userDetailsFormData = new FormData();
         userDetailsFormData.append('name', name);
         userDetailsFormData.append('email', email);
@@ -383,8 +385,18 @@ const Driver_Details = () => {
         userDetailsFormData.append('altMobileNumber', altnumber);
         userDetailsFormData.append('gender', gender);
         userDetailsFormData.append('profilePicture', profileimg);
-        appendIfPresent(userDetailsFormData,'birthday', birthday);
+        appendIfPresent(userDetailsFormData, 'birthday', birthday);
+        try {
+            await axios.put(`${BaseUrl}api/v1/updateDriverVendorProfile/detail/${id}`, userDetailsFormData, getAuthHeaders());
+            toast.success("Driver Details Updated successfully");
+        } catch (error) {
+            console.error('Error updating driver details:', error);
+            toast.error("Failed to update driver details. Please try again later.");
+        }
+    };
 
+    const updateDocumentDetails = async (e) => {
+        e.preventDefault();
         const documentDetails = {
             aadhar: adharcard,
             present_address: firstlineaddress,
@@ -430,40 +442,34 @@ const Driver_Details = () => {
             driverVehicleCategory: vehicleId,
             city: cityId
         };
-
-        const imageFormData = new FormData();
-        imageFormData.append('interior', interiorImage);
-        imageFormData.append('exterior', exteriorImage);
-        imageFormData.append('rc', rcImage);
-        imageFormData.append('fitness', fitnessImage);
-        imageFormData.append('permit', permitImage);
-        imageFormData.append('insurance', insuranceImage);
-        imageFormData.append('drivinglicense', drivingLicenseImage);
-        imageFormData.append('aadharCard', aadharCardImage);
-        imageFormData.append('cancelCheck', cancelCheckImage);
-        imageFormData.append('bankStatement', bankStatementImage);
-
-
-
-
-
         try {
-            // Update user details
-            await axios.put(`${BaseUrl}api/v1/updateDriverVendorProfile/detail/${id}`, userDetailsFormData, getAuthHeaders());
-
-            // Update document details
             await axios.post(`${BaseUrl}api/v1/driver/documentDriverDetailByAdmin/${id}`, documentDetails, getAuthHeaders());
-
-            // Update image details
-            await axios.post(`${BaseUrl}api/v1/driver/image/${id}`, imageFormData, getAuthHeaders());
-
-            toast.success("Driver Details Updated successfully");
-
-            // Fetch updated details after all APIs are successfully called
-            fetchDriverDetails();
+            toast.success("Driver Vehicle Details Updated successfully");
         } catch (error) {
-            console.log('Error updating driver details:', error);
-            toast.error("Error updating Driver Details");
+            console.error('Error updating Vehicle details:', error);
+            toast.error("Failed to update driver Vehicle. Please try again later.");
+        }
+    };
+
+    const updateImageDetails = async (e) => {
+        e.preventDefault();
+        const imageFormData = new FormData();
+        appendIfPresent(imageFormData,'interior', interiorImage);
+        appendIfPresent(imageFormData,'exterior', exteriorImage);
+        appendIfPresent(imageFormData,'rc', rcImage);
+        appendIfPresent(imageFormData,'fitness', fitnessImage);
+        appendIfPresent(imageFormData,'permit', permitImage);
+        appendIfPresent(imageFormData,'insurance', insuranceImage);
+        appendIfPresent(imageFormData,'drivinglicense', drivingLicenseImage);
+        appendIfPresent(imageFormData,'aadharCard', aadharCardImage);
+        appendIfPresent(imageFormData,'cancelCheck', cancelCheckImage);
+        appendIfPresent(imageFormData,'bankStatement', bankStatementImage);
+        try {
+            await axios.post(`${BaseUrl}api/v1/driver/image/${id}`, imageFormData, getAuthHeaders());
+            toast.success("Driver Document Updated successfully");
+        } catch (error) {
+            console.error('Error updating image Document:', error);
+            toast.error("Failed to update driver Document. Please try again later.");
         }
     };
 
@@ -476,7 +482,7 @@ const Driver_Details = () => {
             navigate('/drivers');
         } catch (error) {
             console.error('Error deleting Driver:', error);
-            toast.error("Error deleting Driver");
+            toast.error("Failed to delete driver. Please try again later.");
         }
     };
 
@@ -489,7 +495,7 @@ const Driver_Details = () => {
             toast.success("Driver is blocked successfully");
         } catch (error) {
             console.error('Error blocking driver:', error);
-            toast.error("Error blocking driver");
+            toast.error("Failed to block driver. Please try again later.");
         }
     };
 
@@ -500,7 +506,7 @@ const Driver_Details = () => {
             toast.success("Driver is unblocked successfully'");
         } catch (error) {
             console.error('Error Unblocking driver:', error);
-            toast.error("Error unblocking Driver");
+            toast.error("Failed to unblock driver. Please try again later.");
         }
     };
 
@@ -656,9 +662,24 @@ const Driver_Details = () => {
             }
         }, [props])
 
+        // const isPDF = (url) => {
+        //     return typeof url === 'string' && url.toLowerCase().endsWith('.pdf');
+        // };
+
+        // const isPDF = (url) => {
+        //     return url && url.toLowerCase().endsWith('.pdf');
+        // };
+
+
         const isPDF = (url) => {
-            return url && url.toLowerCase().endsWith('.pdf');
+            if (url instanceof File) {
+                return url.type === 'application/pdf';
+            } else if (typeof url === 'string') {
+                return url.toLowerCase().endsWith('.pdf');
+            }
+            return false;
         };
+        
 
 
         // Function to handle image download
@@ -704,7 +725,7 @@ const Driver_Details = () => {
                         <div className="modal-content">
                             {isPDF(imageUrl) ? (
                                 <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-                                    <Viewer fileUrl={imageUrl instanceof File ? URL.createObjectURL(imageUrl) : imageUrl} />;
+                                    <Viewer fileUrl={imageUrl instanceof File ? URL.createObjectURL(imageUrl) : imageUrl || img}  style={{ width: '100%' }}/>;
                                 </Worker>
 
                             ) : (
@@ -762,7 +783,7 @@ const Driver_Details = () => {
         };
 
         fetchCity();
-    }, [Statecode]); // Trigger fetchCity whenever Statecode changes
+    }, [Statecode]);
 
 
 
@@ -789,13 +810,13 @@ const Driver_Details = () => {
                             <button onClick={() => navigate('/drivers')}>Back</button>
                             {role1 === 'superAdmin' ? (
                                 <>
-                                    <button onClick={handlePutRequest}>Update Profile</button>
+                                    <button onClick={updateUserDetails}>Update Profile</button>
 
                                 </>
                             ) : (
                                 <>
                                     {permissionsArray.some(permission => permission.name === 'All Drivers' && permission.edit) && (
-                                        <button onClick={handlePutRequest}>Update Profile</button>
+                                        <button onClick={updateUserDetails}>Update Profile</button>
                                     )}
                                 </>
                             )}
@@ -908,10 +929,6 @@ const Driver_Details = () => {
                                     </div>
                                     <div className='rider_details13'>
                                         <div className='rider_details14'>
-                                            <label htmlFor="">Client Id</label>
-                                            <input type="text" placeholder='Enter client id' value={clientid} onChange={(e) => setClientID(e.target.value)} />
-                                        </div>
-                                        <div className='rider_details14'>
                                             <label htmlFor="">Email</label>
                                             <input type="email" placeholder='Enter email' value={email} onChange={(e) => setEmail(e.target.value)} />
                                         </div>
@@ -934,22 +951,7 @@ const Driver_Details = () => {
                                             <label htmlFor="">DOB</label>
                                             <input type="date" value={formatDate(birthday)} onChange={(e) => setBirthday(e.target.value)} />
                                         </div>
-                                        <div className='rider_details14'>
-                                            <label htmlFor="">Aadhar Card Number</label>
-                                            <input type="text" value={adharcard} onChange={(e) => setAdharcard(e.target.value)} />
-                                        </div>
-                                        <div className='rider_details14'>
-                                            <label htmlFor="">First Line Address</label>
-                                            <input type="text" value={firstlineaddress} onChange={(e) => setFirstLineAddress(e.target.value)} />
-                                        </div>
-                                        <div className='rider_details14'>
-                                            <label htmlFor="">Second Line Address</label>
-                                            <input type="text" value={secondlineaddress} onChange={(e) => setSecondLineAddress(e.target.value)} />
-                                        </div>
-                                        <div className='rider_details14'>
-                                            <label htmlFor="">Driver license Number</label>
-                                            <input type="text" value={drivinglince} onChange={(e) => setDrivinglince(e.target.value)} />
-                                        </div>
+
                                     </div>
                                 </div>
 
@@ -957,6 +959,9 @@ const Driver_Details = () => {
                                     <div className='rider_details12114'>
                                         <h6>Vehicle Information</h6>
                                         <div className='rider_details12113'></div>
+                                        <div className='rider4'>
+                                            <button onClick={updateDocumentDetails}>Update</button>
+                                        </div>
                                     </div>
                                     <div className='rider_details13'>
                                         <div className='rider_details14'>
@@ -999,6 +1004,26 @@ const Driver_Details = () => {
                                                     <option key={City._id} value={City.city}>{City.city}</option>
                                                 ))}
                                             </select>
+                                        </div>
+                                        <div className='rider_details14'>
+                                            <label htmlFor="">Client Id</label>
+                                            <input type="text" placeholder='Enter client id' value={clientid} onChange={(e) => setClientID(e.target.value)} />
+                                        </div>
+                                        <div className='rider_details14'>
+                                            <label htmlFor="">Aadhar Card Number</label>
+                                            <input type="text" value={adharcard} onChange={(e) => setAdharcard(e.target.value)} />
+                                        </div>
+                                        <div className='rider_details14'>
+                                            <label htmlFor="">Driver license Number</label>
+                                            <input type="text" value={drivinglince} onChange={(e) => setDrivinglince(e.target.value)} />
+                                        </div>
+                                        <div className='rider_details14'>
+                                            <label htmlFor="">First Line Address</label>
+                                            <input type="text" value={firstlineaddress} onChange={(e) => setFirstLineAddress(e.target.value)} />
+                                        </div>
+                                        <div className='rider_details14'>
+                                            <label htmlFor="">Second Line Address</label>
+                                            <input type="text" value={secondlineaddress} onChange={(e) => setSecondLineAddress(e.target.value)} />
                                         </div>
                                         <div className='rider_details14'>
                                             <label>Rc Number</label>
@@ -1155,7 +1180,10 @@ const Driver_Details = () => {
                                         <div className='rider_details12'>
                                             <div className='rider_details12114'>
                                                 <h6>Driver's All Documents</h6>
-                                                <div className='rider_details12112'></div>
+                                                <div className='rider_details1211212112'></div>
+                                                <div className='rider4'>
+                                                    <button onClick={updateImageDetails}>Update</button>
+                                                </div>
                                             </div>
 
                                             <div className='rider_details20'>
@@ -1247,7 +1275,7 @@ const Driver_Details = () => {
                                                 <div className='rider_details2122'>
                                                     <div className='rider_details21'>
                                                         <input type="file" id="fileInput5" style={{ display: 'none' }} onChange={handleImageChange5} />
-                                                        <div onClick={() => handleImageClick(fitnessImage)} className='rider_details213'>
+                                                        <div onClick={() => handleImageClick(permitImage)} className='rider_details213'>
                                                             {isPDF(permitImage) ? (
                                                                 <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
                                                                     <Viewer fileUrl={permitImage instanceof File ? URL.createObjectURL(permitImage) : permitImage} />
@@ -1268,7 +1296,7 @@ const Driver_Details = () => {
                                                 <div className='rider_details2122'>
                                                     <div className='rider_details21'>
                                                         <input type="file" id="fileInput6" style={{ display: 'none' }} onChange={handleImageChange6} />
-                                                        <div onClick={() => handleImageClick(fitnessImage)} className='rider_details213'>
+                                                        <div onClick={() => handleImageClick(insuranceImage)} className='rider_details213'>
                                                             {isPDF(insuranceImage) ? (
                                                                 <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
                                                                     <Viewer fileUrl={insuranceImage instanceof File ? URL.createObjectURL(insuranceImage) : insuranceImage} />
@@ -1289,7 +1317,7 @@ const Driver_Details = () => {
                                                 <div className='rider_details2122'>
                                                     <div className='rider_details21'>
                                                         <input type="file" id="fileInput7" style={{ display: 'none' }} onChange={handleImageChange7} />
-                                                        <div onClick={() => handleImageClick(fitnessImage)} className='rider_details213'>
+                                                        <div onClick={() => handleImageClick(drivingLicenseImage)} className='rider_details213'>
                                                             {isPDF(drivingLicenseImage) ? (
                                                                 <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
                                                                     <Viewer fileUrl={drivingLicenseImage instanceof File ? URL.createObjectURL(drivingLicenseImage) : drivingLicenseImage} />;
@@ -1310,7 +1338,7 @@ const Driver_Details = () => {
                                                 <div className='rider_details2122'>
                                                     <div className='rider_details21'>
                                                         <input type="file" id="fileInput8" style={{ display: 'none' }} onChange={handleImageChange8} />
-                                                        <div onClick={() => handleImageClick(fitnessImage)} className='rider_details213'>
+                                                        <div onClick={() => handleImageClick(aadharCardImage)} className='rider_details213'>
                                                             {isPDF(aadharCardImage) ? (
                                                                 <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
                                                                     <Viewer fileUrl={aadharCardImage instanceof File ? URL.createObjectURL(aadharCardImage) : aadharCardImage || img} />;
@@ -1331,7 +1359,7 @@ const Driver_Details = () => {
                                                 <div className='rider_details2122'>
                                                     <div className='rider_details21'>
                                                         <input type="file" id="fileInput9" style={{ display: 'none' }} onChange={handleImageChange9} />
-                                                        <div onClick={() => handleImageClick(fitnessImage)} className='rider_details213'>
+                                                        <div onClick={() => handleImageClick(cancelCheckImage)} className='rider_details213'>
                                                             {isPDF(cancelCheckImage) ? (
                                                                 <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
                                                                     <Viewer fileUrl={cancelCheckImage instanceof File ? URL.createObjectURL(cancelCheckImage) : cancelCheckImage || img} />;
@@ -1352,7 +1380,7 @@ const Driver_Details = () => {
                                                 <div className='rider_details2122'>
                                                     <div className='rider_details21'>
                                                         <input type="file" id="fileInput10" style={{ display: 'none' }} onChange={handleImageChange10} />
-                                                        <div onClick={() => handleImageClick(fitnessImage)} className='rider_details213'>
+                                                        <div onClick={() => handleImageClick(bankStatementImage)} className='rider_details213'>
                                                             {isPDF(bankStatementImage) ? (
                                                                 <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js" >
                                                                     <Viewer fileUrl={bankStatementImage instanceof File ? URL.createObjectURL(bankStatementImage) : bankStatementImage} />
@@ -1603,12 +1631,6 @@ const Driver_Details = () => {
                                         )}
                                     </>
                                 )}
-
-
-                                <div className='rider_details19'>
-
-                                    {/* <button onClick={() => navigate('/drivers')}>Close</button> */}
-                                </div>
                             </div>
                         </div>
                     </>

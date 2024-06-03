@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Vendors.css'
 import HOC from '../../Components/HOC/HOC'
 import { Link } from 'react-router-dom';
+import Pagination from 'react-bootstrap/Pagination';
+
 
 import { IoSearch } from "react-icons/io5";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -20,15 +22,20 @@ const Vendors = () => {
     const [vendorData, setVendorData] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const [search, setSearch] = useState("");
+    const [totalPages, setTotalPages] = useState(0);
 
     useEffect(() => {
         fetchVendorsData();
-    }, []);
+    }, [limit, search, page]);
 
-    const fetchVendorsData = () => {
-        axios.get(`${BaseUrl}api/v1/admin/all/vendor`, getAuthHeaders())
+    const fetchVendorsData = useCallback(() => {
+        axios.get(`${BaseUrl}api/v1/admin/all/vendor?page=${page}&limit=${limit}&search=${search}`, getAuthHeaders())
             .then(response => {
-                setVendorData(response.data.category);
+                setVendorData(response.data.data.docs);
+                setTotalPages(response.data.data.totalPages);
             })
             .catch(error => {
                 console.error('Error fetching vendor data:', error);
@@ -36,26 +43,27 @@ const Vendors = () => {
             .finally(() => {
                 setLoading(false);
             });
-    };
+    }, [page, limit, search]);
+
+    const handlePageChange = (pageNumber) => {
+        setPage(pageNumber);
+    }
+
 
     const handleSearch = (event) => {
-        setSearchQuery(event.target.value);
+        setPage(1);
+        setSearch(event.target.value);
     };
-
-    const filteredVendorData = vendorData.filter(vindor =>
-        vindor.name && vindor.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
 
     const deleteVendor = (vendorId) => {
         axios.delete(`${BaseUrl}api/v1/admin/delete/driver/${vendorId}`, getAuthHeaders())
             .then(response => {
-                // console.log('vendor deleted successfully');
                 toast.success("vendor deleted successfully");
                 fetchVendorsData();
             })
             .catch(error => {
                 console.error('Error deleting Vendor:', error);
-                toast.error("Error deleting Vendor");
+                toast.error("Failed to delete vendor. Please try again later.");
             });
     };
 
@@ -75,7 +83,7 @@ const Vendors = () => {
             })
             .catch(error => {
                 console.error('Error blocking vendor:', error);
-                toast.error("Error blocking vendor");
+                toast.error("Failed to block vendor. Please try again later.");
             });
     };
     const unblockVendor = (vendorId) => {
@@ -94,7 +102,7 @@ const Vendors = () => {
             })
             .catch(error => {
                 console.error('Error unblocking vendor:', error);
-                toast.error("Error unblocking vendor");
+                toast.error("Failed to unblock vendor. Please try again later.");
             });
     };
 
@@ -144,6 +152,7 @@ const Vendors = () => {
                                     <th>(₹)Total Earnings</th>
                                     <th>Total Vehicles</th>
                                     <th>Total Trips</th>
+                                    <th>Status</th>
                                     <th>Action Buttons</th>
                                 </tr>
                             </thead>
@@ -152,136 +161,87 @@ const Vendors = () => {
                                     <tr>
                                         <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading vendors...</td>
                                     </tr>
-                                ) :
-                                    searchQuery && filteredVendorData.length === 0 ? (
-                                        <tr>
-                                            <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Vendor not found</td>
+                                ) : vendorData?.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>vendor not found</td>
+                                    </tr>
+                                ) : (
+                                    vendorData?.map(vendor => (
+                                        <tr key={vendor.id}>
+                                            <td>
+                                                <img src={vendor?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
+                                            </td>
+                                            <td>{vendor?.name}</td>
+                                            <td>{vendor?.email}</td>
+                                            <td>{vendor?.mobileNumber}</td>
+                                            <td style={{ color: '#F52D56' }}>{vendor?.wallet}</td>
+                                            <td>{vendor?.noOfVehicle}</td>
+                                            <td>{vendor?.totalBooking}</td>
+                                            <td>
+                                                <div className='rider9'>
+                                                    {role === 'superAdmin' ? (
+                                                        <>
+                                                            <div className='rider10' onClick={() => deleteVendor(vendor._id)}>
+                                                                <RiDeleteBinLine color='#667085' size={20} />
+                                                                <p>Delete</p>
+                                                            </div>
+                                                            <div className='rider10' onClick={() => { vendor.isBlock ? unblockVendor(vendor._id) : blockVendor(vendor._id) }}>
+                                                                <MdOutlineBlock color={vendor.isBlock ? "red" : "#667085"} size={20} />
+                                                                <p style={{ color: vendor.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                            </div>
+                                                            <div className='rider10'>
+                                                                <Link to={`/vendors_details/${vendor._id}`} className='sidebar-link' >
+                                                                    <IoEyeOutline color='#667085' size={20} />
+                                                                    <p>View</p>
+                                                                </Link>
+                                                            </div>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            {permissionsArray.some(permission => permission.name === 'All Vendors' && permission.delete) && (
+                                                                <div className='rider10' onClick={() => deleteVendor(vendor._id)}>
+                                                                    <RiDeleteBinLine color='#667085' size={20} />
+                                                                    <p>Delete</p>
+                                                                </div>
+                                                            )}
+                                                            {permissionsArray.some(permission => permission.name === 'All Vendors' && permission.block) && (
+                                                                <div className='rider10' onClick={() => { vendor.isBlock ? unblockVendor(vendor._id) : blockVendor(vendor._id) }}>
+                                                                    <MdOutlineBlock color={vendor.isBlock ? "red" : "#667085"} size={20} />
+                                                                    <p style={{ color: vendor.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
+                                                                </div>
+                                                            )}
+                                                            {permissionsArray.some(permission => permission.name === 'All Vendors' && permission.view) && (
+                                                                <div className='rider10'>
+                                                                    <Link to={`/vendors_details/${vendor._id}`} className='sidebar-link' >
+                                                                        <IoEyeOutline color='#667085' size={20} />
+                                                                        <p>View</p>
+                                                                    </Link>
+                                                                </div>
+                                                            )}
+                                                        </>
+                                                    )}
+                                                </div>
+
+                                            </td>
                                         </tr>
-                                    ) : (
-                                        searchQuery
-                                            ?
-                                            filteredVendorData.map(vendor => (
-                                                <tr key={vendor.id}>
-                                                    <td>
-                                                        <img src={vendor?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
-                                                    </td>
-                                                    <td>{vendor?.name}</td>
-                                                    <td>{vendor.email}</td>
-                                                    <td>{vendor.mobileNumber}</td>
-                                                    <td style={{ color: '#F52D56' }}>{vendor.wallet}</td>
-                                                    <td>{vendor.noOfVehicle}</td>
-                                                    <td>{vendor.totalBooking}</td>
-                                                    <td>
-                                                        <div className='rider9'>
-                                                            {role === 'superAdmin' ? (
-                                                                <>
-                                                                    <div className='rider10' onClick={() => deleteVendor(vendor._id)}>
-                                                                        <RiDeleteBinLine color='#667085' size={20} />
-                                                                        <p>Delete</p>
-                                                                    </div>
-                                                                    <div className='rider10' onClick={() => { vendor.isBlock ? unblockVendor(vendor._id) : blockVendor(vendor._id) }}>
-                                                                        <MdOutlineBlock color={vendor.isBlock ? "red" : "#667085"} size={20} />
-                                                                        <p style={{ color: vendor.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
-                                                                    </div>
-                                                                    <div className='rider10'>
-                                                                        <Link to={`/vendors_details/${vendor._id}`} className='sidebar-link' >
-                                                                            <IoEyeOutline color='#667085' size={20} />
-                                                                            <p>View</p>
-                                                                        </Link>
-                                                                    </div>
-                                                                </>
-                                                            ) : (
-                                                                <>
-                                                                    {permissionsArray.some(permission => permission.name === 'All Vendors' && permission.delete) && (
-                                                                        <div className='rider10' onClick={() => deleteVendor(vendor._id)}>
-                                                                            <RiDeleteBinLine color='#667085' size={20} />
-                                                                            <p>Delete</p>
-                                                                        </div>
-                                                                    )}
-                                                                    {permissionsArray.some(permission => permission.name === 'All Vendors' && permission.block) && (
-                                                                        <div className='rider10' onClick={() => { vendor.isBlock ? unblockVendor(vendor._id) : blockVendor(vendor._id) }}>
-                                                                            <MdOutlineBlock color={vendor.isBlock ? "red" : "#667085"} size={20} />
-                                                                            <p style={{ color: vendor.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
-                                                                        </div>
-                                                                    )}
-                                                                    {permissionsArray.some(permission => permission.name === 'All Vendors' && permission.view) && (
-                                                                        <div className='rider10'>
-                                                                            <Link to={`/vendors_details/${vendor._id}`} className='sidebar-link' >
-                                                                                <IoEyeOutline color='#667085' size={20} />
-                                                                                <p>View</p>
-                                                                            </Link>
-                                                                        </div>
-                                                                    )}
-                                                                </>
-                                                            )}
-                                                        </div>
-
-                                                    </td>
-                                                </tr>
-                                            ))
-                                            : vendorData.map(vendor => (
-                                                <tr key={vendor.id}>
-                                                    <td>
-                                                        <img src={vendor?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
-                                                    </td>
-                                                    <td>{vendor?.name}</td>
-                                                    <td>{vendor.email}</td>
-                                                    <td>{vendor.mobileNumber}</td>
-                                                    <td style={{ color: '#F52D56' }}>{vendor.wallet}</td>
-                                                    <td>{vendor.noOfVehicle}</td>
-                                                    <td>{vendor.totalBooking}</td>
-                                                    <td>
-                                                        <div className='rider9'>
-                                                            {role === 'superAdmin' ? (
-                                                                <>
-                                                                    <div className='rider10' onClick={() => deleteVendor(vendor._id)}>
-                                                                        <RiDeleteBinLine color='#667085' size={20} />
-                                                                        <p>Delete</p>
-                                                                    </div>
-                                                                    <div className='rider10' onClick={() => { vendor.isBlock ? unblockVendor(vendor._id) : blockVendor(vendor._id) }}>
-                                                                        <MdOutlineBlock color={vendor.isBlock ? "red" : "#667085"} size={20} />
-                                                                        <p style={{ color: vendor.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
-                                                                    </div>
-                                                                    <div className='rider10'>
-                                                                        <Link to={`/vendors_details/${vendor._id}`} className='sidebar-link' >
-                                                                            <IoEyeOutline color='#667085' size={20} />
-                                                                            <p>View</p>
-                                                                        </Link>
-                                                                    </div>
-                                                                </>
-                                                            ) : (
-                                                                <>
-                                                                    {permissionsArray.some(permission => permission.name === 'All Vendors' && permission.delete) && (
-                                                                        <div className='rider10' onClick={() => deleteVendor(vendor._id)}>
-                                                                            <RiDeleteBinLine color='#667085' size={20} />
-                                                                            <p>Delete</p>
-                                                                        </div>
-                                                                    )}
-                                                                    {permissionsArray.some(permission => permission.name === 'All Vendors' && permission.block) && (
-                                                                        <div className='rider10' onClick={() => { vendor.isBlock ? unblockVendor(vendor._id) : blockVendor(vendor._id) }}>
-                                                                            <MdOutlineBlock color={vendor.isBlock ? "red" : "#667085"} size={20} />
-                                                                            <p style={{ color: vendor.isBlock ? 'red' : '#667085' }}>Block/Unblock</p>
-                                                                        </div>
-                                                                    )}
-                                                                    {permissionsArray.some(permission => permission.name === 'All Vendors' && permission.view) && (
-                                                                        <div className='rider10'>
-                                                                            <Link to={`/vendors_details/${vendor._id}`} className='sidebar-link' >
-                                                                                <IoEyeOutline color='#667085' size={20} />
-                                                                                <p>View</p>
-                                                                            </Link>
-                                                                        </div>
-                                                                    )}
-                                                                </>
-                                                            )}
-                                                        </div>
-
-                                                    </td>
-                                                </tr>
-                                            ))
-                                    )}
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div className='rider_details555'>
+                    <Pagination >
+                        <Pagination.First onClick={() => handlePageChange(1)} />
+                        <Pagination.Prev onClick={() => handlePageChange(page - 1)} />
+                        {[...Array(totalPages).keys()].map(number => (
+                            <Pagination.Item key={number + 1} active={number + 1 === page} onClick={() => handlePageChange(number + 1)}>
+                                {number + 1}
+                            </Pagination.Item>
+                        ))}
+                        <Pagination.Next onClick={() => handlePageChange(page + 1)} />
+                        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
+                    </Pagination>
                 </div>
             </div>
         </>
