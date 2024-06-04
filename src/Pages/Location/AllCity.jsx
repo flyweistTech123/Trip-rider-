@@ -3,13 +3,16 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './LocatiolnType.css';
-import { IoSearch } from "react-icons/io5";
-import { RiDeleteBinLine } from "react-icons/ri";
+import Pagination from 'react-bootstrap/Pagination';
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
+
+
 import HOC from '../../Components/HOC/HOC';
 import { debounce } from 'lodash';
 import { useNavigate, Link } from 'react-router-dom';
 import { MdEdit } from "react-icons/md";
+import { IoSearch } from "react-icons/io5";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 
 
@@ -20,13 +23,18 @@ const AllCity = () => {
     const [cityData, setCityData] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const [search, setSearch] = useState("");
+    const [totalPages, setTotalPages] = useState(0);
 
 
 
-    const fetchCityData = () => {
-        axios.get(`${BaseUrl}api/v1/City`, getAuthHeaders())
+    const fetchCityData = useCallback(() => {
+        axios.get(`${BaseUrl}api/v1/City/getAllCity/WithPaginate?page=${page}&limit=${limit}`, getAuthHeaders())
             .then(response => {
-                setCityData(response.data.data);
+                setCityData(response.data.data.docs);
+                setTotalPages(response.data.data.totalPages);
             })
             .catch(error => {
                 console.error('Error fetching City data:', error);
@@ -34,7 +42,64 @@ const AllCity = () => {
             .finally(() => {
                 setLoading(false);
             });
+    }, [page, limit, search]);
+
+
+    useEffect(() => {
+        fetchCityData();
+    }, [limit, search, page]);
+
+
+    const handlePageChange = (newPage) => {
+        if (newPage > 0 && newPage <= totalPages) {
+            setPage(newPage);
+        }
     };
+
+    const getPageNumbers = () => {
+        const maxVisiblePages = 5;
+        let startPage, endPage;
+
+        if (totalPages <= maxVisiblePages) {
+            startPage = 1;
+            endPage = totalPages;
+        } else {
+            const middlePage = Math.floor(maxVisiblePages / 2);
+            if (page <= middlePage) {
+                startPage = 1;
+                endPage = maxVisiblePages;
+            } else if (page + middlePage >= totalPages) {
+                startPage = totalPages - maxVisiblePages + 1;
+                endPage = totalPages;
+            } else {
+                startPage = page - middlePage;
+                endPage = page + middlePage;
+            }
+        }
+
+        const pages = [];
+        if (startPage > 1) {
+            pages.push(1);
+            if (startPage > 2) {
+                pages.push('...');
+            }
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            pages.push(i);
+        }
+
+        if (endPage < totalPages) {
+            if (endPage < totalPages - 1) {
+                pages.push('...');
+            }
+            pages.push(totalPages);
+        }
+
+        return pages;
+    };
+
+
 
     const debouncedSearch = useCallback(
         debounce((query) => {
@@ -47,16 +112,15 @@ const AllCity = () => {
                     })
                     .catch(error => {
                         console.error('Error fetching City data by name:', error);
-                        // toast.error('Error fetching City data by name');
                     })
                     .finally(() => {
                         setLoading(false);
                     });
             } else {
-                fetchCityData(); // If search query is cleared, fetch all cities again
+                fetchCityData();
             }
         }, 500),
-        [] // The empty array ensures the callback is not recreated on every render
+        []
     );
 
     const handleSearch = (event) => {
@@ -78,9 +142,6 @@ const AllCity = () => {
     };
 
 
-    useEffect(() => {
-        fetchCityData();
-    }, []);
 
     return (
         <>
@@ -166,6 +227,23 @@ const AllCity = () => {
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div className='rider_details555'>
+                    <Pagination>
+                        <Pagination.First onClick={() => handlePageChange(1)} disabled={page === 1} />
+                        <Pagination.Prev onClick={() => handlePageChange(page - 1)} disabled={page === 1} />
+                        {getPageNumbers().map((number, index) => (
+                            number === '...' ? (
+                                <Pagination.Ellipsis key={index} />
+                            ) : (
+                                <Pagination.Item key={number} active={number === page} onClick={() => handlePageChange(number)}>
+                                    {number}
+                                </Pagination.Item>
+                            )
+                        ))}
+                        <Pagination.Next onClick={() => handlePageChange(page + 1)} disabled={page === totalPages} />
+                        <Pagination.Last onClick={() => handlePageChange(totalPages)} disabled={page === totalPages} />
+                    </Pagination>
                 </div>
             </div>
         </>

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Notification.css'
 import HOC from '../../Components/HOC/HOC'
+import Pagination from 'react-bootstrap/Pagination';
 
 import { IoSearch } from "react-icons/io5";
 
@@ -28,6 +29,10 @@ const Notification = () => {
     const [title, setTitle] = useState("");
     const [sendTo, setSendTo] = useState('');
     const [selectedId, setSelectedId] = useState(null);
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const [search, setSearch] = useState("");
+    const [totalPages, setTotalPages] = useState(0);
 
     const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
 
@@ -37,17 +42,23 @@ const Notification = () => {
         fetchDriver();
         fetchVendor();
         fetchUser();
-    }, []);
+    }, [limit, search, page]);
 
-    const fetchNotificationData = () => {
-        axios.get(`${BaseUrl}api/v1/notify/GetAllNotification`, getAuthHeaders())
+    const fetchNotificationData = useCallback(() => {
+        axios.get(`${BaseUrl}api/v1/notify/GetAllNotification?page=${page}&limit=${limit}&search=${search}`, getAuthHeaders())
             .then(response => {
-                setNotificationData(response.data.data);
+                setNotificationData(response.data.data.docs);
+                setTotalPages(response.data.data.totalPages);
             })
             .catch(error => {
                 console.error('Error fetching Notification data:', error);
             });
-    };
+    }, [page, limit, search]);
+
+
+    const handlePageChange = (pageNumber) => {
+        setPage(pageNumber);
+    }
 
 
     const deleteData = async (id) => {
@@ -99,7 +110,7 @@ const Notification = () => {
     const fetchDriver = async () => {
         try {
             const response = await axios.get(`${BaseUrl}api/v1/admin/all/driver`, getAuthHeaders());
-            setDriverNames(response.data.category);
+            setDriverNames(response.data.data.docs);
         } catch (error) {
             console.error('Error fetching driver name:', error);
         }
@@ -108,7 +119,7 @@ const Notification = () => {
     const fetchVendor = async () => {
         try {
             const response = await axios.get(`${BaseUrl}api/v1/admin/all/vendor`, getAuthHeaders());
-            setVendorNames(response.data.category);
+            setVendorNames(response.data.data.docs);
         } catch (error) {
             console.error('Error fetching Vendor name:', error);
         }
@@ -117,11 +128,13 @@ const Notification = () => {
     const fetchUser = async () => {
         try {
             const response = await axios.get(`${BaseUrl}api/v1/admin/all/user`, getAuthHeaders());
-            setUserNames(response.data.category);
+            setUserNames(response.data.data.docs);
         } catch (error) {
             console.error('Error fetching User name:', error);
         }
     };
+
+
 
 
 
@@ -305,6 +318,19 @@ const Notification = () => {
                         </table>
                     </div>
 
+                </div>
+                <div className='rider_details555'>
+                    <Pagination >
+                        <Pagination.First onClick={() => handlePageChange(1)} />
+                        <Pagination.Prev onClick={() => handlePageChange(page - 1)} />
+                        {[...Array(totalPages).keys()].map(number => (
+                            <Pagination.Item key={number + 1} active={number + 1 === page} onClick={() => handlePageChange(number + 1)}>
+                                {number + 1}
+                            </Pagination.Item>
+                        ))}
+                        <Pagination.Next onClick={() => handlePageChange(page + 1)} />
+                        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
+                    </Pagination>
                 </div>
             </div>
         </>

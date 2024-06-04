@@ -9,6 +9,7 @@ import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Pagination from 'react-bootstrap/Pagination';
 
 
 
@@ -29,6 +30,11 @@ const LiveChart = () => {
     const [totalNewMessages, setTotalNewMessages] = useState(0); // State to track total new messages
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
+    const [limit, setLimit] = useState(10);
+    const [search, setSearch] = useState("");
+    const [totalPages, setTotalPages] = useState(0);
+    const [page, setPage] = useState(1);
+
 
     const messageContainerRef = useRef(null);
 
@@ -80,6 +86,8 @@ const LiveChart = () => {
 
     
 
+    
+
     const fetchMessages = async () => {
         try {
             if (!selectedUser || !selectedUser._id) return;
@@ -113,8 +121,10 @@ const LiveChart = () => {
 
     const fetchuserData = async () => {
         try {
-            const response = await axios.get(`${BaseUrl}api/v1/admin/all/user`, getAuthHeaders());
-            const usersData = response.data.category;
+            const response = await axios.get(`${BaseUrl}api/v1/admin/all/user?page=${page}&limit=${limit}&search=${search}`, getAuthHeaders());
+            const usersData = response?.data?.data?.docs;
+            setTotalPages(response.data.data.totalPages);
+
 
             const updatedUsers = await Promise.all(usersData.map(async user => {
                 const messagesRef = collection(db, 'chatwithadmin', user._id, 'messages');
@@ -135,6 +145,9 @@ const LiveChart = () => {
             setLoading(false);
         };
     };
+
+
+    
 
 
     const handleSearch = (event) => {

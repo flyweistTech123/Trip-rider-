@@ -167,11 +167,11 @@ const Drivers = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading drivers...</td>
+                                        <td colSpan="8" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading drivers...</td>
                                     </tr>
                                 ) : driverData.length === 0 ? (
                                     <tr>
-                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Driver not found</td>
+                                        <td colSpan="8" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Driver not found</td>
                                     </tr>
                                 ) : (
                                     driverData?.map(driver => (

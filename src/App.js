@@ -86,6 +86,13 @@ import AllState from './Pages/Location/AllState.jsx';
 import AllCity from './Pages/Location/AllCity.jsx';
 import AddCity from './Pages/Location/AddCity.jsx';
 import UpdateCity from './Pages/Location/UpdateCity.jsx';
+import RefundPolicy from './Pages/RefundPolicy/RefundPolicy.jsx';
+import UserTermsandconditions from './Pages/Terms and conditions/UserTermsandconditions.jsx';
+import DriverTermsandconditions from './Pages/Terms and conditions/DriverTermsandconditions.jsx';
+import VendorTermsandconditions from './Pages/Terms and conditions/VendorTermsandconditions.jsx';
+import UserPrivacypolicy from './Pages/Privacy policy/UserPrivacypolicy.jsx';
+import DriverPrivacypolicy from './Pages/Privacy policy/DriverPrivacypolicy.jsx';
+import VendorPrivacypolicy from './Pages/Privacy policy/VendorPrivacypolicy.jsx';
 
 
 
@@ -148,10 +155,10 @@ function App() {
             <Route path="/addpromocode" element={<AdminRouteProtect> <AddPromoCode /> </AdminRouteProtect>} />
             <Route path="/updatepromocode/:id" element={<AdminRouteProtect> <UpdatePromoCode /> </AdminRouteProtect>} />
             <Route path="/termsandconditions" element={<AdminRouteProtect> <Termsandconditions /> </AdminRouteProtect>} />
-            <Route path="/addtermsandconditions" element={<AdminRouteProtect> <AddTermsandconditions /> </AdminRouteProtect>} />
+            <Route path="/addtermsandconditions/:id" element={<AdminRouteProtect> <AddTermsandconditions /> </AdminRouteProtect>} />
             <Route path="/updatetermsandconditions/:id" element={<AdminRouteProtect> <UpdateTermsandconditions /> </AdminRouteProtect>} />
             <Route path="/privacypolicy" element={<AdminRouteProtect> <Privacypolicy /> </AdminRouteProtect>} />
-            <Route path="/addprivacypolicy" element={<AdminRouteProtect> <AddPrivacypolicy /> </AdminRouteProtect>} />
+            <Route path="/addprivacypolicy/:id" element={<AdminRouteProtect> <AddPrivacypolicy /> </AdminRouteProtect>} />
             <Route path="/updateprivacypolicy/:id" element={<AdminRouteProtect> <UpdatePrivacypolicy /> </AdminRouteProtect>} />
             <Route path="/privileges" element={<AdminRouteProtect> <Privileges /> </AdminRouteProtect>} />
             <Route path="/earnings" element={<AdminRouteProtect> <Earnings /> </AdminRouteProtect>} />
@@ -179,6 +186,13 @@ function App() {
             <Route path="/driver_bookings/:id" element={<AdminRouteProtect> <Driver_Bookings /> </AdminRouteProtect>} />
             <Route path="/vendor_bookings/:id" element={<AdminRouteProtect> <Vendor_bookings /> </AdminRouteProtect>} />
             <Route path="/bookings" element={<AdminRouteProtect> <Bookings /> </AdminRouteProtect>} />
+            <Route path="/refundPolicy" element={<AdminRouteProtect> <RefundPolicy /> </AdminRouteProtect>} />
+            <Route path="/usertermsandconditions" element={<AdminRouteProtect> <UserTermsandconditions /> </AdminRouteProtect>} />
+            <Route path="/drivertermsandconditions" element={<AdminRouteProtect> <DriverTermsandconditions /> </AdminRouteProtect>} />
+            <Route path="/vendortermsandconditions" element={<AdminRouteProtect> <VendorTermsandconditions /> </AdminRouteProtect>} />
+            <Route path="/userprivacypolicy" element={<AdminRouteProtect> <UserPrivacypolicy /> </AdminRouteProtect>} />
+            <Route path="/driverprivacypolicy" element={<AdminRouteProtect> <DriverPrivacypolicy /> </AdminRouteProtect>} />
+            <Route path="/vendorprivacypolicy" element={<AdminRouteProtect> <VendorPrivacypolicy /> </AdminRouteProtect>} />
           </Routes>
         </Router>
     </>

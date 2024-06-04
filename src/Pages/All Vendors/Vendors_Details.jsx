@@ -508,17 +508,22 @@ const Vendors_Details = () => {
         const [kycstatus, setKYCstatus] = useState(" ");
         const [kycremarkstatus, setKYCRemarkstatus] = useState(" ");
 
-        const fetchDriverData = async () => {
-            try {
-                const response = await axios.get(`${BaseUrl}api/v1/getUserById/${id}`, getAuthHeaders()); // Use the ID from the URL
-                const driverStatus = response.data.data.status;
-                const driverRemark = response.data.data.kycRemark;
-                setKYCstatus(driverStatus)
-                setKYCRemarkstatus(driverRemark)
-            } catch (error) {
-                console.error('Error fetching driver data:', error);
-            }
-        };
+
+        useEffect(() => {
+            const fetchVendorData = async () => {
+                try {
+                    const response = await axios.get(`${BaseUrl}api/v1/getUserById/${id}`, getAuthHeaders());
+                    const VendorStatus = response.data.data.status;
+                    const VendorRemark = response.data.data.kycRemark;
+                    setKYCstatus(VendorStatus);
+                    setKYCRemarkstatus(VendorRemark);
+                } catch (error) {
+                    console.error('Error fetching vendor data:', error);
+                }
+            };
+
+            fetchVendorData();
+        }, [id]);
 
 
         const ChangeStatus = async (e) => {
@@ -538,7 +543,7 @@ const Vendors_Details = () => {
                 );
 
                 // After successful request, fetch updated driver data and close the modal
-                fetchDriverData();
+                fetchvendorDetails();
                 setModalShow(false);
                 toast.success("KYC Status Updated successfully");
             } catch (error) {
@@ -549,9 +554,7 @@ const Vendors_Details = () => {
 
 
 
-        useEffect(() => {
-            fetchDriverData()
-        }, [props])
+
 
         return (
             <Modal

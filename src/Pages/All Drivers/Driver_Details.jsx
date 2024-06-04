@@ -572,7 +572,7 @@ const Driver_Details = () => {
                 );
 
                 // After successful request, fetch updated driver data and close the modal
-                fetchDriverData();
+                fetchDriverDetails();
                 setModalShow(false);
                 toast.success("KYC Status Updated successfully");
             } catch (error) {

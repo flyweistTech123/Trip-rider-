@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Privacypolicy.css'
 import HOC from '../../Components/HOC/HOC'
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 
@@ -15,42 +16,48 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 
 const UpdatePrivacypolicy = () => {
-    const { id } = useParams(); 
+    const { id } = useParams();
     const [privacy, setPrivacy] = useState('');
-    const [policyType, setPolicyType] = useState('');
-    const navigate = useNavigate();
+    const [type, setType] = useState('user');
+    const navigate = useNavigate()
+
+    const fetchTermsDetails = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}api/v1/privacy/${id}`, getAuthHeaders())
+            const { privacy, type, } = response.data.data;
+            setPrivacy(privacy);
+            setType(type);
+        } catch (error) {
+            console.error('Error fetching Privacy Policy details:', error);
+        }
+    };
 
     useEffect(() => {
-        const fetchPrivacyDetails = async () => {
-            try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/privacy/type/${id}`);
-                const { privacy, type } = response.data.data;
-                setPrivacy(privacy);
-                setPolicyType(type);
-            } catch (error) {
-                console.error('Error fetching Privacy Policy details:', error);
-                toast.error("Error fetching Privacy Policy details");
-            }
-        };
-        fetchPrivacyDetails();
+        fetchTermsDetails();
     }, [id]);
 
     const handleUpdate = async () => {
         const data = {
             privacy: privacy,
-            type: policyType,
+            type: type,
         }
+
 
         try {
-            const response = await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/privacy/${id}`, data);
+            const response = await axios.put(`${BaseUrl}api/v1/privacy/${id}`, data, getAuthHeaders());
             toast.success("Privacy Policy Updated successfully");
-            navigate('/privacypolicy');
+            if (type === 'user') {
+                navigate('/userprivacypolicy')
+            } else if (type === 'driver') {
+                navigate('/driverprivacypolicy')
+            } else {
+                navigate('/vendorprivacypolicy')
+            }
         } catch (error) {
             console.error('Error updating Privacy Policy:', error);
-            toast.error("Error updating Privacy Policy");
+            toast.error("Failed to update Privacy Policy. Please try again later.");
         }
     };
-
 
 
     return (
@@ -61,29 +68,30 @@ const UpdatePrivacypolicy = () => {
                         <div className='rider3'>
                             <h6>Update Privacy Policy</h6>
                         </div>
+                        <div className='rider4'>
+                            <button onClick={() => navigate(-1)}>
+                                Back
+                            </button>
+                            <button onClick={handleUpdate}>
+                                Update
+                            </button>
+                        </div>
                     </div>
                     <div className='terms'>
-                        <div className='terms1'>
-                            <h1>Update Privacy Policy</h1>
-                        </div>
-                        <div className='terms5'>
-                            <div className='service1'>
+                        <div className='terms2'>
+                            {/* <div className='terms3'>
                                 <label htmlFor="">Type</label>
-                                <select onChange={(e) => setPolicyType(e.target.value)}>
+                                <select onChange={(e) => setType(e.target.value)}>
                                     <option value="">Select Type</option>
-                                    <option name="vendor" value="vendor" selected={policyType === "vendor"}>Vendor</option>
-                                    <option name="user" value="user" selected={policyType === "user"} >User</option>
-                                    <option name="driver" value="driver" selected={policyType === "driver"}  >Driver</option>
+                                    <option name="vendor" value="vendor">Vendor</option>
+                                    <option name="user" value="user" >User</option>
+                                    <option name="driver" value="driver" >Driver</option>
                                 </select>
+                            </div> */}
+                            <div className='terms3'>
+                                <label htmlFor="">Privacy Policy</label>
+                                <textarea name="" id="" rows="10" placeholder='Enter Privacy Policy' value={privacy} onChange={(e) => setPrivacy(e.target.value)} ></textarea>
                             </div>
-                            <div className='terms2'>
-                                <textarea name="" id="" cols="95" rows="10" placeholder='Enter Privacy Policy' value={privacy} onChange={(e) => setPrivacy(e.target.value)} ></textarea>
-                            </div>
-                        </div>
-
-                        <div className='dailyprice5'>
-                            <button onClick={() => navigate('/privacypolicy')}>Cancel</button>
-                            <button onClick={handleUpdate}>Update</button>
                         </div>
                     </div>
 

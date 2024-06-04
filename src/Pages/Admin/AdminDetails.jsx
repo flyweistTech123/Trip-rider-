@@ -260,10 +260,10 @@ const AdminDetails = () => {
         try {
             await axios.delete(`${BaseUrl}api/v1/admin/delete/driver/${id}`, getAuthHeaders());
             toast.success("Admin deleted successfully");
-            navigate('/riders');
+            navigate('/privileges');
         } catch (error) {
             console.error('Error deleting Admin:', error);
-            toast.error("Error deleting Admin");
+            toast.error("Failed to delete Admin. Please try again later.");
         }
     };
 
@@ -276,7 +276,7 @@ const AdminDetails = () => {
             toast.success("Admin is blocked successfully");
         } catch (error) {
             console.error('Error blocking Admin:', error);
-            toast.error("Error blocking Admin");
+            toast.error("Failed to block Admin. Please try again later.");
         }
     };
 
@@ -288,7 +288,7 @@ const AdminDetails = () => {
             toast.success("Admin is unblocked successfully'");
         } catch (error) {
             console.error('Error Unblocking Admin:', error);
-            toast.error("Error unblocking Admin");
+            toast.error("Failed to unblock Admin. Please try again later.");
         }
     };
 
@@ -296,7 +296,7 @@ const AdminDetails = () => {
 
     let textColor = '';
 
-    switch (kycstatus1) {
+    switch (status) {
         case 'reject':
             textColor = '#F52D56'; // Red color for 'reject'
             break;
@@ -349,7 +349,7 @@ const AdminDetails = () => {
                 );
 
                 // After successful request, fetch updated driver data and close the modal
-                fetchDriverData();
+                fetchAdminDetails();
                 setModalShow(false);
                 toast.success("KYC Status Updated successfully");
             } catch (error) {

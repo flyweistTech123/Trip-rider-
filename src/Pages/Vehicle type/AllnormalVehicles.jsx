@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,10 +6,12 @@ import './Vehicletype.css'
 import HOC from '../../Components/HOC/HOC'
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Pagination from 'react-bootstrap/Pagination';
 
 import { IoSearch } from "react-icons/io5";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { MdEdit } from "react-icons/md";
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 
@@ -22,15 +24,20 @@ const AllnormalVehicles = () => {
     const [vehicleData, setVehicleData] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const [search, setSearch] = useState("");
+    const [totalPages, setTotalPages] = useState(0);
 
     useEffect(() => {
         fetchVehicleData();
-    }, []);
+    }, [limit, search, page]);
 
-    const fetchVehicleData = () => {
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/vehicle')
+    const fetchVehicleData = useCallback(() => {
+        axios.get(`${BaseUrl}api/v1/getVehicleWithPaginate?page=${page}&limit=${limit}&search=${search}`, getAuthHeaders())
             .then(response => {
-                setVehicleData(response.data.data);
+                setVehicleData(response.data.data.docs);
+                setTotalPages(response.data.data.totalPages);
             })
             .catch(error => {
                 console.error('Error fetching Vehicle data:', error);
@@ -38,7 +45,14 @@ const AllnormalVehicles = () => {
             .finally(() => {
                 setLoading(false);
             });
-    };
+    }, [page, limit, search]);
+
+
+    const handlePageChange = (pageNumber) => {
+        setPage(pageNumber);
+    }
+
+
 
     const deleteVehicle = (vehicleId) => {
         axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/vehicle/${vehicleId}`)
@@ -167,6 +181,20 @@ const AllnormalVehicles = () => {
                             </tbody>
                         </table>
                     </div>
+                </div>
+
+                <div className='rider_details555'>
+                    <Pagination >
+                        <Pagination.First onClick={() => handlePageChange(1)} />
+                        <Pagination.Prev onClick={() => handlePageChange(page - 1)} />
+                        {[...Array(totalPages).keys()].map(number => (
+                            <Pagination.Item key={number + 1} active={number + 1 === page} onClick={() => handlePageChange(number + 1)}>
+                                {number + 1}
+                            </Pagination.Item>
+                        ))}
+                        <Pagination.Next onClick={() => handlePageChange(page + 1)} />
+                        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
+                    </Pagination>
                 </div>
             </div>
         </>

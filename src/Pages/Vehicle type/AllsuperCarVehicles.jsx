@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -7,6 +7,7 @@ import HOC from '../../Components/HOC/HOC'
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
+import Pagination from 'react-bootstrap/Pagination';
 
 
 import { IoSearch } from "react-icons/io5";
@@ -24,17 +25,21 @@ const AllsuperCarVehicles = () => {
     const [supercarData, setSuperCarData] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
-
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const [search, setSearch] = useState("");
+    const [totalPages, setTotalPages] = useState(0);
 
 
     useEffect(() => {
         fetchSuperCarData();
-    }, []);
+    }, [limit, search, page]);
 
-    const fetchSuperCarData = () => {
-        axios.get(`${BaseUrl}api/v1/SuperCar`, getAuthHeaders())
+    const fetchSuperCarData = useCallback(() => {
+        axios.get(`${BaseUrl}api/v1/getSuperCarWithPaginate?page=${page}&limit=${limit}&search=${search}`, getAuthHeaders())
             .then(response => {
-                setSuperCarData(response.data.data);
+                setSuperCarData(response.data.data.docs);
+                setTotalPages(response.data.data.totalPages);
             })
             .catch(error => {
                 console.error('Error fetching Super Car data:', error);
@@ -42,7 +47,12 @@ const AllsuperCarVehicles = () => {
             .finally(() => {
                 setLoading(false);
             });
-    };
+    }, [page, limit, search]);
+
+
+    const handlePageChange = (pageNumber) => {
+        setPage(pageNumber);
+    }
 
     const deleteSuperCar = (supercarId) => {
         axios.delete(`${BaseUrl}api/v1/SuperCar/${supercarId}`, getAuthHeaders())
@@ -158,6 +168,19 @@ const AllsuperCarVehicles = () => {
 
                         </table>
                     </div>
+                </div>
+                <div className='rider_details555'>
+                    <Pagination >
+                        <Pagination.First onClick={() => handlePageChange(1)} />
+                        <Pagination.Prev onClick={() => handlePageChange(page - 1)} />
+                        {[...Array(totalPages).keys()].map(number => (
+                            <Pagination.Item key={number + 1} active={number + 1 === page} onClick={() => handlePageChange(number + 1)}>
+                                {number + 1}
+                            </Pagination.Item>
+                        ))}
+                        <Pagination.Next onClick={() => handlePageChange(page + 1)} />
+                        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
+                    </Pagination>
                 </div>
             </div>
         </>

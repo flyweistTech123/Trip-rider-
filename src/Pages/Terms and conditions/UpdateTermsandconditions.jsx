@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Termsandconditions.css'
 import HOC from '../../Components/HOC/HOC'
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 
@@ -17,20 +18,21 @@ import { useNavigate, useParams } from 'react-router-dom';
 const UpdateTermsandconditions = () => {
     const { id } = useParams();
     const [term, setTerms] = useState('');
-    const [type, setType] = useState('');
+    const [type, setType] = useState('user');
     const navigate = useNavigate()
 
+    const fetchTermsDetails = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}api/v1/terms/${id}`, getAuthHeaders())
+            const { terms, type, } = response.data.data;
+            setTerms(terms);
+            setType(type);
+        } catch (error) {
+            console.error('Error fetching Terms and Conditions details:', error);
+        }
+    };
+
     useEffect(() => {
-        const fetchTermsDetails = async () => {
-            try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/terms/${id}`);
-                const { terms, type } = response.data.data;
-                setTerms(terms);
-                setType(type);
-            } catch (error) {
-                console.error('Error fetching Terms and Conditions details:', error);
-            }
-        };
         fetchTermsDetails();
     }, [id]);
 
@@ -42,12 +44,18 @@ const UpdateTermsandconditions = () => {
 
 
         try {
-            const response = await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/terms/${id}`, data);
+            const response = await axios.put(`${BaseUrl}api/v1/terms/${id}`, data, getAuthHeaders());
             toast.success("Terms and Conditions Updated successfully");
-            navigate('/termsandconditions');
+            if (type === 'user') {
+                navigate('/usertermsandconditions')
+            } else if (type === 'driver') {
+                navigate('/drivertermsandconditions')
+            } else {
+                navigate('/vendortermsandconditions')
+            }
         } catch (error) {
             console.error('Error updating Terms and Conditions:', error);
-            toast.error("Error updating Terms and Conditions");
+            toast.error("Failed to update Terms and Conditions. Please try again later.");
         }
     };
 
@@ -60,29 +68,30 @@ const UpdateTermsandconditions = () => {
                         <div className='rider3'>
                             <h6>Update Terms and Conditions</h6>
                         </div>
+                        <div className='rider4'>
+                            <button onClick={() => navigate(-1)}>
+                                Back
+                            </button>
+                            <button onClick={handleUpdate}>
+                                Update
+                            </button>
+                        </div>
                     </div>
                     <div className='terms'>
-                        <div className='terms1'>
-                            <h1>Update Terms and Conditions</h1>
-                        </div>
-                        <div className='terms5'>
-                            <div className='service1'>
+                        <div className='terms2'>
+                            {/* <div className='terms3'>
                                 <label htmlFor="">Type</label>
                                 <select onChange={(e) => setType(e.target.value)}>
                                     <option value="">Select Type</option>
-                                    <option name="vendor" value="vendor" selected={type === "vendor"}>Vendor</option>
-                                    <option name="user" value="user" selected={type === "user"} >User</option>
-                                    <option name="driver" value="driver" selected={type === "driver"}  >Driver</option>
+                                    <option name="vendor" value="vendor">Vendor</option>
+                                    <option name="user" value="user" >User</option>
+                                    <option name="driver" value="driver" >Driver</option>
                                 </select>
+                            </div> */}
+                            <div className='terms3'>
+                                <label htmlFor="">Terms</label>
+                                <textarea name="" id="" rows="10" placeholder='Enter Terms and Conditions' value={term} onChange={(e) => setTerms(e.target.value)} ></textarea>
                             </div>
-                            <div className='terms2'>
-                                <textarea name="" id="" cols="95" rows="10" placeholder='Enter Terms and Conditions' value={term} onChange={(e) => setTerms(e.target.value)} ></textarea>
-                            </div>
-                        </div>
-
-                        <div className='dailyprice5'>
-                            <button onClick={() => navigate('/termsandconditions')}>Cancel</button>
-                            <button onClick={handleUpdate}>Update</button>
                         </div>
                     </div>
 

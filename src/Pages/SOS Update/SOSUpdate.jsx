@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import './SOSUpdate.css'
@@ -12,6 +12,8 @@ import { Button, Form } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 import img2 from '../../Images/user.webp'
+import Pagination from 'react-bootstrap/Pagination';
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 
@@ -22,34 +24,43 @@ const SOSUpdate = () => {
     const [sosId, setSOSId] = useState('')
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const [search, setSearch] = useState("");
+    const [totalPages, setTotalPages] = useState(0);
 
 
-    const fetchSOSData = async () => {
-        try {
-            const response = await axios.get('https://rajiv-cab-mu.vercel.app/api/v1/getAllSosRequest');
-            setSosData(response.data.data);
-        } catch (error) {
-            console.error('Error fetching SOS data:', error);
-        }
-        finally {
-            setLoading(false);
-        };
-    };
+
+    const fetchSOSData = useCallback(() => {
+        axios.get(`${BaseUrl}api/v1/getAllSosRequest?page=${page}&limit=${limit}&search=${search}`, getAuthHeaders())
+            .then(response => {
+                setSosData(response.data.data.docs);
+                setTotalPages(response.data.data.totalPages);
+            })
+            .catch(error => {
+                console.error('Error fetching SOS data:', error);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, [page, limit, search]);
 
     useEffect(() => {
         fetchSOSData();
-    }, []);
+    }, [limit, search, page]);
 
 
     const navigate = useNavigate();
 
-    const handleSearch = (event) => {
-        setSearchQuery(event.target.value);
-    };
+    const handlePageChange = (pageNumber) => {
+        setPage(pageNumber);
+    }
 
-    const filteredSOSData = sosdata.filter(sos =>
-        sos?.user?.name && sos?.user?.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+
+    const handleSearch = (event) => {
+        setPage(1);
+        setSearch(event.target.value);
+    };
 
 
     function SosStatusModal(props) {
@@ -180,7 +191,6 @@ const SOSUpdate = () => {
                                     <IoSearch />
                                 </div>
                                 <input type="search" name="" id="" placeholder='Search name'
-                                    value={searchQuery}
                                     onChange={handleSearch}
                                 />
                             </div>
@@ -202,94 +212,68 @@ const SOSUpdate = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading SOS...</td>
+                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading sos...</td>
                                     </tr>
-                                ) :
-                                    searchQuery && filteredSOSData.length === 0 ? (
-                                        <tr>
-                                            <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>SOS not found</td>
+                                ) : sosdata.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>SOS not found</td>
+                                    </tr>
+                                ) : (
+                                    sosdata.map(SOS => (
+                                        <tr key={SOS.id}>
+                                            <td>
+                                                <img src={SOS?.user?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
+                                            </td>
+                                            <td>{SOS?.user?.name}</td>
+                                            <td>{(SOS.id)}</td>
+                                            <td>{(SOS.locationInWord)}</td>
+                                            <td>{(SOS.reason)}</td>
+                                            <td style={{
+                                                color: SOS.status === 'REJECT' ? '#F52D56' :
+                                                    SOS.status === 'PENDING' ? '#FBAC2C' :
+                                                        SOS.status === 'APPROVED' ? '#609527' : 'black',
+                                                fontWeight: '600'
+                                            }}>
+                                                {SOS.status}
+                                            </td>
+                                            <td className='rider9'>
+                                                <div className='rider10'>
+                                                    <Link to={`/soslocation/${SOS._id}`} className='sidebar-link' >
+                                                        <IoLocationSharp color='#000000' size={22} />
+                                                        <p style={{ fontSize: '10px' }}>Track Live Location</p>
+                                                    </Link>
+                                                </div>
+                                                <div className='rider10'
+                                                    onClick={() => {
+                                                        setSOSId(SOS?._id);
+                                                        setModalShow(true);
+                                                    }}
+                                                >
+                                                    <MdEdit color='#000000' size={20} />
+                                                    <p>Edit</p>
+                                                </div>
+                                            </td>
                                         </tr>
-                                    ) : (
-                                        searchQuery
-                                            ?
-
-                                            filteredSOSData.map(SOS => (
-                                                <tr key={SOS.id}>
-                                                    <td>
-                                                        <img src={SOS?.user?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
-                                                    </td>
-                                                    <td>{SOS?.user?.name}</td>
-                                                    <td>{(SOS.id)}</td>
-                                                    <td>{(SOS.locationInWord)}</td>
-                                                    <td>{(SOS.reason)}</td>
-                                                    <td style={{
-                                                        color: SOS.status === 'REJECT' ? '#F52D56' :
-                                                            SOS.status === 'PENDING' ? '#FBAC2C' :
-                                                                SOS.status === 'APPROVED' ? '#609527' : 'black',
-                                                        fontWeight: '600'
-                                                    }}>
-                                                        {SOS.status}
-                                                    </td>
-                                                    <td className='rider9'>
-                                                        <div className='rider10'>
-                                                            <Link to={`/soslocation/${SOS._id}`} className='sidebar-link' >
-                                                                <IoLocationSharp color='#000000' size={22} />
-                                                                <p style={{ fontSize: '10px' }}>Track Live Location</p>
-                                                            </Link>
-                                                        </div>
-                                                        <div className='rider10'
-                                                            onClick={() => {
-                                                                setSOSId(SOS?._id);
-                                                                setModalShow(true);
-                                                            }}
-                                                        >
-                                                            <MdEdit color='#000000' size={20} />
-                                                            <p>Edit</p>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))
-                                            :
-                                            sosdata.map(SOS => (
-                                                <tr key={SOS.id}>
-                                                    <td>
-                                                        <img src={SOS?.user?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
-                                                    </td>
-                                                    <td>{SOS?.user?.name}</td>
-                                                    <td>{(SOS.id)}</td>
-                                                    <td>{(SOS.locationInWord)}</td>
-                                                    <td>{(SOS.reason)}</td>
-                                                    <td style={{
-                                                        color: SOS.status === 'REJECT' ? '#F52D56' :
-                                                            SOS.status === 'PENDING' ? '#FBAC2C' :
-                                                                SOS.status === 'APPROVED' ? '#609527' : 'black',
-                                                        fontWeight: '600'
-                                                    }}>
-                                                        {SOS.status}
-                                                    </td>
-                                                    <td className='rider9'>
-                                                        <div className='rider10'>
-                                                            <Link to={`/soslocation/${SOS._id}`} className='sidebar-link' >
-                                                                <IoLocationSharp color='#000000' size={22} />
-                                                                <p style={{ fontSize: '10px' }}>Track Live Location</p>
-                                                            </Link>
-                                                        </div>
-                                                        <div className='rider10'
-                                                            onClick={() => {
-                                                                setSOSId(SOS?._id);
-                                                                setModalShow(true);
-                                                            }}
-                                                        >
-                                                            <MdEdit color='#000000' size={20} />
-                                                            <p>Edit</p>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))
-                                    )}
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>
+                </div>
+
+
+                <div className='rider_details555'>
+                    <Pagination >
+                        <Pagination.First onClick={() => handlePageChange(1)} />
+                        <Pagination.Prev onClick={() => handlePageChange(page - 1)} />
+                        {[...Array(totalPages).keys()].map(number => (
+                            <Pagination.Item key={number + 1} active={number + 1 === page} onClick={() => handlePageChange(number + 1)}>
+                                {number + 1}
+                            </Pagination.Item>
+                        ))}
+                        <Pagination.Next onClick={() => handlePageChange(page + 1)} />
+                        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
+                    </Pagination>
                 </div>
             </div>
         </>

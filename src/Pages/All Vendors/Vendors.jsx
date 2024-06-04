@@ -159,11 +159,11 @@ const Vendors = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading vendors...</td>
+                                        <td colSpan="9" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading vendors...</td>
                                     </tr>
                                 ) : vendorData?.length === 0 ? (
                                     <tr>
-                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>vendor not found</td>
+                                        <td colSpan="9" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>vendor not found</td>
                                     </tr>
                                 ) : (
                                     vendorData?.map(vendor => (
@@ -177,6 +177,16 @@ const Vendors = () => {
                                             <td style={{ color: '#F52D56' }}>{vendor?.wallet}</td>
                                             <td>{vendor?.noOfVehicle}</td>
                                             <td>{vendor?.totalBooking}</td>
+                                            <td style={{
+                                                color:
+                                                vendor?.status === 'reject' ? '#F52D56' :
+                                                vendor?.status === 'pending' ? '#FBAC2C' :
+                                                vendor?.status === 'hold' ? '#357ABD' :
+                                                vendor?.status === 'approved' ? '#609527' :
+                                                                    '#000'
+                                            }}>
+                                                {vendor?.status}
+                                            </td>
                                             <td>
                                                 <div className='rider9'>
                                                     {role === 'superAdmin' ? (

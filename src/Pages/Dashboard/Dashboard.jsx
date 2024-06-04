@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './Dashboard.css'
 import HOC from '../../Components/HOC/HOC'
 import { Link } from "react-router-dom"; // Import Link for routing
-
+import Pagination from 'react-bootstrap/Pagination';
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
@@ -20,6 +20,10 @@ const Dashboard = () => {
   const [totalVendors, setTotalVendors] = useState(0);
   const [totalEarnings, setTotalEarnings] = useState(0);
   const [totalcancel, setcancel] = useState(0);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [search, setSearch] = useState("");
+  const [totalPages, setTotalPages] = useState(0);
 
 
   const [loading, setLoading] = useState(true);
@@ -41,20 +45,25 @@ const Dashboard = () => {
 
 
 
-  // const fetchTransactionData = () => {
-  //   axios.get(`${BaseUrl}api/v1/getAllBookingTransaction`, getAuthHeaders())
-  //     .then(response => {
-  //       setBookingTransaction(response.data.data);
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching Transaction data:', error);
-  //     })
-  // };
+  const fetchTransactionData = useCallback(() => {
+    axios.get(`${BaseUrl}api/v1/getAllBookingTransaction?page=${page}&limit=${limit}`, getAuthHeaders())
+      .then(response => {
+        setBookingTransaction(response.data.data.docs);
+        setTotalPages(response.data.data.pages);
+      })
+      .catch(error => {
+        console.error('Error fetching Transaction data:', error);
+      })
+  }, [page, limit, search]);
 
   useEffect(() => {
     fetchData();
-    // fetchTransactionData();
-  }, []);
+    fetchTransactionData();
+  }, [limit, search, page]);
+
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+  }
 
   const fetchData = async () => {
     try {
@@ -64,15 +73,13 @@ const Dashboard = () => {
         axios.get(`${BaseUrl}api/v1/admin/all/vendor`, getAuthHeaders()),
         axios.get(`${BaseUrl}api/v1/getBooking?status=cancel`, getAuthHeaders()),
         axios.get(`${BaseUrl}api/v1/getBooking`, getAuthHeaders()),
-        // axios.get(`${BaseUrl}api/v1/admin/me`, getAuthHeaders())
       ]);
 
-      setTotalRiders(ridreResponse.data.category.length);
-      setTotalDrivers(driversResponse.data.category.length);
-      setTotalVendors(vendorsResponse.data.category.length);
-      setTotalVendors(vendorsResponse.data.category.length);
-      setcancel(cancelRides.data.data.length);
-      setTotalbookings(booking.data.data.length);
+      setTotalRiders(ridreResponse.data.data.totalDocs);
+      setTotalDrivers(driversResponse.data.data.totalDocs);
+      setTotalVendors(vendorsResponse.data.data.totalDocs);
+      setcancel(cancelRides.data.data.totalDocs);
+      setTotalbookings(booking.data.data.totalDocs);
       setTotalEarnings(earning.data.data.wallet);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -318,6 +325,19 @@ const Dashboard = () => {
             )}
 
           </div>
+        </div>
+        <div className='rider_details555'>
+          <Pagination >
+            <Pagination.First onClick={() => handlePageChange(1)} />
+            <Pagination.Prev onClick={() => handlePageChange(page - 1)} />
+            {[...Array(totalPages).keys()].map(number => (
+              <Pagination.Item key={number + 1} active={number + 1 === page} onClick={() => handlePageChange(number + 1)}>
+                {number + 1}
+              </Pagination.Item>
+            ))}
+            <Pagination.Next onClick={() => handlePageChange(page + 1)} />
+            <Pagination.Last onClick={() => handlePageChange(totalPages)} />
+          </Pagination>
         </div>
       </div >
     </>

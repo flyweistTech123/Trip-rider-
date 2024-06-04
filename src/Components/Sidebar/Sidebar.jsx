@@ -59,6 +59,7 @@ const Sidebar = () => {
         { icon: img14, text: 'Geofencing', link: '/geofencing_view' },
         { icon: img18, text: 'Terms and conditions', link: '/termsandconditions' },
         { icon: img19, text: 'Privacy policy', link: '/privacypolicy' },
+        { icon: img19, text: 'Refund policy', link: '/refundPolicy' },
     ];
 
     // const sidebarItems2 = [

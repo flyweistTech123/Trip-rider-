@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import './Payout_Management.css'
@@ -6,37 +6,52 @@ import HOC from '../../Components/HOC/HOC'
 import { useNavigate } from 'react-router-dom';
 import { IoSearch } from "react-icons/io5";
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
+import Pagination from 'react-bootstrap/Pagination';
 
 
 const Payout_Management = () => {
     const [payoutdata, setPayoutData] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(15);
+    const [search, setSearch] = useState("");
+    const [totalPages, setTotalPages] = useState(0);
 
-    const fetchPayoutData = async () => {
-        try {
-            const response = await axios.get(`${BaseUrl}api/v1/getAllPayoutTransaction`, getAuthHeaders());
-            setPayoutData(response.data.data);
-        } catch (error) {
-            console.error('Error fetching wallet data:', error);
-        }
-        finally {
-            setLoading(false);
-        };
-    };
+
+
+
+
+    const fetchPayoutData = useCallback(() => {
+        axios.get(`${BaseUrl}api/v1/getAllPayoutTransaction?page=${page}&limit=${limit}&search=${search}`, getAuthHeaders())
+            .then(response => {
+                setPayoutData(response.data.data.docs);
+                setTotalPages(response.data.data.totalPages);
+            })
+            .catch(error => {
+                console.error('Error fetching wallet data:', error);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, [page, limit, search]);
+
 
     useEffect(() => {
         fetchPayoutData();
-    }, []);
+    }, [limit, search, page]);
+
+
+
+    const handlePageChange = (pageNumber) => {
+        setPage(pageNumber);
+    }
 
 
     const handleSearch = (event) => {
-        setSearchQuery(event.target.value);
+        setPage(1);
+        setSearch(event.target.value);
     };
 
-    const filteredpayoutData = payoutdata.filter(payout =>
-        payout.name && payout.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -80,8 +95,8 @@ const Payout_Management = () => {
                                 <div className='rider6'>
                                     <IoSearch />
                                 </div>
-                                <input type="search" name="" id="" placeholder='Search name' value={searchQuery}
-                                onChange={handleSearch} />
+                                <input type="search" name="" id="" placeholder='Search name'
+                                    onChange={handleSearch} />
                             </div>
                         </div>
                     </div>
@@ -105,65 +120,53 @@ const Payout_Management = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="11" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Payout...</td>
+                                        <td colSpan="11" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading payout...</td>
                                     </tr>
-                                ) :
-                                    searchQuery && filteredpayoutData.length === 0 ? (
-                                        <tr>
-                                            <td colSpan="11" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Data not found</td>
+                                ) : payoutdata.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="11" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Payout not found</td>
+                                    </tr>
+                                ) : (
+                                    payoutdata.map(payout => (
+                                        <tr key={payout.id}>
+                                            <td className='rider8'>{payout?.id}</td>
+                                            <td>{(payout.name)}</td>
+                                            <td>{(payout.mobileNumber)}</td>
+                                            <td>{(payout.accountNumber)}</td>
+                                            <td>{(payout.ifsc)}</td>
+                                            <td>{(payout.upiId)}</td>
+                                            <td>{(payout.paymentMethod)}</td>
+                                            <td>{formatDate(payout.createdAt)}</td>
+                                            <td>{formatTime(payout.createdAt)}</td>
+                                            <td style={{
+                                                color: payout.status === 'FAILED' ? '#F52D56' :
+                                                    payout.status === 'PENDING' ? '#FBAC2C' :
+                                                        payout.status === 'PAID' ? '#609527' : 'black',
+                                                fontWeight: '600'
+                                            }}>
+                                                {payout.status}
+                                            </td>
+                                            <td className='payuser4'><button onClick={() => navigate(`/pay_user/${payout._id}`)}>Pay</button></td>
                                         </tr>
-                                    ) : (
-                                        searchQuery
-                                            ?
-                                            filteredpayoutData.map(payout => (
-                                                <tr key={payout.id}>
-                                                    <td className='rider8'>{payout?.id}</td>
-                                                    <td>{(payout.name)}</td>
-                                                    <td>{(payout.mobileNumber)}</td>
-                                                    <td>{(payout.accountNumber)}</td>
-                                                    <td>{(payout.ifsc)}</td>
-                                                    <td>{(payout.upiId)}</td>
-                                                    <td>{(payout.paymentMethod)}</td>
-                                                    <td>{formatDate(payout.createdAt)}</td>
-                                                    <td>{formatTime(payout.createdAt)}</td>
-                                                    <td style={{
-                                                        color: payout.status === 'FAILED' ? '#F52D56' :
-                                                            payout.status === 'PENDING' ? '#FBAC2C' :
-                                                                payout.status === 'PAID' ? '#609527' : 'black',
-                                                        fontWeight: '600'
-                                                    }}>
-                                                        {payout.status}
-                                                    </td>
-                                                    <td className='payuser4'><button onClick={() => navigate(`/pay_user/${payout._id}`)}>Pay</button></td>
-                                                </tr>
-                                            ))
-                                            :
-                                            payoutdata.map(payout => (
-                                                <tr key={payout.id}>
-                                                    <td className='rider8'>{payout?.id}</td>
-                                                    <td>{(payout.name)}</td>
-                                                    <td>{(payout.mobileNumber)}</td>
-                                                    <td>{(payout.accountNumber)}</td>
-                                                    <td>{(payout.ifsc)}</td>
-                                                    <td>{(payout.upiId)}</td>
-                                                    <td>{(payout.paymentMethod)}</td>
-                                                    <td>{formatDate(payout.createdAt)}</td>
-                                                    <td>{formatTime(payout.createdAt)}</td>
-                                                    <td style={{
-                                                        color: payout.status === 'FAILED' ? '#F52D56' :
-                                                            payout.status === 'PENDING' ? '#FBAC2C' :
-                                                                payout.status === 'PAID' ? '#609527' : 'black',
-                                                        fontWeight: '600'
-                                                    }}>
-                                                        {payout.status}
-                                                    </td>
-                                                    <td className='payuser4'><button onClick={() => navigate(`/pay_user/${payout._id}`)}>Pay</button></td>
-                                                </tr>
-                                            ))
-                                    )}
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>
+                </div>
+
+                <div className='rider_details555'>
+                    <Pagination >
+                        <Pagination.First onClick={() => handlePageChange(1)} />
+                        <Pagination.Prev onClick={() => handlePageChange(page - 1)} />
+                        {[...Array(totalPages).keys()].map(number => (
+                            <Pagination.Item key={number + 1} active={number + 1 === page} onClick={() => handlePageChange(number + 1)}>
+                                {number + 1}
+                            </Pagination.Item>
+                        ))}
+                        <Pagination.Next onClick={() => handlePageChange(page + 1)} />
+                        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
+                    </Pagination>
                 </div>
             </div>
         </>
