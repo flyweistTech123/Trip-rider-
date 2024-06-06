@@ -7,6 +7,8 @@ import HOC from '../../Components/HOC/HOC';
 import { useNavigate } from 'react-router-dom';
 import img3 from '../../Images/img43.png';
 import axios from 'axios';
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
+
 
 const Add_Service = () => {
     const navigate = useNavigate();
@@ -35,7 +37,7 @@ const Add_Service = () => {
         formData.append('description', description);
 
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/serviceCategory', formData);
+            const response = await axios.post(`${BaseUrl}api/v1/serviceCategory`, formData, getAuthHeaders());
             console.log('Response:', response.data);
             toast.success("Service Added successfully");
 
@@ -69,12 +71,12 @@ const Add_Service = () => {
 
                     <div className='service'>
 
-                        <div className='service2'>
-                            <div className='service1'>
+                        <div className='dailyprice3'>
+                            <div className='dailyprice4'>
                                 <label htmlFor="">Category</label>
                                 <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} />
                             </div>
-                            <div className='service1'>
+                            <div className='dailyprice2'>
                                 <label htmlFor="">Type</label>
                                 <select onChange={(e) => setType(e.target.value)}>
                                     <option value="">Select Type</option>
@@ -84,10 +86,10 @@ const Add_Service = () => {
                                 </select>
                             </div>
                         </div>
-                        <div className='service2'>
+                        <div className='service111'>
                             <div className='service1'>
                                 <label htmlFor="">Description</label>
-                                <textarea name="" id="" cols="200" rows="10" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                                <textarea name="" id=""  rows="10" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                             </div>
                         </div>
 

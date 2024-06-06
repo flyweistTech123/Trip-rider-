@@ -8,6 +8,7 @@ import { IoSearch } from "react-icons/io5";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 
@@ -26,24 +27,27 @@ const AddPromoCode = () => {
             category: category,
             discountPer: discount,
             isDiscount: active,
-        }
-
-
+        };
+    
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/category', data);
+            const response = await axios.post(`${BaseUrl}api/v1/category`, data, getAuthHeaders());
             const message = response.data.message;
             toast.success(message);
-
+    
             // Reset state variables to clear input fields
             setCategory('');
             setDiscount('');
             setActive('');
-            navigate('/allpromocode')
+            navigate('/allpromocode');
         } catch (error) {
             console.error('Error to Promo code:', error);
-            toast.error('Error to add Promo code');
+    
+            // Extract and display the specific error message
+            const errorMessage = error.response?.data?.message || 'Failed to Promo code. Please try again later.';
+            toast.error(errorMessage);
         }
-    }
+    };
+    
 
 
     const navigate = useNavigate()

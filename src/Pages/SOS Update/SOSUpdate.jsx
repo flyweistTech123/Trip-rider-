@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import img2 from '../../Images/user.webp'
 import Pagination from 'react-bootstrap/Pagination';
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
+import CustomPagination from '../../Components/Pagination/Pagination';
 
 
 
@@ -32,10 +33,10 @@ const SOSUpdate = () => {
 
 
     const fetchSOSData = useCallback(() => {
-        axios.get(`${BaseUrl}api/v1/getAllSosRequest?page=${page}&limit=${limit}&search=${search}`, getAuthHeaders())
+        axios.get(`${BaseUrl}api/v1/getAllSosRequest?page=${page}&limit=${limit}`, getAuthHeaders())
             .then(response => {
                 setSosData(response.data.data.docs);
-                setTotalPages(response.data.data.totalPages);
+                setTotalPages(response.data.data.pages);
             })
             .catch(error => {
                 console.error('Error fetching SOS data:', error);
@@ -50,17 +51,25 @@ const SOSUpdate = () => {
     }, [limit, search, page]);
 
 
+
+
     const navigate = useNavigate();
 
-    const handlePageChange = (pageNumber) => {
-        setPage(pageNumber);
-    }
+    const handlePageChange = (newPage) => {
+        if (newPage < 1 || newPage > totalPages) return;
+        setPage(newPage);
+        setLoading(true);
+    };
 
 
     const handleSearch = (event) => {
         setPage(1);
-        setSearch(event.target.value);
+        setSearchQuery(event.target.value);
     };
+
+    const filteredSOSData = sosdata?.filter(sos =>
+        sos?.user?.name && sos?.user?.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
 
     function SosStatusModal(props) {
@@ -212,68 +221,104 @@ const SOSUpdate = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading sos...</td>
+                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading SOS...</td>
                                     </tr>
-                                ) : sosdata.length === 0 ? (
-                                    <tr>
-                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>SOS not found</td>
-                                    </tr>
-                                ) : (
-                                    sosdata.map(SOS => (
-                                        <tr key={SOS.id}>
-                                            <td>
-                                                <img src={SOS?.user?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
-                                            </td>
-                                            <td>{SOS?.user?.name}</td>
-                                            <td>{(SOS.id)}</td>
-                                            <td>{(SOS.locationInWord)}</td>
-                                            <td>{(SOS.reason)}</td>
-                                            <td style={{
-                                                color: SOS.status === 'REJECT' ? '#F52D56' :
-                                                    SOS.status === 'PENDING' ? '#FBAC2C' :
-                                                        SOS.status === 'APPROVED' ? '#609527' : 'black',
-                                                fontWeight: '600'
-                                            }}>
-                                                {SOS.status}
-                                            </td>
-                                            <td className='rider9'>
-                                                <div className='rider10'>
-                                                    <Link to={`/soslocation/${SOS._id}`} className='sidebar-link' >
-                                                        <IoLocationSharp color='#000000' size={22} />
-                                                        <p style={{ fontSize: '10px' }}>Track Live Location</p>
-                                                    </Link>
-                                                </div>
-                                                <div className='rider10'
-                                                    onClick={() => {
-                                                        setSOSId(SOS?._id);
-                                                        setModalShow(true);
-                                                    }}
-                                                >
-                                                    <MdEdit color='#000000' size={20} />
-                                                    <p>Edit</p>
-                                                </div>
-                                            </td>
+                                ) :
+                                    searchQuery && filteredSOSData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>SOS not found</td>
                                         </tr>
-                                    ))
-                                )}
+                                    ) : (
+                                        searchQuery
+                                            ?
+
+                                            filteredSOSData?.map(SOS => (
+                                                <tr key={SOS.id}>
+                                                    <td>
+                                                        <img src={SOS?.user?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
+                                                    </td>
+                                                    <td>{SOS?.user?.name}</td>
+                                                    <td>{(SOS.id)}</td>
+                                                    <td>{(SOS.locationInWord)}</td>
+                                                    <td>{(SOS.reason)}</td>
+                                                    <td style={{
+                                                        color: SOS.status === 'REJECT' ? '#F52D56' :
+                                                            SOS.status === 'PENDING' ? '#FBAC2C' :
+                                                                SOS.status === 'APPROVED' ? '#609527' : 'black',
+                                                        fontWeight: '600'
+                                                    }}>
+                                                        {SOS.status}
+                                                    </td>
+                                                    <td className='rider9'>
+                                                        <div className='rider10'>
+                                                            <Link to={`/soslocation/${SOS._id}`} className='sidebar-link' >
+                                                                <IoLocationSharp color='#000000' size={22} />
+                                                                <p style={{ fontSize: '10px' }}>Track Live Location</p>
+                                                            </Link>
+                                                        </div>
+                                                        <div className='rider10'
+                                                            onClick={() => {
+                                                                setSOSId(SOS?._id);
+                                                                setModalShow(true);
+                                                            }}
+                                                        >
+                                                            <MdEdit color='#000000' size={20} />
+                                                            <p>Edit</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                            :
+                                            sosdata.map(SOS => (
+                                                <tr key={SOS.id}>
+                                                    <td>
+                                                        <img src={SOS?.user?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
+                                                    </td>
+                                                    <td>{SOS?.user?.name}</td>
+                                                    <td>{(SOS.id)}</td>
+                                                    <td>{(SOS.locationInWord)}</td>
+                                                    <td>{(SOS.reason)}</td>
+                                                    <td style={{
+                                                        color: SOS.status === 'REJECT' ? '#F52D56' :
+                                                            SOS.status === 'PENDING' ? '#FBAC2C' :
+                                                                SOS.status === 'APPROVED' ? '#609527' : 'black',
+                                                        fontWeight: '600'
+                                                    }}>
+                                                        {SOS.status}
+                                                    </td>
+                                                    <td className='rider9'>
+                                                        <div className='rider10'>
+                                                            <Link to={`/soslocation/${SOS._id}`} className='sidebar-link' >
+                                                                <IoLocationSharp color='#000000' size={22} />
+                                                                <p style={{ fontSize: '10px' }}>Track Live Location</p>
+                                                            </Link>
+                                                        </div>
+                                                        <div className='rider10'
+                                                            onClick={() => {
+                                                                setSOSId(SOS?._id);
+                                                                setModalShow(true);
+                                                            }}
+                                                        >
+                                                            <MdEdit color='#000000' size={20} />
+                                                            <p>Edit</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                    )}
                             </tbody>
                         </table>
                     </div>
                 </div>
 
 
+
                 <div className='rider_details555'>
-                    <Pagination >
-                        <Pagination.First onClick={() => handlePageChange(1)} />
-                        <Pagination.Prev onClick={() => handlePageChange(page - 1)} />
-                        {[...Array(totalPages).keys()].map(number => (
-                            <Pagination.Item key={number + 1} active={number + 1 === page} onClick={() => handlePageChange(number + 1)}>
-                                {number + 1}
-                            </Pagination.Item>
-                        ))}
-                        <Pagination.Next onClick={() => handlePageChange(page + 1)} />
-                        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
-                    </Pagination>
+                    <CustomPagination
+                        page={page}
+                        totalPages={totalPages}
+                        handlePageChange={handlePageChange}
+                    />
                 </div>
             </div>
         </>

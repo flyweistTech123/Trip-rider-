@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './LocatiolnType.css';
 import Pagination from 'react-bootstrap/Pagination';
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
+import CustomPagination from '../../Components/Pagination/Pagination';
 
 
 import HOC from '../../Components/HOC/HOC';
@@ -24,7 +25,7 @@ const AllCity = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(15);
     const [search, setSearch] = useState("");
     const [totalPages, setTotalPages] = useState(0);
 
@@ -50,54 +51,14 @@ const AllCity = () => {
     }, [limit, search, page]);
 
 
+
     const handlePageChange = (newPage) => {
-        if (newPage > 0 && newPage <= totalPages) {
-            setPage(newPage);
-        }
+        if (newPage < 1 || newPage > totalPages) return;
+        setPage(newPage);
+        setLoading(true);
     };
 
-    const getPageNumbers = () => {
-        const maxVisiblePages = 5;
-        let startPage, endPage;
 
-        if (totalPages <= maxVisiblePages) {
-            startPage = 1;
-            endPage = totalPages;
-        } else {
-            const middlePage = Math.floor(maxVisiblePages / 2);
-            if (page <= middlePage) {
-                startPage = 1;
-                endPage = maxVisiblePages;
-            } else if (page + middlePage >= totalPages) {
-                startPage = totalPages - maxVisiblePages + 1;
-                endPage = totalPages;
-            } else {
-                startPage = page - middlePage;
-                endPage = page + middlePage;
-            }
-        }
-
-        const pages = [];
-        if (startPage > 1) {
-            pages.push(1);
-            if (startPage > 2) {
-                pages.push('...');
-            }
-        }
-
-        for (let i = startPage; i <= endPage; i++) {
-            pages.push(i);
-        }
-
-        if (endPage < totalPages) {
-            if (endPage < totalPages - 1) {
-                pages.push('...');
-            }
-            pages.push(totalPages);
-        }
-
-        return pages;
-    };
 
 
 
@@ -229,21 +190,11 @@ const AllCity = () => {
                     </div>
                 </div>
                 <div className='rider_details555'>
-                    <Pagination>
-                        <Pagination.First onClick={() => handlePageChange(1)} disabled={page === 1} />
-                        <Pagination.Prev onClick={() => handlePageChange(page - 1)} disabled={page === 1} />
-                        {getPageNumbers().map((number, index) => (
-                            number === '...' ? (
-                                <Pagination.Ellipsis key={index} />
-                            ) : (
-                                <Pagination.Item key={number} active={number === page} onClick={() => handlePageChange(number)}>
-                                    {number}
-                                </Pagination.Item>
-                            )
-                        ))}
-                        <Pagination.Next onClick={() => handlePageChange(page + 1)} disabled={page === totalPages} />
-                        <Pagination.Last onClick={() => handlePageChange(totalPages)} disabled={page === totalPages} />
-                    </Pagination>
+                    <CustomPagination
+                        page={page}
+                        totalPages={totalPages}
+                        handlePageChange={handlePageChange}
+                    />
                 </div>
             </div>
         </>

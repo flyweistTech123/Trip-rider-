@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { IoSearch } from "react-icons/io5";
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
+import CustomPagination from '../../Components/Pagination/Pagination';
 
 
 
@@ -18,15 +19,19 @@ const AllScheduledBooking = () => {
     const [bookingData, setBookingData] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const [search, setSearch] = useState("");
+    const [totalPages, setTotalPages] = useState(0);
 
     useEffect(() => {
         fetchCanceledBookings();
-    }, []);
+    }, [limit, search, page]);
 
     const fetchCanceledBookings = () => {
-        axios.get(`${BaseUrl}api/v1/getBooking?status=complete`, getAuthHeaders()) // Assuming 'status' is the parameter for filtering canceled bookings
+        axios.get(`${BaseUrl}api/v1/getBooking?status=complete?page=${page}&limit=${limit}&search=${search}`, getAuthHeaders()) // Assuming 'status' is the parameter for filtering canceled bookings
             .then(response => {
-                setBookingData(response.data.data);
+                setBookingData(response.data.data.docs);
             })
             .catch(error => {
                 console.error('Error fetching canceled bookings:', error);
@@ -34,6 +39,12 @@ const AllScheduledBooking = () => {
             .finally(() => {
                 setLoading(false);
             });
+    };
+
+    const handlePageChange = (newPage) => {
+        if (newPage < 1 || newPage > totalPages) return;
+        setPage(newPage);
+        setLoading(true);
     };
 
 
@@ -147,6 +158,13 @@ const AllScheduledBooking = () => {
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div className='rider_details555'>
+                    <CustomPagination
+                        page={page}
+                        totalPages={totalPages}
+                        handlePageChange={handlePageChange}
+                    />
                 </div>
             </div>
         </>

@@ -11,12 +11,11 @@
 }
 
 .service1 label{
-    font-family: "Poppins", sans-serif;
-    font-weight: 700;
-    font-size: 14px;
+    font-family: "Mulish", sans-serif;
+    font-weight: 500;
+    font-size: 19.59px;
     color: #000000;
-    line-height: 19.5px;
-    letter-spacing: 0.2px; 
+    line-height: 24.58px;
     margin: 0;
 }
 
@@ -41,6 +40,11 @@
     align-items: center;
 }
 
+.service111{
+    width: 100%;
+    margin-top: 20px;
+}
+
 .service1 textarea{
     width: 100%;
     border: 1px solid #DADADA;
@@ -48,8 +52,6 @@
     padding-left: 10px;
     padding-top: 10px;
     outline: none;
-    display: flex;
-    align-items: center;
 }
 
 

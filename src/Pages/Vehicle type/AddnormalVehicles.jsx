@@ -5,6 +5,7 @@ import HOC from '../../Components/HOC/HOC'
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import img3 from '../../Images/img43.png';
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 import { useNavigate } from 'react-router-dom';
@@ -29,8 +30,9 @@ const AddnormalVehicles = () => {
         formData.append('image', image);
 
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/vehicle', formData)
-            toast.success("Vehicle added successfully");
+            const response = await axios.post(`${BaseUrl}api/v1/vehicle`, formData, getAuthHeaders())
+            const message = response.data.message;
+            toast.success(message);
             navigate('/allnormalvehicles')
             setVehicleName('');
             setImage('');

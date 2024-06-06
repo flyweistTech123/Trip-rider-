@@ -47,7 +47,7 @@ const Update_Service = () => {
         formData.append('description', description);
 
         try {
-            const response = await axios.put(`${BaseUrl}api/v1/serviceCategory/${id}`, getAuthHeaders(), formData);
+            const response = await axios.put(`${BaseUrl}api/v1/serviceCategory/${id}`, formData, getAuthHeaders(),);
             toast.success("Service Updated successfully");
             navigate('/services')
         } catch (error) {
@@ -80,12 +80,12 @@ const Update_Service = () => {
 
                     <div className='service'>
 
-                        <div className='service2'>
-                            <div className='service1'>
+                        <div className='dailyprice3'>
+                            <div className='dailyprice4'>
                                 <label htmlFor="">Category</label>
                                 <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} />
                             </div>
-                            <div className='service1'>
+                            <div className='dailyprice2'>
                                 <label htmlFor="">Type</label>
                                 <select onChange={(e) => setType(e.target.value)}>
                                     <option value="hour" selected={type === "hour"}>Hourly</option>
@@ -94,10 +94,10 @@ const Update_Service = () => {
                                 </select>
                             </div>
                         </div>
-                        <div className='service2'>
+                        <div className='service111'>
                             <div className='service1'>
                                 <label htmlFor="">Description</label>
-                                <textarea name="" id="" cols="200" rows="10" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                                <textarea name="" id="" rows="10" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                             </div>
                         </div>
 

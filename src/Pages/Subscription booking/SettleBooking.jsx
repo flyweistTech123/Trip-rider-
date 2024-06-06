@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import './SettleBooking.css'
@@ -12,6 +12,7 @@ import { FaCheck } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
 import { IoEyeOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
+import CustomPagination from '../../Components/Pagination/Pagination';
 
 import img2 from '../../Images/user.webp'
 
@@ -24,22 +25,33 @@ const SettleBooking = () => {
     const [assignedDrivers, setAssignedDrivers] = useState({});
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const [search, setSearch] = useState("");
+    const [totalPages, setTotalPages] = useState(0);
 
-    const fetchSettleData = async () => {
+    const fetchSettleData = useCallback(async () => {
         try {
-            const response = await axios.get(`${BaseUrl}api/v1/getSettleBooking`, getAuthHeaders())
-            setSettleData(response.data.data);
+            const response = await axios.get(`${BaseUrl}api/v1/getSettleBooking?page=${page}&limit=${limit}`, getAuthHeaders())
+            setSettleData(response.data.data.docs);
+            setTotalPages(response.data.data.totalPages);
         } catch (error) {
             console.error('Error fetching settle data:', error);
         }
         finally {
             setLoading(false);
         };
-    };
+    }, [page, limit, search]);
 
     useEffect(() => {
         fetchSettleData();
-    }, []);
+    }, [limit, search, page]);
+
+    const handlePageChange = (newPage) => {
+        if (newPage < 1 || newPage > totalPages) return;
+        setPage(newPage);
+        setLoading(true);
+    };
 
 
 
@@ -80,20 +92,26 @@ const SettleBooking = () => {
     function AssignDriverModal(props) {
         const [drivernames, setDriverNames] = useState([]);
         const [drivername, setDrivername] = useState("")
+        const [page, setPage] = useState(1);
+        const [limit, setLimit] = useState(10);
+        const [search, setSearch] = useState("");
+        const [totalPages, setTotalPages] = useState(0);
+
+
+
+        const fetchDriver = useCallback(async () => {
+            try {
+                const response = await axios.get(`${BaseUrl}api/v1/admin/all/driver?page=${page}&limit=${limit}&search=${search}`, getAuthHeaders());
+                setDriverNames(response.data.data.docs);
+                setTotalPages(response.data.data.totalPages);
+            } catch (error) {
+                console.error('Error fetching driver name:', error);
+            }
+        }, [page, limit, search]);
 
         useEffect(() => {
-            const fetchDriver = async () => {
-                try {
-                    const response = await axios.get(`${BaseUrl}api/v1/admin/all/driver`, getAuthHeaders());
-                    setDriverNames(response.data.category);
-
-                } catch (error) {
-                    console.error('Error fetching driver name:', error);
-                }
-            };
-
             fetchDriver();
-        }, []);
+        }, [fetchDriver]);
 
         const handlePut = async (e) => {
             e.preventDefault();
@@ -114,6 +132,13 @@ const SettleBooking = () => {
                 toast.error("Error assigning Driver");
             }
         }
+
+
+        const handlePageChange = (newPage) => {
+            if (newPage < 1 || newPage > totalPages) return;
+            setPage(newPage);
+            setLoading(true);
+        };
 
 
         return (
@@ -140,10 +165,19 @@ const SettleBooking = () => {
                             </div>
                         </div>
 
+                        <div className='rider_details555'>
+                            <CustomPagination
+                                page={page}
+                                totalPages={totalPages}
+                                handlePageChange={handlePageChange}
+                            />
+                        </div>
+
                         <Modal.Footer>
                             <Button className='sos6' type="submit">Assign</Button>
                         </Modal.Footer>
                     </Form>
+
                 </Modal.Body>
             </Modal>
         );
@@ -156,7 +190,7 @@ const SettleBooking = () => {
             e.preventDefault();
             try {
                 await axios.put(
-                    `${BaseUrl}api/v1/cancelSettleBooking/${bookingId}`,getAuthHeaders() 
+                    `${BaseUrl}api/v1/cancelSettleBooking/${bookingId}`, getAuthHeaders()
                 );
                 props.onHide();
                 fetchSettleData();
@@ -181,7 +215,7 @@ const SettleBooking = () => {
 
                         <div className='CancelBookingModal2'>
                             <button onClick={CancelBooking}>Yes</button>
-                            <button onClick={()=>setModalShow1(false)}>NO</button>
+                            <button onClick={() => setModalShow1(false)}>NO</button>
                         </div>
                     </div>
                 </Modal.Body>
@@ -251,10 +285,10 @@ const SettleBooking = () => {
 
                                             filteredbookingData.map(settle => (
                                                 <tr key={settle.id}>
-                                                    <td className='rider8'>
-                                                        <img src={settle?.user?.profilePicture} style={{ width: '50px' }} />
-                                                        {settle?.user?.name}
+                                                    <td>
+                                                        <img src={settle?.user?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
                                                     </td>
+                                                    <td>{settle?.user?.name}</td>
                                                     <td>{settle?.bookingId}</td>
                                                     <td>{settle?.current?.address}</td>
                                                     <td>{settle?.drop?.address}</td>
@@ -277,7 +311,7 @@ const SettleBooking = () => {
                                                                 <FaCheck color='#000000' size={20} />
                                                                 <p>Aprove</p>
                                                             </div>
-                                                            <div className='rider10' >
+                                                            <div className='rider10'>
                                                                 <RxCross2 color='#000000' size={20} onClick={() => {
                                                                     setBookingId(settle?._id);
                                                                     setModalShow1(true);
@@ -327,7 +361,7 @@ const SettleBooking = () => {
                                                                 <RxCross2 color='#000000' size={20} onClick={() => {
                                                                     setBookingId(settle?._id);
                                                                     setModalShow1(true);
-                                                                }}/>
+                                                                }} />
                                                                 <p>Cancel</p>
                                                             </div>
                                                             <div className='rider10'>
@@ -347,7 +381,13 @@ const SettleBooking = () => {
                         </table>
                     </div>
                 </div>
-
+                <div className='rider_details555'>
+                    <CustomPagination
+                        page={page}
+                        totalPages={totalPages}
+                        handlePageChange={handlePageChange}
+                    />
+                </div>
             </div>
         </>
     )

@@ -5,6 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import './Services.css'
 import { Link } from 'react-router-dom';
 import HOC from '../../Components/HOC/HOC'
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
+
 
 import { IoSearch } from "react-icons/io5";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -17,19 +19,19 @@ import img from '../../Images/imgvehicle.jpg'
 
 
 const Services2 = () => {
-    const [riderData, setRiderData] = useState([]);
+    const [serviceData, setServiceData] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate()
 
     useEffect(() => {
-        fetchRiderData();
+        fetchServiceData();
     }, []);
 
-    const fetchRiderData = () => {
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/serviceCategory')
+    const fetchServiceData = () => {
+        axios.get(`${BaseUrl}api/v1/serviceCategory`, getAuthHeaders())
             .then(response => {
-                setRiderData(response.data.data);
+                setServiceData(response.data.data);
             })
             .catch(error => {
                 console.error('Error fetching rider data:', error);
@@ -43,15 +45,15 @@ const Services2 = () => {
         setSearchQuery(event.target.value);
     };
 
-    const filteredserviceData = riderData.filter(service =>
+    const filteredserviceData = serviceData.filter(service =>
         service.type && service.type.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const deleteRider = (riderId) => {
-        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/serviceCategory/${riderId}`)
+    const deleteService = (serviceId) => {
+        axios.delete(`${BaseUrl}api/v1/serviceCategory/${serviceId}`, getAuthHeaders() )
             .then(response => {
                 toast.success("Service deleted successfully");
-                fetchRiderData();
+                fetchServiceData();
             })
             .catch(error => {
                 console.error('Error deleting Service:', error);
@@ -103,27 +105,27 @@ const Services2 = () => {
                                     ) : (
                                         searchQuery
                                             ?
-                                            filteredserviceData.map(rider => (
-                                                <tr key={rider.id}>
-                                                    <td className='service9'><img src={rider.banner} /></td>
+                                            filteredserviceData.map(service => (
+                                                <tr key={service.id}>
+                                                    <td className='service9'><img src={service.banner} /></td>
                                                     <td className='service10'>
-                                                        <img src={rider?.image || img} alt="No image" />
+                                                        <img src={service?.image || img} alt="No image" />
                                                     </td>
-                                                    <td>{rider.category}</td>
-                                                    <td>{rider.type}</td>
+                                                    <td>{service.category}</td>
+                                                    <td>{service.type}</td>
                                                     <td>
                                                         <div className='service12'>
-                                                            {rider.description}
+                                                            {service.description}
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div className='service11'>
-                                                            <div className='rider10' onClick={() => deleteRider(rider._id)}>
+                                                            <div className='rider10' onClick={() => deleteService(service._id)}>
                                                                 <RiDeleteBinLine color='#667085' size={20} />
                                                                 <p>Delete</p>
                                                             </div>
                                                             <div className='rider10'>
-                                                                <Link to={`/Update_Service/${rider._id}`} className='sidebar-link' >
+                                                                <Link to={`/Update_Service/${service._id}`} className='sidebar-link' >
                                                                     <MdEdit color='#667085' size={20} />
                                                                     <p>Edit</p>
                                                                 </Link>
@@ -132,27 +134,27 @@ const Services2 = () => {
                                                     </td>
                                                 </tr>
                                             ))
-                                            : riderData.map(rider => (
-                                                <tr key={rider.id}>
-                                                    <td className='service9'><img src={rider.banner} /></td>
+                                            : serviceData.map(service => (
+                                                <tr key={service.id}>
+                                                    <td className='service9'><img src={service.banner} /></td>
                                                     <td className='service10'>
-                                                        <img src={rider?.image || img} alt="No image" />
+                                                        <img src={service?.image || img} alt="No image" />
                                                     </td>
-                                                    <td>{rider.category}</td>
-                                                    <td>{rider.type}</td>
+                                                    <td>{service.category}</td>
+                                                    <td>{service.type}</td>
                                                     <td>
                                                         <div className='service12'>
-                                                            {rider.description}
+                                                            {service.description}
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div className='service11'>
-                                                            <div className='rider10' onClick={() => deleteRider(rider._id)}>
+                                                            <div className='rider10' onClick={() => deleteService(service._id)}>
                                                                 <RiDeleteBinLine color='#667085' size={20} />
                                                                 <p>Delete</p>
                                                             </div>
                                                             <div className='rider10'>
-                                                                <Link to={`/Update_Service/${rider._id}`} className='sidebar-link' >
+                                                                <Link to={`/Update_Service/${service._id}`} className='sidebar-link' >
                                                                     <MdEdit color='#667085' size={20} />
                                                                     <p>Edit</p>
                                                                 </Link>

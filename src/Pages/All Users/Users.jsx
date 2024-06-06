@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import './Users.css'
 import HOC from '../../Components/HOC/HOC'
 import { Link } from 'react-router-dom';
-import Pagination from 'react-bootstrap/Pagination';
 
 import { IoSearch } from "react-icons/io5";
 import { RiDeleteBinLine } from "react-icons/ri";
