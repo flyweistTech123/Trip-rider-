@@ -1,15 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import './LiveChart.css'
 import HOC from '../../Components/HOC/HOC'
-import { collection, query, orderBy, getDocs, limit, addDoc } from 'firebase/firestore';
+import { collection, query, orderBy, getDocs, limit, addDoc, onSnapshot } from 'firebase/firestore';
 import { db } from "../../Components/Firebase/Firebase";
 import { useNavigate } from 'react-router-dom';
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Pagination from 'react-bootstrap/Pagination';
+import { toast } from 'react-toastify';
 
 
 
@@ -17,6 +16,7 @@ import img2 from '../../Images/user.webp'
 import send from '../../Images/send.png'
 
 import { IoIosArrowDown } from "react-icons/io";
+import CustomPagination from '../../Components/Pagination/Pagination';
 
 
 const LiveChart = () => {
@@ -27,10 +27,10 @@ const LiveChart = () => {
     const [newMessage, setNewMessage] = useState('');
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
+    const [read, setRead] = useState(false);
     const [totalNewMessages, setTotalNewMessages] = useState(0); // State to track total new messages
-    const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
-    const [limit, setLimit] = useState(10);
+    const [limit1, setLimit] = useState(10);
     const [search, setSearch] = useState("");
     const [totalPages, setTotalPages] = useState(0);
     const [page, setPage] = useState(1);
@@ -56,7 +56,7 @@ const LiveChart = () => {
     useEffect(() => {
         fetchuserData();
         fetchAdminData();
-    }, []);
+    }, [limit1, search, page]);
 
 
 
@@ -72,6 +72,40 @@ const LiveChart = () => {
         setUsers(sortedUsers);
     }, [messages])
 
+
+    useEffect(() => {
+        if (selectedUser) {
+            const unsubscribe = onSnapshot(collection(db, 'chatwithadmin', selectedUser._id, 'messages'), (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === "added" && change.doc.data().type === "user") {
+                        // Show browser notification for new user messages
+                        showNotification("New Message", change.doc.data().message);
+                        // toast.success("City added successfully");
+                    }
+                });
+            });
+
+            return () => unsubscribe();
+        }
+    }, [selectedUser]);
+
+    const showNotification = (title, body) => {
+        // Let's check if the browser supports notifications
+        if (!("Notification" in window)) {
+            console.error("This browser does not support desktop notification");
+        } else if (Notification.permission === "granted") {
+            // If it's okay, let's create a notification
+            new Notification(title, { body });
+        } else if (Notification.permission !== "denied") {
+            Notification.requestPermission().then(function (permission) {
+                // If the user accepts, let's create a notification
+                if (permission === "granted") {
+                    new Notification(title, { body });
+                }
+            });
+        }
+    };
+
     const fetchAdminData = async () => {
         try {
             const response = await axios.get(`${BaseUrl}api/v1/admin/me`, getAuthHeaders())
@@ -84,9 +118,9 @@ const LiveChart = () => {
         }
     };
 
-    
 
-    
+
+
 
     const fetchMessages = async () => {
         try {
@@ -96,20 +130,12 @@ const LiveChart = () => {
             const querySnapshot = await getDocs(q);
 
             const allMessages = [];
-            
+
             querySnapshot.forEach(doc => {
                 allMessages.push({ id: doc.id, ...doc.data() });
             });
 
             // console.log('allMessages', "message ")
-
-            if (allMessages.length > messages.length) {
-                const newMessages = allMessages.filter(msg => !msg.read && msg.type === 'user');
-                console.log(newMessages, "update")
-                if (newMessages.length > 0) {
-                    // toast.success("New message");
-                }
-            }
 
             setMessages(allMessages);
             // console.log("Messages fetched: ", allMessages);
@@ -119,11 +145,12 @@ const LiveChart = () => {
     };
 
 
-    const fetchuserData = async () => {
+    const fetchuserData = useCallback(async () => {
         try {
-            const response = await axios.get(`${BaseUrl}api/v1/admin/all/user?page=${page}&limit=${limit}&search=${search}`, getAuthHeaders());
+            const response = await axios.get(`${BaseUrl}api/v1/admin/all/user?page=${page}&limit=${limit1}&search=${search}`, getAuthHeaders());
             const usersData = response?.data?.data?.docs;
             setTotalPages(response.data.data.totalPages);
+            // console.log(usersData, "users")
 
 
             const updatedUsers = await Promise.all(usersData.map(async user => {
@@ -144,19 +171,24 @@ const LiveChart = () => {
         finally {
             setLoading(false);
         };
+    }, [page, limit1, search]);
+
+
+
+
+
+
+    const handlePageChange = (newPage) => {
+        if (newPage < 1 || newPage > totalPages) return;
+        setPage(newPage);
+        setLoading(true);
     };
-
-
-    
 
 
     const handleSearch = (event) => {
-        setSearchQuery(event.target.value);
+        setPage(1);
+        setSearch(event.target.value);
     };
-
-    const filteredUserData = users.filter(user =>
-        user.name && user.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
 
     const handleUserClick = (user) => {
         setSelectedUser(user);
@@ -174,7 +206,8 @@ const LiveChart = () => {
                 type: 'admin',
                 image: image,
                 name: name, // You can replace 'Admin' with the actual admin name
-                timestamp: new Date()
+                timestamp: new Date(),
+                read: false 
             };
             await addDoc(messagesRef, newMessageDoc);
 
@@ -183,8 +216,32 @@ const LiveChart = () => {
 
             // Clear the input field after sending the message
             setNewMessage('');
+            if (selectedUser.deviceToken) {
+                await sendPushNotification(selectedUser.deviceToken, newMessage);
+            } else {
+                console.warn("Selected user does not have a device token");
+            }
         } catch (error) {
             console.error('Error sending message:', error);
+        }
+    };
+
+
+    const sendPushNotification = async (deviceToken, message) => {
+        try {
+            const response = await axios.post(`${BaseUrl}api/v1/user/sendMessage/ThroughPushNotification`, {
+                deviceToken,
+                title: "Message from Admin",
+                body: message
+            }, getAuthHeaders());
+
+            if (response.status === 200) {
+                console.log("Push notification sent successfully");
+            } else {
+                console.error("Failed to send push notification", response.data);
+            }
+        } catch (error) {
+            console.error("Error sending push notification:", error);
         }
     };
 
@@ -258,7 +315,6 @@ const LiveChart = () => {
                             <div className='livechart5'>
                                 <input type="search" placeholder='Search user'
                                     onChange={handleSearch}
-                                    value={searchQuery}
                                 />
                             </div>
 
@@ -266,49 +322,29 @@ const LiveChart = () => {
                             <div className='livechart6' >
                                 {loading ? (
                                     <tr>
-                                        <td style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading users...</td>
+                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading users...</td>
                                     </tr>
-                                ) :
-                                    searchQuery && filteredUserData.length === 0 ? (
-                                        <tr>
-                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>User not found</td>
-                                        </tr>
-                                    ) : (
-                                        searchQuery
-                                            ?
-                                            filteredUserData.map(user => (
-                                                <div className='livechart7' key={user._id} onClick={() => handleUserClick(user)}>
-                                                    <div className='livechart8'>
-                                                        <div className='livechart852'>
-                                                            <img src={user?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
-                                                        </div>
-                                                        <div className='livechart9'>
-                                                            <h6>{user?.name || "User"}</h6>
-                                                            <p>{user?.lastMessage}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className='livechart10'>
-                                                        <p>{formatTimestamp(user?.lastMessageTime)}</p>
-                                                    </div>
-                                                </div>
-                                            ))
-                                            : users.map(user => (
-                                                <div className='livechart7' key={user._id} onClick={() => handleUserClick(user)}>
-                                                    <div className='livechart8'>
-                                                        <div className='livechart852'>
-                                                            <img src={user?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
-                                                        </div>
-                                                        <div className='livechart9'>
-                                                            <h6>{user?.name || "User"}</h6>
-                                                            <p>{user?.lastMessage}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className='livechart10'>
-                                                        <p>{formatTimestamp(user?.lastMessageTime)}</p>
-                                                    </div>
-                                                </div>
-                                            ))
-                                    )}
+                                ) : users.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>User not found</td>
+                                    </tr>
+                                ) : (users.map(user => (
+                                    <div className='livechart7' key={user._id} onClick={() => handleUserClick(user)}>
+                                        <div className='livechart8'>
+                                            <div className='livechart852'>
+                                                <img src={user?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
+                                            </div>
+                                            <div className='livechart9'>
+                                                <h6>{user?.name || "User"}</h6>
+                                                <p>{user?.lastMessage}</p>
+                                            </div>
+                                        </div>
+                                        <div className='livechart10'>
+                                            <p>{formatTimestamp(user?.lastMessageTime)}</p>
+                                        </div>
+                                    </div>
+                                ))
+                                )}
                             </div>
 
                         </div>
@@ -374,6 +410,15 @@ const LiveChart = () => {
                         </div>
                     </div>
                 </div>
+                <div className='rider_details555'>
+                    <CustomPagination
+                        page={page}
+                        totalPages={totalPages}
+                        handlePageChange={handlePageChange}
+                    />
+                </div>
+
+
             </div >
         </>
     )

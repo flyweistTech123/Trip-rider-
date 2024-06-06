@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import './LiveChart.css'
 import HOC from '../../Components/HOC/HOC'
-import { collection, query, orderBy, getDocs, limit, addDoc } from 'firebase/firestore';
+import { collection, query, orderBy, getDocs, limit, addDoc, onSnapshot } from 'firebase/firestore';
 import { db, auth } from "../../Components/Firebase/Firebase";
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import CustomPagination from '../../Components/Pagination/Pagination';
 
 
 // import plus from '../../Images/Vector.png'
@@ -30,6 +31,10 @@ const LiveChartWithDriver = () => {
     const [totalNewMessages, setTotalNewMessages] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
+    const [limit1, setLimit] = useState(10);
+    const [search, setSearch] = useState("");
+    const [totalPages, setTotalPages] = useState(0);
+    const [page, setPage] = useState(1);
 
 
     const messageContainerRef = useRef(null);
@@ -51,7 +56,7 @@ const LiveChartWithDriver = () => {
     useEffect(() => {
         fetchDriverData();
         fetchAdminData();
-    }, []);
+    }, [limit1, search, page]);
 
 
     // useEffect(() => {
@@ -71,6 +76,40 @@ const LiveChartWithDriver = () => {
 
         setDrivers(sortedDrivers);
     }, [messages]);
+
+
+    useEffect(() => {
+        if (selecteddriver) {
+            const unsubscribe = onSnapshot(collection(db, 'chatwithadmin', selecteddriver._id, 'messages'), (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === "added" && change.doc.data().type === "user") {
+                        // Show browser notification for new user messages
+                        showNotification("New Message", change.doc.data().message);
+                        // toast.success("City added successfully");
+                    }
+                });
+            });
+
+            return () => unsubscribe();
+        }
+    }, [selecteddriver]);
+
+    const showNotification = (title, body) => {
+        // Let's check if the browser supports notifications
+        if (!("Notification" in window)) {
+            console.error("This browser does not support desktop notification");
+        } else if (Notification.permission === "granted") {
+            // If it's okay, let's create a notification
+            new Notification(title, { body });
+        } else if (Notification.permission !== "denied") {
+            Notification.requestPermission().then(function (permission) {
+                // If the user accepts, let's create a notification
+                if (permission === "granted") {
+                    new Notification(title, { body });
+                }
+            });
+        }
+    };
 
     const fetchAdminData = async () => {
         try {
@@ -97,45 +136,56 @@ const LiveChartWithDriver = () => {
                 allMessages.push({ id: doc.id, ...doc.data() });
             });
             setMessages(allMessages);
-            console.log("hello", allMessages);
+            // console.log("hello", allMessages);
         } catch (error) {
             console.error('Error fetching messages:', error);
         }
     };
 
-    const fetchDriverData = async () => {
+
+
+    const fetchDriverData = useCallback(async () => {
         try {
-            const response = await axios.get(`${BaseUrl}api/v1/admin/all/user`, getAuthHeaders());
-            const usersData = response.data.category;
-            const usersWithLastMessage = await Promise.all(usersData.map(async driver => {
-                const messagesRef = collection(db, 'chatwithadmin', driver._id, 'messages');
+            const response = await axios.get(`${BaseUrl}api/v1/admin/all/driver?page=${page}&limit=${limit1}&search=${search}`, getAuthHeaders());
+            const driverData = response?.data?.data?.docs;
+            setTotalPages(response.data.data.totalPages);
+            // console.log(usersData, "users")
+
+
+            const updatedDriver = await Promise.all(driverData.map(async user => {
+                const messagesRef = collection(db, 'chatwithadmin', user._id, 'messages');
                 const q = query(messagesRef, orderBy('timestamp', 'desc'), limit(1));
                 const querySnapshot = await getDocs(q);
                 const lastMessageDoc = querySnapshot.docs[0];
                 const lastMessage = lastMessageDoc ? lastMessageDoc.data().message : '';
                 const lastMessageTime = lastMessageDoc ? lastMessageDoc.data().timestamp : null;
-                return { ...driver, lastMessage, lastMessageTime };
+
+                return { ...user, lastMessage, lastMessageTime };
             }));
 
-            setDrivers(usersWithLastMessage);
+            setDrivers(updatedDriver);
         } catch (error) {
-            console.error('Error fetching rider data:', error);
+            console.error('Error fetching driver data:', error);
         }
         finally {
             setLoading(false);
         };
+    }, [page, limit1, search]);
+
+
+    const handlePageChange = (newPage) => {
+        if (newPage < 1 || newPage > totalPages) return;
+        setPage(newPage);
+        setLoading(true);
     };
 
 
     const handleSearch = (event) => {
-        setSearchQuery(event.target.value);
+        setPage(1);
+        setSearch(event.target.value);
     };
 
-    const filteredDriverData = drivers.filter(driver =>
-        driver.name && driver.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-
-    const handleUserClick = (driver) => {
+    const handleDriverClick = (driver) => {
         setSelectedDriver(driver);
     };
 
@@ -234,7 +284,6 @@ const LiveChartWithDriver = () => {
                             <div className='livechart5'>
                                 <input type="search" placeholder='Search driver'
                                     onChange={handleSearch}
-                                    value={searchQuery}
                                 />
                             </div>
 
@@ -242,49 +291,29 @@ const LiveChartWithDriver = () => {
                             <div className='livechart6' >
                                 {loading ? (
                                     <tr>
-                                        <td style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading drivers...</td>
+                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading drivers...</td>
                                     </tr>
-                                ) :
-                                    searchQuery && filteredDriverData.length === 0 ? (
-                                        <tr>
-                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Driver not found</td>
-                                        </tr>
-                                    ) : (
-                                        searchQuery
-                                            ?
-                                            filteredDriverData.map(driver => (
-                                                <div className='livechart7' key={driver.id} onClick={() => handleUserClick(driver)}>
-                                                    <div className='livechart8'>
-                                                        <div className='livechart852'>
-                                                            <img src={driver?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
-                                                        </div>
-                                                        <div className='livechart9'>
-                                                            <h6>{driver?.name || "User"}</h6>
-                                                            <p>{driver?.lastMessage}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className='livechart10'>
-                                                        <p>{formatTimestamp(driver?.lastMessageTime)}</p>
-                                                    </div>
-                                                </div>
-                                            ))
-                                            : drivers.map(driver => (
-                                                <div className='livechart7' key={driver?.id} onClick={() => handleUserClick(driver)}>
-                                                    <div className='livechart8'>
-                                                        <div className='livechart852'>
-                                                            <img src={driver?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
-                                                        </div>
-                                                        <div className='livechart9'>
-                                                            <h6>{driver?.name || "User"}</h6>
-                                                            <p>{driver?.lastMessage}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className='livechart10'>
-                                                        <p>{formatTimestamp(driver?.lastMessageTime)}</p>
-                                                    </div>
-                                                </div>
-                                            ))
-                                    )}
+                                ) : drivers.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Drivers not found</td>
+                                    </tr>
+                                ) : (drivers.map(driver => (
+                                    <div className='livechart7' key={driver?.id} onClick={() => handleDriverClick(driver)}>
+                                        <div className='livechart8'>
+                                            <div className='livechart852'>
+                                                <img src={driver?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
+                                            </div>
+                                            <div className='livechart9'>
+                                                <h6>{driver?.name || "User"}</h6>
+                                                <p>{driver?.lastMessage}</p>
+                                            </div>
+                                        </div>
+                                        <div className='livechart10'>
+                                            <p>{formatTimestamp(driver?.lastMessageTime)}</p>
+                                        </div>
+                                    </div>
+                                ))
+                                )}
                             </div>
 
                         </div>
@@ -349,6 +378,13 @@ const LiveChartWithDriver = () => {
                             )}
                         </div>
                     </div>
+                </div>
+                <div className='rider_details555'>
+                    <CustomPagination
+                        page={page}
+                        totalPages={totalPages}
+                        handlePageChange={handlePageChange}
+                    />
                 </div>
             </div >
         </>

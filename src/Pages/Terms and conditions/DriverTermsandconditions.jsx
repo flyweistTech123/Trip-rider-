@@ -63,7 +63,7 @@ const DriverTermsandconditions = () => {
                             <button onClick={() => navigate('/termsandconditions')}>
                                 Back
                             </button>
-                            <button onClick={() => navigate(`/updateprivacypolicy/${termsType}`)}>
+                            <button onClick={() => navigate(`/addtermsandconditions/${termsType}`)}>
                                 Add <FaPlusSquare />
                             </button>
                         </div>

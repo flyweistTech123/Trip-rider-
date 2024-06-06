@@ -93,6 +93,17 @@ import VendorTermsandconditions from './Pages/Terms and conditions/VendorTermsan
 import UserPrivacypolicy from './Pages/Privacy policy/UserPrivacypolicy.jsx';
 import DriverPrivacypolicy from './Pages/Privacy policy/DriverPrivacypolicy.jsx';
 import VendorPrivacypolicy from './Pages/Privacy policy/VendorPrivacypolicy.jsx';
+import DriverRefundpolicy from './Pages/RefundPolicy/DriverRefundpolicy.jsx';
+import UserRefundpolicy from './Pages/RefundPolicy/UserRefundpolicy.jsx';
+import VendorRefundpolicy from './Pages/RefundPolicy/VendorRefundpolicy.jsx';
+import AddRefundpolicy from './Pages/RefundPolicy/AddRefundpolicy.jsx';
+import UpdateRefundpolicy from './Pages/RefundPolicy/UpdateRefundpolicy.jsx';
+import Agreement from './Pages/Agreement/Agreement.jsx';
+import AddAgreement from './Pages/Agreement/AddAgreement.jsx';
+import UpdateAgreement from './Pages/Agreement/UpdateAgreement.jsx';
+import UserAgreement from './Pages/Agreement/UserAgreement.jsx';
+import DriverAgreement from './Pages/Agreement/DriverAgreement.jsx';
+import VendorAgreement from './Pages/Agreement/VendorAgreement.jsx';
 
 
 
@@ -187,12 +198,23 @@ function App() {
             <Route path="/vendor_bookings/:id" element={<AdminRouteProtect> <Vendor_bookings /> </AdminRouteProtect>} />
             <Route path="/bookings" element={<AdminRouteProtect> <Bookings /> </AdminRouteProtect>} />
             <Route path="/refundPolicy" element={<AdminRouteProtect> <RefundPolicy /> </AdminRouteProtect>} />
+            <Route path="/driverrefundpolicy" element={<AdminRouteProtect> <DriverRefundpolicy /> </AdminRouteProtect>} />
+            <Route path="/userrefundpolicy" element={<AdminRouteProtect> <UserRefundpolicy /> </AdminRouteProtect>} />
+            <Route path="/vendorrefundpolicy" element={<AdminRouteProtect> <VendorRefundpolicy /> </AdminRouteProtect>} />
+            <Route path="/addrefundpolicy/:id" element={<AdminRouteProtect> <AddRefundpolicy /> </AdminRouteProtect>} />
+            <Route path="/updateRefundpolicy/:id" element={<AdminRouteProtect> <UpdateRefundpolicy /> </AdminRouteProtect>} />
             <Route path="/usertermsandconditions" element={<AdminRouteProtect> <UserTermsandconditions /> </AdminRouteProtect>} />
             <Route path="/drivertermsandconditions" element={<AdminRouteProtect> <DriverTermsandconditions /> </AdminRouteProtect>} />
             <Route path="/vendortermsandconditions" element={<AdminRouteProtect> <VendorTermsandconditions /> </AdminRouteProtect>} />
             <Route path="/userprivacypolicy" element={<AdminRouteProtect> <UserPrivacypolicy /> </AdminRouteProtect>} />
             <Route path="/driverprivacypolicy" element={<AdminRouteProtect> <DriverPrivacypolicy /> </AdminRouteProtect>} />
             <Route path="/vendorprivacypolicy" element={<AdminRouteProtect> <VendorPrivacypolicy /> </AdminRouteProtect>} />
+            <Route path="/agreement" element={<AdminRouteProtect> <Agreement /> </AdminRouteProtect>} />
+            <Route path="/addagreement/:id" element={<AdminRouteProtect> <AddAgreement /> </AdminRouteProtect>} />
+            <Route path="/updateagreement/:id" element={<AdminRouteProtect> <UpdateAgreement /> </AdminRouteProtect>} />
+            <Route path="/useragreement" element={<AdminRouteProtect> <UserAgreement /> </AdminRouteProtect>} />
+            <Route path="/driveragreement" element={<AdminRouteProtect> <DriverAgreement /> </AdminRouteProtect>} />
+            <Route path="/vendoragreement" element={<AdminRouteProtect> <VendorAgreement /> </AdminRouteProtect>} />
           </Routes>
         </Router>
     </>

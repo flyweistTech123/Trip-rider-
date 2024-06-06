@@ -75,7 +75,7 @@ const DriverPrivacypolicy = () => {
                             </tr>
                         ) : privacyData.length === 0 ? (
                             <div className='terms1'>
-                                <p>No Privacy Policys available. Press 'Add' to add new Privacy Policys.</p>
+                                <p>No Privacy policy available. Press 'Add' to add new Privacy policy.</p>
                             </div>
                         ) : (
 

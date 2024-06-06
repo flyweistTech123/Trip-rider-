@@ -82,7 +82,7 @@ const VendorTermsandconditions = () => {
                             termsData?.map(terms => (
                                 <>
                                     <div className='rider4'>
-                                        <button onClick={() => navigate(`/updateprivacypolicy/${terms._id}`)}>
+                                        <button onClick={() => navigate(`/updatetermsandconditions/${terms._id}`)}>
                                             Update <MdModeEditOutline />
                                         </button>
                                         <button onClick={() => deleteTerms(terms._id)}>

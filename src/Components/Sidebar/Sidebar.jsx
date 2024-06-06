@@ -60,6 +60,7 @@ const Sidebar = () => {
         { icon: img18, text: 'Terms and conditions', link: '/termsandconditions' },
         { icon: img19, text: 'Privacy policy', link: '/privacypolicy' },
         { icon: img19, text: 'Refund policy', link: '/refundPolicy' },
+        { icon: img19, text: 'Agreement', link: '/agreement' },
     ];
 
     // const sidebarItems2 = [

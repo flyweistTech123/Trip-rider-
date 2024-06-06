@@ -23,7 +23,7 @@ const UpdatePrivacypolicy = () => {
 
     const fetchTermsDetails = async () => {
         try {
-            const response = await axios.get(`${BaseUrl}api/v1/privacy/${id}`, getAuthHeaders())
+            const response = await axios.get(`${BaseUrl}api/v1/terms/byId/${id}`, getAuthHeaders())
             const { privacy, type, } = response.data.data;
             setPrivacy(privacy);
             setType(type);

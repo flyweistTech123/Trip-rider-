@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './Termsandconditions.css'
+// import './Privacypolicy.css'
 import HOC from '../../Components/HOC/HOC'
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
-
-
 
 
 import { useNavigate, useParams } from 'react-router-dom';
@@ -15,49 +13,40 @@ import { useNavigate, useParams } from 'react-router-dom';
 // import img from '../../Images/img5.png'
 
 
-const UpdateTermsandconditions = () => {
+const AddRefundpolicy = () => {
     const { id } = useParams();
-    const [term, setTerms] = useState('');
-    const [type, setType] = useState('user');
+    const [refundpolicy, setRefundpolicy] = useState('');
+    const [type, setType] = useState(id);
     const navigate = useNavigate()
 
-    const fetchTermsDetails = async () => {
-        try {
-            const response = await axios.get(`${BaseUrl}api/v1/terms/byId/${id}`, getAuthHeaders())
-            const { terms, type, } = response.data.data;
-            setTerms(terms);
-            setType(type);
-        } catch (error) {
-            console.error('Error fetching Terms and Conditions details:', error);
-        }
-    };
 
-    useEffect(() => {
-        fetchTermsDetails();
-    }, [id]);
 
-    const handleUpdate = async () => {
+    const handlePostRequest = async () => {
         const data = {
-            terms: term,
-            type: type,
+            refund: refundpolicy,
+            type: type
         }
 
 
         try {
-            const response = await axios.put(`${BaseUrl}api/v1/terms/${id}`, data, getAuthHeaders());
-            toast.success("Terms and Conditions Updated successfully");
+            const response = await axios.post(`${BaseUrl}api/v1/refundPolicy`, data, getAuthHeaders());
+            const message = response.data.message;
+            toast.success(message);
+            // toast.success("Terms and Conditions added successfully");
+            setRefundpolicy('')
+            setType('')
             if (type === 'user') {
-                navigate('/usertermsandconditions')
+                navigate('/userrefundpolicy')
             } else if (type === 'driver') {
-                navigate('/drivertermsandconditions')
+                navigate('/driverrefundpolicy')
             } else {
-                navigate('/vendortermsandconditions')
+                navigate('/vendorrefundpolicy')
             }
         } catch (error) {
-            console.error('Error updating Terms and Conditions:', error);
-            toast.error("Failed to update Terms and Conditions. Please try again later.");
+            console.error('Error Adding Refund policy:', error);
+            toast.error("Failed to Add Refund policy. Please try again later.");
         }
-    };
+    }
 
 
     return (
@@ -66,14 +55,14 @@ const UpdateTermsandconditions = () => {
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>Update Terms and Conditions</h6>
+                            <h6>Add Refund policy</h6>
                         </div>
                         <div className='rider4'>
                             <button onClick={() => navigate(-1)}>
                                 Back
                             </button>
-                            <button onClick={handleUpdate}>
-                                Update
+                            <button onClick={handlePostRequest}>
+                                Add
                             </button>
                         </div>
                     </div>
@@ -89,8 +78,8 @@ const UpdateTermsandconditions = () => {
                                 </select>
                             </div> */}
                             <div className='terms3'>
-                                <label htmlFor="">Terms</label>
-                                <textarea name="" id="" rows="10" placeholder='Enter Terms and Conditions' value={term} onChange={(e) => setTerms(e.target.value)} ></textarea>
+                                <label htmlFor="">Refund policy</label>
+                                <textarea name="" id="" rows="10" placeholder='Enter Refund policy' value={refundpolicy} onChange={(e) => setRefundpolicy(e.target.value)} ></textarea>
                             </div>
                         </div>
                     </div>
@@ -102,4 +91,4 @@ const UpdateTermsandconditions = () => {
     )
 }
 
-export default HOC(UpdateTermsandconditions)
+export default HOC(AddRefundpolicy)

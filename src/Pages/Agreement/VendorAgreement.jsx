@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './Termsandconditions.css';
+// import './Termsandconditions.css';
 import { Link } from 'react-router-dom';
 import HOC from '../../Components/HOC/HOC';
 import { MdModeEditOutline } from 'react-icons/md';
@@ -11,44 +11,44 @@ import { MdDelete } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
-const UserTermsandconditions = () => {
-    const [termsData, setTermsData] = useState([]);
-    const [termsType, setTermsType] = useState('user');
+const VendorAgreement = () => {
+    const [agreementData, setAgreement] = useState([]);
+    const [agreementType, setAgreementType] = useState('vendor');
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
 
 
 
-    const fetchTermsData = () => {
+    const fetchAgreementData = () => {
         axios
-            .get(`${BaseUrl}api/v1/terms/user`, getAuthHeaders())
+            .get(`${BaseUrl}api/v1/agreement/vendor`, getAuthHeaders())
             .then(response => {
                 const data = response.data.data || [];
-                setTermsData(data);
+                setAgreement(data);
             })
             .catch(error => {
-                console.error('Error fetching Terms and Conditions data:', error);
+                console.error('Error fetching Agreement data:', error);
             })
             .finally(() => {
                 setLoading(false);
             });
     };
 
-    const deleteTerms = (termsId) => {
-        axios.delete(`${BaseUrl}api/v1/terms/${termsId}`, getAuthHeaders())
+    const deleteAgreement = (agreementId) => {
+        axios.delete(`${BaseUrl}api/v1/terms/${agreementId}`, getAuthHeaders())
             .then(response => {
-                toast.success('Terms and Conditions deleted successfully');
-                fetchTermsData();
+                toast.success('Agreement deleted successfully');
+                fetchAgreementData();
             })
             .catch(error => {
-                console.error('Error deleting Terms and Conditions:', error);
-                toast.error("Failed to delete Terms and Conditions. Please try again later.");
+                console.error('Error deleting Agreement:', error);
+                toast.error("Failed to delete Agreement. Please try again later.");
             });
     };
 
     useEffect(() => {
-        fetchTermsData();
+        fetchAgreementData();
     }, []);
 
     return (
@@ -57,13 +57,13 @@ const UserTermsandconditions = () => {
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>User Terms and Conditions</h6>
+                            <h6>Vendor Agreement</h6>
                         </div>
                         <div className='rider4'>
-                            <button onClick={() => navigate('/termsandconditions')}>
+                            <button onClick={() => navigate('/agreement')}>
                                 Back
                             </button>
-                            <button onClick={() => navigate(`/addtermsandconditions/${termsType}`)}>
+                            <button onClick={() => navigate(`/addagreement/${agreementType}`)}>
                                 Add <FaPlusSquare />
                             </button>
                         </div>
@@ -71,26 +71,26 @@ const UserTermsandconditions = () => {
                     <div className='terms'>
                         {loading ? (
                             <tr>
-                                <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading terms and conditions...</td>
+                                <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Agreement...</td>
                             </tr>
-                        ) : termsData.length === 0 ? (
+                        ) : agreementData.length === 0 ? (
                             <div className='terms1'>
-                                <p>No terms and conditions available. Press 'Add' to add new terms and conditions.</p>
+                                <p>No Agreement available. Press 'Add' to add new Agreement.</p>
                             </div>
                         ) : (
 
-                            termsData?.map(terms => (
+                            agreementData?.map(agreement => (
                                 <>
                                     <div className='rider4'>
-                                        <button onClick={() => navigate(`/updatetermsandconditions/${terms._id}`)}>
+                                        <button onClick={() => navigate(`/updatetermsandconditions/${agreement._id}`)}>
                                             Update <MdModeEditOutline />
                                         </button>
-                                        <button onClick={() => deleteTerms(terms._id)}>
+                                        <button onClick={() => deleteAgreement(agreement._id)}>
                                             Delete <MdDelete />
                                         </button>
                                     </div>
                                     <div className='terms1'>
-                                        <p>{terms?.terms}</p>
+                                        <p>{agreement?.agreement}</p>
                                     </div>
                                 </>
                             ))
@@ -103,4 +103,4 @@ const UserTermsandconditions = () => {
     );
 };
 
-export default HOC(UserTermsandconditions);
+export default HOC(VendorAgreement);

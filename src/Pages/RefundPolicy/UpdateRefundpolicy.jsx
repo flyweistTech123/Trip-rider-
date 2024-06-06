@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './Termsandconditions.css'
+// import './Privacypolicy.css'
 import HOC from '../../Components/HOC/HOC'
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
@@ -15,47 +15,47 @@ import { useNavigate, useParams } from 'react-router-dom';
 // import img from '../../Images/img5.png'
 
 
-const UpdateTermsandconditions = () => {
+const UpdateRefundpolicy = () => {
     const { id } = useParams();
-    const [term, setTerms] = useState('');
+    const [refundpolicy, setRefundpolicy] = useState('');
     const [type, setType] = useState('user');
     const navigate = useNavigate()
 
-    const fetchTermsDetails = async () => {
+    const fetchRefundPolicyDetails = async () => {
         try {
             const response = await axios.get(`${BaseUrl}api/v1/terms/byId/${id}`, getAuthHeaders())
-            const { terms, type, } = response.data.data;
-            setTerms(terms);
+            const { refund, type, } = response.data.data;
+            setRefundpolicy(refund);
             setType(type);
         } catch (error) {
-            console.error('Error fetching Terms and Conditions details:', error);
+            console.error('Error fetching Refund policy details:', error);
         }
     };
 
     useEffect(() => {
-        fetchTermsDetails();
+        fetchRefundPolicyDetails();
     }, [id]);
 
     const handleUpdate = async () => {
         const data = {
-            terms: term,
+            privacy: refundpolicy,
             type: type,
         }
 
 
         try {
             const response = await axios.put(`${BaseUrl}api/v1/terms/${id}`, data, getAuthHeaders());
-            toast.success("Terms and Conditions Updated successfully");
+            toast.success("Refund policy Updated successfully");
             if (type === 'user') {
-                navigate('/usertermsandconditions')
+                navigate('/userrefundpolicy')
             } else if (type === 'driver') {
-                navigate('/drivertermsandconditions')
+                navigate('/driverrefundpolicy')
             } else {
-                navigate('/vendortermsandconditions')
+                navigate('/vendorrefundpolicy')
             }
         } catch (error) {
-            console.error('Error updating Terms and Conditions:', error);
-            toast.error("Failed to update Terms and Conditions. Please try again later.");
+            console.error('Error updating Refund policy:', error);
+            toast.error("Failed to update Refund policy. Please try again later.");
         }
     };
 
@@ -66,7 +66,7 @@ const UpdateTermsandconditions = () => {
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>Update Terms and Conditions</h6>
+                            <h6>Update Privacy Policy</h6>
                         </div>
                         <div className='rider4'>
                             <button onClick={() => navigate(-1)}>
@@ -89,8 +89,8 @@ const UpdateTermsandconditions = () => {
                                 </select>
                             </div> */}
                             <div className='terms3'>
-                                <label htmlFor="">Terms</label>
-                                <textarea name="" id="" rows="10" placeholder='Enter Terms and Conditions' value={term} onChange={(e) => setTerms(e.target.value)} ></textarea>
+                                <label htmlFor="">Refund policy</label>
+                                <textarea name="" id="" rows="10" placeholder='Enter Privacy Policy' value={refundpolicy} onChange={(e) => setRefundpolicy(e.target.value)} ></textarea>
                             </div>
                         </div>
                     </div>
@@ -102,4 +102,4 @@ const UpdateTermsandconditions = () => {
     )
 }
 
-export default HOC(UpdateTermsandconditions)
+export default HOC(UpdateRefundpolicy)
