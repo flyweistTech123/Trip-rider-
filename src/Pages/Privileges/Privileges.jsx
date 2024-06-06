@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 import HOC from '../../Components/HOC/HOC'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Pagination from 'react-bootstrap/Pagination';
+// import Pagination from 'react-bootstrap/Pagination';
+import CustomPagination from '../../Components/Pagination/Pagination';
 
 
 import { IoSearch } from "react-icons/io5";
@@ -51,10 +52,11 @@ const Privileges = () => {
     }, [page, limit, search]);
 
 
-
-    const handlePageChange = (pageNumber) => {
-        setPage(pageNumber);
-    }
+    const handlePageChange = (newPage) => {
+        if (newPage < 1 || newPage > totalPages) return;
+        setPage(newPage);
+        setLoading(true);
+    };
 
 
     const handleSearch = (event) => {
@@ -257,17 +259,11 @@ const Privileges = () => {
                     </div>
                 </div>
                 <div className='rider_details555'>
-                    <Pagination >
-                        <Pagination.First onClick={() => handlePageChange(1)} />
-                        <Pagination.Prev onClick={() => handlePageChange(page - 1)} />
-                        {[...Array(totalPages).keys()].map(number => (
-                            <Pagination.Item key={number + 1} active={number + 1 === page} onClick={() => handlePageChange(number + 1)}>
-                                {number + 1}
-                            </Pagination.Item>
-                        ))}
-                        <Pagination.Next onClick={() => handlePageChange(page + 1)} />
-                        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
-                    </Pagination>
+                    <CustomPagination
+                        page={page}
+                        totalPages={totalPages}
+                        handlePageChange={handlePageChange}
+                    />
                 </div>
             </div>
         </>

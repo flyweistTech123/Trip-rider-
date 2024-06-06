@@ -12,6 +12,7 @@ import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 import { RiDeleteBinLine } from "react-icons/ri";
 
 
+import CustomPagination from '../../Components/Pagination/Pagination';
 
 
 
@@ -56,9 +57,10 @@ const Notification = () => {
     }, [page, limit, search]);
 
 
-    const handlePageChange = (pageNumber) => {
-        setPage(pageNumber);
-    }
+    const handlePageChange = (newPage) => {
+        if (newPage < 1 || newPage > totalPages) return;
+        setPage(newPage);
+    };
 
 
     const deleteData = async (id) => {
@@ -320,17 +322,11 @@ const Notification = () => {
 
                 </div>
                 <div className='rider_details555'>
-                    <Pagination >
-                        <Pagination.First onClick={() => handlePageChange(1)} />
-                        <Pagination.Prev onClick={() => handlePageChange(page - 1)} />
-                        {[...Array(totalPages).keys()].map(number => (
-                            <Pagination.Item key={number + 1} active={number + 1 === page} onClick={() => handlePageChange(number + 1)}>
-                                {number + 1}
-                            </Pagination.Item>
-                        ))}
-                        <Pagination.Next onClick={() => handlePageChange(page + 1)} />
-                        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
-                    </Pagination>
+                    <CustomPagination
+                        page={page}
+                        totalPages={totalPages}
+                        handlePageChange={handlePageChange}
+                    />
                 </div>
             </div>
         </>

@@ -18,38 +18,40 @@ const UserRefundpolicy = () => {
     const navigate = useNavigate();
 
 
-
-
-    const fetchRefundPolicyData = () => {
-        axios
-            .get(`${BaseUrl}api/v1/refundPolicy/user`, getAuthHeaders())
-            .then(response => {
-                const data = response.data.data || [];
-                setRefundPolicyData(data);
-            })
-            .catch(error => {
-                console.error('Error fetching Refund policy data:', error);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    };
-
-    const deleteRefundPolicy = (refundId) => {
-        axios.delete(`${BaseUrl}api/v1/terms/${refundId}`, getAuthHeaders())
-            .then(response => {
-                toast.success('Refund policy deleted successfully');
-                fetchRefundPolicyData();
-            })
-            .catch(error => {
-                console.error('Error deleting Refund policy:', error);
-                toast.error("Failed to delete Refund policy. Please try again later.");
-            });
-    };
-
     useEffect(() => {
         fetchRefundPolicyData();
     }, []);
+
+ 
+    const fetchRefundPolicyData = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get(`${BaseUrl}api/v1/refundPolicy/user`, getAuthHeaders());
+            const data = response.data.data || [];
+            setRefundPolicyData(data);
+        } catch (error) {
+            console.error('Error fetching refund policy data:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const deleteRefundPolicy = async (refundId) => {
+        setLoading(true); // Set loading to true before starting the deletion
+        try {
+            await axios.delete(`${BaseUrl}api/v1/terms/${refundId}`, getAuthHeaders());
+            toast.success('Refund policy deleted successfully');
+            fetchRefundPolicyData(); 
+            setRefundPolicyData('')
+        } catch (error) {
+            console.error('Error deleting refund policy:', error);
+            toast.error("Failed to delete refund policy. Please try again later.");
+        } finally {
+            setLoading(false); // Set loading to false after the deletion process
+        }
+    };
+
+
 
     return (
         <>
@@ -80,7 +82,7 @@ const UserRefundpolicy = () => {
                         ) : (
 
                             refundPlicyData?.map(refund => (
-                                <>
+                                <div key={refund._id}>
                                     <div className='rider4'>
                                         <button onClick={() => navigate(`/updateRefundpolicy/${refund._id}`)}>
                                             Update <MdModeEditOutline />
@@ -90,9 +92,9 @@ const UserRefundpolicy = () => {
                                         </button>
                                     </div>
                                     <div className='terms1'>
-                                        <p>{refund?.refund}</p>
+                                        <p>{refund?.terms}</p>
                                     </div>
-                                </>
+                                </div>
                             ))
 
                         )}

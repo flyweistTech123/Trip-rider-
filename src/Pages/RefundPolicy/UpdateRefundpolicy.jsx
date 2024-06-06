@@ -24,8 +24,8 @@ const UpdateRefundpolicy = () => {
     const fetchRefundPolicyDetails = async () => {
         try {
             const response = await axios.get(`${BaseUrl}api/v1/terms/byId/${id}`, getAuthHeaders())
-            const { refund, type, } = response.data.data;
-            setRefundpolicy(refund);
+            const { terms, type, } = response.data.data;
+            setRefundpolicy(terms);
             setType(type);
         } catch (error) {
             console.error('Error fetching Refund policy details:', error);
@@ -38,7 +38,7 @@ const UpdateRefundpolicy = () => {
 
     const handleUpdate = async () => {
         const data = {
-            privacy: refundpolicy,
+            terms: refundpolicy,
             type: type,
         }
 
@@ -66,7 +66,7 @@ const UpdateRefundpolicy = () => {
                 <div className='rider1'>
                     <div className='rider2'>
                         <div className='rider3'>
-                            <h6>Update Privacy Policy</h6>
+                            <h6>Update Refund policy</h6>
                         </div>
                         <div className='rider4'>
                             <button onClick={() => navigate(-1)}>

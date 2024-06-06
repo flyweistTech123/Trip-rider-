@@ -6,7 +6,7 @@ import HOC from '../../Components/HOC/HOC'
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 import Pagination from 'react-bootstrap/Pagination';
 
-
+import CustomPagination from '../../Components/Pagination/Pagination';
 import { IoSearch } from "react-icons/io5";
 
 
@@ -14,7 +14,7 @@ const Earnings = () => {
     const [earningdata, setEarningData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(15);
     const [search, setSearch] = useState("");
     const [totalPages, setTotalPages] = useState(0);
 
@@ -38,9 +38,11 @@ const Earnings = () => {
     }, [limit, search, page]);
 
 
-    const handlePageChange = (pageNumber) => {
-        setPage(pageNumber);
-    }
+    const handlePageChange = (newPage) => {
+        if (newPage < 1 || newPage > totalPages) return;
+        setPage(newPage);
+        setLoading(true);
+    };
 
 
     const handleSearch = (event) => {
@@ -112,17 +114,11 @@ const Earnings = () => {
                 </div>
 
                 <div className='rider_details555'>
-                    <Pagination >
-                        <Pagination.First onClick={() => handlePageChange(1)} />
-                        <Pagination.Prev onClick={() => handlePageChange(page - 1)} />
-                        {[...Array(totalPages).keys()].map(number => (
-                            <Pagination.Item key={number + 1} active={number + 1 === page} onClick={() => handlePageChange(number + 1)}>
-                                {number + 1}
-                            </Pagination.Item>
-                        ))}
-                        <Pagination.Next onClick={() => handlePageChange(page + 1)} />
-                        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
-                    </Pagination>
+                    <CustomPagination
+                        page={page}
+                        totalPages={totalPages}
+                        handlePageChange={handlePageChange}
+                    />
                 </div>
             </div>
         </>

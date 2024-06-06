@@ -38,7 +38,7 @@ const UpdateAgreement = () => {
 
     const handleUpdate = async () => {
         const data = {
-            agreement: agreement,
+            terms: agreement,
             type: type,
         }
 

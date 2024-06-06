@@ -17,39 +17,42 @@ const UserTermsandconditions = () => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-
-
-
-    const fetchTermsData = () => {
-        axios
-            .get(`${BaseUrl}api/v1/terms/user`, getAuthHeaders())
-            .then(response => {
-                const data = response.data.data || [];
-                setTermsData(data);
-            })
-            .catch(error => {
-                console.error('Error fetching Terms and Conditions data:', error);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    };
-
-    const deleteTerms = (termsId) => {
-        axios.delete(`${BaseUrl}api/v1/terms/${termsId}`, getAuthHeaders())
-            .then(response => {
-                toast.success('Terms and Conditions deleted successfully');
-                fetchTermsData();
-            })
-            .catch(error => {
-                console.error('Error deleting Terms and Conditions:', error);
-                toast.error("Failed to delete Terms and Conditions. Please try again later.");
-            });
-    };
-
     useEffect(() => {
         fetchTermsData();
     }, []);
+
+
+
+    const fetchTermsData = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get(`${BaseUrl}api/v1/terms/user`, getAuthHeaders());
+            const data = response.data.data || [];
+            setTermsData(data);
+        } catch (error) {
+            console.error('Error fetching Terms and Conditions data:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+    const deleteTerms = async (termsId) => {
+        setLoading(true); // Set loading to true before starting the deletion
+        try {
+            await axios.delete(`${BaseUrl}api/v1/terms/${termsId}`, getAuthHeaders());
+            toast.success('Terms and Conditions deleted successfully');
+            fetchTermsData(); 
+            setTermsData('')
+        } catch (error) {
+              console.error('Error deleting Terms and Conditions:', error);
+            toast.error("Failed to delete Terms and Conditions. Please try again later.");
+        } finally {
+            setLoading(false); // Set loading to false after the deletion process
+        }
+    };
+
+
 
     return (
         <>
@@ -80,7 +83,7 @@ const UserTermsandconditions = () => {
                         ) : (
 
                             termsData?.map(terms => (
-                                <>
+                                <div key={terms._id}>
                                     <div className='rider4'>
                                         <button onClick={() => navigate(`/updatetermsandconditions/${terms._id}`)}>
                                             Update <MdModeEditOutline />
@@ -92,7 +95,7 @@ const UserTermsandconditions = () => {
                                     <div className='terms1'>
                                         <p>{terms?.terms}</p>
                                     </div>
-                                </>
+                                </div>
                             ))
 
                         )}

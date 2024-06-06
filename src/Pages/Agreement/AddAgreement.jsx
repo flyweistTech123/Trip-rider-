@@ -79,7 +79,7 @@ const AddAgreement = () => {
                             </div> */}
                             <div className='terms3'>
                                 <label htmlFor="">Agreement</label>
-                                <textarea name="" id="" rows="10" placeholder='Enter Terms and Conditions' value={agreement} onChange={(e) => setAgreement(e.target.value)} ></textarea>
+                                <textarea name="" id="" rows="10" placeholder='Enter Agreement' value={agreement} onChange={(e) => setAgreement(e.target.value)} ></textarea>
                             </div>
                         </div>
                     </div>

@@ -23,7 +23,7 @@ const AddRefundpolicy = () => {
 
     const handlePostRequest = async () => {
         const data = {
-            refund: refundpolicy,
+            terms: refundpolicy,
             type: type
         }
 

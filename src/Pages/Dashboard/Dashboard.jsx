@@ -6,6 +6,7 @@ import { Link } from "react-router-dom"; // Import Link for routing
 import Pagination from 'react-bootstrap/Pagination';
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
+import CustomPagination from '../../Components/Pagination/Pagination';
 
 
 import img from '../../Images/img6.png'
@@ -61,9 +62,11 @@ const Dashboard = () => {
     fetchTransactionData();
   }, [limit, search, page]);
 
-  const handlePageChange = (pageNumber) => {
-    setPage(pageNumber);
-  }
+  const handlePageChange = (newPage) => {
+    if (newPage < 1 || newPage > totalPages) return;
+    setPage(newPage);
+    setLoading(true);
+  };
 
   const fetchData = async () => {
     try {
@@ -327,17 +330,11 @@ const Dashboard = () => {
           </div>
         </div>
         <div className='rider_details555'>
-          <Pagination >
-            <Pagination.First onClick={() => handlePageChange(1)} />
-            <Pagination.Prev onClick={() => handlePageChange(page - 1)} />
-            {[...Array(totalPages).keys()].map(number => (
-              <Pagination.Item key={number + 1} active={number + 1 === page} onClick={() => handlePageChange(number + 1)}>
-                {number + 1}
-              </Pagination.Item>
-            ))}
-            <Pagination.Next onClick={() => handlePageChange(page + 1)} />
-            <Pagination.Last onClick={() => handlePageChange(totalPages)} />
-          </Pagination>
+          <CustomPagination
+            page={page}
+            totalPages={totalPages}
+            handlePageChange={handlePageChange}
+          />
         </div>
       </div >
     </>

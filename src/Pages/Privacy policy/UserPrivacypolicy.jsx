@@ -19,32 +19,33 @@ const UserPrivacypolicy = () => {
 
 
 
-
-    const fetchPrivacyData = () => {
-        axios
-            .get(`${BaseUrl}api/v1/privacy/type/user`, getAuthHeaders())
-            .then(response => {
-                const data = response.data.data || [];
-                setPrivacyData(data);
-            })
-            .catch(error => {
-                console.error('Error fetching Privacy Policy data:', error);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+    const fetchPrivacyData = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get(`${BaseUrl}api/v1/privacy/type/user`, getAuthHeaders());
+            const data = response.data.data || [];
+            setPrivacyData(data);
+        } catch (error) {
+            console.error('Error fetching Privacy Policy data:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const deletePrivacy = (privacyId) => {
-        axios.delete(`${BaseUrl}api/v1/terms/${privacyId}`, getAuthHeaders())
-            .then(response => {
-                toast.success('Privacy Policy deleted successfully');
-                fetchPrivacyData();
-            })
-            .catch(error => {
-                console.error('Error deleting Privacy Policy:', error);
-                toast.error("Failed to delete Privacy Policy. Please try again later.");
-            });
+
+    const deletePrivacy = async (privacyId) => {
+        setLoading(true); // Set loading to true before starting the deletion
+        try {
+            await axios.delete(`${BaseUrl}api/v1/privacy/${privacyId}`, getAuthHeaders());
+            toast.success('Privacy Policy deleted successfully');
+            fetchPrivacyData();
+            setPrivacyData('')
+        } catch (error) {
+            console.error('Error deleting Privacy Policy:', error);
+            toast.error("Failed to delete Privacy Policy. Please try again later.");
+        } finally {
+            setLoading(false); // Set loading to false after the deletion process
+        }
     };
 
     useEffect(() => {
@@ -80,7 +81,7 @@ const UserPrivacypolicy = () => {
                         ) : (
 
                             privacyData?.map(privacy => (
-                                <>
+                                <div key={privacy._id}>
                                     <div className='rider4'>
                                         <button onClick={() => navigate(`/updateprivacypolicy/${privacy._id}`)}>
                                             Update <MdModeEditOutline />
@@ -92,7 +93,7 @@ const UserPrivacypolicy = () => {
                                     <div className='terms1'>
                                         <p>{privacy?.privacy}</p>
                                     </div>
-                                </>
+                                </div>
                             ))
 
                         )}

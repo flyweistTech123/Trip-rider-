@@ -89,7 +89,7 @@ const UpdateTermsandconditions = () => {
                                 </select>
                             </div> */}
                             <div className='terms3'>
-                                <label htmlFor="">Terms</label>
+                                <label htmlFor="">Terms and Conditions</label>
                                 <textarea name="" id="" rows="10" placeholder='Enter Terms and Conditions' value={term} onChange={(e) => setTerms(e.target.value)} ></textarea>
                             </div>
                         </div>

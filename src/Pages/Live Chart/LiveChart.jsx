@@ -73,21 +73,21 @@ const LiveChart = () => {
     }, [messages])
 
 
-    useEffect(() => {
-        if (selectedUser) {
-            const unsubscribe = onSnapshot(collection(db, 'chatwithadmin', selectedUser._id, 'messages'), (snapshot) => {
-                snapshot.docChanges().forEach((change) => {
-                    if (change.type === "added" && change.doc.data().type === "user") {
-                        // Show browser notification for new user messages
-                        showNotification("New Message", change.doc.data().message);
-                        // toast.success("City added successfully");
-                    }
-                });
-            });
+    // useEffect(() => {
+    //     if (selectedUser) {
+    //         const unsubscribe = onSnapshot(collection(db, 'chatwithadmin', selectedUser._id, 'messages'), (snapshot) => {
+    //             snapshot.docChanges().forEach((change) => {
+    //                 if (change.type === "added" && change.doc.data().type === "user") {
+    //                     // Show browser notification for new user messages
+    //                     showNotification("New Message", change.doc.data().message);
+    //                     // toast.success("City added successfully");
+    //                 }
+    //             });
+    //         });
 
-            return () => unsubscribe();
-        }
-    }, [selectedUser]);
+    //         return () => unsubscribe();
+    //     }
+    // }, [selectedUser]);
 
     const showNotification = (title, body) => {
         // Let's check if the browser supports notifications

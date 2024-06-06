@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 const DriverAgreement = () => {
-    const [agreementData, setAgreement] = useState([]);
+    const [agreementData, setAgreementData] = useState([]);
     const [agreementType, setAgreementType] = useState('driver');
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
@@ -20,31 +20,35 @@ const DriverAgreement = () => {
 
 
 
-    const fetchAgreementData = () => {
-        axios
-            .get(`${BaseUrl}api/v1/agreement/driver`, getAuthHeaders())
-            .then(response => {
-                const data = response.data.data || [];
-                setAgreement(data);
-            })
-            .catch(error => {
-                console.error('Error fetching Agreement data:', error);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+
+
+    const fetchAgreementData = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get(`${BaseUrl}api/v1/agreement/driver`, getAuthHeaders());
+            const data = response.data.data || [];
+            setAgreementData(data);
+        } catch (error) {
+            console.error('Error fetching Agreement data:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const deleteAgreement = (agreementId) => {
-        axios.delete(`${BaseUrl}api/v1/terms/${agreementId}`, getAuthHeaders())
-            .then(response => {
-                toast.success('Agreement deleted successfully');
-                fetchAgreementData();
-            })
-            .catch(error => {
-                console.error('Error deleting Agreement:', error);
-                toast.error("Failed to delete Agreement. Please try again later.");
-            });
+
+    const deleteAgreement = async (agreementId) => {
+        setLoading(true); // Set loading to true before starting the deletion
+        try {
+            await axios.delete(`${BaseUrl}api/v1/terms/${agreementId}`, getAuthHeaders());
+            toast.success('Agreement deleted successfully');
+            fetchAgreementData();
+            setAgreementData('')
+        } catch (error) {
+            console.error('Error deleting Agreement:', error);
+            toast.error("Failed to delete Agreement. Please try again later.");
+        } finally {
+            setLoading(false); // Set loading to false after the deletion process
+        }
     };
 
     useEffect(() => {
@@ -80,7 +84,7 @@ const DriverAgreement = () => {
                         ) : (
 
                             agreementData?.map(agreement => (
-                                <>
+                                <div key={agreement._id}>
                                     <div className='rider4'>
                                         <button onClick={() => navigate(`/updateagreement/${agreement._id}`)}>
                                             Update <MdModeEditOutline />
@@ -90,9 +94,9 @@ const DriverAgreement = () => {
                                         </button>
                                     </div>
                                     <div className='terms1'>
-                                        <p>{agreement?.agreement}</p>
+                                        <p>{agreement?.terms}</p>
                                     </div>
-                                </>
+                                </div>
                             ))
 
                         )}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import './Wallet_Management.css'
@@ -7,6 +7,7 @@ import HOC from '../../Components/HOC/HOC'
 import { IoSearch } from "react-icons/io5";
 
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
+import CustomPagination from '../../Components/Pagination/Pagination';
 
 
 
@@ -14,31 +15,42 @@ const Wallet_Management = () => {
     const [walletdata, setWalletData] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(15);
+    const [search, setSearch] = useState("");
+    const [totalPages, setTotalPages] = useState(0);
 
-    const fetchWalletData = async () => {
+    const fetchWalletData = useCallback(async () => {
         try {
-            const response = await axios.get(`${BaseUrl}api/v1/getAllWalletTransaction`, getAuthHeaders());
-            setWalletData(response.data.data);
+            const response = await axios.get(`${BaseUrl}api/v1/getAllWalletTransaction?page=${page}&limit=${limit}&search=${search}`, getAuthHeaders());
+            setWalletData(response.data.data.docs);
+            setTotalPages(response.data.data.totalPages);
         } catch (error) {
             console.error('Error fetching wallet data:', error);
         }
         finally {
             setLoading(false);
         };
-    };
+    }, [page, limit, search]);
 
     useEffect(() => {
         fetchWalletData();
-    }, []);
+    }, [limit, search, page]);
 
 
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
     };
 
-    const filteredWalletData = walletdata.filter(wallet =>
+    const filteredWalletData = walletdata?.filter(wallet =>
         wallet?.user?.name && wallet?.user?.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
+
+    const handlePageChange = (newPage) => {
+        if (newPage < 1 || newPage > totalPages) return;
+        setPage(newPage);
+        setLoading(true);
+    };
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -110,7 +122,7 @@ const Wallet_Management = () => {
                                         searchQuery
                                             ?
 
-                                            filteredWalletData.map(Wallet => (
+                                            filteredWalletData?.map(Wallet => (
                                                 <tr key={Wallet.id}>
                                                     <td className='rider8'>{Wallet?.id}</td>
                                                     <td>{Wallet?.user?.name}</td>
@@ -122,7 +134,7 @@ const Wallet_Management = () => {
                                                 </tr>
                                             ))
                                             :
-                                            walletdata.map(Wallet => (
+                                            walletdata?.map(Wallet => (
                                                 <tr key={Wallet.id}>
                                                     <td className='rider8'>{Wallet?.id}</td>
                                                     <td>{Wallet?.user?.name}</td>
@@ -137,6 +149,13 @@ const Wallet_Management = () => {
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div className='rider_details555'>
+                    <CustomPagination
+                        page={page}
+                        totalPages={totalPages}
+                        handlePageChange={handlePageChange}
+                    />
                 </div>
             </div>
         </>
