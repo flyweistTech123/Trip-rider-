@@ -30,24 +30,33 @@ const Login = () => {
                 toast.error('Please input your email!');
                 return;
             }
-
+    
             if (!password) {
                 toast.error('Password is required.');
                 return;
             }
+    
             const response = await axios.post(`${BaseUrl}api/v1/admin/login`, {
                 email: email,
                 password: password,
                 role: role
             });
-
-            const { token, user } = response.data.data;
-            localStorage.setItem('token', token);
-            localStorage.setItem('role', user.role);
-            toast.success("Login successfully");
-            navigate('/dashboard');
+    
+            console.log('Response:', response); // Debugging line to see the entire response object
+    
+            // Check if the status is 200 and the expected data is present
+            if (response.status === 200 && response.data && response.data.data) {
+                const { token, user } = response.data.data;
+                localStorage.setItem('token', token);
+                localStorage.setItem('role', user.role);
+                toast.success("Login successfully");
+                navigate('/dashboard');
+            } else {
+                console.warn('Unexpected response structure:', response.data); // Debugging line to see unexpected response structure
+                toast.error('Something went wrong. Please try again.');
+            }
         } catch (error) {
-            console.error('Error:', error.message);
+            console.error('Error:', error); // Detailed error log
             if (error.response && error.response.data && error.response.data.message === 'user not found ! not registered') {
                 toast.error('Admin not exists. Please use a different email.');
             } else {
@@ -55,6 +64,7 @@ const Login = () => {
             }
         }
     };
+    
 
 
 

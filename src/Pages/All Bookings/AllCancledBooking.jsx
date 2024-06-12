@@ -28,7 +28,7 @@ const AllCancledBooking = () => {
     }, [limit, search, page]);
 
     const fetchCanceledBookings = useCallback(() => {
-        axios.get(`${BaseUrl}api/v1/getBooking?status=cancelpage=${page}&limit=${limit}&search=${search}`, getAuthHeaders()) // Assuming 'status' is the parameter for filtering canceled bookings
+        axios.get(`${BaseUrl}api/v1/getBooking?status=cancel&page=${page}&limit=${limit}&search=${search}`, getAuthHeaders()) // Assuming 'status' is the parameter for filtering canceled bookings
             .then(response => {
                 setBookingData(response.data.data.docs);
             })
