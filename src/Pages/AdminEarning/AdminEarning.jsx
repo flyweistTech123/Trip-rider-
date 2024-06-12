@@ -36,7 +36,7 @@ const AdminEarning = () => {
 
         axios.get(apiUrl, getAuthHeaders())
             .then(response => {
-                setTransactionData(response.data.data);
+                setTransactionData(response?.data?.data);
             })
             .catch(error => {
                 console.error('Error fetching transaction data:', error);
