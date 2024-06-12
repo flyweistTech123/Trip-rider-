@@ -200,13 +200,13 @@ const Dashboard = () => {
                           <tr key={transaction.id}>
                             <td>{transaction.id}</td>
                             <td>{transaction?.user?.name}</td>
-                            <td>{transaction.driverId.name}</td>
+                            <td>{transaction?.driverId?.name}</td>
                             <td>{transaction.paymentMode}</td>
-                            <td>{formatDate(transaction.updatedAt)}</td>
-                            <td>{formatTime(transaction.updatedAt)}</td>
-                            <td>{transaction.driverAmount}</td>
-                            <td>{transaction.adminAmount}</td>
-                            <td> <div className='dashboard5'>+{transaction.amount}</div>
+                            <td>{formatDate(transaction?.updatedAt)}</td>
+                            <td>{formatTime(transaction?.updatedAt)}</td>
+                            <td>{transaction?.driverAmount}</td>
+                            <td>{transaction?.adminAmount}</td>
+                            <td> <div className='dashboard5'>+{transaction?.amount}</div>
                             </td>
                           </tr>
                         ))}
@@ -306,13 +306,13 @@ const Dashboard = () => {
                                 <tr key={transaction.id}>
                                   <td>{transaction.id}</td>
                                   <td>{transaction?.user?.name}</td>
-                                  <td>{transaction.driverId.name}</td>
-                                  <td>{transaction.paymentMode}</td>
-                                  <td>{formatDate(transaction.updatedAt)}</td>
-                                  <td>{formatTime(transaction.updatedAt)}</td>
-                                  <td>{transaction.driverAmount}</td>
-                                  <td>{transaction.adminAmount}</td>
-                                  <td> <div className='dashboard5'>+{transaction.amount}</div>
+                                  <td>{transaction?.driverId?.name}</td>
+                                  <td>{transaction?.paymentMode}</td>
+                                  <td>{formatDate(transaction?.updatedAt)}</td>
+                                  <td>{formatTime(transaction?.updatedAt)}</td>
+                                  <td>{transaction?.driverAmount}</td>
+                                  <td>{transaction?.adminAmount}</td>
+                                  <td> <div className='dashboard5'>+{transaction?.amount}</div>
                                   </td>
                                 </tr>
                               ))}

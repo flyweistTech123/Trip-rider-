@@ -10,6 +10,7 @@ import { IoSearch } from "react-icons/io5";
 
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 import { RiDeleteBinLine } from "react-icons/ri";
+import Select from 'react-select';
 
 
 import CustomPagination from '../../Components/Pagination/Pagination';
@@ -25,6 +26,9 @@ import CustomPagination from '../../Components/Pagination/Pagination';
 const Notification = () => {
 
     const [notificationdata, setNotificationData] = useState([]);
+    const [drivernames, setDriverNames] = useState([]);
+    const [vendornames, setVendorNames] = useState([]);
+    const [usernames, setUserNames] = useState([]);
     const [message, setMessage] = useState("");
     const [total, setTotal] = useState("");
     const [title, setTitle] = useState("");
@@ -34,6 +38,7 @@ const Notification = () => {
     const [limit, setLimit] = useState(10);
     const [search, setSearch] = useState("");
     const [totalPages, setTotalPages] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
 
@@ -44,6 +49,67 @@ const Notification = () => {
         fetchVendor();
         fetchUser();
     }, [limit, search, page]);
+
+
+    const fetchDriver = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}api/v1/admin/all/driver`, getAuthHeaders());
+            setDriverNames(response.data.data.docs);
+        } catch (error) {
+            console.error('Error fetching driver name:', error);
+        }
+    };
+
+    const fetchVendor = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}api/v1/admin/all/vendor`, getAuthHeaders());
+            setVendorNames(response.data.data.docs);
+        } catch (error) {
+            console.error('Error fetching Vendor name:', error);
+        }
+    };
+
+    // const fetchUser = async () => {
+    //     try {
+    //         const response = await axios.get(`${BaseUrl}api/v1/admin/all/user`, getAuthHeaders());
+    //         setUserNames(response.data.data.docs);
+    //     } catch (error) {
+    //         console.error('Error fetching User name:', error);
+    //     }
+    // };
+
+    const fetchUser = useCallback(() => {
+        axios.get(`${BaseUrl}api/v1/admin/all/user?page=${page}&limit=${limit}&search=${search}`, getAuthHeaders())
+            .then(response => {
+                setUserNames(prevData => [...prevData, ...response.data.data.docs]);
+                setTotalPages(response.data.data.totalPages);
+            })
+            .catch(error => {
+                console.error('Error fetching User name:', error);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, [page, limit, search]);
+
+
+    useEffect(() => {
+        if (page > 1) {
+            fetchUser();
+        }
+    }, [page, fetchUser]);
+
+    const handleScroll = (e) => {
+        const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+        if (bottom && !loading && page < totalPages) {
+            setPage(prevPage => prevPage + 1);
+        }
+    };
+
+
+
+
+
 
     const fetchNotificationData = useCallback(() => {
         axios.get(`${BaseUrl}api/v1/notify/GetAllNotification?page=${page}&limit=${limit}&search=${search}`, getAuthHeaders())
@@ -101,41 +167,6 @@ const Notification = () => {
             toast.error("Error creating notification");
         }
     };
-
-
-
-
-    const [drivernames, setDriverNames] = useState([]);
-    const [vendornames, setVendorNames] = useState([]);
-    const [usernames, setUserNames] = useState([]);
-
-    const fetchDriver = async () => {
-        try {
-            const response = await axios.get(`${BaseUrl}api/v1/admin/all/driver`, getAuthHeaders());
-            setDriverNames(response.data.data.docs);
-        } catch (error) {
-            console.error('Error fetching driver name:', error);
-        }
-    };
-
-    const fetchVendor = async () => {
-        try {
-            const response = await axios.get(`${BaseUrl}api/v1/admin/all/vendor`, getAuthHeaders());
-            setVendorNames(response.data.data.docs);
-        } catch (error) {
-            console.error('Error fetching Vendor name:', error);
-        }
-    };
-
-    const fetchUser = async () => {
-        try {
-            const response = await axios.get(`${BaseUrl}api/v1/admin/all/user`, getAuthHeaders());
-            setUserNames(response.data.data.docs);
-        } catch (error) {
-            console.error('Error fetching User name:', error);
-        }
-    };
-
 
 
 
@@ -209,6 +240,7 @@ const Notification = () => {
                                         <label htmlFor="">Select the {sendTo}</label>
                                         <select onChange={(e) => setSelectedId(e.target.value)}
                                             value={selectedId}
+                                            onScroll={handleScroll}
                                         >
                                             <option value="">Select the individual {sendTo}</option>
                                             {sendTo === "DRIVER" ? (
@@ -232,6 +264,8 @@ const Notification = () => {
                                             )}
 
                                         </select>
+                                        {loading && <div>Loading...</div>}
+
                                     </div>
                                 )}
                             </div>

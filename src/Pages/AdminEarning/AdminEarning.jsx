@@ -58,12 +58,12 @@ const AdminEarning = () => {
         setSelectedServiceType(event.target.value);
     };
 
-    const filteredBookingData = transactionData.filter(transaction => {
-        const userNameMatches = transaction?.user?.name && transaction?.user?.name.toLowerCase().includes(searchQuery.toLowerCase());
-        const driverNameMatches = transaction?.driverId?.name && transaction?.driverId?.name.toLowerCase().includes(searchQuery.toLowerCase());
+    // const filteredBookingData = transactionData?.filter(transaction => {
+    //     const userNameMatches = transaction?.user?.name && transaction?.user?.name.toLowerCase().includes(searchQuery.toLowerCase());
+    //     const driverNameMatches = transaction?.driverId?.name && transaction?.driverId?.name.toLowerCase().includes(searchQuery.toLowerCase());
 
-        return userNameMatches || driverNameMatches;
-    });
+    //     return userNameMatches || driverNameMatches;
+    // });
 
     return (
         <>
@@ -118,16 +118,16 @@ const AdminEarning = () => {
                                         <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Transactions...</td>
                                     </tr>
                                 ) :
-                                    searchQuery && filteredBookingData.length === 0 ? (
+                                    searchQuery && transactionData?.length === 0 ? (
                                         <tr>
                                             <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Transactions not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery
                                             ?
-                                            filteredBookingData.map(transaction => (
-                                                <tr key={transaction.id}>
-                                                    <td>{transaction.id}</td>
+                                            transactionData?.map(transaction => (
+                                                <tr key={transaction?.id}>
+                                                    <td>{transaction?.id}</td>
                                                     <td>{transaction?.bookingId?.bookingId}</td>
                                                     <td>{transaction?.user?.name}</td>
                                                     <td>{transaction?.driverId?.name}</td>
@@ -140,9 +140,9 @@ const AdminEarning = () => {
                                                 </tr>
                                             ))
                                             :
-                                            transactionData.map(transaction => (
-                                                <tr key={transaction.id}>
-                                                    <td>{transaction.id}</td>
+                                            transactionData?.map(transaction => (
+                                                <tr key={transaction?.id}>
+                                                    <td>{transaction?.id}</td>
                                                     <td>{transaction?.bookingId?.bookingId}</td>
                                                     <td>{transaction?.user?.name}</td>
                                                     <td>{transaction?.driverId?.name}</td>

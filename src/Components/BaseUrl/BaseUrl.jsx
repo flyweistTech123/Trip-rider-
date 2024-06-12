@@ -5,7 +5,7 @@ export const getAuthHeaders = () => {
     const token = localStorage.getItem("token");
     return {
         headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
         },
     };
 };
