@@ -22,19 +22,17 @@ const AddCity = () => {
     const [statecode, setStateCode] = useState('');
     const [city, setCity] = useState('');
     const [countryCode, setCountryCode] = useState('IN');
-    const [latitude, setLatitude] = useState('');
-    const [longitude, setLongitude] = useState('');
     const [limit, setLimit] = useState('');
+    const [availableServiceCity, setAvailableServiceCity] = useState('');
 
 
     const handlePostRequest = async () => {
         const data = {
             city: city,
             stateCode: statecode,
-            latitude: latitude,
-            longitude: longitude,
             limit: limit,
-            countryCode: countryCode
+            countryCode: countryCode,
+            availableServiceCity: availableServiceCity.split(',').map(city => city.trim())
         }
 
 
@@ -48,11 +46,9 @@ const AddCity = () => {
                 // Reset state variables to clear input fields
                 setCity('');
                 setStateCode('');
-                setLatitude('');
-                setLongitude('');
                 setLimit('');
                 setCountryCode('');
-                navigate('/allcity');   
+                navigate('/allcity');
             }
         } catch (error) {
             console.error('Error to Add City:', error);
@@ -105,16 +101,18 @@ const AddCity = () => {
                                 </select>
                             </div>
                             <div className='dailyprice4'>
-                                <label htmlFor="">Latitude</label>
-                                <input type="number" placeholder='Enter latitude' value={latitude} onChange={(e) => setLatitude(e.target.value)} />
-                            </div>
-                            <div className='dailyprice4'>
-                                <label htmlFor="">Longitude</label>
-                                <input type="text" placeholder='Enter Longitude' value={longitude} onChange={(e) => setLongitude(e.target.value)} />
-                            </div>
-                            <div className='dailyprice4'>
                                 <label htmlFor="">Limit</label>
                                 <input type="number" placeholder='Enter limit' value={limit} onChange={(e) => setLimit(e.target.value)} />
+                            </div>
+                            <div className='dailyprice4'>
+                                <label htmlFor=''>Available Service Cities</label>
+                                <input
+                                    type='text'
+                                    placeholder='Enter available service cities (comma-separated)'
+                                    value={availableServiceCity}
+                                    onChange={(e) => setAvailableServiceCity(e.target.value)}
+                                />
+                                
                             </div>
                         </div>
                         <div className='dailyprice5'>

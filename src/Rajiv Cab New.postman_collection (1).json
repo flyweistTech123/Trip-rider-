@@ -1,0 +1,4033 @@
+{
+	"info": {
+		"_postman_id": "9751f47c-4983-4928-b697-d9b78a058cb3",
+		"name": "Rajiv Cab New",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27672922",
+		"_collection_link": "https://planetary-crater-659259.postman.co/workspace/My-Workspace~4366e780-e2d0-49e8-8b99-72722e27232b/collection/27672922-9751f47c-4983-4928-b697-d9b78a058cb3?action=share&source=collection_link&creator=27672922"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Register admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"email2@gmail.com\",\r\n    \"password\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/admin/register",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"email2@gmail.com\",\r\n    \"password\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/admin/login",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWY1ODUxNTM1OTdiMGYxNTg4YmMxYiIsImlhdCI6MTcwNTk5MDI0M30.fXXMQZ9IzrmHqhu-VlT6TzOiJL7xJ-tv-kkYOWrGUwU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "update",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "email2@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "noida",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "male",
+									"type": "text"
+								},
+								{
+									"key": "birthday",
+									"value": "13dec",
+									"type": "text"
+								},
+								{
+									"key": "mobileNumber",
+									"value": "12321313",
+									"type": "text"
+								},
+								{
+									"key": "profilePicture",
+									"type": "file",
+									"src": "ogXrR-x-f/Capture vendor.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/admin/detail",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"detail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "My Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWY1ODUxNTM1OTdiMGYxNTg4YmMxYiIsImlhdCI6MTcwNTk5MDI0M30.fXXMQZ9IzrmHqhu-VlT6TzOiJL7xJ-tv-kkYOWrGUwU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/admin/me",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Vendor",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/admin/all/vendor",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"all",
+								"vendor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Driver",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/admin/all/driver",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"all",
+								"driver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/admin/all/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"all",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Driver",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/admin/delete/driver/657962ec005a4e50eb3d274d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"delete",
+								"driver",
+								"657962ec005a4e50eb3d274d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Block Driver",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/admin/block/driver/6576ef0f5b46c897bed01185",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"block",
+								"driver",
+								"6576ef0f5b46c897bed01185"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Kyc Driver approved reject",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"\"  /// pending', 'approved', 'reject', 'hold\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/v1/admin/Kyc/driver/6576ef0f5b46c897bed01185",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"Kyc",
+								"driver",
+								"6576ef0f5b46c897bed01185"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unblock Driver",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/admin/unblock/driver/6576ef0f5b46c897bed01185",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"unblock",
+								"driver",
+								"6576ef0f5b46c897bed01185"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Banner",
+			"item": [
+				{
+					"name": "Create Bannner",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "my banner",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "nlHTOY_36/Capture coupon.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/banner",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"banner"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Banner",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/banner",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"banner"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Banner by type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/banner/type/{{type}}",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"banner",
+								"type",
+								"{{type}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Banner",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "My Update",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "ZlfTBO22c/Capture vendor.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/banner/updateBanner/6579543c1f6fe710fe6129c8",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"banner",
+								"updateBanner",
+								"6579543c1f6fe710fe6129c8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Banner",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/banner/6579543c1f6fe710fe6129c8",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"banner",
+								"6579543c1f6fe710fe6129c8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "serviceCategory",
+			"item": [
+				{
+					"name": "Create serviceCategory",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "category",
+									"value": "Ambulance",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "other",
+									"description": "Basic', 'Hourly', \"Monthly\", \"superCar",
+									"type": "text"
+								},
+								{
+									"key": "banner",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "description",
+									"value": "dfdf",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/serviceCategory",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"serviceCategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get serviceCategory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/serviceCategory",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"serviceCategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get serviceCategory by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/serviceCategory/{{id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"serviceCategory",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update serviceCategory",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "category",
+									"value": "Ambulance",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "other",
+									"type": "text"
+								},
+								{
+									"key": "banner",
+									"type": "file",
+									"src": "wzdI27CPy/Frame 529.png"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "rMeQ9VepY/Group 7429.png"
+								},
+								{
+									"key": "description",
+									"value": "dfdf",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/serviceCategory/65b0bdd79361bbba7c2e42b2",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"serviceCategory",
+								"65b0bdd79361bbba7c2e42b2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "serviceCategory",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/serviceCategory/656f1eaade72d42234d6c105",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"serviceCategory",
+								"656f1eaade72d42234d6c105"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category\": \"Other\",\r\n    \"discountPer\": 0,\r\n    \"isDiscount\": \"false\"\r\n}\r\n// {\r\n//     \"category\": \"Working Women\",\r\n//     \"discountPer\": 30,\r\n//     \"isDiscount\": \"false\"\r\n// }\r\n// {\r\n//     \"category\": \"Armed Forces\",\r\n//     \"discountPer\": 30,\r\n//     \"isDiscount\": \"false\"\r\n// }\r\n// {\r\n//     \"category\": \"senior citizen\",\r\n//     \"discountPer\": 35\r\n// }\r\n// {\r\n//     \"category\": \"Student\",\r\n//     \"discountPer\": 25,\r\n//     \"isDiscount\": \"false\"\r\n// }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/category",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/category",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/category/{{id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/category/{{id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Terms",
+			"item": [
+				{
+					"name": "Create Terms",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"terms\":\"This is terms and conditions\",\r\n    \"type\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/terms",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"terms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Terms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/terms",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"terms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Terms by type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/terms/{{type}}",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"terms",
+								"{{type}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Terms",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"terms\": \"This is terms 2\",\r\n    \"type\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/terms/656f1eaade72d42234d6c105",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"terms",
+								"656f1eaade72d42234d6c105"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete terms",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/terms/656f1eaade72d42234d6c105",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"terms",
+								"656f1eaade72d42234d6c105"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Privacy",
+			"item": [
+				{
+					"name": "Create Privacy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"privacy\": \"This is privacy & policy\",\r\n    \"type\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/privacy",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"privacy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Privacy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/privacy",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"privacy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update privacy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"privacy\": \"This is privacy 2\",\r\n    \"type\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/privacy/657072a5ef27dcba2489357d",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"privacy",
+								"657072a5ef27dcba2489357d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete privacy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/privacy/657072a5ef27dcba2489357d",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"privacy",
+								"657072a5ef27dcba2489357d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get privacyby type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/privacy/type/{{type}}",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"privacy",
+								"type",
+								"{{type}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "State",
+			"item": [
+				{
+					"name": "Create State",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/State",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"State"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get State",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/State",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"State"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update City",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"city\":\"This is terms 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/City/656f1eaade72d42234d6c105",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"City",
+								"656f1eaade72d42234d6c105"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete city",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/city/656f1eaade72d42234d6c105",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"city",
+								"656f1eaade72d42234d6c105"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "City",
+			"item": [
+				{
+					"name": "Create City",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/City",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"City"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get city",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/City",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"City"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update City",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"city\":\"This is terms 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/City/656f1eaade72d42234d6c105",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"City",
+								"656f1eaade72d42234d6c105"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete city",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/city/656f1eaade72d42234d6c105",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"city",
+								"656f1eaade72d42234d6c105"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vehicle",
+			"item": [
+				{
+					"name": "Create vehicle",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "suv 8 seaterghh",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "car",
+									"description": "// enum: [\"auto\", \"bike\", \"car\"]↵}:",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "S8JfDKeBI/suv6sheater.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/vehicle",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"vehicle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get vehicle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/vehicle",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"vehicle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Vehicle",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"TATA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/vehicle/656f00077e9328b2e4be2cb7",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"vehicle",
+								"656f00077e9328b2e4be2cb7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Vehicle",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/vehicle/656f00077e9328b2e4be2cb7",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"vehicle",
+								"656f00077e9328b2e4be2cb7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get vehicle by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/vehicle/{{id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"vehicle",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AmbulancevVehicle",
+			"item": [
+				{
+					"name": "Create ambulanceVehicle",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Normal",
+									"description": "enum: [\"Normal\", \"Configuration\"]",
+									"type": "text"
+								},
+								{
+									"key": "perKm",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "basePrice",
+									"value": "50",
+									"type": "text"
+								},
+								{
+									"key": "taxRate",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "gstRate",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "serviceCharge",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "nightCharges",
+									"value": "20",
+									"type": "text"
+								},
+								{
+									"key": "waitingCharge",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "trafficCharge",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "ENImvJHJr/Rectangle 1120.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/ambulanceVehicle",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"ambulanceVehicle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get ambulanceVehicle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/ambulanceVehicle",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"ambulanceVehicle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update ambulanceVehicle",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"TATA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/ambulanceVehicle/656f00077e9328b2e4be2cb7",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"ambulanceVehicle",
+								"656f00077e9328b2e4be2cb7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete ambulanceVehicle",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/ambulanceVehicle/656f00077e9328b2e4be2cb7",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"ambulanceVehicle",
+								"656f00077e9328b2e4be2cb7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get ambulanceVehicleby id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/ambulanceVehicle/{{id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"ambulanceVehicle",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pricing",
+			"item": [
+				{
+					"name": "Create Pricing",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"city\": \"65cb321be51d4e909aeaf4c8\",\r\n    \"vehicle\": \"65cb20467a8ece998e959758\",\r\n    \"fromKm\": 16,\r\n    \"toKm\": 50,\r\n    \"price\": 8\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/Pricing",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"Pricing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id Pricing",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/Pricing/{{id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"Pricing",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Pricing",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"city\": \"65b0bdd79361bbba7c2e42b2\",\r\n    \"vehicle\": \"65b0cdad644bd2b369f3eedb\",\r\n    \"fromKm\": 15,\r\n    \"toKm\": 50,\r\n    \"price\": 8\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/Pricing/{{id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"Pricing",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete charge",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/charge/65994d1d2e4459fb6397d301",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"charge",
+								"65994d1d2e4459fb6397d301"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all Pricing",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/Pricing",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"Pricing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by distance Pricing",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjI2MDIxZDBiODMzNDNhOTllNDliYSIsImlhdCI6MTcwNjE4ODg0MX0.GMlnW8Hy84vucf2JXcp07mq8n4Jk9cdYmJn1Lo1jT4g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"distanceInKm\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/Pricing/by/distance",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"Pricing",
+								"by",
+								"distance"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "HourlyPricing",
+			"item": [
+				{
+					"name": "AddHourlyPricing",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"city\": \"65cb321be51d4e909aeaf4c8\",\r\n    \"vehicle\": \"65cb20467a8ece998e959758\",\r\n    \"km\": 20,\r\n    \"hours\": 4,\r\n    \"price\": 34\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/AddHourlyPricing",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"AddHourlyPricing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getHourlyPricing",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/getHourlyPricing",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"getHourlyPricing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateHourlyPricing",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"city\": \"65b0bdd79361bbba7c2e42b2\",\r\n    \"vehicle\": \"65b0cdad644bd2b369f3eedb\",\r\n    \"km\": 75,\r\n    \"hours\": 15,\r\n    \"price\": 560\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/updateHourlyPricing/656f1eaade72d42234d6c105",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"updateHourlyPricing",
+								"656f1eaade72d42234d6c105"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeHourlyPricing",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/removeHourlyPricing/656f1eaade72d42234d6c105",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"removeHourlyPricing",
+								"656f1eaade72d42234d6c105"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by distance HourlyPricing",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjI2MDIxZDBiODMzNDNhOTllNDliYSIsImlhdCI6MTcwNjE4ODg0MX0.GMlnW8Hy84vucf2JXcp07mq8n4Jk9cdYmJn1Lo1jT4g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"distanceInKm\": 10,\r\n    \"city\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/HourlyPricing/by/distance",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"HourlyPricing",
+								"by",
+								"distance"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OutStationPricing",
+			"item": [
+				{
+					"name": "Add OutStationPricing",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"city\": \"65cb321be51d4e909aeaf4c8\",\r\n    \"vehicle\": \"65cb20467a8ece998e959758\",\r\n    \"type\": \"bothSide\",            // oneSide\", \"bothSide\r\n    \"price\": 18,\r\n    \"kmLimit\": 200,\r\n    \"kmPrice\": 19,\r\n    \"hrPrice\": 11,\r\n    \"hrLimit\": 12\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/OutStationPricing/add",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"OutStationPricing",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get OutStationPricing bu id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/OutStationPricing/{{id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"OutStationPricing",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get OutStationPricing",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/OutStationPricing/get",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"OutStationPricing",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update OutStationPricing",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"city\": \"65b0bdd79361bbba7c2e42b2\",\r\n    \"vehicle\": \"65b0cdad644bd2b369f3eedb\",\r\n    \"price\": 560,\r\n    \"kmLimit\": \"\",\r\n    \"kmPrice\": \"\",\r\n    \"hrPrice\": \"\",\r\n    \"hrLimit\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/OutStationPricing/update/656f1eaade72d42234d6c105",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"OutStationPricing",
+								"update",
+								"656f1eaade72d42234d6c105"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove OutStationPricing",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/OutStationPricing/delete/656f1eaade72d42234d6c105",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"OutStationPricing",
+								"delete",
+								"656f1eaade72d42234d6c105"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by distance OutStationPricing",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjI2MDIxZDBiODMzNDNhOTllNDliYSIsImlhdCI6MTcwNjE4ODg0MX0.GMlnW8Hy84vucf2JXcp07mq8n4Jk9cdYmJn1Lo1jT4g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"distanceInKm\": 10,\r\n    \"city\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/OutStationPricing/by/distance",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"OutStationPricing",
+								"by",
+								"distance"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "BasePricing",
+			"item": [
+				{
+					"name": "Create BasePricing",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"city\": \"65cb320ae51d4e909aeaf462\",\r\n    \"vehicle\": \"65cb20467a8ece998e959758\",\r\n    \"basePrice\": 45,\r\n    \"taxRate\": 8,\r\n    \"gstRate\": 18,\r\n    \"serviceCharge\": 15,\r\n    \"nightCharges\": 20,\r\n    \"waitingCharge\": 8,\r\n    \"trafficCharge\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/BasePricing/add",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"BasePricing",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id BasePricing",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/BasePricing/{{id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"BasePricing",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update BasePricing",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"vehicle\": \"65b0cdad644bd2b369f3eedb\",\r\n    \"city\": \"65af5e166cba2195e3e38074\",\r\n    \"basePrice\": 50,\r\n    \"taxRate\": 8,\r\n    \"gstRate\": 18,\r\n    \"serviceCharge\": 15,\r\n    \"nightCharges\": 20,\r\n    \"waitingCharge\": 8,\r\n    \"trafficCharge\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/BasePricing/update/{{id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"BasePricing",
+								"update",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete BasePricing",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/BasePricing/delete/65994d1d2e4459fb6397d301",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"BasePricing",
+								"delete",
+								"65994d1d2e4459fb6397d301"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all BasePricing",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/BasePricing/get",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"BasePricing",
+								"get"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SuperCar",
+			"item": [
+				{
+					"name": "Add SuperCar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "IGqO163O1/image 376.png"
+								},
+								{
+									"key": "name",
+									"value": "AudiAudi Q8 ETRON",
+									"type": "text"
+								},
+								{
+									"key": "serviceCategory",
+									"value": "65b0be5e9361bbba7c2e42bf",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/SuperCar",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"SuperCar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SuperCar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/SuperCar",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"SuperCar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SuperCar by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/SuperCar/{{id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"SuperCar",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "serviceCategory",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/SuperCar/656f1eaade72d42234d6c105",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"SuperCar",
+								"656f1eaade72d42234d6c105"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove SuperCar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/SuperCar/656f1eaade72d42234d6c105",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"SuperCar",
+								"656f1eaade72d42234d6c105"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SuperCarPricing",
+			"item": [
+				{
+					"name": "Add SuperCarPricing",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "AudiAudi Q8 ETRON",
+									"type": "text"
+								},
+								{
+									"key": "serviceCategory",
+									"value": "65b0be5e9361bbba7c2e42bf",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "20000",
+									"type": "text"
+								},
+								{
+									"key": "kmLimit",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "kmPrice",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "hrPrice",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "hrLimit",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": [
+										"IGqO163O1/image 376 (2).png",
+										"IGqO163O1/image 376.png"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/SuperCarPricing",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"SuperCarPricing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SuperCarPricing",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/SuperCarPricing?superCar=65ba340ea4036b1d793b3bcd",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"SuperCarPricing"
+							],
+							"query": [
+								{
+									"key": "superCar",
+									"value": "65ba340ea4036b1d793b3bcd"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SuperCarPricing by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/SuperCarPricing/{{id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"SuperCarPricing",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateHourlyPricing",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "AudiAudi Q8 ETRON",
+									"type": "text"
+								},
+								{
+									"key": "serviceCategory",
+									"value": "65b0be5e9361bbba7c2e42bf",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "20000",
+									"type": "text"
+								},
+								{
+									"key": "kmLimit",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "kmPrice",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "hrPrice",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "hrLimit",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/SuperCarPricing/656f1eaade72d42234d6c105",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"SuperCarPricing",
+								"656f1eaade72d42234d6c105"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove SuperCarPricing",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/SuperCarPricing/656f1eaade72d42234d6c105",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"SuperCarPricing",
+								"656f1eaade72d42234d6c105"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Driver",
+			"item": [
+				{
+					"name": "Register Driver",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobileNumber\":\"7983290283\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://rajiv-cab-mu.vercel.app/api/v1/driver/register",
+							"protocol": "https",
+							"host": [
+								"rajiv-cab-mu",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"driver",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Drive login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobileNumber\": \"1234567899\",\r\n    \"otp\": \"7111\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://rajiv-cab-mu.vercel.app/api/v1/driver/verify/login",
+							"protocol": "https",
+							"host": [
+								"rajiv-cab-mu",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"driver",
+								"verify",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Driver",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobileNumber\":\"1234567899\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/driver/login",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"driver",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resend Otp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobileNumber\":\"7983270583\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/driver/resend/otp",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"driver",
+								"resend",
+								"otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "My Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjFmYmVmZDBiODMzNDNhOWViMzU5YiIsImlhdCI6MTcwNjE2MzE5MX0.oZcoRD0SC1h6GW7v4rqIMhpjNsJ9i0t_7847_OgXWOA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/driver/me",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"driver",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDriverVehicleCategory",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/driver/getDriverVehicleCategory",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"driver",
+								"getDriverVehicleCategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "location",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWY3YjczNWQ1NmNjOTVmY2RkYTA0ZSIsImlhdCI6MTcwNTk5OTI5NH0.wkII8GZj_ye11BQKqahsr4HsQs6pHhRXgn5dqjc74mU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"coordinates\": [\r\n        28.2833,\r\n        78.5865\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/driver/detail/location",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"driver",
+								"detail",
+								"location"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Profile Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWY3YjczNWQ1NmNjOTVmY2RkYTA0ZSIsImlhdCI6MTcwNTk5OTI5NH0.wkII8GZj_ye11BQKqahsr4HsQs6pHhRXgn5dqjc74mU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "update",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "update@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "noida",
+									"type": "text"
+								},
+								{
+									"key": "profilePicture",
+									"type": "file",
+									"src": "sGw2J5qyu/cheerful-man-summer-hat-looking-camera 1.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/driver/detail",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"driver",
+								"detail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Driver Detail",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Y2M4ZTQ0NTI2ZTBiYTU5NzdhOTNlYiIsImlhdCI6MTcwNzkwNjQxOH0.2lgupYwZesAqJsOVy1hPXeL-jsJJRAa-17Gp5g2mjH8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"city\": \"65cb321be51d4e909aeaf4c8\",\r\n    \"driverVehicleCategory\": \"65d0873d24893f4de786417a\",\r\n    \"dlno\": \"String\",\r\n    \"dlDob\": \"String\",\r\n    \"aadhar\": \"String\",\r\n    \"client_id\": \"your_client_id\",\r\n    \"rc_number\": \"454\",\r\n    \"registration_date\": \"2023-01-01\",\r\n    \"owner_name\": \"John Doe\",\r\n    \"father_name\": \"Doe Sr.\",\r\n    \"present_address\": \"123 Main St, City\",\r\n    \"permanent_address\": \"456 Oak St, City\",\r\n    \"mobile_number\": \"1234567890\",\r\n    \"vehicle_category\": \"LMV\",\r\n    \"vehicle_chasi_number\": \"MA1YU2HHUF6K12744\",\r\n    \"vehicle_engine_number\": \"HHF4K21436\",\r\n    \"maker_description\": \"MAHINDRA & MAHINDRA LIMITED\",\r\n    \"maker_model\": \"XUV500\",\r\n    \"body_type\": \"SALOON\",\r\n    \"fuel_type\": \"DIESEL\",\r\n    \"color\": \"NPERLWHT\",\r\n    \"norms_type\": \"EURO 4\",\r\n    \"fit_up_to\": \"2023-12-15\",\r\n    \"financer\": \"ABC Bank\",\r\n    \"financed\": true,\r\n    \"insurance_company\": \"The New India Assurance Company Limited\",\r\n    \"insurance_policy_number\": \"31030031220100290326\",\r\n    \"insurance_upto\": \"2023-12-18\",\r\n    \"manufacturing_date\": \"2015-10-01\",\r\n    \"manufacturing_date_formatted\": \"2015-10\",\r\n    \"registered_at\": \"SDM GURUGRAM, Haryana\",\r\n    \"latest_by\": \"2023-04-13\",\r\n    \"less_info\": true,\r\n    \"tax_upto\": \"2023-01-01\",\r\n    \"tax_paid_upto\": \"2023-01-01\",\r\n    \"cubic_capacity\": \"0.00\",\r\n    \"vehicle_gross_weight\": \"2510\",\r\n    \"no_cylinders\": \"4\",\r\n    \"seat_capacity\": \"7\",\r\n    \"sleeper_capacity\": \"0\",\r\n    \"standing_capacity\": \"\",\r\n    \"wheelbase\": \"0\",\r\n    \"unladen_weight\": \"1850\",\r\n    \"vehicle_category_description\": \"Motor Car(LMV)\",\r\n    \"pucc_number\": \"DL00300410001347\",\r\n    \"pucc_upto\": \"2023-11-10\",\r\n    \"permit_number\": \"P12345\",\r\n    \"permit_issue_date\": \"2023-01-01\",\r\n    \"permit_valid_from\": \"2023-01-01\",\r\n    \"permit_valid_upto\": \"2023-12-31\",\r\n    \"permit_type\": \"Transport\",\r\n    \"national_permit_number\": \"NP98765\",\r\n    \"national_permit_upto\": \"2023-12-31\",\r\n    \"national_permit_issued_by\": \"Transport Authority\",\r\n    \"non_use_status\": \"Active\",\r\n    \"non_use_from\": \"2022-01-01\",\r\n    \"non_use_to\": \"2022-12-31\",\r\n    \"blacklist_status\": \"Not Blacklisted\",\r\n    \"noc_details\": \"NOC123\",\r\n    \"owner_number\": \"2\",\r\n    \"rc_status\": \"ACTIVE\",\r\n    \"masked_name\": false,\r\n    \"challan_details\": \"No Challans\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/driver/detail/driver",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"driver",
+								"detail",
+								"driver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "driver car Image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "interior",
+									"type": "file",
+									"src": "-mQS-pp5g/12.png"
+								},
+								{
+									"key": "exterior",
+									"type": "file",
+									"src": "6vBEO1Za7/hackback.jpg"
+								},
+								{
+									"key": "permit",
+									"type": "file",
+									"src": "_gh7TrU34/sudan.jpg"
+								},
+								{
+									"key": "fitness",
+									"type": "file",
+									"src": "wrLdE2AQI/hackback.jpg"
+								},
+								{
+									"key": "insurance",
+									"type": "file",
+									"src": "oDjIz0qrn/sudan.jpg"
+								},
+								{
+									"key": "aadharCard",
+									"type": "file",
+									"src": "EmACRQNwA/suv6sheater.jpg"
+								},
+								{
+									"key": "drivinglicense",
+									"type": "file",
+									"src": "ISOxjQx2k/hackback.jpg"
+								},
+								{
+									"key": "cancelCheck",
+									"type": "file",
+									"src": "aF7Pq5Ppj/suv6sheater.jpg"
+								},
+								{
+									"key": "bankStatement",
+									"type": "file",
+									"src": "ethAM2H4g/sudan.jpg"
+								},
+								{
+									"key": "rc",
+									"type": "file",
+									"src": "ILZbzfN3v/8-seater-cars-in-india.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/driver/image/65cc8e44526e0ba5977a93eb",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"driver",
+								"image",
+								"65cc8e44526e0ba5977a93eb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get my all detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/driver/my/car/detail/65b15465f4ed0366f26eb0df",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"driver",
+								"my",
+								"car",
+								"detail",
+								"65b15465f4ed0366f26eb0df"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vendor",
+			"item": [
+				{
+					"name": "vendor register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobileNumber\": \"7983270583\",\r\n    \"name\": \"Varun chaudhary\",\r\n    \"email\": \"varun@gmail.com\",\r\n    \"altMobileNumber\": \"7983270582\",\r\n    \"noOfVehicle\": \"10\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/vendor/register",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"vendor",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobileNumber\":\"7983270583\",\r\n    \"otp\":\"4943\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/vendor/verify/otp",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"vendor",
+								"verify",
+								"otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Vendor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobileNumber\":\"7983270583\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/vendor/login",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"vendor",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "vendor My Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWU0OTk2ZDg4ZjE1YjY1NjFkNDAyOCIsImlhdCI6MTcwNTkyMTQ4MH0.ESe87yjWMozo-ADeg8OTKh23MNDEWQQZFLjsCymDbS4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/vendor/me",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"vendor",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "vendor Update Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWU0OTk2ZDg4ZjE1YjY1NjFkNDAyOCIsImlhdCI6MTcwNTkyMTQ4MH0.ESe87yjWMozo-ADeg8OTKh23MNDEWQQZFLjsCymDbS4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"varun\",\r\n    \"email\":\"varun@gmail.com\",\r\n    \"address\":\"noida\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/vendor/detail",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"vendor",
+								"detail"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "Register user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobileNumber\": \"7983270583\",\r\n    \"name\": \"varun\",\r\n    \"email\": \"varun@gmail.com\",\r\n    \"gender\": \"male\",\r\n    \"birthday\": \"1998-10-27\",\r\n    \"category\": \"65af5e166cba2195e3e38074\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobileNumber\":\"7983270583\",\r\n    \"otp\": \"5397\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/user/verify/otp",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"verify",
+								"otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobileNumber\":\"7983270583\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "My Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTYxOWZkNzNmN2FmZDI0ZmY5YzY1ZCIsImlhdCI6MTcwMjAzOTg2MX0.PCn6jUfdwSra7S6HHSgikZVRbDGsyAmscSrjWq3Ym4U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/v1/user/me",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWY1ODUxNTM1OTdiMGYxNTg4YmMxYiIsImlhdCI6MTcwNTk5MDI0M30.fXXMQZ9IzrmHqhu-VlT6TzOiJL7xJ-tv-kkYOWrGUwU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"faiz\",\r\n    \"email\":\"faiz@gmail.com\",\r\n    \"address\":\"noida\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/user/detail",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"detail"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "getSettleBooking",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/api/v1/getSettleBooking",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"getSettleBooking"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getSettleBookingById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/api/v1/getSettleBookingById/{{bookingId}}",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"getSettleBookingById",
+										"{{bookingId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getBooking",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/api/v1/getBooking",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"getBooking"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getBookingById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/api/v1/getBookingById/{{bookingId}}",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"getBookingById",
+										"{{bookingId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "assignDriverOnSettleBooking",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"driverId\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:4000/api/v1/assignDriverOnSettleBooking/{{bookingId}}",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"assignDriverOnSettleBooking",
+										"{{bookingId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "createSettleBooking",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjEzODQxZDBiODMzNDNhOWI4MThkYiIsImlhdCI6MTcwNjExMzExMH0.xgDxA8XheFwakuo8JqhPNWcuKM2oOiAwIBMGA70N8rk"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"current\": {\n        \"latitude\": 37.7749,\n        \"longitude\": -122.4194,\n        \"address\": \"Pickup Address\"\n    },\n    \"drop\": {\n        \"latitude\": 37.7749,\n        \"longitude\": -122.4194,\n        \"address\": \"Drop Address\"\n    },\n    \"pickUpTime\": \"08:00\",\n    \"dropTime\": \"17:00\",\n    \"km\": \"50\",\n    \"city\": \"Meerut\",\n    \"vehicle\": \"65cb20467a8ece998e959758\"\n}"
+								},
+								"url": {
+									"raw": "localhost:4000/api/v1/user/createSettleBooking",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"createSettleBooking"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createSuperCarBooking",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjEzODQxZDBiODMzNDNhOWI4MThkYiIsImlhdCI6MTcwNjExMzExMH0.xgDxA8XheFwakuo8JqhPNWcuKM2oOiAwIBMGA70N8rk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"current\": {\r\n        \"latitude\": 38.7749,\r\n        \"longitude\": 132.4194,\r\n        \"address\": \"Pickup Address\"\r\n    },\r\n    \"drop\": {\r\n        \"latitude\": 37.7749,\r\n        \"longitude\": -122.4194,\r\n        \"address\": \"Drop Address\"\r\n    },\r\n    \"date\": \"11Dec,2022\",\r\n    \"time\": \"4:15PM\",\r\n    \"superCarPricingId\": \"65ba1dcc1e5d397e93c631e3\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:4000/api/v1/user/createSuperCarBooking",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"createSuperCarBooking"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createHourlyBooking",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjEzODQxZDBiODMzNDNhOWI4MThkYiIsImlhdCI6MTcwNjExMzExMH0.xgDxA8XheFwakuo8JqhPNWcuKM2oOiAwIBMGA70N8rk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"current\": {\r\n        \"latitude\": 38.7749,\r\n        \"longitude\": 132.4194,\r\n        \"address\": \"Pickup Address\"\r\n    },\r\n    \"drop\": {\r\n        \"latitude\": 37.7749,\r\n        \"longitude\": -122.4194,\r\n        \"address\": \"Drop Address\"\r\n    },\r\n    \"date\": \"11Dec,2022\",\r\n    \"time\": \"4:15PM\",\r\n    \"hour\": \"3\",\r\n    \"distance\": \"15\",\r\n    \"city\": \"Noida\",\r\n    \"vehicleId\": \"65cb20467a8ece998e959758\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:4000/api/v1/user/createHourlyBooking",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"createHourlyBooking"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "user booking",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjEzODQxZDBiODMzNDNhOWI4MThkYiIsImlhdCI6MTcwNjExMzExMH0.xgDxA8XheFwakuo8JqhPNWcuKM2oOiAwIBMGA70N8rk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/api/v1/user/get/booking",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"get",
+										"booking"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Booking by Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/api/v1/user/get/booking/by/65b13c482c7926b778dfbe74",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"get",
+										"booking",
+										"by",
+										"65b13c482c7926b778dfbe74"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cancel booking bu user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjEzODQxZDBiODMzNDNhOWI4MThkYiIsImlhdCI6MTcwNjExMzExMH0.xgDxA8XheFwakuo8JqhPNWcuKM2oOiAwIBMGA70N8rk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/api/v1/user/cancelBooking/659e3e43a8ce547ec8f32634",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"cancelBooking",
+										"659e3e43a8ce547ec8f32634"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createBooking",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjEzODQxZDBiODMzNDNhOWI4MThkYiIsImlhdCI6MTcwNjExMzExMH0.xgDxA8XheFwakuo8JqhPNWcuKM2oOiAwIBMGA70N8rk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"current\": {\r\n        \"latitude\": 38.7749,\r\n        \"longitude\": 132.4194,\r\n        \"address\": \"Pickup Address\"\r\n    },\r\n    \"drop\": {\r\n        \"latitude\": 37.7749,\r\n        \"longitude\": -122.4194,\r\n        \"address\": \"Drop Address\"\r\n    },\r\n    \"vehicleId\": \"65d0897c24893f4de786417d\",\r\n    \"city\": \"Meerut\",\r\n    \"date\": \"11Dec,2022\",\r\n    \"time\": \"4:15PM\",\r\n    \"hour\": \"1hr 35min\",\r\n    \"distance\": \"16\",\r\n    \"serviceType\": \"\" // ['daily', 'bike', 'airport', 'delivery', 'auto'],\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:4000/api/v1/user/createBooking",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"createBooking"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createAmbulanceBooking",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjEzODQxZDBiODMzNDNhOWI4MThkYiIsImlhdCI6MTcwNjExMzExMH0.xgDxA8XheFwakuo8JqhPNWcuKM2oOiAwIBMGA70N8rk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"current\": {\r\n        \"latitude\": 38.7749,\r\n        \"longitude\": 132.4194,\r\n        \"address\": \"Pickup Address\"\r\n    },\r\n    \"drop\": {\r\n        \"latitude\": 37.7749,\r\n        \"longitude\": -122.4194,\r\n        \"address\": \"Drop Address\"\r\n    },\r\n    \"vehicleId\": \"65d0afa7fea562fb4dae972e\",\r\n    \"date\": \"11 Dec,2022\",\r\n    \"time\": \"4:15PM\",\r\n    \"hour\": \"1hr 35min\",\r\n    \"distance\": \"16\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:4000/api/v1/user/createAmbulanceBooking",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"createAmbulanceBooking"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Driver",
+					"item": [
+						{
+							"name": "Latest Booking",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Y2M4ZTQ0NTI2ZTBiYTU5NzdhOTNlYiIsImlhdCI6MTcwODE3NjQ1Nn0.Qi-bGdjuul3v84oOOdAJWrouZfglwXUdyyEzhr2fYw8",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/api/v1/driver/latest/booking",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"driver",
+										"latest",
+										"booking"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Accept Booking",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzZlZjBmNWI0NmM4OTdiZWQwMTE4NSIsImlhdCI6MTcwMjI5NDA3Nn0.M0wdTQZ36zpQ8hNFPpUSek8bBISuhQB6ULBf0F3-7Xs",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:4000/api/v1/driver/accept/booking/659e3e43a8ce547ec8f32634",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"driver",
+										"accept",
+										"booking",
+										"659e3e43a8ce547ec8f32634"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "stop Booking",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzZlZjBmNWI0NmM4OTdiZWQwMTE4NSIsImlhdCI6MTcwMjI5NDA3Nn0.M0wdTQZ36zpQ8hNFPpUSek8bBISuhQB6ULBf0F3-7Xs",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:4000/api/v1/driver/stop/booking/659e3e43a8ce547ec8f32634",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"driver",
+										"stop",
+										"booking",
+										"659e3e43a8ce547ec8f32634"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "sendOtpToUserBooking",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzZlZjBmNWI0NmM4OTdiZWQwMTE4NSIsImlhdCI6MTcwMjI5NDA3Nn0.M0wdTQZ36zpQ8hNFPpUSek8bBISuhQB6ULBf0F3-7Xs",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"otp\":\"6511\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:4000/api/v1/driver/sendOtpToUserBooking/659e3e43a8ce547ec8f32634",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"driver",
+										"sendOtpToUserBooking",
+										"659e3e43a8ce547ec8f32634"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Otp Verify to start Booking",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzZlZjBmNWI0NmM4OTdiZWQwMTE4NSIsImlhdCI6MTcwMjI5NDA3Nn0.M0wdTQZ36zpQ8hNFPpUSek8bBISuhQB6ULBf0F3-7Xs",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"otp\":\"6511\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:4000/api/v1/driver/otp/booking/659e3e43a8ce547ec8f32634",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"driver",
+										"otp",
+										"booking",
+										"659e3e43a8ce547ec8f32634"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Booking by Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/api/v1/user/get/booking/by/659e3e43a8ce547ec8f32634",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"get",
+										"booking",
+										"by",
+										"659e3e43a8ce547ec8f32634"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getBookingByDate",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/api/v1/driver/date/booking/{{selectedDate}}",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"driver",
+										"date",
+										"booking",
+										"{{selectedDate}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "My Booking",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzZlZjBmNWI0NmM4OTdiZWQwMTE4NSIsImlhdCI6MTcwMjI5NDA3Nn0.M0wdTQZ36zpQ8hNFPpUSek8bBISuhQB6ULBf0F3-7Xs",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/api/v1/driver/my/booking",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"driver",
+										"my",
+										"booking"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getSettleBooking",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/api/v1/driver/getSettleBooking",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"driver",
+										"getSettleBooking"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getSettleBookingById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/api/v1/driver/getSettleBookingById/{{bookingId}}",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"driver",
+										"getSettleBookingById",
+										"{{bookingId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

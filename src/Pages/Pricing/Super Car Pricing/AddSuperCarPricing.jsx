@@ -22,7 +22,8 @@ import img3 from '../../../Images/img43.png';
 
 const AddSuperCarPricing = () => {
     const [name, setName] = useState('');
-    const [image, setImage] = useState('');
+    const [images, setImages] = useState([]);
+    const [previewImages, setPreviewImages] = useState([]);
     const [superCar, setSuperCar] = useState('');
     const [superCars, setSuperCars] = useState([]);
     const [price, setPrice] = useState('');
@@ -38,7 +39,9 @@ const AddSuperCarPricing = () => {
     const handlePostRequest = async () => {
         const formData = new FormData();
         formData.append('name', name);
-        formData.append('image', image);
+        images.forEach((image, index) => {
+            formData.append(`image`, image);
+        });
         formData.append('superCar', superCar);
         formData.append('price', price);
         formData.append('kmLimit', kmLimit);
@@ -55,7 +58,8 @@ const AddSuperCarPricing = () => {
             toast.success("Super car Pricing added successfully");
             navigate('/allsupercarpricing')
             setName('');
-            setImage('');
+            setImages([]);
+            setPreviewImages([]);
             setPrice('');
             setKmLimit('');
             setKmPrice('');
@@ -66,8 +70,12 @@ const AddSuperCarPricing = () => {
             SetPricePerMinGreater()
 
         } catch (error) {
-            console.log('Error to add Super car Pricing:', error)
-            toast.error("Error to add Super car Pricing")
+            console.log('Error to add Super car Pricing:', error);
+            if (error.response && error.response.data && error.response.data.message === 'pricing already exit.') {
+                toast.error("Pricing already exists. Please use a different pricing.");
+            } else {
+                toast.error("Error to add Super car Pricing");
+            }
         }
     }
 
@@ -87,6 +95,18 @@ const AddSuperCarPricing = () => {
     const triggerFileInput1 = () => {
         document.getElementById('fileInput1').click();
     };
+
+    const handleFileChange = (e) => {
+        const selectedFiles = Array.from(e.target.files);
+        const newImages = selectedFiles.map(file => ({
+            img: URL.createObjectURL(file),
+            file: file
+        }));
+        setPreviewImages(prev => [...prev, ...newImages]);
+        setImages(prev => [...prev, ...selectedFiles]);
+    };
+
+
 
 
     return (
@@ -156,19 +176,28 @@ const AddSuperCarPricing = () => {
                                 <label htmlFor="">Upload Super car Image</label>
                                 <div className='ambulance2' onClick={triggerFileInput1}>
                                     <div className='vehicle14'>
-                                        {image ? (
-                                            <img src={URL.createObjectURL(image)} alt="" />
+                                        {previewImages.length > 0 ? (
+                                            previewImages.map((img, index) => (
+                                                <img key={index} src={img.img} alt={`Preview ${index}`} />
+                                            ))
                                         ) : (
                                             <img src={img3} alt="" />
                                         )}
                                     </div>
                                     <p>Drag and drop images here, or click to add image</p>
                                     <button>Add Images</button>
-                                    <input type="file" id="fileInput1" style={{ display: 'none' }} onChange={(e) => setImage(e.target.files[0])} />
+                                    <input
+                                        type="file"
+                                        id="fileInput1"
+                                        style={{ display: 'none' }}
+                                        multiple
+                                        onChange={handleFileChange}
+                                    />
                                 </div>
+                                {/* <button onClick={handlePostRequest}>Upload</button> */}
                             </div>
                         </div>
-                
+
 
                         <div className='dailyprice5'>
                             <button onClick={() => navigate('/allsupercarpricing')}>Cancel</button>

@@ -47,7 +47,8 @@
 
 
 .vehicle12{
-
+    display: flex;
+    flex-direction: column;
 }
 
 .vehicle12 img{
@@ -72,14 +73,15 @@
 
 
 .vehicle14{
-    width: 100px;
-    height: 100px;
+    width: auto;
+    height: auto;
     border-radius: 9px;
     background-color: #F52D56;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    padding: 10px;
 }
 
 

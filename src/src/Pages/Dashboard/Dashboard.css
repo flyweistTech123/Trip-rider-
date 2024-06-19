@@ -1,0 +1,125 @@
+.dashboard {
+}
+
+.dashboardconatiner {
+  width: 100%;
+  height: 700px;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 18px 18px 10px 10px;
+  overflow: auto;
+}
+
+.dashboard1 {
+  width: 301px;
+  height: 176px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  cursor: pointer;
+}
+
+.dashboard1 img {
+}
+
+.dashboard1 p {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  color: #101828;
+  line-height: 22.5px;
+  margin: 0;
+}
+
+.dashboard1 h6 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  color: #101828;
+  line-height: 32.5px;
+  margin: 0;
+}
+
+.dashboard2 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 95%;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.dashboard3 {
+  margin-top: 20px;
+}
+
+.dashboard3 table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dashboard3 tbody {
+}
+
+.dashboard3 thead {
+  border-radius: 0px 0px 6px 6px;
+  background-color: #f52d56;
+}
+
+.dashboard3 table tr {
+  height: 62px;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 0px 0px 6px 6px;
+}
+
+.dashboard3 table th {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #ffffff;
+  line-height: 21px;
+  margin: 0;
+  text-align: center;
+  height: 44px;
+}
+
+.dashboard3 table td {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #000000;
+  line-height: 21px;
+  margin: 0;
+  text-align: center;
+}
+
+.dashboard4 {
+  width: 95%;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.dashboard4 h6 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #000000;
+  line-height: 27px;
+  margin: 0;
+}
+
+.dashboard5 {
+  width: 67.22px;
+  height: 23.11px;
+  background-color: #e8ffeb;
+  border-radius: 16.8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #3a5b16;
+}

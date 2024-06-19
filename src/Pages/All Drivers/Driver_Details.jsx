@@ -903,7 +903,7 @@ const Driver_Details = () => {
                                     </div>
 
                                     <div className='rider_details8'>
-                                        <div className='rider_details9'>
+                                        <div className='rider_details9' onClick={() => navigate(`/driver_earning/${id}`)}>
                                             <p>Wallet Balance</p>
                                             <div className='rider_details10'>
                                                 <img src={img1} alt="" />

@@ -74,19 +74,6 @@ const UpdateSuperCarPricing = () => {
         }
     }
 
-    // useEffect(() => {
-    //     const fetchSuperCar = async () => {
-    //         try {
-    //             const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/SuperCar`);
-    //             setSuperCars(response.data.data);
-    //         } catch (error) {
-    //             console.error('Error fetching Super car:', error);
-    //         }
-    //     };
-
-    //     fetchSuperCar();
-    // }, []);
-
     const triggerFileInput = () => {
         document.getElementById('fileInput').click();
     };
@@ -154,21 +141,6 @@ const UpdateSuperCarPricing = () => {
                                     <input type="file" id="fileInput" style={{ display: 'none' }} onChange={(e) => setImage(e.target.files[0])} />
                                 </div>
                             </div>
-                        </div>
-                        <div className='dailyprice3'>
-                            {/* <div className='dailyprice2'>
-                                <label htmlFor="">Super Cars</label>
-                                <select value={superCar} onChange={(e) => {
-                                    const selectedSupercar = superCars.find(supercar => supercar.name === e.target.value);
-                                    setSuperCarID(selectedSupercar._id);
-                                    setSuperCar(e.target.value);
-                                }}>
-                                    <option>Select Super Cars</option>
-                                    {superCars?.map(Supercar => (
-                                        <option key={Supercar._id} value={Supercar.name}>{Supercar.name}</option>
-                                    ))}
-                                </select>
-                            </div> */}
                         </div>
 
 

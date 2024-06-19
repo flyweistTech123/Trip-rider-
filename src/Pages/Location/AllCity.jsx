@@ -135,9 +135,8 @@ const AllCity = () => {
                                     <th>City</th>
                                     <th>CountryCode</th>
                                     <th>StateCode</th>
+                                    <th>Available City</th>
                                     <th>Limit</th>
-                                    <th>Latitude</th>
-                                    <th>Longitude</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -157,9 +156,14 @@ const AllCity = () => {
                                             <td>{city?.city}</td>
                                             <td>{city?.countryCode}</td>
                                             <td>{city?.stateCode}</td>
+                                            <td>
+                                                <ul>
+                                                    {city.availableServiceCity.map((availableCity, index) => (
+                                                        <li key={index}>{availableCity}</li>
+                                                    ))}
+                                                </ul>
+                                            </td>
                                             <td>{city?.limit}</td>
-                                            <td>{city?.latitude}</td>
-                                            <td>{city?.longitude}</td>
                                             <td style={{
                                                 color:
                                                     city?.status === 'ACTIVE' ? '#609527' :

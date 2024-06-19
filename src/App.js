@@ -104,6 +104,7 @@ import UpdateAgreement from './Pages/Agreement/UpdateAgreement.jsx';
 import UserAgreement from './Pages/Agreement/UserAgreement.jsx';
 import DriverAgreement from './Pages/Agreement/DriverAgreement.jsx';
 import VendorAgreement from './Pages/Agreement/VendorAgreement.jsx';
+import Driver_Earning from './Pages/All Drivers/Driver_Earning.jsx';
 
 
 
@@ -215,6 +216,7 @@ function App() {
             <Route path="/useragreement" element={<AdminRouteProtect> <UserAgreement /> </AdminRouteProtect>} />
             <Route path="/driveragreement" element={<AdminRouteProtect> <DriverAgreement /> </AdminRouteProtect>} />
             <Route path="/vendoragreement" element={<AdminRouteProtect> <VendorAgreement /> </AdminRouteProtect>} />
+            <Route path="/driver_earning/:id" element={<AdminRouteProtect> <Driver_Earning /> </AdminRouteProtect>} />
           </Routes>
         </Router>
     </>

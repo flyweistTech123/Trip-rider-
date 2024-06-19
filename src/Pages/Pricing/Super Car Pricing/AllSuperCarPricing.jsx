@@ -108,12 +108,12 @@ const AllSuperCarPricing = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="8" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Super Car pricing...</td>
+                                        <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Super Car pricing...</td>
                                     </tr>
                                 ) :
                                     searchQuery && filteredPriceData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="8" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Price not found</td>
+                                            <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Price not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery
@@ -153,11 +153,15 @@ const AllSuperCarPricing = () => {
                                             supercarpriceeData.map(supercarprice => (
                                                 <tr key={supercarprice.id}>
                                                     <td>{supercarprice?.name}</td>
-                                                    {supercarprice.image.length > 0 && (
-                                                        <td className='vehicle12'>
-                                                            <img src={supercarprice.image[0].img} alt="" />
-                                                        </td>
-                                                    )}
+                                                    <td>
+                                                        {supercarprice.image.length > 0 && (
+                                                            supercarprice.image.map((img, index) => (
+                                                                <div className='vehicle12'>
+                                                                    <img key={index} src={img.img} alt={`Supercar ${supercarprice.name}`} />
+                                                                </div>
+                                                            ))
+                                                        )}
+                                                    </td>
                                                     <td>{supercarprice.kmLimit}</td>
                                                     <td>{supercarprice.kmPrice}</td>
                                                     <td>{supercarprice.hrLimit}</td>

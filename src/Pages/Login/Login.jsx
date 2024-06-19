@@ -42,7 +42,7 @@ const Login = () => {
                 role: role
             });
     
-            console.log('Response:', response); // Debugging line to see the entire response object
+            console.log('Response:', response);
     
             // Check if the status is 200 and the expected data is present
             if (response.status === 200 && response.data && response.data.data) {

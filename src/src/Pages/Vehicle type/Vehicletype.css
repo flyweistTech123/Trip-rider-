@@ -1,0 +1,95 @@
+.vehicle{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.vehicle p{
+    width: 93px;
+    height: 26px;
+    border-radius: 5px;
+    background-color: #24C5D8;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    color: #FFFFFF;
+    line-height:18px;
+    margin: 0;
+    padding-top: 5px;
+}
+.vehicle1{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.vehicle1 select{
+    width: 93px;
+    height: 26px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background-color: #0F2C64;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    color: #FFFFFF;
+    line-height:18px;
+    margin: 0;
+}
+
+
+.vehicle12{
+
+}
+
+.vehicle12 img{
+    max-width: 100px;
+}
+
+
+.vehicle13{
+    margin-top: 50px;
+}
+
+.vehicle13 label{
+    font-family: "Mulish", sans-serif;
+    font-weight: 500;
+    font-size: 19.59px;
+    color: #000000;
+    line-height: 24.58px;
+    margin: 0;
+}
+
+
+
+
+.vehicle14{
+    width: 100px;
+    height: 100px;
+    border-radius: 9px;
+    background-color: #F52D56;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+
+.vehicle14 img{
+    max-width: 80px;
+    max-height: 80px;
+}
+
+
+
+.vehicle18{
+    margin-top: 30px;
+}
