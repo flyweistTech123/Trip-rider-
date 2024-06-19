@@ -21,8 +21,8 @@ import img3 from '../../../Images/img43.png';
 const UpdateSuperCarPricing = () => {
     const { id } = useParams();
     const [name, setName] = useState('');
-    const [image, setImage] = useState([]);
-    const [imageData, setImageData] = useState([]);
+    const [images, setImages] = useState([]);
+    const [previewImages, setPreviewImages] = useState([]);
     const [price, setPrice] = useState('');
     const [kmLimit, setKmLimit] = useState('');
     const [kmPrice, setKmPrice] = useState('')
@@ -37,7 +37,8 @@ const UpdateSuperCarPricing = () => {
                 const response = await axios.get(`${BaseUrl}api/v1/SuperCarPricing/${id}`, getAuthHeaders());
                 const { name, image, price, kmLimit, kmPrice, hrPrice, hrLimit, pricePerKmGreater, pricePerMinGreater } = response.data.data;
                 setName(name);
-                setImage(image[0].img);
+                setPreviewImages(image.map(imgObj => imgObj.img));
+                setImages(image.map(imgObj => imgObj.img));
                 setPrice(price);
                 setKmLimit(kmLimit);
                 setKmPrice(kmPrice);
@@ -54,7 +55,9 @@ const UpdateSuperCarPricing = () => {
     const handlePutRequest = async () => {
         const formData = new FormData();
         formData.append('name', name);
-        formData.append('image', image);
+        images.forEach((image, index) => {
+            formData.append(`image`, image);
+        });
         formData.append('price', price);
         formData.append('kmLimit', kmLimit);
         formData.append('kmPrice', kmPrice);
@@ -77,6 +80,17 @@ const UpdateSuperCarPricing = () => {
     const triggerFileInput = () => {
         document.getElementById('fileInput').click();
     };
+
+    const handleFileChange = (e) => {
+        const selectedFiles = Array.from(e.target.files);
+        const newImages = selectedFiles.map(file => ({
+            img: URL.createObjectURL(file),
+            file: file
+        }));
+        setPreviewImages(prev => [...prev, ...newImages.map(imgObj => imgObj.img)]);
+        setImages(prev => [...prev, ...selectedFiles]);
+    };
+
     const navigate = useNavigate()
     return (
         <>
@@ -130,15 +144,23 @@ const UpdateSuperCarPricing = () => {
                                 <label htmlFor="">Updated Super Car Image</label>
                                 <div className='service7' onClick={triggerFileInput}>
                                     <div className='vehicle14'>
-                                        {image ? (
-                                            <img src={image instanceof File ? URL.createObjectURL(image) : image} alt="" />
+                                        {previewImages.length > 0 ? (
+                                            previewImages.map((img, index) => (
+                                                <img key={index} src={img} alt={`Preview ${index}`} />
+                                            ))
                                         ) : (
                                             <img src={img3} alt="" />
                                         )}
                                     </div>
                                     <p>Drag and drop images here, or click to add image</p>
-                                    <button>Update Image</button>
-                                    <input type="file" id="fileInput" style={{ display: 'none' }} onChange={(e) => setImage(e.target.files[0])} />
+                                    <button>Update Images</button>
+                                    <input
+                                        type="file"
+                                        id="fileInput"
+                                        style={{ display: 'none' }}
+                                        multiple
+                                        onChange={handleFileChange}
+                                    />
                                 </div>
                             </div>
                         </div>

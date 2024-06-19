@@ -76,7 +76,8 @@
     width: auto;
     height: auto;
     border-radius: 9px;
-    background-color: #F52D56;
+    /* background-color: #F52D56; */
+    background-color: #000000;
     display: flex;
     align-items: center;
     justify-content: center;

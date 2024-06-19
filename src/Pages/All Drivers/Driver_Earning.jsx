@@ -17,20 +17,26 @@ import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 const Driver_Earning = () => {
-    const [bookingData, setBookingData] = useState([]);
+    const [earningdata, setEarningData] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [drivername, setDrivername] = useState('Driver');
     const [loading, setLoading] = useState(true);
+    const [selectedPaymentmode, setSelectedPaymentMode] = useState('');
     const navigate = useNavigate()
 
     const { id } = useParams();
 
 
+    const fetchEarningData = () => {
+        let apiUrl = `${BaseUrl}api/v1/getDriverEarning/${id}?`;
 
-    const fetchBookingData = () => {
-        axios.get(`${BaseUrl}api/v1/getDriverEarning/${id}`, getAuthHeaders())
+        if (selectedPaymentmode) {
+            apiUrl += `type=${selectedPaymentmode}`;
+        }
+
+        axios.get(apiUrl, getAuthHeaders())
             .then(response => {
-                setBookingData(response.data.data);
+                setEarningData(response.data.data);
             })
             .catch(error => {
                 console.error('Error fetching Earning data:', error);
@@ -55,9 +61,9 @@ const Driver_Earning = () => {
     };
 
     useEffect(() => {
-        fetchBookingData();
+        fetchEarningData();
         fetchUserData();
-    }, [id]);
+    }, [id, selectedPaymentmode]);
 
 
 
@@ -65,12 +71,15 @@ const Driver_Earning = () => {
         setSearchQuery(event.target.value);
     };
 
-    const filteredBookingData = bookingData.filter(booking => {
-        const userNameMatches = booking?.userId?.name && booking?.userId?.name.toLowerCase().includes(searchQuery.toLowerCase());
-        const driverNameMatches = booking?.driver?.name && booking?.driver?.name.toLowerCase().includes(searchQuery.toLowerCase());
-        const VendorNameMatches = booking?.vendorId?.name && booking?.vendorId?.name.toLowerCase().includes(searchQuery.toLowerCase());
 
-        return userNameMatches || driverNameMatches || VendorNameMatches;
+    const handlePaymentModeChange = (event) => {
+        setSelectedPaymentMode(event.target.value);
+    };
+
+
+    const filteredEarningData = earningdata.filter(earning => {
+        const userNameMatches = earning?.userId?.name && earning?.userId?.name.toLowerCase().includes(searchQuery.toLowerCase());
+        return userNameMatches;
     });
 
 
@@ -93,6 +102,13 @@ const Driver_Earning = () => {
                         </div>
 
                         <div className='rider4'>
+                            <div className='adminearning'>
+                                <select value={selectedPaymentmode} onChange={handlePaymentModeChange}>
+                                    <option value="">All Payment</option>
+                                    <option value="UPI">WALLET</option>
+                                    <option value="CASH">CASH</option>
+                                </select>
+                            </div>
                             <button onClick={() => navigate(-1)}>Back</button>
                             <div className='rider5'>
                                 <div className='rider6'>
@@ -128,14 +144,14 @@ const Driver_Earning = () => {
                                         <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading {drivername}'s Earnings...</td>
                                     </tr>
                                 ) :
-                                    searchQuery && filteredBookingData.length === 0 ? (
+                                    searchQuery && filteredEarningData.length === 0 ? (
                                         <tr>
                                             <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Earning not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery
                                             ?
-                                            filteredBookingData.map(transaction => (
+                                            filteredEarningData.map(transaction => (
                                                 <tr key={transaction.id}>
                                                     <td>{transaction.id}</td>
                                                     <td>{transaction?.bookingId?.bookingId}</td>
@@ -149,12 +165,12 @@ const Driver_Earning = () => {
                                                     <td>{transaction?.transactionStatus}</td>
                                                 </tr>
                                             ))
-                                            : bookingData.length === 0 ? ( // Check if filtered data is empty
+                                            : earningdata.length === 0 ? ( // Check if filtered data is empty
                                                 <tr>
                                                     <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>No Earnings found for {drivername}.</td>
                                                 </tr>
                                             ) :
-                                                bookingData.map(transaction => (
+                                                earningdata.map(transaction => (
                                                     <tr key={transaction.id}>
                                                         <td>{transaction.id}</td>
                                                         <td>{transaction?.bookingId?.bookingId}</td>

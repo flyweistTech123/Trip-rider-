@@ -114,8 +114,10 @@
   width: 42px;
   height: 42px;
   border-radius: 41px;
-  background-color: #fee0e6;
-  color: #c3052c;
+  /* background-color: #fee0e6; */
+  background-color: #000000;
+  /* color: #c3052c; */
+  color: #FFFFFF;
   font-weight: 500;
   font-size: 20px;
   display: flex;
@@ -166,7 +168,8 @@
   border: none;
   outline: none;
   border-radius: 5px;
-  background-color: #C3052C;
+  /* background-color: #C3052C; */
+  background-color: #000000;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 14px;

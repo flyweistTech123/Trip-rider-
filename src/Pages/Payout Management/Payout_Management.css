@@ -62,7 +62,8 @@
 .payuser3 button{
     width: 217px;
     height: 67px;
-    background-color: #F52D56;
+    /* background-color: #F52D56; */
+    background-color: #000000;
     border: none;
     outline: none;
     border-radius: 14px;
@@ -75,14 +76,16 @@
 
 
 .payuser3 button:hover{
-    background-color: #C3052C;
+  background-color: #111; /* Darker background color on hover */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow effect on hover */
 }
 
 
 .payuser4 button{
     width: 57px;
     height: 27px;
-    background-color: #F52D56;
+    /* background-color: #F52D56; */
+    background-color: #000000;
     border: none;
     outline: none;
     border-radius: 50px;
@@ -94,5 +97,7 @@
 }
 
 .payuser4 button:hover{
-    background-color: #C3052C;
+    /* background-color: #C3052C; */
+    background-color: #111; /* Darker background color on hover */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow effect on hover */
 }

@@ -1,6 +1,6 @@
 .notification {
-    width: 95%;
-    margin: auto;
+  width: 95%;
+  margin: auto;
 }
 
 .notification1 {
@@ -90,166 +90,145 @@
   margin: 0;
 }
 
-
-.notification7{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.notification7 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-
-.notification7 label{
-    font-family: "Mulish", sans-serif;
-    font-weight: 500;
-    font-size: 17.92px;
-    color: #000000;
-    line-height: 22.49px;
-    margin: 0;
+.notification7 label {
+  font-family: "Mulish", sans-serif;
+  font-weight: 500;
+  font-size: 17.92px;
+  color: #000000;
+  line-height: 22.49px;
+  margin: 0;
 }
 
-
-.notification7 input{
-    width: 500px;
-    height: 53px;
-    border-radius: 6.81px;
-    border: 1.36px solid #b7b7b7;
-    outline: none;
-    padding-left: 10px;
+.notification7 input {
+  width: 500px;
+  height: 53px;
+  border-radius: 6.81px;
+  border: 1.36px solid #b7b7b7;
+  outline: none;
+  padding-left: 10px;
 }
 
-
-.notification8{
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.notification8 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.notification8 label{
-    font-family: "Mulish", sans-serif;
-    font-weight: 500;
-    font-size: 17.92px;
-    color: #000000;
-    line-height: 22.49px;
-    margin: 0;
+.notification8 label {
+  font-family: "Mulish", sans-serif;
+  font-weight: 500;
+  font-size: 17.92px;
+  color: #000000;
+  line-height: 22.49px;
+  margin: 0;
 }
 
-
-.notification8 input{
-    width: 168px;
-    height: 50px;
-    font-size: 400;
-    color: #7D7D7D;
-    border: 1px solid #E0E0E0;
-    border-radius: 8px;
-    outline: none;
+.notification8 input {
+  width: 168px;
+  height: 50px;
+  font-size: 400;
+  color: #7d7d7d;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  outline: none;
 }
 
-
-.notification7 textarea{
-    border-radius: 6.81px;
-    border: 1.36px solid #b7b7b7;
-    outline: none;
-    padding-left: 10px;
-    padding-top: 10px;
+.notification7 textarea {
+  border-radius: 6.81px;
+  border: 1.36px solid #b7b7b7;
+  outline: none;
+  padding-left: 10px;
+  padding-top: 10px;
 }
 
-
-.notification9{
-    text-align: end;
-    margin-top: 20px;
+.notification9 {
+  text-align: end;
+  margin-top: 20px;
 }
 
-.notification9 button:nth-child(1){
-    width: 74px;
-    height: 35px;
-    border-radius: 8px;
-    border: 1px solid #E0E0E0;
-    outline: none;
-    background-color: #FFFFFF;
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    color: #ABABAB;
-    line-height: 24px;
-    margin: 0;
-    margin-right: 10px;
+.notification9 button:nth-child(1) {
+  width: 74px;
+  height: 35px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  outline: none;
+  background-color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #ababab;
+  line-height: 24px;
+  margin: 0;
+  margin-right: 10px;
 }
 
-
-.notification9 button:nth-child(2):hover{
-    background-color: #C3052C;
+.notification9 button:nth-child(2):hover {
+  background-color: #111;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.notification9 button:nth-child(1):hover{
-    background-color: #C3052C;
-    color: #FFFFFF;
+.notification9 button:nth-child(1):hover {
+  background-color: #111;
+  color: #ffffff;
 }
 
-
-.notification9 button:nth-child(2){
-    width: 74px;
-    height: 35px;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-    background-color: #F52D56;
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    color: #FFFFFF;
-    line-height: 24px;
-    margin: 0;
+.notification9 button:nth-child(2) {
+  width: 74px;
+  height: 35px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  /* background-color: #F52D56; */
+  background-color: #000000;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #ffffff;
+  line-height: 24px;
+  margin: 0;
 }
 
-
-.notification8 button:hover{
-    background-color: #C3052C;
+.notification8 button:hover {
+  background-color: #c3052c;
 }
 
-
-
-
-
-
-.notification10{
-    margin-top: 20px;
-    padding-bottom: 20px;
+.notification10 {
+  margin-top: 20px;
+  padding-bottom: 20px;
 }
 
-.notification10 table{
-    border-collapse: collapse;
-    width: 100%;
+.notification10 table {
+  border-collapse: collapse;
+  width: 100%;
 }
 
-
-.notification10 table th{
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    font-size: 14px;
-    color: #878787;
-    line-height: 21px;
-    margin: 0;
-    text-align: center;
-    border-radius: 4px;
-    height: 37px;
-    border: 1px solid #E5E5E5;
+.notification10 table th {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #878787;
+  line-height: 21px;
+  margin: 0;
+  text-align: center;
+  border-radius: 4px;
+  height: 37px;
+  border: 1px solid #e5e5e5;
 }
 
-
-.notification10 table td{
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    font-size: 14px;
-    color: #000000;
-    line-height: 21px;
-    margin: 0;
-    text-align: center;
-    border-radius: 4px;
-    border: 1px solid #E5E5E5;
+.notification10 table td {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #000000;
+  line-height: 21px;
+  margin: 0;
+  text-align: center;
+  border-radius: 4px;
+  border: 1px solid #e5e5e5;
 }
-
-
-
-
-
-

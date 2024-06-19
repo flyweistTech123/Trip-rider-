@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 
-import img from '../../Images/img4.png'
+import img from '../../Images/logo.png'
 import img1 from '../../Images/img10.png'
 import img2 from '../../Images/img11.png'
 import img3 from '../../Images/img12.png'
@@ -87,7 +87,7 @@ const Sidebar = () => {
     if (adminData && adminData.permissions) {
         permissionsArray = adminData.permissions;
     } else {
-        console.log('Permissions array not found in adminData.');
+        // console.log('Permissions array not found in adminData.');
     }
 
     const filteredSidebarItems = [

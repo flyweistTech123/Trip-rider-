@@ -127,12 +127,12 @@ const Payout_Management = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading payout...</td>
+                                        <td colSpan="11" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading payout...</td>
                                     </tr>
                                 ) :
                                     searchQuery && filteredrefundData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>detail not found</td>
+                                            <td colSpan="11" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>detail not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery

@@ -4,11 +4,9 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import img from '../../Images/img.png';
-import google from '../../Images/img1.png';
+import img from '../../Images/logo.png';
 import { BaseUrl } from '../../Components/BaseUrl/BaseUrl';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
-
 
 const Login = () => {
     const navigate = useNavigate();
@@ -18,10 +16,9 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [emailError, setEmailError] = useState(false);
 
-
     useEffect(() => {
         localStorage.clear();
-    }, [])
+    }, []);
 
     const handleLogin = async () => {
         try {
@@ -30,43 +27,33 @@ const Login = () => {
                 toast.error('Please input your email!');
                 return;
             }
-    
+
             if (!password) {
                 toast.error('Password is required.');
                 return;
             }
-    
+
             const response = await axios.post(`${BaseUrl}api/v1/admin/login`, {
                 email: email,
                 password: password,
                 role: role
             });
-    
-            console.log('Response:', response);
-    
-            // Check if the status is 200 and the expected data is present
-            if (response.status === 200 && response.data && response.data.data) {
-                const { token, user } = response.data.data;
-                localStorage.setItem('token', token);
-                localStorage.setItem('role', user.role);
-                toast.success("Login successfully");
-                navigate('/dashboard');
-            } else {
-                console.warn('Unexpected response structure:', response.data); // Debugging line to see unexpected response structure
-                toast.error('Something went wrong. Please try again.');
-            }
+
+            const { token, UpdatedCategory } = response.data.data;
+            const userRole = UpdatedCategory.role;
+            localStorage.setItem('token', token);
+            localStorage.setItem('role', userRole);
+            toast.success("Login successfully");
+            navigate('/dashboard');
         } catch (error) {
-            console.error('Error:', error); // Detailed error log
+            console.error('Error:', error.message);
             if (error.response && error.response.data && error.response.data.message === 'user not found ! not registered') {
-                toast.error('Admin not exists. Please use a different email.');
+                toast.error('Admin does not exist. Please use a different email.');
             } else {
                 toast.error('Something went wrong. Please try again.');
             }
         }
     };
-    
-
-
 
     return (
         <>
@@ -83,19 +70,14 @@ const Login = () => {
 
                 <div className='login2'>
                     <div className='login7'>
-                        <p>Login an Account</p>
+                        <p>Login to an Account</p>
                         <h5>Welcome Back, Lorem ipsum dolor sit amet.</h5>
                     </div>
-                    {/* <div className='login3'>
-                        <button> <img src={google} alt="" />Sign-in with google</button>
-                    </div> */}
                     <div className='login4'>
                         <div className='login20'>
                             <label htmlFor="">Email</label>
                             <input
                                 type="email"
-                                name=""
-                                id=""
                                 placeholder='ex. email@domain.com'
                                 value={email}
                                 onChange={(e) => {
@@ -111,8 +93,6 @@ const Login = () => {
                             <div style={{ position: 'relative' }}>
                                 <input
                                     type={showPassword ? 'text' : 'password'}
-                                    name=""
-                                    id=""
                                     placeholder='Enter password'
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
@@ -136,7 +116,7 @@ const Login = () => {
                     </div>
 
                     <div className='login5' onClick={handleLogin}>
-                        <button >Login</button>
+                        <button>Login</button>
                     </div>
                     <div className='login6'>
                         <span>Don’t have an account?</span>

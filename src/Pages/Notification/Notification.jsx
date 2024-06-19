@@ -35,25 +35,46 @@ const Notification = () => {
     const [sendTo, setSendTo] = useState('');
     const [selectedId, setSelectedId] = useState(null);
     const [page, setPage] = useState(1);
+    const [limitd, setLimitd] = useState('');
+    const [limitv, setLimitv] = useState('');
+    const [limitu, setLimitu] = useState('');
     const [limit, setLimit] = useState(10);
     const [search, setSearch] = useState("");
     const [totalPages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(false);
 
-    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+    const currentDate = new Date().toISOString().split('T')[0];
 
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     useEffect(() => {
         fetchNotificationData();
         fetchDriver();
         fetchVendor();
         fetchUser();
-    }, [limit, search, page]);
+    }, [limitd,]);
+
+
+    const fetchData = async () => {
+        try {
+            const response1 = await axios.get(`${BaseUrl}api/v1/admin/all/driver?page=1&limit=${limitd}`, getAuthHeaders());
+            const response2 = await axios.get(`${BaseUrl}api/v1/admin/all/vendor?page=1&limit=${limitv}`, getAuthHeaders());
+            const response3 = await axios.get(`${BaseUrl}api/v1/admin/all/user?page=1&limit=${limitu}`, getAuthHeaders());
+            setLimitd(response1.data.data.totalDocs)
+            setLimitv(response2.data.data.totalDocs)
+            setLimitu(response3.data.data.totalDocs)
+        } catch (error) {
+            console.error('Error fetching driver name:', error);
+        }
+    };
 
 
     const fetchDriver = async () => {
         try {
-            const response = await axios.get(`${BaseUrl}api/v1/admin/all/driver`, getAuthHeaders());
+            const response = await axios.get(`${BaseUrl}api/v1/admin/all/driver?limit=${limitd}`, getAuthHeaders());
             setDriverNames(response.data.data.docs);
         } catch (error) {
             console.error('Error fetching driver name:', error);
@@ -62,49 +83,22 @@ const Notification = () => {
 
     const fetchVendor = async () => {
         try {
-            const response = await axios.get(`${BaseUrl}api/v1/admin/all/vendor`, getAuthHeaders());
+            const response = await axios.get(`${BaseUrl}api/v1/admin/all/vendor?limit=${limitv}`, getAuthHeaders());
             setVendorNames(response.data.data.docs);
         } catch (error) {
             console.error('Error fetching Vendor name:', error);
         }
     };
 
-    // const fetchUser = async () => {
-    //     try {
-    //         const response = await axios.get(`${BaseUrl}api/v1/admin/all/user`, getAuthHeaders());
-    //         setUserNames(response.data.data.docs);
-    //     } catch (error) {
-    //         console.error('Error fetching User name:', error);
-    //     }
-    // };
-
-    const fetchUser = useCallback(() => {
-        axios.get(`${BaseUrl}api/v1/admin/all/user?page=${page}&limit=${limit}&search=${search}`, getAuthHeaders())
-            .then(response => {
-                setUserNames(prevData => [...prevData, ...response.data.data.docs]);
-                setTotalPages(response.data.data.totalPages);
-            })
-            .catch(error => {
-                console.error('Error fetching User name:', error);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }, [page, limit, search]);
-
-
-    useEffect(() => {
-        if (page > 1) {
-            fetchUser();
-        }
-    }, [page, fetchUser]);
-
-    const handleScroll = (e) => {
-        const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-        if (bottom && !loading && page < totalPages) {
-            setPage(prevPage => prevPage + 1);
+    const fetchUser = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}api/v1/admin/all/user?limit=${limitu}`, getAuthHeaders());
+            setUserNames(response.data.data.docs);
+        } catch (error) {
+            console.error('Error fetching User name:', error);
         }
     };
+
 
 
 
@@ -240,7 +234,6 @@ const Notification = () => {
                                         <label htmlFor="">Select the {sendTo}</label>
                                         <select onChange={(e) => setSelectedId(e.target.value)}
                                             value={selectedId}
-                                            onScroll={handleScroll}
                                         >
                                             <option value="">Select the individual {sendTo}</option>
                                             {sendTo === "DRIVER" ? (

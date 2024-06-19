@@ -67,7 +67,8 @@
 
 .dashboard3 thead {
   border-radius: 0px 0px 6px 6px;
-  background-color: #f52d56;
+  /* background-color: #f52d56; */
+  background-color: #080707;
 }
 
 .dashboard3 table tr {

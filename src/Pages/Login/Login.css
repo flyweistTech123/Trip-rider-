@@ -9,19 +9,24 @@
 .login1 {
   width: 40%;
   height: 100vh;
-  background-color: #F52D56;
-}
-
-.login9 {
+  /* background-color: #F52D56; */
+  background-color: #080707;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.login9 img {
-  width: 385.9px;
+.login9 {
+  width: 300px;
+  height: 300px;
+  text-align: center;
 }
 
+.login9 img {
+  width: 100%;
+  height: 100%;
+}
 
 .login10 {
   margin-top: 40px;
@@ -30,8 +35,8 @@
 .login10 h3 {
   font-family: "Outfit", sans-serif;
   font-weight: 600;
-  font-size: 40.26px;
-  color: #FFFFFF;
+  font-size: 25.26px;
+  color: #ffffff;
   line-height: 58.34px;
   margin: 0;
   padding-left: 20px;
@@ -41,7 +46,7 @@
   font-family: "Outfit", sans-serif;
   font-weight: 400;
   font-size: 16.09px;
-  color: #FFFFFFBF;
+  color: #ffffffbf;
   line-height: 22.13px;
   margin: 0;
   padding-left: 20px;
@@ -99,7 +104,7 @@
   font-family: "Outfit", sans-serif;
   font-weight: 600;
   font-size: 32.19px;
-  color: #0A0A0C;
+  color: #0a0a0c;
   line-height: 40.56px;
   margin: 0;
 }
@@ -127,7 +132,7 @@
   align-items: center;
   gap: 20px;
   cursor: pointer;
-  background-color: #F52D56;
+  background-color: #f52d56;
   transition: transform 0.3s ease;
 }
 
@@ -154,7 +159,6 @@
   line-height: 40px;
 }
 
-
 .login20 select {
   width: 450px;
   border: none;
@@ -168,7 +172,6 @@
   line-height: 40px;
 }
 
-
 .login20 input::placeholder {
   font-family: "Outfit", sans-serif;
   font-weight: 300;
@@ -177,7 +180,7 @@
   line-height: 17.74px;
 }
 
-.login20 label{
+.login20 label {
   font-family: "Outfit", sans-serif;
   font-weight: 600;
   font-size: 16.09px;
@@ -199,15 +202,17 @@
   font-weight: 500;
   font-size: 16.09px;
   line-height: 16.09px;
-  color: #FFFFFF;
+  color: #ffffff;
   letter-spacing: 1%;
   cursor: pointer;
-  background-color: #F52D56;
-  transition: transform 0.3s ease;
+  background-color: #080707; 
+  transition: background-color 0.3s ease; /* Added background-color transition */
 }
 
 .login5 button:hover {
-  transform: scale(0.9);
+  /* transform: scale(0.9); */
+  background-color: #111; /* Darker background color on hover */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow effect on hover */
 }
 
 .login6 {
@@ -218,16 +223,17 @@
   font-family: "Outfit", sans-serif;
   font-weight: 400;
   font-size: 16.09px;
-  color: #0A0A0C;
+  color: #0a0a0c;
   line-height: 20.28px;
   cursor: pointer;
 }
 
 .login6 span:nth-child(2) {
   font-family: "Outfit", sans-serif;
-  font-weight: 400;
+  font-weight: 700;
   font-size: 16.09px;
-  color: #F52D56;
+  /* color: #f52d56; */
+  color: #080707;
   line-height: 20.28px;
   cursor: pointer;
 }
@@ -239,9 +245,7 @@
   line-height: 40px;
 }
 
-
-
-.login50{
+.login50 {
   font-family: "Outfit", sans-serif;
   font-weight: 400;
   font-size: 16.09px;
