@@ -5,6 +5,7 @@ import HOC from '../../../Components/HOC/HOC'
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import img3 from '../../../Images/img43.png';
+import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
 
 
 import { useNavigate, useParams } from 'react-router-dom';
@@ -33,7 +34,7 @@ const UpdateAmbulancePricing = () => {
     useEffect(() => {
         const fetchPriceDetails = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/ambulanceVehicle/${id}`);
+                const response = await axios.get(`${BaseUrl}api/v1/ambulanceVehicle/${id}`, getAuthHeaders());
                 const { name, perKm, basePrice, taxRate, gstRate, serviceCharge, nightCharges, waitingCharge, trafficCharge, image } = response.data.data;
                 setName(name);
                 setImage(image);
@@ -66,7 +67,7 @@ const UpdateAmbulancePricing = () => {
         formData.append('trafficCharge', trafficcharge);
 
         try {
-            const response = await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/ambulanceVehicle/${id}`, formData)
+            const response = await axios.put(`${BaseUrl}api/v1/ambulanceVehicle/${id}`, getAuthHeaders(), formData)
             toast.success("Base Ambulance price Updated successfully");
             navigate('/allambulancepricing')
         } catch (error) {

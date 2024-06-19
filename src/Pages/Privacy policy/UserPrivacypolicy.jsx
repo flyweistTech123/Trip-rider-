@@ -72,7 +72,7 @@ const UserPrivacypolicy = () => {
                     <div className='terms'>
                         {loading ? (
                             <tr>
-                                <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Privacy Policy...</td>
+                                <td colSpan="7" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading Privacy Policy...</td>
                             </tr>
                         ) : privacyData.length === 0 ? (
                             <div className='terms1'>
@@ -82,7 +82,7 @@ const UserPrivacypolicy = () => {
 
                             privacyData?.map(privacy => (
                                 <div key={privacy._id}>
-                                    <div className='rider4'>
+                                    <div className='terms33'>
                                         <button onClick={() => navigate(`/updateprivacypolicy/${privacy._id}`)}>
                                             Update <MdModeEditOutline />
                                         </button>

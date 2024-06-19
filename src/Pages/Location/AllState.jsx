@@ -94,12 +94,12 @@ const AllState = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="8" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading states...</td>
+                                        <td colSpan="8" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading states...</td>
                                     </tr>
                                 ) :
                                     searchQuery && filteredStateData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="8" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>State not found</td>
+                                            <td colSpan="8" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>State not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery

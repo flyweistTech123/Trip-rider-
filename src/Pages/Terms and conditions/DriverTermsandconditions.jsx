@@ -75,7 +75,7 @@ const DriverTermsandconditions = () => {
                     <div className='terms'>
                         {loading ? (
                             <tr>
-                                <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading terms and conditions...</td>
+                                <td colSpan="7" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading terms and conditions...</td>
                             </tr>
                         ) : termsData.length === 0 ? (
                             <div className='terms1'>
@@ -85,7 +85,7 @@ const DriverTermsandconditions = () => {
 
                             termsData?.map(terms => (
                                 <div key={terms._id}>
-                                    <div className='rider4'>
+                                    <div className='terms33'>
                                         <button onClick={() => navigate(`/updatetermsandconditions/${terms._id}`)}>
                                             Update <MdModeEditOutline />
                                         </button>

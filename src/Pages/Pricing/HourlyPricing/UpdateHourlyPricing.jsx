@@ -5,6 +5,7 @@ import HOC from '../../../Components/HOC/HOC';
 import { useNavigate, useParams } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
+import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
 
 
 const UpdateHourlyPricing = () => {
@@ -25,7 +26,7 @@ const UpdateHourlyPricing = () => {
     useEffect(() => {
         const fetchPriceDetails = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/getHourlyPricingById/${id}`);
+                const response = await axios.get(`${BaseUrl}api/v1/getHourlyPricingById/${id}`, getAuthHeaders());
                 const { vehicle, city, km, hours, pricePerMin, pricePerkm, pricePerKmGreater, pricePerMinGreater } = response.data.data;
                 setVehicleId(vehicle._id);
                 setVehicleName(vehicle.name);
@@ -58,7 +59,7 @@ const UpdateHourlyPricing = () => {
 
 
         try {
-            const response = await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/updateHourlyPricing/${id}`, data);
+            const response = await axios.put(`${BaseUrl}api/v1/updateHourlyPricing/${id}`, getAuthHeaders(), data);
             toast.success("Hourly Pricing Updated successfully");
             navigate('/allhourlypricing');
         } catch (error) {
@@ -70,7 +71,7 @@ const UpdateHourlyPricing = () => {
     useEffect(() => {
         const fetchVehicles = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/vehicle`);
+                const response = await axios.get(`${BaseUrl}api/v1/vehicle`, getAuthHeaders());
                 setVehicles(response.data.data);
 
             } catch (error) {
@@ -85,7 +86,7 @@ const UpdateHourlyPricing = () => {
     useEffect(() => {
         const fetchCity = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/City`);
+                const response = await axios.get(`${BaseUrl}api/v1/City`, getAuthHeaders());
                 setCity(response.data.data);
             } catch (error) {
                 console.error('Error fetching City:', error);

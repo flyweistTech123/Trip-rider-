@@ -144,11 +144,11 @@ const AllCity = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="8" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading city...</td>
+                                        <td colSpan="8" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading city...</td>
                                     </tr>
                                 ) : cityData.length === 0 ? (
                                     <tr>
-                                        <td colSpan="8" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>City not found</td>
+                                        <td colSpan="8" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>City not found</td>
                                     </tr>
                                 ) : (
                                     cityData.map(city => (

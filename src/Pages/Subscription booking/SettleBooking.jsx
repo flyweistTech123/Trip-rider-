@@ -272,12 +272,12 @@ const SettleBooking = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="9" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Subscription booking...</td>
+                                        <td colSpan="9" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading Subscription booking...</td>
                                     </tr>
                                 ) :
                                     searchQuery && filteredbookingData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="9" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Subscription booking not found</td>
+                                            <td colSpan="9" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Subscription booking not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery

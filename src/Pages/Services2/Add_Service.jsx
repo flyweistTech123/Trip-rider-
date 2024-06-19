@@ -7,6 +7,7 @@ import HOC from '../../Components/HOC/HOC';
 import { useNavigate } from 'react-router-dom';
 import img3 from '../../Images/img43.png';
 import axios from 'axios';
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 const Add_Service = () => {
     const navigate = useNavigate();
@@ -35,7 +36,7 @@ const Add_Service = () => {
         formData.append('description', description);
 
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/serviceCategory', formData);
+            const response = await axios.post(`${BaseUrl}api/v1/serviceCategory`, getAuthHeaders(), formData);
             console.log('Response:', response.data);
             toast.success("Service Added successfully");
 

@@ -101,12 +101,12 @@ const AllPromoCode = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="5" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading promocode...</td>
+                                        <td colSpan="5" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading promocode...</td>
                                     </tr>
                                 ) :
                                     searchQuery && filteredPromoData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="5" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Promo code not found</td>
+                                            <td colSpan="5" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Promo code not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery

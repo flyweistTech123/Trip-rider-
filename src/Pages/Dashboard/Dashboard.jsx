@@ -76,6 +76,7 @@ const Dashboard = () => {
         axios.get(`${BaseUrl}api/v1/admin/all/vendor`, getAuthHeaders()),
         axios.get(`${BaseUrl}api/v1/getBooking?status=cancel`, getAuthHeaders()),
         axios.get(`${BaseUrl}api/v1/getBooking`, getAuthHeaders()),
+        axios.get(`${BaseUrl}api/v1/admin/me`, getAuthHeaders()),
       ]);
 
       setTotalRiders(ridreResponse.data.data.totalDocs);

@@ -3,14 +3,9 @@ import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import './Setting.css'
 import HOC from '../../Components/HOC/HOC'
-import { Link, Navigate } from 'react-router-dom';
-import { IoSearch } from "react-icons/io5";
-import { IoLocationSharp } from "react-icons/io5";
-import { MdEdit } from "react-icons/md";
-import { Button, Form } from "react-bootstrap";
-import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 const Setting = () => {
@@ -29,7 +24,7 @@ const Setting = () => {
 
     const fetchtripsettingDetails = async () => {
         try {
-            const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/commission`);
+            const response = await axios.get(`${BaseUrl}api/v1/commission`,  getAuthHeaders());
             const { adminCommission, disCountType, serviceTax, driverSearchRadius, userCanScheduleBookAfterMin, minimumTimeDriverFindInMinutes, maximumTimeFindInMinutesDriverForRegularRide } = response.data.data;
             setAdminCommission(adminCommission)
             setDisCountType(disCountType)
@@ -59,7 +54,7 @@ const Setting = () => {
         }
 
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/commission/add', data)
+            const response = await axios.post(`${BaseUrl}api/v1/commission/add`, getAuthHeaders(), data)
             toast.success("Trip Setting Updated successfully");
         } catch (error) {
             console.log('Error to update Trip setting:', error)
@@ -75,7 +70,7 @@ const Setting = () => {
 
     const fetchWalletsettingDetails = async () => {
         try {
-            const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/walletSetting`);
+            const response = await axios.get(`${BaseUrl}api/v1/walletSetting`, getAuthHeaders());
             const { walletMinimumAmount, walletMinimumAmountToAdd, walletMaximumAmountToAdd, driverWalletMinimumAmountToGetOrder } = response.data.data;
             setWalletMinimumAmount(walletMinimumAmount);
             setWalletMinimumAmountToAdd(walletMinimumAmountToAdd);
@@ -96,7 +91,7 @@ const Setting = () => {
         }
 
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/walletSetting/add', data)
+            const response = await axios.post(`${BaseUrl}api/v1/walletSetting/add`, getAuthHeaders(), data)
             toast.success("wallet Setting Updated successfully");
         } catch (error) {
             console.log('Error to update wallet setting:', error)
@@ -120,7 +115,7 @@ const Setting = () => {
 
     const fetchAppsettingDetails = async () => {
         try {
-            const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/appSetting`);
+            const response = await axios.get(`${BaseUrl}api/v1/appSetting`, getAuthHeaders());
             const { logo, favicon, appName, currencyName, countryCode, latitude, longitude } = response.data.data;
             setLogo(logo);
             setFavicon(favicon);
@@ -145,7 +140,7 @@ const Setting = () => {
         formData.append('latitude', latitude);
         formData.append('longitude', longitude);
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/appSetting/add', formData)
+            const response = await axios.post(`${BaseUrl}api/v1/appSetting/add`,  getAuthHeaders(),  formData)
             toast.success("App Setting Updated successfully");
         } catch (error) {
             console.log('Error to update App setting:', error)
@@ -163,7 +158,7 @@ const Setting = () => {
 
     const fetchReferralpsettingDetails = async () => {
         try {
-            const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/referralSetting`);
+            const response = await axios.get(`${BaseUrl}api/v1/referralSetting`, getAuthHeaders());
             const { referralForDriver, referralForUser } = response.data.data;
             setReferralForDriver(referralForDriver);
             setReferralForUser(referralForUser)
@@ -179,7 +174,7 @@ const Setting = () => {
             referralForUser: referralforuser,
         }
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/referralSetting/add', data)
+            const response = await axios.post(`${BaseUrl}api/v1/referralSetting/add`, getAuthHeaders(), data)
             toast.success("Referral Setting Updated successfully");
         } catch (error) {
             console.log('Error to update Referral setting:', error)
@@ -198,7 +193,7 @@ const Setting = () => {
 
     const fetchMapsettingDetails = async () => {
         try {
-            const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/mapSetting`);
+            const response = await axios.get(`${BaseUrl}api/v1/mapSetting`, getAuthHeaders());
             const { googleMapKeyForWebApp, googleMapKeyForDistanceMatrix, googleSheetId } = response.data.data;
             setGoogleMapKeyForWebApp(googleMapKeyForWebApp);
             setGoogleMapKeyForDistanceMatrix(googleMapKeyForDistanceMatrix);
@@ -216,7 +211,7 @@ const Setting = () => {
             googleSheetId: googlesheetId,
         }
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/mapSetting/add', data)
+            const response = await axios.post(`${BaseUrl}api/v1/mapSetting/add`, getAuthHeaders(), data)
             toast.success("Map Setting Updated successfully");
         } catch (error) {
             console.log('Error to update Map setting:', error)
@@ -235,7 +230,7 @@ const Setting = () => {
 
     const fetchEmergencysettingDetails = async () => {
         try {
-            const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/emergencyDetails`);
+            const response = await axios.get(`${BaseUrl}api/v1/emergencyDetails`, getAuthHeaders());
             const { phone, phoneText, policeNumber, policeNumberText, ambulanceNumber, ambulanceNumberText } = response.data.data;
             setPhone(phone);
             setPhoneText(phoneText);
@@ -259,7 +254,7 @@ const Setting = () => {
             ambulanceNumbertext:ambulanceNumbertext,
         }
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/emergencyDetails/add', data)
+            const response = await axios.post(`${BaseUrl}api/v1/emergencyDetails/add`, getAuthHeaders(), data)
             toast.success("Emergency Setting Updated successfully");
         } catch (error) {
             console.log('Error to update Emergency setting:', error)

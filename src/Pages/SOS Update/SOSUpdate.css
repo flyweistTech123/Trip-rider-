@@ -56,7 +56,8 @@
 .sos5 button{
     width: auto;
     height: auto;
-    background-color: #FF0034;
+    /* background-color: #FF0034; */
+    background-color: #000000;
     border: none;
     outline: none;
     border-radius: 10px;
@@ -71,16 +72,21 @@
 
 
 .sos5 button:hover{
-    background-color: #C3052C;
+    /* background-color: #C3052C; */
+    background-color: #111; /* Darker background color on hover */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow effect on hover */
 }
 
 
 .sos6{
-    background-color: #FF0034;
+    /* background-color: #FF0034; */
+    background-color: #000000;
     outline:  none;
     border: none;
 }
 
 .sos6:hover{
-    background-color: #C3052C;
+    /* background-color: #C3052C; */
+    background-color: #111; /* Darker background color on hover */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow effect on hover */
 }

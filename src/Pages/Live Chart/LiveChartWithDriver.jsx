@@ -291,11 +291,11 @@ const LiveChartWithDriver = () => {
                             <div className='livechart6' >
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading drivers...</td>
+                                        <td colSpan="7" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading drivers...</td>
                                     </tr>
                                 ) : drivers.length === 0 ? (
                                     <tr>
-                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Drivers not found</td>
+                                        <td colSpan="7" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Drivers not found</td>
                                     </tr>
                                 ) : (drivers.map(driver => (
                                     <div className='livechart7' key={driver?.id} onClick={() => handleDriverClick(driver)}>

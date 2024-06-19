@@ -86,11 +86,11 @@ const Earnings = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading...</td>
+                                        <td colSpan="6" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading...</td>
                                     </tr>
                                 ) : earningdata.length === 0 ? (
                                     <tr>
-                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Transactions not found</td>
+                                        <td colSpan="6" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Transactions not found</td>
                                     </tr>
                                 ) : (
 

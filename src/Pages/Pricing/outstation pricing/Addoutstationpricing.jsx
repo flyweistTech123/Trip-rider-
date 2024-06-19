@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
 
 
 // import img from '../../Images/img5.png'
@@ -42,7 +42,7 @@ const Addoutstationpricing = () => {
         }
 
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/OutStationPricing/add', data)
+            const response = await axios.post(`${BaseUrl}api/v1/OutStationPricing/add`,  getAuthHeaders(), data)
             toast.success("Outstation Pricing add successfully");
             navigate('/alloutstationpricing')
             setCity('');
@@ -63,7 +63,7 @@ const Addoutstationpricing = () => {
     useEffect(() => {
         const fetchVehicles = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/vehicle`);
+                const response = await axios.get(`${BaseUrl}api/v1/vehicle`,  getAuthHeaders());
                 setVehicles(response.data.data);
                 console.log(response.data.data, "vechcal print")
 
@@ -77,7 +77,7 @@ const Addoutstationpricing = () => {
     useEffect(() => {
         const fetchCity = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/City`);
+                const response = await axios.get(`${BaseUrl}api/v1/City`, getAuthHeaders());
                 setCitys(response.data.data);
             } catch (error) {
                 console.error('Error fetching City:', error);

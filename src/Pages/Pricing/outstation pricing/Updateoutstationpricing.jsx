@@ -4,6 +4,7 @@ import '../Pricing.css'
 import HOC from '../../../Components/HOC/HOC'
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
+import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
 
 
 import { useNavigate, useParams } from 'react-router-dom';
@@ -33,7 +34,7 @@ const Updateoutstationpricing = () => {
     useEffect(() => {
         const fetchPriceDetails = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/OutStationPricing/${id}`);
+                const response = await axios.get(`${BaseUrl}api/v1/OutStationPricing/${id}`, getAuthHeaders());
                 const { vehicle, city, type, price, kmLimit, kmPrice, hrPrice, hrLimit } = response.data.data;
                 setVehicleId(vehicle._id);
                 setVehicle(vehicle.name);
@@ -64,7 +65,7 @@ const Updateoutstationpricing = () => {
         }
 
         try {
-            const response = await axios.put(`https://rajiv-cab-mu.vercel.app/api/v1/OutStationPricing/update/${id}`, data)
+            const response = await axios.put(`${BaseUrl}api/v1/OutStationPricing/update/${id}`, getAuthHeaders(), data)
             toast.success("Outstation Pricing Updated successfully");
             navigate('/alloutstationpricing')
         } catch (error) {
@@ -76,7 +77,7 @@ const Updateoutstationpricing = () => {
     useEffect(() => {
         const fetchVehicles = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/vehicle`);
+                const response = await axios.get(`${BaseUrl}api/v1/vehicle`, getAuthHeaders());
                 setVehicles(response.data.data);
                 console.log(response.data.data, "vechcal print")
 
@@ -90,7 +91,7 @@ const Updateoutstationpricing = () => {
     useEffect(() => {
         const fetchCity = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/City`);
+                const response = await axios.get(`${BaseUrl}api/v1/City`, getAuthHeaders());
                 setCitys(response.data.data);
             } catch (error) {
                 console.error('Error fetching City:', error);

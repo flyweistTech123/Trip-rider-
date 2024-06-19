@@ -99,7 +99,8 @@
 .banner4 button {
   width: 257px;
   height: 61px;
-  background-color: #f52d56;
+  /* background-color: #f52d56; */
+  background-color: #000000;
   border: none;
   outline: none;
   border-radius: 14px;
@@ -116,7 +117,8 @@
   width: 82px;
   height: 82px;
   border-radius: 9px;
-  background-color: #f52d56;
+  /* background-color: #f52d56; */
+  background-color: #000000;
   display: flex;
   align-items: center;
   justify-content: center;

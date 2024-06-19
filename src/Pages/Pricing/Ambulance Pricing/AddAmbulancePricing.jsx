@@ -5,6 +5,7 @@ import HOC from '../../../Components/HOC/HOC'
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import img3 from '../../../Images/img43.png';
+import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
 
 
 import { useNavigate } from 'react-router-dom';
@@ -42,7 +43,7 @@ const AddAmbulancePricing = () => {
         formData.append('waitingCharge', waitingCharge);
         formData.append('trafficCharge', trafficcharge);
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/ambulanceVehicle', formData)
+            const response = await axios.post(`${BaseUrl}api/v1/ambulanceVehicle`, getAuthHeaders(), formData)
             const message = response.data.message;
             toast.success(message);
             navigate('/allambulancepricing')

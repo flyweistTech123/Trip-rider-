@@ -60,11 +60,11 @@
     color: #ffffff;
     line-height: 20.08px;
     margin: 0;
-    background-color: #f52d56;
+    background-color: #C3052C;
     cursor: pointer;
   }
   
   .promo1 button:nth-child(2):hover {
-    background-color: #c3052c;
+    background-color: #f52d56;
   }
   

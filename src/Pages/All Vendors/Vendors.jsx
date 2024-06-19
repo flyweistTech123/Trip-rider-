@@ -162,11 +162,11 @@ const Vendors = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="9" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading vendors...</td>
+                                        <td colSpan="9" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading vendors...</td>
                                     </tr>
                                 ) : vendorData?.length === 0 ? (
                                     <tr>
-                                        <td colSpan="9" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>vendor not found</td>
+                                        <td colSpan="9" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>vendor not found</td>
                                     </tr>
                                 ) : (
                                     vendorData?.map(vendor => (

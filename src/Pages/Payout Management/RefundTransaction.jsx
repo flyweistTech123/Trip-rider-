@@ -123,11 +123,11 @@ const RefundTransaction = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="11" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading refund...</td>
+                                        <td colSpan="11" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading refund...</td>
                                     </tr>
                                 ) : payoutdata.length === 0 ? (
                                     <tr>
-                                        <td colSpan="11" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Refund not found</td>
+                                        <td colSpan="11" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Refund not found</td>
                                     </tr>
                                 ) : (
                                     searchQuery

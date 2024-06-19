@@ -340,5 +340,6 @@
     font-size: 18px;
     line-height:21px;
     margin: 0;
-    color: #F52D56;
+    /* color: #F52D56; */
+    color: #000000;
 }

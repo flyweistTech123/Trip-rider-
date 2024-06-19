@@ -108,12 +108,12 @@ const AllSuperCarPricing = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Super Car pricing...</td>
+                                        <td colSpan="10" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading Super Car pricing...</td>
                                     </tr>
                                 ) :
                                     searchQuery && filteredPriceData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Price not found</td>
+                                            <td colSpan="10" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Price not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery

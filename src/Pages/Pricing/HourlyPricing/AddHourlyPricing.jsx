@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { IoSearch } from "react-icons/io5";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BaseUrl, getAuthHeaders } from '../../../Components/BaseUrl/BaseUrl';
 
 
 
@@ -41,7 +42,7 @@ const AddHourlyPricing = () => {
 
 
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/AddHourlyPricing', data);
+            const response = await axios.post(`${BaseUrl}api/v1/AddHourlyPricing`,getAuthHeaders(), data);
 
             toast.success("Hourly Pricing add successfully");
 
@@ -65,7 +66,7 @@ const AddHourlyPricing = () => {
     useEffect(() => {
         const fetchVehicles = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/vehicle`);
+                const response = await axios.get(`${BaseUrl}api/v1/vehicle`, getAuthHeaders());
                 setVehicles(response.data.data);
                 console.log(response.data.data, "vechcal print")
 
@@ -82,7 +83,7 @@ const AddHourlyPricing = () => {
     useEffect(() => {
         const fetchCity = async () => {
             try {
-                const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/City`);
+                const response = await axios.get(`${BaseUrl}api/v1/City`, getAuthHeaders());
                 setCity(response.data.data);
             } catch (error) {
                 console.error('Error fetching City:', error);

@@ -31,6 +31,7 @@ const AllCancledBooking = () => {
         axios.get(`${BaseUrl}api/v1/getBooking?status=cancel&page=${page}&limit=${limit}&search=${search}`, getAuthHeaders()) // Assuming 'status' is the parameter for filtering canceled bookings
             .then(response => {
                 setBookingData(response.data.data.docs);
+                setTotalPages(response.data.data.totalPages);
             })
             .catch(error => {
                 console.error('Error fetching canceled bookings:', error);
@@ -101,12 +102,12 @@ const AllCancledBooking = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="8" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading canceled rides...</td>
+                                        <td colSpan="9" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading canceled rides...</td>
                                     </tr>
                                 ) :
                                     searchQuery && filteredBookingData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="8" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Ride not found</td>
+                                            <td colSpan="9" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Ride not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery
@@ -120,11 +121,23 @@ const AllCancledBooking = () => {
                                                     <td>{booking?.time}</td>
                                                     <td>{booking?.distance} Km</td>
                                                     <td>{booking?.totalPrice}</td>
-                                                    <td>{booking?.car?.name}</td>
+                                                    <td>
+                                                        {booking?.serviceType === 'superCar' ? (
+                                                            booking?.superCar?.name
+
+                                                        ) : booking?.serviceType === 'ambulance' ? (
+                                                            booking?.vehicleAmbulance?.name
+                                                        ) : (
+                                                            booking?.car?.name
+                                                        )
+                                                        }
+                                                    </td>
+                                                    {/* <td>{booking?.car?.name}</td> */}
                                                     <td style={{
                                                         color: booking?.status === 'cancel' ? '#F52D56' :
-                                                            booking?.status === 'pending' ? '#FBAC2C' :
-                                                                booking?.status === 'complete' ? '#609527' : 'black',
+                                                            booking?.status === 'autoCancelled' ? '#F52D56' :
+                                                                booking?.status === 'pending' ? '#FBAC2C' :
+                                                                    booking?.status === 'complete' ? '#609527' : 'black',
                                                         fontWeight: '600'
                                                     }}>
                                                         {booking?.status}
@@ -141,11 +154,23 @@ const AllCancledBooking = () => {
                                                     <td>{booking?.time}</td>
                                                     <td>{booking?.distance} Km</td>
                                                     <td>{booking?.totalPrice}</td>
-                                                    <td>{booking?.car?.name}</td>
+                                                    <td>
+                                                        {booking?.serviceType === 'superCar' ? (
+                                                            booking?.superCar?.name
+
+                                                        ) : booking?.serviceType === 'ambulance' ? (
+                                                            booking?.vehicleAmbulance?.name
+                                                        ) : (
+                                                            booking?.car?.name
+                                                        )
+                                                        }
+                                                    </td>
+                                                    {/* <td>{booking?.car?.name}</td> */}
                                                     <td style={{
                                                         color: booking?.status === 'cancel' ? '#F52D56' :
-                                                            booking?.status === 'pending' ? '#FBAC2C' :
-                                                                booking?.status === 'complete' ? '#609527' : 'black',
+                                                            booking?.status === 'autoCancelled' ? 'red' :
+                                                                booking?.status === 'pending' ? '#FBAC2C' :
+                                                                    booking?.status === 'complete' ? '#609527' : 'black',
                                                         fontWeight: '600'
                                                     }}>
                                                         {booking?.status}

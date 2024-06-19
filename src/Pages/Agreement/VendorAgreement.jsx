@@ -73,7 +73,7 @@ const VendorAgreement = () => {
                     <div className='terms'>
                         {loading ? (
                             <tr>
-                                <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Agreement...</td>
+                                <td colSpan="7" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading Agreement...</td>
                             </tr>
                         ) : agreementData.length === 0 ? (
                             <div className='terms1'>
@@ -83,7 +83,7 @@ const VendorAgreement = () => {
 
                             agreementData?.map(agreement => (
                                 <div key={agreement._id}>
-                                    <div className='rider4'>
+                                    <div className='terms33'>
                                         <button onClick={() => navigate(`/updateagreement/${agreement._id}`)}>
                                             Update <MdModeEditOutline />
                                         </button>

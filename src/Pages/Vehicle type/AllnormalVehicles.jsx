@@ -57,7 +57,7 @@ const AllnormalVehicles = () => {
 
 
     const deleteVehicle = (vehicleId) => {
-        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/vehicle/${vehicleId}`)
+        axios.delete(`${BaseUrl}api/v1/vehicle/${vehicleId}`, getAuthHeaders())
             .then(response => {
                 toast.success("Vehicle deleted successfully");
                 fetchVehicleData();
@@ -116,12 +116,12 @@ const AllnormalVehicles = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Vehicles...</td>
+                                        <td colSpan="6" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading Vehicles...</td>
                                     </tr>
                                 ) :
                                     searchQuery && filteredVehiclesData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Vehicle not found</td>
+                                            <td colSpan="6" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Vehicle not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery
@@ -157,7 +157,11 @@ const AllnormalVehicles = () => {
                                                 <tr key={Vehicle.id}>
                                                     <td>{index + 1}</td>
                                                     <td>{Vehicle.name}</td>
-                                                    <td className='vehicle12'><img src={Vehicle.image} alt="" /></td>
+                                                    <td>
+                                                        <div className='vehicle12'>
+                                                            <img src={Vehicle.image} alt="" />
+                                                        </div>
+                                                    </td>
                                                     <td className='vehicle12'>{Vehicle.type}</td>
                                                     <td className='vehicle3'>
                                                         <div className='vehicle'><p>Active</p></div>

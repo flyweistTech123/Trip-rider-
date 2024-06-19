@@ -160,12 +160,12 @@ const AdminEarning = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Transactions...</td>
+                                        <td colSpan="11" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading Transactions...</td>
                                     </tr>
                                 ) :
                                     searchQuery && filteredBookingData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Transactions not found</td>
+                                            <td colSpan="11" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Transactions not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery

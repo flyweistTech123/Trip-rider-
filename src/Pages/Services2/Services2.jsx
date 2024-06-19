@@ -11,6 +11,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { MdEdit } from "react-icons/md";
 
 import { useNavigate } from 'react-router-dom';
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 import img from '../../Images/imgvehicle.jpg'
@@ -27,7 +28,7 @@ const Services2 = () => {
     }, []);
 
     const fetchRiderData = () => {
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/serviceCategory')
+        axios.get(`${BaseUrl}api/v1/serviceCategory` , getAuthHeaders())
             .then(response => {
                 setRiderData(response.data.data);
             })
@@ -48,7 +49,7 @@ const Services2 = () => {
     );
 
     const deleteRider = (riderId) => {
-        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/serviceCategory/${riderId}`)
+        axios.delete(`${BaseUrl}api/v1/serviceCategory/${riderId}`, getAuthHeaders())
             .then(response => {
                 toast.success("Service deleted successfully");
                 fetchRiderData();
@@ -93,12 +94,12 @@ const Services2 = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Services...</td>
+                                        <td colSpan="6" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading Services...</td>
                                     </tr>
                                 ) :
                                     searchQuery && filteredserviceData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Service not found</td>
+                                            <td colSpan="6" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Service not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery

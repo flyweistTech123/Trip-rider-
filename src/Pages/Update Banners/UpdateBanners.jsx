@@ -8,6 +8,7 @@ import HOC from '../../Components/HOC/HOC'
 import { useNavigate } from 'react-router-dom';
 import { IoSearch } from "react-icons/io5";
 import { IoIosCloseCircle } from "react-icons/io";
+import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 
 
 import Modal from 'react-bootstrap/Modal';
@@ -31,7 +32,7 @@ const UpdateBanners = () => {
     }, []);
 
     const fetchDriverData = () => {
-        axios.get('https://rajiv-cab-mu.vercel.app/api/v1/banner')
+        axios.get(`${BaseUrl}api/v1/banner`, getAuthHeaders())
             .then(response => {
                 setBannerData(response.data.data);
             })
@@ -51,7 +52,7 @@ const UpdateBanners = () => {
         banner.name && banner.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     const deleteDriver = (driverId) => {
-        axios.delete(`https://rajiv-cab-mu.vercel.app/api/v1/banner/${driverId}`)
+        axios.delete(`${BaseUrl}api/v1/banner/${driverId}` , getAuthHeaders())
             .then(response => {
                 fetchDriverData();
                 toast.success("Banner deleted successfully");
@@ -74,7 +75,7 @@ const UpdateBanners = () => {
         formData.append('image', bannerImage);
 
         try {
-            const response = await axios.post('https://rajiv-cab-mu.vercel.app/api/v1/banner', formData)
+            const response = await axios.post(`${BaseUrl}api/v1/banner`, getAuthHeaders(), formData)
             toast.success("Banner Added successfully");
             setName('')
             setBanneImage(null)
@@ -118,7 +119,7 @@ const UpdateBanners = () => {
                     <div className='banner'>
                         {loading ? (
                             <tr>
-                                <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading banners...</td>
+                                <td colSpan="6" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading banners...</td>
                             </tr>
                         ) :
                             searchQuery && filteredBannerData.length === 0 ? (
@@ -171,7 +172,7 @@ const UpdateBanners = () => {
                                 <div className='banner5'>
                                     <img src={img3} alt="" />
                                 </div>
-                                <p>Drag and drop images here , or click to add image </p>
+                                {/* <p>Drag and drop images here , or click to add image </p> */}
                                 <button onClick={handleShow}>Add Banner</button>
                             </div>
                         </div>
@@ -180,8 +181,8 @@ const UpdateBanners = () => {
             </div>
 
 
-            <Modal show={modalShow} onHide={handleClose} className="custom-modal">
-                <Modal.Header className="custom-modal-header" closeButton>
+            <Modal show={modalShow} onHide={handleClose} className="custom-modal" >
+                <Modal.Header  closeButton   className='adminprofileupdate'>
                     <Modal.Title>Add Banner</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

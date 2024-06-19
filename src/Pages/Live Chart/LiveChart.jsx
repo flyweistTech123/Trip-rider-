@@ -322,11 +322,11 @@ const LiveChart = () => {
                             <div className='livechart6' >
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading users...</td>
+                                        <td colSpan="7" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading users...</td>
                                     </tr>
                                 ) : users.length === 0 ? (
                                     <tr>
-                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>User not found</td>
+                                        <td colSpan="7" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>User not found</td>
                                     </tr>
                                 ) : (users.map(user => (
                                     <div className='livechart7' key={user._id} onClick={() => handleUserClick(user)}>

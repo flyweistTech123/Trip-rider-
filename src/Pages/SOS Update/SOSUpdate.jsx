@@ -78,7 +78,7 @@ const SOSUpdate = () => {
         useEffect(() => {
             const fetchSOSDetails = async () => {
                 try {
-                    const response = await axios.get(`https://rajiv-cab-mu.vercel.app/api/v1/getSosRequestById/${sosId}`)
+                    const response = await axios.get(`${BaseUrl}api/v1/getSosRequestById/${sosId}` , getAuthHeaders()) 
                     setSOSstatus(response.data.data.status);
                 } catch (error) {
                     console.error('Error fetching SOS details:', error);
@@ -91,7 +91,7 @@ const SOSUpdate = () => {
             e.preventDefault();
             try {
                 await axios.put(
-                    `https://rajiv-cab-mu.vercel.app/api/v1/approvedRejectSosRequestById/${sosId}`,
+                    `${BaseUrl}api/v1/approvedRejectSosRequestById/${sosId}`, getAuthHeaders(),
                     {
                         status: sosstatus,
                     }
@@ -221,12 +221,12 @@ const SOSUpdate = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading SOS...</td>
+                                        <td colSpan="7" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading SOS...</td>
                                     </tr>
                                 ) :
                                     searchQuery && filteredSOSData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>SOS not found</td>
+                                            <td colSpan="7" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>SOS not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery

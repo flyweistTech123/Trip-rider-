@@ -111,12 +111,12 @@ const Wallet_Management = () => {
 
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading wallet...</td>
+                                        <td colSpan="7" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading wallet...</td>
                                     </tr>
                                 ) :
                                     searchQuery && filteredWalletData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="7" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>detail not found</td>
+                                            <td colSpan="7" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>detail not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery

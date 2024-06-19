@@ -115,12 +115,12 @@ const AllsuperCarVehicles = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading Super cars...</td>
+                                        <td colSpan="6" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading Super cars...</td>
                                     </tr>
                                 ) :
                                     searchQuery && filteredVehiclesData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="6" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Super cars not found</td>
+                                            <td colSpan="6" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Super cars not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery

@@ -166,11 +166,11 @@ const Privileges = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="9" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading admins...</td>
+                                        <td colSpan="9" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading admins...</td>
                                     </tr>
                                 ) : adminData.length === 0 ? (
                                     <tr>
-                                        <td colSpan="9" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Admin not found</td>
+                                        <td colSpan="9" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Admin not found</td>
                                     </tr>
                                 ) : (
                                     adminData.map((admin, index) => (
