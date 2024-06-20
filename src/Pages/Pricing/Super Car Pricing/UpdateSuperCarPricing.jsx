@@ -21,7 +21,10 @@ import img3 from '../../../Images/img43.png';
 const UpdateSuperCarPricing = () => {
     const { id } = useParams();
     const [name, setName] = useState('');
-    const [images, setImages] = useState([]);
+    // const [images, setImages] = useState([]);
+    // const [previewImages, setPreviewImages] = useState([]);
+    const [existingImages, setExistingImages] = useState([]);
+    const [newImages, setNewImages] = useState([]);
     const [previewImages, setPreviewImages] = useState([]);
     const [price, setPrice] = useState('');
     const [kmLimit, setKmLimit] = useState('');
@@ -37,8 +40,10 @@ const UpdateSuperCarPricing = () => {
                 const response = await axios.get(`${BaseUrl}api/v1/SuperCarPricing/${id}`, getAuthHeaders());
                 const { name, image, price, kmLimit, kmPrice, hrPrice, hrLimit, pricePerKmGreater, pricePerMinGreater } = response.data.data;
                 setName(name);
+                // setPreviewImages(image.map(imgObj => imgObj.img));
+                // setImages(image.map(imgObj => imgObj.img));
+                setExistingImages(image.map(imgObj => imgObj.img));
                 setPreviewImages(image.map(imgObj => imgObj.img));
-                setImages(image.map(imgObj => imgObj.img));
                 setPrice(price);
                 setKmLimit(kmLimit);
                 setKmPrice(kmPrice);
@@ -55,9 +60,12 @@ const UpdateSuperCarPricing = () => {
     const handlePutRequest = async () => {
         const formData = new FormData();
         formData.append('name', name);
-        images.forEach((image, index) => {
+        existingImages.forEach((image, index) => {
             formData.append(`image`, image);
         });
+        newImages.forEach((image, index) => {
+            formData.append('image', image.file);
+        })
         formData.append('price', price);
         formData.append('kmLimit', kmLimit);
         formData.append('kmPrice', kmPrice);
@@ -83,12 +91,12 @@ const UpdateSuperCarPricing = () => {
 
     const handleFileChange = (e) => {
         const selectedFiles = Array.from(e.target.files);
-        const newImages = selectedFiles.map(file => ({
+        const newImagesData = selectedFiles.map(file => ({
             img: URL.createObjectURL(file),
-            file: file
+            file
         }));
-        setPreviewImages(prev => [...prev, ...newImages.map(imgObj => imgObj.img)]);
-        setImages(prev => [...prev, ...selectedFiles]);
+        setPreviewImages(prev => [...prev, ...newImagesData.map(imgObj => imgObj.img)]);
+        setNewImages(prev => [...prev, ...newImagesData]);
     };
 
     const navigate = useNavigate()

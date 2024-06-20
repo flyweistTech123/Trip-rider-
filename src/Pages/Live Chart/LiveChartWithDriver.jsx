@@ -28,7 +28,7 @@ const LiveChartWithDriver = () => {
     const [newMessage, setNewMessage] = useState('');
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
-    const [totalNewMessages, setTotalNewMessages] = useState(0);
+    // const [totalNewMessages, setTotalNewMessages] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
     const [limit1, setLimit] = useState(10);
@@ -67,7 +67,6 @@ const LiveChartWithDriver = () => {
 
     useEffect(() => {
         const totalNewMsg = messages.filter(msg => !msg.read).length;
-        setTotalNewMessages(totalNewMsg);
         const sortedDrivers = [...drivers].sort((a, b) => {
             if (!a.lastMessageTime) return 1; // Put users with no messages at the bottom
             if (!b.lastMessageTime) return -1;
@@ -268,8 +267,8 @@ const LiveChartWithDriver = () => {
                             <div className='livechart2'>
                                 <div className='livechart3'>
                                     <h5>Messages</h5>
-                                    <IoIosArrowDown color='#000000' size={20} />
-                                    <p>{totalNewMessages}</p>
+                                    {/* <IoIosArrowDown color='#000000' size={20} />
+                                    <p>{totalNewMessages}</p> */}
                                 </div>
 
                                 {/* <div className='livechart4'>
@@ -319,22 +318,18 @@ const LiveChartWithDriver = () => {
                         </div>
 
                         <div className='livechart11'>
-                            {messages.length === 0 || !selecteddriver ? (
-                                <div className='no-messages'>
-                                    <h6> Please select a driver to view messages.</h6>
-                                </div>
-                            ) : (
+                            {selecteddriver ? (
                                 <div className='livechart12'>
-                                    {selecteddriver && (
-                                        <div className='livechart13'>
-                                            <div className='livechart14'>
-                                                <img src={selecteddriver?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
-                                            </div>
-                                            <div className='livechart15'>
-                                                <h6>{selecteddriver.name}</h6>
-                                            </div>
+
+                                    <div className='livechart13'>
+                                        <div className='livechart14'>
+                                            <img src={selecteddriver?.profilePicture || img2} alt="No image" style={{ width: '60px', height: "60px", borderRadius: "100%" }} />
                                         </div>
-                                    )}
+                                        <div className='livechart15'>
+                                            <h6>{selecteddriver.name}</h6>
+                                        </div>
+                                    </div>
+
 
 
 
@@ -359,8 +354,8 @@ const LiveChartWithDriver = () => {
                                                     ""
                                                 )}
                                             </div>
-                                        ))
-                                        }
+                                        ))}
+
                                     </div>
 
                                     <div className='livechart25'>
@@ -375,7 +370,12 @@ const LiveChartWithDriver = () => {
                                         </div>
                                     </div>
                                 </div>
+                            ) : (
+                                <div className='no-messages'>
+                                    <h6>Please select a driver to view messages.</h6>
+                                </div>
                             )}
+
                         </div>
                     </div>
                 </div>
