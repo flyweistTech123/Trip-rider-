@@ -7,16 +7,13 @@ import { db, auth } from "../../Components/Firebase/Firebase";
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
-import CustomPagination from '../../Components/Pagination/Pagination';
+import _isEqual from 'lodash/isEqual';
 
 
 // import plus from '../../Images/Vector.png'
 import send from '../../Images/send.png'
 import img2 from '../../Images/user.webp'
 
-
-import { IoIosArrowDown } from "react-icons/io";
 
 
 
@@ -31,13 +28,17 @@ const LiveChartWithDriver = () => {
     // const [totalNewMessages, setTotalNewMessages] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
-    const [limit1, setLimit] = useState(10);
+    const [limitd, setLimitd] = useState('');
     const [search, setSearch] = useState("");
     const [totalPages, setTotalPages] = useState(0);
     const [page, setPage] = useState(1);
 
 
     const messageContainerRef = useRef(null);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
 
     useEffect(() => {
@@ -46,6 +47,15 @@ const LiveChartWithDriver = () => {
         }
         scrollToBottom();
     }, [selecteddriver, messages]);
+
+    const fetchData = async () => {
+        try {
+            const response1 = await axios.get(`${BaseUrl}api/v1/admin/all/driver?page=1&limit=${limitd}`, getAuthHeaders());
+            setLimitd(response1.data.data.totalDocs)
+        } catch (error) {
+            console.error('Error fetching driver name:', error);
+        }
+    };
 
     const scrollToBottom = () => {
         if (messageContainerRef.current) {
@@ -56,25 +66,24 @@ const LiveChartWithDriver = () => {
     useEffect(() => {
         fetchDriverData();
         fetchAdminData();
-    }, [limit1, search, page]);
+    }, [ limitd, search, page]);
 
 
-    // useEffect(() => {
-    //     const totalNewMsg = messages.filter(msg => !msg.read).length;
-    //     setTotalNewMessages(totalNewMsg);
-    // }, [messages]);
 
 
     useEffect(() => {
-        const totalNewMsg = messages.filter(msg => !msg.read).length;
-        const sortedDrivers = [...drivers].sort((a, b) => {
-            if (!a.lastMessageTime) return 1; // Put users with no messages at the bottom
+        // Sorting users only when the messages change
+        const sorteddriver = [...drivers].sort((a, b) => {
+            if (!a.lastMessageTime) return 1;
             if (!b.lastMessageTime) return -1;
-            return b.lastMessageTime - a.lastMessageTime; // Sort by descending order of message time
+            return b.lastMessageTime - a.lastMessageTime;
         });
 
-        setDrivers(sortedDrivers);
-    }, [messages]);
+        // Check if the sortedUsers are different from current users before setting state
+        if (!_isEqual(sorteddriver, drivers)) {
+            setDrivers(sorteddriver);
+        }
+    }, [drivers, messages]); // Depend on users and messages
 
 
     useEffect(() => {
@@ -145,10 +154,9 @@ const LiveChartWithDriver = () => {
 
     const fetchDriverData = useCallback(async () => {
         try {
-            const response = await axios.get(`${BaseUrl}api/v1/admin/all/driver?page=${page}&limit=${limit1}&search=${search}`, getAuthHeaders());
+            const response = await axios.get(`${BaseUrl}api/v1/admin/all/driver?page=${page}&limit=${limitd}&search=${search}`, getAuthHeaders());
             const driverData = response?.data?.data?.docs;
             setTotalPages(response.data.data.totalPages);
-            // console.log(usersData, "users")
 
 
             const updatedDriver = await Promise.all(driverData.map(async user => {
@@ -169,14 +177,9 @@ const LiveChartWithDriver = () => {
         finally {
             setLoading(false);
         };
-    }, [page, limit1, search]);
+    }, [page, limitd, search]);
 
 
-    const handlePageChange = (newPage) => {
-        if (newPage < 1 || newPage > totalPages) return;
-        setPage(newPage);
-        setLoading(true);
-    };
 
 
     const handleSearch = (event) => {
@@ -205,6 +208,7 @@ const LiveChartWithDriver = () => {
             await addDoc(messagesRef, newMessageDoc);
 
             setMessages(prevMessages => [newMessageDoc, ...prevMessages]);
+            await fetchDriverData();
 
             setNewMessage('');
         } catch (error) {
@@ -378,13 +382,6 @@ const LiveChartWithDriver = () => {
 
                         </div>
                     </div>
-                </div>
-                <div className='rider_details555'>
-                    <CustomPagination
-                        page={page}
-                        totalPages={totalPages}
-                        handlePageChange={handlePageChange}
-                    />
                 </div>
             </div >
         </>

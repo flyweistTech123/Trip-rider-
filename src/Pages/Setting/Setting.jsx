@@ -54,7 +54,7 @@ const Setting = () => {
         }
 
         try {
-            const response = await axios.post(`${BaseUrl}api/v1/commission/add`, getAuthHeaders(), data)
+            const response = await axios.post(`${BaseUrl}api/v1/commission/add`, data, getAuthHeaders())
             toast.success("Trip Setting Updated successfully");
         } catch (error) {
             console.log('Error to update Trip setting:', error)
@@ -91,7 +91,7 @@ const Setting = () => {
         }
 
         try {
-            const response = await axios.post(`${BaseUrl}api/v1/walletSetting/add`, getAuthHeaders(), data)
+            const response = await axios.post(`${BaseUrl}api/v1/walletSetting/add`, data, getAuthHeaders())
             toast.success("wallet Setting Updated successfully");
         } catch (error) {
             console.log('Error to update wallet setting:', error)
@@ -140,7 +140,7 @@ const Setting = () => {
         formData.append('latitude', latitude);
         formData.append('longitude', longitude);
         try {
-            const response = await axios.post(`${BaseUrl}api/v1/appSetting/add`,  getAuthHeaders(),  formData)
+            const response = await axios.post(`${BaseUrl}api/v1/appSetting/add`,  formData,   getAuthHeaders())
             toast.success("App Setting Updated successfully");
         } catch (error) {
             console.log('Error to update App setting:', error)
@@ -174,7 +174,7 @@ const Setting = () => {
             referralForUser: referralforuser,
         }
         try {
-            const response = await axios.post(`${BaseUrl}api/v1/referralSetting/add`, getAuthHeaders(), data)
+            const response = await axios.post(`${BaseUrl}api/v1/referralSetting/add`, data, getAuthHeaders())
             toast.success("Referral Setting Updated successfully");
         } catch (error) {
             console.log('Error to update Referral setting:', error)
@@ -211,7 +211,7 @@ const Setting = () => {
             googleSheetId: googlesheetId,
         }
         try {
-            const response = await axios.post(`${BaseUrl}api/v1/mapSetting/add`, getAuthHeaders(), data)
+            const response = await axios.post(`${BaseUrl}api/v1/mapSetting/add`, data, getAuthHeaders())
             toast.success("Map Setting Updated successfully");
         } catch (error) {
             console.log('Error to update Map setting:', error)
@@ -254,7 +254,7 @@ const Setting = () => {
             ambulanceNumbertext:ambulanceNumbertext,
         }
         try {
-            const response = await axios.post(`${BaseUrl}api/v1/emergencyDetails/add`, getAuthHeaders(), data)
+            const response = await axios.post(`${BaseUrl}api/v1/emergencyDetails/add`, data, getAuthHeaders() )
             toast.success("Emergency Setting Updated successfully");
         } catch (error) {
             console.log('Error to update Emergency setting:', error)

@@ -116,12 +116,12 @@ const Driver_Bookings = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading {drivername}'s bookings...</td>
+                                        <td colSpan="10" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading {drivername}'s bookings...</td>
                                     </tr>
                                 ) :
                                     searchQuery && filteredBookingData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Booking not found</td>
+                                            <td colSpan="10" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Booking not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery
@@ -169,7 +169,7 @@ const Driver_Bookings = () => {
                                             ))
                                             : bookingData.length === 0 ? ( // Check if filtered data is empty
                                                 <tr>
-                                                    <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>No bookings found for {drivername}.</td>
+                                                    <td colSpan="10" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>No bookings found for {drivername}.</td>
                                                 </tr>
                                             ) :
                                                 bookingData.map(booking => (

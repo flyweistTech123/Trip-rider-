@@ -16,8 +16,7 @@ import _isEqual from 'lodash/isEqual';
 import img2 from '../../Images/user.webp'
 import send from '../../Images/send.png'
 
-import { IoIosArrowDown } from "react-icons/io";
-import CustomPagination from '../../Components/Pagination/Pagination';
+// import CustomPagination from '../../Components/Pagination/Pagination';
 
 
 const LiveChart = () => {
@@ -30,15 +29,19 @@ const LiveChart = () => {
     const [image, setImage] = useState('');
     const [read, setRead] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [limit1, setLimit] = useState(10);
+    const [limitu, setLimitu] = useState('');
     const [search, setSearch] = useState("");
     const [totalPages, setTotalPages] = useState(0);
     const [page, setPage] = useState(1);
+    const [unreadMessages, setUnreadMessages] = useState({});
+
 
 
     const messageContainerRef = useRef(null);
 
-
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     useEffect(() => {
         if (selectedUser) {
@@ -46,6 +49,16 @@ const LiveChart = () => {
         }
         scrollToBottom();
     }, [selectedUser, messages]);
+
+
+    const fetchData = async () => {
+        try {
+            const response1 = await axios.get(`${BaseUrl}api/v1/admin/all/user?page=1&limit=${limitu}`, getAuthHeaders());
+            setLimitu(response1.data.data.totalDocs)
+        } catch (error) {
+            console.error('Error fetching driver name:', error);
+        }
+    };
 
     const scrollToBottom = () => {
         if (messageContainerRef.current) {
@@ -56,24 +69,7 @@ const LiveChart = () => {
     useEffect(() => {
         fetchuserData();
         fetchAdminData();
-    }, [limit1, search, page]);
-
-
-    function arraysAreEqual(arr1, arr2) {
-        if (arr1.length !== arr2.length) return false;
-
-        for (let i = 0; i < arr1.length; i++) {
-            if (typeof arr1[i] === 'object' && typeof arr2[i] === 'object') {
-                if (!arraysAreEqual(arr1[i], arr2[i])) {
-                    return false;
-                }
-            } else if (arr1[i] !== arr2[i]) {
-                return false;
-            }
-        }
-
-        return true;
-    }
+    }, [limitu, search, page]);
 
 
 
@@ -100,7 +96,7 @@ const LiveChart = () => {
                     if (change.type === "added" && change.doc.data().type === "user") {
                         // Show browser notification for new user messages
                         showNotification("New Message", change.doc.data().message);
-                        // toast.success("City added successfully");
+                        setUnreadMessages(prev => ({ ...prev, [selectedUser._id]: true }));
                     }
                 });
             });
@@ -156,7 +152,6 @@ const LiveChart = () => {
             });
 
             // console.log('allMessages', "message ")
-
             setMessages(allMessages);
             // console.log("Messages fetched: ", allMessages);
         } catch (error) {
@@ -167,7 +162,7 @@ const LiveChart = () => {
 
     const fetchuserData = useCallback(async () => {
         try {
-            const response = await axios.get(`${BaseUrl}api/v1/admin/all/user?page=${page}&limit=${limit1}&search=${search}`, getAuthHeaders());
+            const response = await axios.get(`${BaseUrl}api/v1/admin/all/user?page=${page}&limit=${limitu}&search=${search}`, getAuthHeaders());
             const usersData = response?.data?.data?.docs;
             setTotalPages(response.data.data.totalPages);
 
@@ -189,18 +184,12 @@ const LiveChart = () => {
         finally {
             setLoading(false);
         };
-    }, [page, limit1, search]);
+    }, [page, limitu, search]);
 
 
 
 
 
-
-    const handlePageChange = (newPage) => {
-        if (newPage < 1 || newPage > totalPages) return;
-        setPage(newPage);
-        setLoading(true);
-    };
 
 
     const handleSearch = (event) => {
@@ -211,6 +200,7 @@ const LiveChart = () => {
     const handleUserClick = (user) => {
         setSelectedUser(user);
         setMessages([]); // Reset messages when a new user is selected
+        setUnreadMessages(prev => ({ ...prev, [user._id]: false }));
     };
 
 
@@ -347,7 +337,9 @@ const LiveChart = () => {
                                             </div>
                                             <div className='livechart9'>
                                                 <h6>{user?.name || "User"}</h6>
-                                                <p>{user?.lastMessage}</p>
+                                                <p style={{ fontWeight: unreadMessages[user._id] ? 'bold' : 'normal' }}>
+                                                    {user?.lastMessage}
+                                                </p>
                                             </div>
                                         </div>
                                         <div className='livechart10'>
@@ -382,7 +374,7 @@ const LiveChart = () => {
                                                     ""
                                                 )}
                                                 <div className='livechart21'>
-                                                    <div className={`${message.type === 'user' ? 'livechart22' : 'livechart23'}`}><p style={{ fontWeight: message.isNew ? 'bold' : 'normal' }}>{message.message}</p></div>
+                                                    <div className={`${message.type === 'user' ? 'livechart22' : 'livechart23'}`}><p>{message.message}</p></div>
                                                 </div>
                                                 {message.type === 'admin' ? (
                                                     <div className='livechart20'>
@@ -415,14 +407,6 @@ const LiveChart = () => {
 
                     </div>
                 </div>
-                <div className='rider_details555'>
-                    <CustomPagination
-                        page={page}
-                        totalPages={totalPages}
-                        handlePageChange={handlePageChange}
-                    />
-                </div>
-
 
             </div >
         </>

@@ -11,8 +11,9 @@
     background-color: #080707;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     padding-bottom: 50px;
+    padding-left: 20px;
 }
 
 
@@ -20,6 +21,7 @@
     padding-top: 10px;
     width: 150px;
     height: 150px;
+    text-align: center;
 }
 
 .sidebar2 img{

@@ -48,7 +48,8 @@ const Login = () => {
         } catch (error) {
             console.error('Error:', error.message);
             if (error.response && error.response.data && error.response.data.message === 'user not found ! not registered') {
-                toast.error('Admin does not exist. Please use a different email.');
+                // toast.error('Admin does not exist. Please use a different email.');
+                toast.error('invalid email/password');
             } else {
                 toast.error('Something went wrong. Please try again.');
             }

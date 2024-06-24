@@ -141,12 +141,12 @@ const Driver_Earning = () => {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Loading {drivername}'s Earnings...</td>
+                                        <td colSpan="10" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Loading {drivername}'s Earnings...</td>
                                     </tr>
                                 ) :
                                     searchQuery && filteredEarningData.length === 0 ? (
                                         <tr>
-                                            <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>Earning not found</td>
+                                            <td colSpan="10" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>Earning not found</td>
                                         </tr>
                                     ) : (
                                         searchQuery
@@ -167,7 +167,7 @@ const Driver_Earning = () => {
                                             ))
                                             : earningdata.length === 0 ? ( // Check if filtered data is empty
                                                 <tr>
-                                                    <td colSpan="10" style={{ color: "#C3052C", fontWeight: "600", fontSize: "18px" }}>No Earnings found for {drivername}.</td>
+                                                    <td colSpan="10" style={{ color: "#000000", fontWeight: "600", fontSize: "18px" }}>No Earnings found for {drivername}.</td>
                                                 </tr>
                                             ) :
                                                 earningdata.map(transaction => (

@@ -4,13 +4,11 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Notification.css'
 import HOC from '../../Components/HOC/HOC'
-import Pagination from 'react-bootstrap/Pagination';
 
 import { IoSearch } from "react-icons/io5";
 
 import { BaseUrl, getAuthHeaders } from '../../Components/BaseUrl/BaseUrl';
 import { RiDeleteBinLine } from "react-icons/ri";
-import Select from 'react-select';
 
 
 import CustomPagination from '../../Components/Pagination/Pagination';
